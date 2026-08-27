@@ -8,15 +8,7 @@ from coral.views.dashboards.sql_query.config.designation_config import DESIGNATI
 from django.db import connection, DatabaseError
 from querysets_shim.adapter import admin 
 from typing import List
-import pdb
 
-SECOND_SURVEY_GROUP = '1ce90bd5-4063-4984-931a-cc971414d7db'
-DESIGNATIONS_GROUP = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
-
-APPROVED = "294f38d0-e391-4f7d-af83-72fbf7fcdfcb"
-PROVISIONAL = "7f81d135-45ac-483f-96f4-2fa8ca882d79"
-
-COUNCIL_NODE = "447973ce-d7e2-11ee-a4a1-0242ac120006"
 
 class DesignationTaskStrategy(TaskStrategy):
     
@@ -104,13 +96,30 @@ class DesignationTaskStrategy(TaskStrategy):
     
     def get_filter_options(self, groupId=None):
         from querysets_shim.models import Monument
+        from arches_controlled_lists.models import ListItem
         with admin():
             """Return the available filter options for the designation tasks."""
-            # create the entries for the council filter options
+            # Create the entries for the council filter options. Council is a
+            # `reference` node, so its options come from a controlled list rather
+            # than from the node config. Heritage Asset and Heritage Asset Revision
+            # use separate council lists whose item ids differ, so the filter value
+            # is the LA code from the label ("LA01 - Causeway Coast..." -> "LA01"),
+            # which both lists share and which the SQL matches on.
             node_alias = Monument._._node_objects_by_alias()
-            domain_options = node_alias['council'].config['options']
+            council_list_id = node_alias['council'].config['controlledList']
 
-            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+            council_items = ListItem.objects.filter(
+                list_id=council_list_id
+            ).prefetch_related('list_item_values')
+
+            domain_values = []
+            for item in council_items:
+                label = item.find_best_label('en')
+                if not label:
+                    continue
+                code = label.split(' - ')[0]
+                domain_values.append({'id': code, 'name': label, 'type': 'council'})
+            domain_values.sort(key=lambda council: council['id'])
 
             return [
                 {'id': 'all', 'name': 'All', 'type': 'default'},

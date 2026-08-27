@@ -23,4 +23,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(dashboards): convert designation dashboard to v8 node ids and controlled lists (#852)
+
 ### Notes
