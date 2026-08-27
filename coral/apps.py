@@ -24,3 +24,9 @@ class CoralConfig(AppConfig):
             from coral.perf import search_sort
 
             search_sort.apply()
+
+        # Compute search result-type counts in SQL instead of 32 graph traversals.
+        if getattr(settings, "CORAL_FAST_RESOURCE_TYPE_COUNTS", True):
+            from coral.perf import search_counts
+
+            search_counts.apply()
