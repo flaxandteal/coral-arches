@@ -16,10 +16,10 @@ function viewModel(params) {
     /**
  * Matches structure of the Correspondence branch
  */
-    this.RESPONSE_FILES_NODE = "5d401df8-5989-11ef-9d18-0242ac120006";
+    this.RESPONSE_FILES_NODE = "7098e813-eebe-5903-a31f-951fd0c67a2c";
     this.RESPONSE_FILE_TEAM_NODE = "983d73b0-5989-11ef-af2d-0242ac120006";
 
-    this.RESPONSE_SUMMARY_NODE = "dd179870-cfe7-11ee-8a4e-0242ac180006";
+    this.RESPONSE_SUMMARY_NODE = "1103a85f-645c-5b9d-bf17-b9299fac0ded";
     this.RESPONSE_SUMMARY_TEAM_NODE = "cd77b29c-2ef6-11ef-b1c4-0242ac140006";
 
     this.HMTEAM = "2628d62f-c206-4c06-b26a-3511e38ea243";

@@ -21,18 +21,18 @@ import template from 'templates/views/components/workflows/get-monument-details.
     this.MONUMENT_NAMES_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11';
     this.MONUMENT_NAMES_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11';
 
-    this.CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006';
-    this.CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006';
+    this.CM_REFERENCE_NODEGROUP = 'c9c4e6dc-aa34-5254-a7b5-4f79bd8b73c1';
+    this.CM_REFERENCE_NODE = '9c4a43d9-a689-5ba2-bed5-4fbbd6ad47e6';
 
     this.ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba'
-    this.TOWNLAND_NODEGROUP = '919bcb94-345c-11ef-a5b7-0242ac120003';
+    this.TOWNLAND_NODEGROUP = 'ffaf4062-be4a-52e6-ace8-7e29014f96bc';
     this.TOWNLAND_NODE = 'd033683a-345c-11ef-a5b7-0242ac120003';
 
     this.NATIONAL_GRIDREF_NODEGROUP = '87d39b2b-f44f-11eb-af5e-a87eeabdefba';
     this.IRISH_GRIDREF_NODE = '2fdedbd0-1459-11ef-8cdd-0242ac120006';
 
-    this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
-    this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
+    this.BFILE_NODEGROUP = "34e9c49c-5523-598a-98a2-32224336d197";
+    this.BFILE_NODE = "0d0b653a-03e2-5a35-9ed4-9219b0681dd0";
 
     this.COUNCIL = "447973ce-d7e2-11ee-a4a1-0242ac120006";
 

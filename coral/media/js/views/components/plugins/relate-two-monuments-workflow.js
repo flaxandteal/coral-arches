@@ -77,36 +77,36 @@ export default ko.components.register('relate-two-monuments-workflow', {
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
-                    nodegroupid: '35d8256a-d7d6-11ee-9916-0242ac120006',
+                    nodegroupid: '450ee1c9-8f79-59b6-a064-01bcb6ddbc2a',
                     resourceid: "['target-step']['target-record'][0]['selectedResourceId']",
                     parenttileid: "['relating-step']['relating-record'][0]['tileId']",
                     nodeOptions: {
-                      "6694d802-37c0-11ef-a167-0242ac150006": {
+                      "f58ee75a-c03d-573e-9c8a-31485ad7db75": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "126c0042-dbc3-11ee-8835-0242ac120006": {
+                      "a1aa083d-ecdf-55b4-bf07-7a309e8805ab": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "35d84fea-d7d6-11ee-9916-0242ac120006": {
+                      "3873bf2c-fefd-5690-a9aa-66b8b7527900": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "ca07b860-2d5b-11ef-bbfd-0242ac120006": {
+                      "efe1d7fb-390c-5ffd-b355-2aa49faf686a": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "ac25af94-1903-11ef-aa9c-0242ac150006": {
+                      "ac9f7da3-6114-5f60-bf8b-ad2f48e169ae": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "98c42ca8-37be-11ef-a167-0242ac150006": {
+                      "576a84d3-b527-5f63-b612-9b211b3c2a45": {
                         "config":{
                           "maxDate":"today"
                         }
@@ -136,7 +136,7 @@ export default ko.components.register('relate-two-monuments-workflow', {
                           "maxDate":"today"
                         }
                       },
-                      "d9368892-1902-11ef-aa9c-0242ac150006": {
+                      "541ca8f3-cd26-54c0-8b2e-e61f928f8407": {
                         "config":{
                           "maxDate":"today"
                         }
@@ -161,7 +161,7 @@ export default ko.components.register('relate-two-monuments-workflow', {
                           "maxDate":"today"
                         }
                       },
-                      "96656e9c-d646-11ee-8b04-0242ac180006": {
+                      "edc70a09-4e17-5c26-a5d8-e56fc4cbffcf": {
                         "config":{
                           "maxDate":"today"
                         }
@@ -171,37 +171,37 @@ export default ko.components.register('relate-two-monuments-workflow', {
                           "maxDate":"today"
                         }
                       },
-                      "e2815e0c-37bd-11ef-a167-0242ac150006": {
+                      "19b28607-0503-585e-9958-a566a431ec95": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "d9bd0b80-d643-11ee-8b04-0242ac180006": {
+                      "e6189d50-775d-5fb8-85d5-aaa81c295228": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "e8d511cc-d64c-11ee-8b04-0242ac180006": {
+                      "853520ed-15ec-5f13-b265-ecf8253cb5c9": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "eeec9e68-d23c-11ee-9373-0242ac180006": {
+                      "126b8c3c-d980-5ebc-8719-a8a8376577f6": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "82731030-37bf-11ef-a167-0242ac150006": {
+                      "1d0cf09e-d91e-5f02-8a87-35fe31cec675": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "5253a3a8-37bd-11ef-a167-0242ac150006": {
+                      "eacf7968-bd81-522d-96e9-9474fe27e449": {
                         "config":{
                           "maxDate":"today"
                         }
                       },
-                      "85396d94-37bc-11ef-9263-0242ac150006": {
+                      "8836a65e-92cb-5330-b468-c6adbe6cc7a5": {
                         "config":{
                           "maxDate":"today"
                         }
@@ -215,11 +215,11 @@ export default ko.components.register('relate-two-monuments-workflow', {
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
-                    nodegroupid: '76fc577c-d7d7-11ee-ade0-0242ac120006',
+                    nodegroupid: '3567a048-599c-5d3e-b9da-332140612855',
                     resourceid: "['target-step']['target-record'][0]['selectedResourceId']",
                     parenttileid: "['relating-step']['relating-record'][0]['tileId']",
                     nodeOptions: {
-                      "e561be82-d7d7-11ee-ade0-0242ac120006": {
+                      "0dac88be-9e0d-5612-b9ad-6b8cface6588": {
                         "component": "user-to-model-select",
                         "signOffGroups": [
                           "1ce90bd5-4063-4984-931a-cc971414d7db",

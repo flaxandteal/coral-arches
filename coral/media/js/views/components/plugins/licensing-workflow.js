@@ -287,7 +287,7 @@ export default ko.components.register('licensing-workflow', {
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    nodegroupid: '33b4430a-16be-11ef-8633-0242ac180006',
+                    nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
                     parenttileid:
                       "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     semanticName: 'Irish Grid Reference'
