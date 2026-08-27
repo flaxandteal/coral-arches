@@ -23,4 +23,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- chore(audit): add v8 node id audit script and findings (#853)
+
 ### Notes
