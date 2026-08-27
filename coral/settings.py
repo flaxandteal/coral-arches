@@ -611,6 +611,8 @@ CORAL_PRUNE_EMPTY_REPORT_SECTIONS = True
 
 CORAL_INDEX_DESCRIPTORS = True
 
+CORAL_DESCRIPTOR_RELEVANCE_SORT = os.environ.get("CORAL_DESCRIPTOR_RELEVANCE_SORT", "True").lower() != "false"
+
 # Hide nodes and cards in a report that have no data
 HIDE_EMPTY_NODES_IN_REPORT = True
 

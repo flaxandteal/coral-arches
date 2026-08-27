@@ -19,3 +19,8 @@ class CoralConfig(AppConfig):
 
             descriptor_indexing.apply()
 
+        # Rank simple-search results by descriptor match, exact first.
+        if getattr(settings, "CORAL_DESCRIPTOR_RELEVANCE_SORT", True):
+            from coral.perf import search_sort
+
+            search_sort.apply()
