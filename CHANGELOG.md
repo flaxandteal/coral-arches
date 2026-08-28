@@ -39,6 +39,10 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   relevance ordering, so they were coming back in resource id order (#850)
 - perf(search): result type counts run as one SQL group by instead of a two hop traversal
   per graph — a term matching 27 resources took 74s (#850)
+- perf(search): the attribute filter panel no longer builds every facet on open — PrimeVue's
+  accordion rendered all 209 of Heritage Asset's reference facets and hid them with CSS,
+  firing 1053 controlled list requests across 25 distinct lists (#NNN)
+- fix(search): selecting a filter checkbox no longer collapses every accordion panel (#NNN)
 
 ### Notes
 
@@ -50,3 +54,10 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   `CORAL_FAST_RESOURCE_TYPE_COUNTS = False` to restore the old behaviour
 - Run `manage.py index_descriptors` after a full arches_search reindex to rebuild the
   descriptor terms
+- The arches_search filter panel is patched by shadowing its component from `coral/src`.
+  See `coral/src/README.md` for what is overridden and when each one can be deleted —
+  both are staged as upstream PRs
+- Each arches_search patch is behind a settings flag: `CORAL_PRUNE_EMPTY_REPORT_SECTIONS`,
+  `CORAL_INDEX_DESCRIPTORS`, `CORAL_DESCRIPTOR_RELEVANCE_SORT`,
+  `CORAL_FAST_RESOURCE_TYPE_COUNTS`. Set one to `False` to fall back to stock behaviour
+  without a deploy
