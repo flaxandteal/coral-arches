@@ -1,6 +1,14 @@
 from django.apps import AppConfig
 from django.conf import settings
 
+# Applied at IMPORT time, not in ready(). Arches regenerates the frontend config
+# (tsconfig paths included) in ArchesAppConfig.ready(), and Django creates every
+# app config before running any ready() - so from ready() this would always land
+# after the file had been written. See coral/frontend_config_patch.py.
+from coral import frontend_config_patch
+
+frontend_config_patch.apply()
+
 
 class CoralConfig(AppConfig):
     name = "coral"
