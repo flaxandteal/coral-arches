@@ -1,0 +1,216 @@
+{
+  "graph_slug": "organization",
+  "graph_name": "Organization",
+  "configs": {
+    "search": {
+      "name": "Organization",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Organization",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Names",
+            "nodegroup_alias": "names",
+            "node_aliases": [
+              "name_currency",
+              "organization_name",
+              "organization_name_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Descriptions",
+            "nodegroup_alias": "descriptions",
+            "node_aliases": [
+              "description",
+              "description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Parent Organization",
+            "nodegroup_alias": "parent_organization",
+            "node_aliases": [
+              "parent_organization"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Organization Currency",
+            "nodegroup_alias": "organization_currency_type",
+            "node_aliases": [
+              "organization_currency_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Contact Details",
+            "nodegroup_alias": "contact_details",
+            "node_aliases": [
+              "contact_name_currency",
+              "contact_name_for_correspondence",
+              "contact_point",
+              "contact_point_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Organization Formation",
+            "nodegroup_alias": "organization_formation",
+            "node_aliases": [
+              "end_date",
+              "organization_type",
+              "start_date"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Addresses",
+            "nodegroup_alias": "location_data",
+            "node_aliases": [
+              "address_currency",
+              "address_status",
+              "building_name_value",
+              "building_number_sub_street_value",
+              "building_number_value",
+              "county_value",
+              "full_address",
+              "locality_value",
+              "postcode_value",
+              "street_value",
+              "sub_street_value",
+              "town_or_city_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Bibliographic Source Citation",
+            "nodegroup_alias": "bibliographic_source_citation",
+            "node_aliases": [
+              "bibliographic_source_citation",
+              "comment",
+              "figs_",
+              "page_s_",
+              "plate_s_",
+              "source_number_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "File(s)",
+            "nodegroup_alias": "digital_file_s_",
+            "node_aliases": [
+              "digital_file_s_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Images",
+            "nodegroup_alias": "images",
+            "node_aliases": [
+              "caption_note",
+              "copyright_holder",
+              "copyright_note_text",
+              "copyright_type",
+              "images"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Activities",
+            "nodegroup_alias": "associated_activities",
+            "node_aliases": [
+              "associated_activities"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated People and Organizations",
+            "nodegroup_alias": "associated_actors",
+            "node_aliases": [
+              "associated_actors"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Monuments, Areas and Artefacts",
+            "nodegroup_alias": "associated_monuments_areas_and_artefacts",
+            "node_aliases": [
+              "association_type",
+              "monument_area_or_artefact"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

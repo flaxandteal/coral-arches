@@ -1,0 +1,313 @@
+{
+  "graph_slug": "activity",
+  "graph_name": "Activity",
+  "configs": {
+    "search": {
+      "name": "Activity",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Activity",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Activity Names",
+            "nodegroup_alias": "activity_names",
+            "node_aliases": [
+              "activity_name",
+              "activity_name_currency",
+              "activity_name_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Archive",
+            "nodegroup_alias": "archive",
+            "node_aliases": [
+              "archive"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Are They Adequate",
+            "nodegroup_alias": "are_they_adequate",
+            "node_aliases": [
+              "are_they_adequate"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Licence",
+            "nodegroup_alias": "associated_licence",
+            "node_aliases": [
+              "associated_licence"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Finds",
+            "nodegroup_alias": "finds",
+            "node_aliases": [
+              "finds"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Licence Holder Present",
+            "nodegroup_alias": "licence_holder_present",
+            "node_aliases": [
+              "hed_inspector_present",
+              "licence_holder_present"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Potential Date Of Remains",
+            "nodegroup_alias": "potential_date_of_remains",
+            "node_aliases": [
+              "potential_date_of_remains_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Standards Met",
+            "nodegroup_alias": "standards_met",
+            "node_aliases": [
+              "standards_met"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Stored At",
+            "nodegroup_alias": "stored_at",
+            "node_aliases": [
+              "stored_at"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Survey Methods Discussed ",
+            "nodegroup_alias": "survey_methods_discussed_",
+            "node_aliases": [
+              "survey_methods_discussed_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Activity Descriptions",
+            "nodegroup_alias": "activity_descriptions",
+            "node_aliases": [
+              "activity_description",
+              "activity_description_type",
+              "description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Record Status",
+            "nodegroup_alias": "record_status_assignment",
+            "node_aliases": [
+              "record_status"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Activity Type",
+            "nodegroup_alias": "activity_type",
+            "node_aliases": [
+              "activity_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Parent Activities",
+            "nodegroup_alias": "parent_activity",
+            "node_aliases": [
+              "parent_activity"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Activity Archive Material",
+            "nodegroup_alias": "activity_archive_material",
+            "node_aliases": [
+              "archive_source_type",
+              "repository_owner",
+              "storage_area_name",
+              "storage_building_name"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Activity Timespan",
+            "nodegroup_alias": "activity_timespan",
+            "node_aliases": [
+              "activity_date_qualifier",
+              "activity_end_date",
+              "activity_start_date",
+              "display_date",
+              "end_date",
+              "start_date"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Archive Objects",
+            "nodegroup_alias": "associated_archive_objects",
+            "node_aliases": [
+              "archive_holder",
+              "archive_object_reference",
+              "archive_object_title"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Activities",
+            "nodegroup_alias": "associated_activities",
+            "node_aliases": [
+              "associated_activities"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated People and Organizations",
+            "nodegroup_alias": "associated_actors",
+            "node_aliases": [
+              "actor",
+              "associated_actor_date_qualifier",
+              "associated_actor_display_date",
+              "associated_actor_end_date",
+              "associated_actor_start_date",
+              "association_type",
+              "role_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Bibliographic Sources",
+            "nodegroup_alias": "bibliographic_source_citation",
+            "node_aliases": [
+              "bibliographic_source_citation",
+              "comment",
+              "figs_",
+              "page_s_",
+              "plate_s_",
+              "source_number_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Consultations",
+            "nodegroup_alias": "associated_consultations",
+            "node_aliases": [
+              "associated_consultations"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Digital Files",
+            "nodegroup_alias": "digital_files",
+            "node_aliases": [
+              "digital_files"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Monuments, Areas and Artefacts",
+            "nodegroup_alias": "associated_monuments_and_areas",
+            "node_aliases": [
+              "associated_monuments_and_areas"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
