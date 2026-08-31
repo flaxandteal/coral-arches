@@ -19,11 +19,11 @@ HA_SYSTEM_REFERENCE_NUMBER_NODE = "325a430a-efe4-11eb-810b-a87eeabdefba"
 # launcher lists one option per child tile, labelled with that number, and hands
 # the workflow the child's PARENT tile id -- see getParentTileOptions() in
 # coral/media/js/views/components/plugins/open-issue-report-workflow.js.
-ISSUE_REPORT_NODEGROUP = "d3ff3fe6-d62b-11ee-9454-0242ac180006"
-ISSUE_REFERENCE_NODEGROUP = "20017860-d711-11ee-9dd0-0242ac120006"
-ISSUE_REFERENCE_NUMBER_NODE = "2001a33a-d711-11ee-9dd0-0242ac120006"
-ISSUE_REFERENCE_TYPE_NODE = "2001a574-d711-11ee-9dd0-0242ac120006"
-ISSUE_REFERENCE_METATYPE_NODE = "2001a6f0-d711-11ee-9dd0-0242ac120006"
+ISSUE_REPORT_NODEGROUP = "7f835acf-5601-5dae-ac0f-6f030fc50ee7"
+ISSUE_REFERENCE_NODEGROUP = "3497eaa2-fa47-59fa-a890-035b7c211278"
+ISSUE_REFERENCE_NUMBER_NODE = "b075893b-848d-5520-9d52-3c3dfbecde16"
+ISSUE_REFERENCE_TYPE_NODE = "b05b1e23-2f4f-56b7-be2a-296598698818"
+ISSUE_REFERENCE_METATYPE_NODE = "50f2077e-b08e-5475-b028-0e323dbef26d"
 
 
 class Command(BaseCommand):

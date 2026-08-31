@@ -204,11 +204,12 @@ class CasbinPermissionFramework(ArchesPermissionBase):
             if group_key in groups_seen:
                 return groups_seen[group_key]
             users = []
-            print(" " * len(ancestors), len(group.members), "members")
-            for n, member in enumerate(group.members):
+            members = group.members or []
+            print(" " * len(ancestors), len(members), "members")
+            for n, member in enumerate(members):
                 if isinstance(member, Group):
                     member_key = self._subj_to_str(member)
-                    print(" " * (1 + len(ancestors)), n, "/", len(group.members), member_key)
+                    print(" " * (1 + len(ancestors)), n, "/", len(members), member_key)
                     # This is the reverse of what might be expected, as the more deeply
                     # nested a group is, the _fewer_ permissions it has. Conversely, the
                     # top groups gather all the permissions from the groups below them,
