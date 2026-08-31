@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "coral-arches"
-version = "8.2.0"
+version = "8.3.0"
 readme = "README.md"
 license = "AGPL-3.0-or-later"
 requires-python = ">=3.11"
@@ -40,6 +40,7 @@ dependencies = [
     "colorama>=0.4.5",
     "arches_resource_version_manager @ git+https://github.com/fargeo/arches-resource-version-manager.git@main",
     "arches-search>=0.1.0a12",
+    "arches-json-importer @ git+https://github.com/flaxandteal/arches-json-importer.git@main",
     "djangorestframework",
     "tabulate",
     "asciitree",

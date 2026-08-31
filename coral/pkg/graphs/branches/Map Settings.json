@@ -7,24 +7,18 @@
                     "active": true,
                     "cardid": "4a6c95f3-1298-11e9-8c66-000d3ab1e588",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "Represents a single node in a graph"
                     },
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
+                    "helptext": {},
+                    "helptitle": {},
                     "instructions": {
                         "en": "Draw a polygon representing your project's extent. These bounds will serve as the default for the cache seed bounds, search result grid bounds, and map bounds in search, cards, and reports"
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Project Extent"
                     },
@@ -36,24 +30,18 @@
                     "active": true,
                     "cardid": "4a6c95f6-1298-11e9-bfdc-000d3ab1e588",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "Represents a single node in a graph"
                     },
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
+                    "helptext": {},
+                    "helptitle": {},
                     "instructions": {
                         "en": "Arches aggregates search results and displays them as hexagons.  You will need to set default parameters for the hexagon size  and its precision."
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Search Results Grid"
                     },
@@ -65,24 +53,18 @@
                     "active": true,
                     "cardid": "4a6c95f9-1298-11e9-a882-000d3ab1e588",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "Represents a single node in a graph"
                     },
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
+                    "helptext": {},
+                    "helptitle": {},
                     "instructions": {
                         "en": "Arches uses the Mapbox mapping library for map display and data creation.  Arches also supports Mapbox basemaps and other services"
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Mapbox API"
                     },
@@ -94,24 +76,18 @@
                     "active": true,
                     "cardid": "4a6c95fc-1298-11e9-8dfa-000d3ab1e588",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "Represents a single node in a graph"
                     },
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
+                    "helptext": {},
+                    "helptitle": {},
                     "instructions": {
                         "en": "You can define the zoom behavior of your maps by specifying max/min and default values.  Zoom level 0 shows the whole world (and is the minimum zoom level).  Most map services support a maximum of 20 or so zoom levels"
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Map Zoom"
                     },
@@ -123,24 +99,16 @@
                     "active": true,
                     "cardid": "4a6c95ff-1298-11e9-b4ac-000d3ab1e588",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": ""
                     },
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
-                    "instructions": {
-                        "en": null
-                    },
-                    "is_editable": true,
+                    "helptext": {},
+                    "helptitle": {},
+                    "instructions": {},
+                    "is_editable": null,
                     "name": {
                         "en": "Map Settings"
                     },
@@ -632,8 +600,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-sliders",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -642,30 +614,35 @@
             "nodegroups": [
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "4a6c95f1-1298-11e9-a56a-000d3ab1e588",
                     "legacygroupid": null,
                     "nodegroupid": "4a6c95f1-1298-11e9-a56a-000d3ab1e588",
                     "parentnodegroup_id": "4a6c95fd-1298-11e9-814b-000d3ab1e588"
                 },
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "4a6c95f4-1298-11e9-a6af-000d3ab1e588",
                     "legacygroupid": null,
                     "nodegroupid": "4a6c95f4-1298-11e9-a6af-000d3ab1e588",
                     "parentnodegroup_id": "4a6c95fd-1298-11e9-814b-000d3ab1e588"
                 },
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "4a6c95f7-1298-11e9-a738-000d3ab1e588",
                     "legacygroupid": null,
                     "nodegroupid": "4a6c95f7-1298-11e9-a738-000d3ab1e588",
                     "parentnodegroup_id": "4a6c95fd-1298-11e9-814b-000d3ab1e588"
                 },
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "4a6c95fa-1298-11e9-a881-000d3ab1e588",
                     "legacygroupid": null,
                     "nodegroupid": "4a6c95fa-1298-11e9-a881-000d3ab1e588",
                     "parentnodegroup_id": "4a6c95fd-1298-11e9-814b-000d3ab1e588"
                 },
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "4a6c95fd-1298-11e9-814b-000d3ab1e588",
                     "legacygroupid": null,
                     "nodegroupid": "4a6c95fd-1298-11e9-814b-000d3ab1e588",
                     "parentnodegroup_id": null
@@ -676,12 +653,15 @@
                     "alias": "project_extent",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -690,18 +670,22 @@
                     "nodeid": "4a6c95f1-1298-11e9-a56a-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "search_results_grid",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -710,18 +694,22 @@
                     "nodeid": "4a6c95f4-1298-11e9-a6af-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "mapbox",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -730,18 +718,22 @@
                     "nodeid": "4a6c95f7-1298-11e9-a738-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "map_zoom",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -750,18 +742,22 @@
                     "nodeid": "4a6c95fa-1298-11e9-a881-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "map_settings",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
@@ -770,18 +766,22 @@
                     "nodeid": "4a6c95fd-1298-11e9-814b-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "hex_bin_size",
                     "config": {},
                     "datatype": "number",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -790,7 +790,8 @@
                     "nodeid": "4a6c9600-1298-11e9-be24-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "default_bounds",
@@ -821,12 +822,15 @@
                         "weight": 2
                     },
                     "datatype": "geojson-feature-collection",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -835,18 +839,22 @@
                     "nodeid": "4a6c9601-1298-11e9-a3a5-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "default_map_zoom",
                     "config": {},
                     "datatype": "number",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -855,18 +863,22 @@
                     "nodeid": "4a6c9602-1298-11e9-b1b6-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "mapbox_sprites",
                     "config": {},
                     "datatype": "string",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -875,18 +887,22 @@
                     "nodeid": "4a6c9603-1298-11e9-8a49-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "hex_bin_precision",
                     "config": {},
                     "datatype": "number",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -895,18 +911,22 @@
                     "nodeid": "4a6c9604-1298-11e9-8ec8-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "map_min_zoom",
                     "config": {},
                     "datatype": "number",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -915,18 +935,22 @@
                     "nodeid": "4a6c9605-1298-11e9-a2db-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "mapbox_glyphs",
                     "config": {},
                     "datatype": "string",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -935,18 +959,22 @@
                     "nodeid": "4a6c9606-1298-11e9-b51f-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "map_max_zoom",
                     "config": {},
                     "datatype": "number",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -955,18 +983,22 @@
                     "nodeid": "4a6c9607-1298-11e9-8495-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "mapbox_api_key",
                     "config": {},
                     "datatype": "string",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -975,29 +1007,27 @@
                     "nodeid": "4a6c9608-1298-11e9-8669-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": null,
-            "publication": {
-                "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
-                "notes": null,
-                "publicationid": "9c17e9fc-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:41.483",
-                "user_id": 1
-            },
+            "publication": null,
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": "map_settings",
                 "config": {},
                 "datatype": "semantic",
-                "description": "",
+                "description": {
+                    "en": ""
+                },
                 "exportable": false,
                 "fieldname": "",
                 "graph_id": "4a6c95f0-1298-11e9-ba52-000d3ab1e588",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
@@ -1005,13 +1035,17 @@
                 "nodegroup_id": "4a6c95fd-1298-11e9-814b-000d3ab1e588",
                 "nodeid": "4a6c95fd-1298-11e9-814b-000d3ab1e588",
                 "ontologyclass": null,
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "map_settings",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
+            "user_permissions": {},
             "version": ""
         }
     ]

@@ -7,24 +7,18 @@
                     "active": true,
                     "cardid": "62c8f465-1809-11e9-a18d-000d3ab1e588",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": ""
                     },
                     "graph_id": "62c8f462-1809-11e9-8552-000d3ab1e588",
                     "helpenabled": false,
-                    "helptext": {
-                        "en": null
-                    },
-                    "helptitle": {
-                        "en": null
-                    },
+                    "helptext": {},
+                    "helptitle": {},
                     "instructions": {
                         "en": "Set the default search results behavior"
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "BASIC_SEARCH_SETTINGS"
                     },
@@ -181,8 +175,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "62c8f462-1809-11e9-8552-000d3ab1e588",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-sliders",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -191,6 +189,7 @@
             "nodegroups": [
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "62c8f463-1809-11e9-8262-000d3ab1e588",
                     "legacygroupid": null,
                     "nodegroupid": "62c8f463-1809-11e9-8262-000d3ab1e588",
                     "parentnodegroup_id": null
@@ -201,12 +200,15 @@
                     "alias": "basic_search_settings",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "62c8f462-1809-11e9-8552-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
@@ -215,18 +217,22 @@
                     "nodeid": "62c8f463-1809-11e9-8262-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "search_export_items_per_page",
                     "config": {},
                     "datatype": "number",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "62c8f462-1809-11e9-8552-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -235,18 +241,22 @@
                     "nodeid": "62c8f466-1809-11e9-a507-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "search_dropdown_length",
                     "config": {},
                     "datatype": "number",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "62c8f462-1809-11e9-8552-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -255,18 +265,22 @@
                     "nodeid": "62c8f467-1809-11e9-a37b-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "search_items_per_page",
                     "config": {},
                     "datatype": "number",
-                    "description": "Represents a single node in a graph",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "62c8f462-1809-11e9-8552-000d3ab1e588",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -275,29 +289,27 @@
                     "nodeid": "62c8f468-1809-11e9-80fc-000d3ab1e588",
                     "ontologyclass": null,
                     "parentproperty": null,
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": null,
-            "publication": {
-                "graph_id": "62c8f462-1809-11e9-8552-000d3ab1e588",
-                "notes": null,
-                "publicationid": "99be0fba-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:37.539",
-                "user_id": 1
-            },
+            "publication": null,
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
                 "alias": "basic_search_settings",
                 "config": {},
                 "datatype": "semantic",
-                "description": "",
+                "description": {
+                    "en": ""
+                },
                 "exportable": false,
                 "fieldname": "",
                 "graph_id": "62c8f462-1809-11e9-8552-000d3ab1e588",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
@@ -305,13 +317,17 @@
                 "nodegroup_id": "62c8f463-1809-11e9-8262-000d3ab1e588",
                 "nodeid": "62c8f463-1809-11e9-8262-000d3ab1e588",
                 "ontologyclass": null,
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "basic_search_settings",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
+            "user_permissions": {},
             "version": ""
         }
     ]

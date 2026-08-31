@@ -336,6 +336,7 @@ INSTALLED_APPS = (
     "arches_vue_components",
     "arches_modular_reports",
     "arches_search",
+    "arches_json_importer",
     "arches",
     "arches.app.models",
     "arches.management",
@@ -367,7 +368,7 @@ INSTALLED_APPS += (
 if DEBUG:
     INSTALLED_APPS = (*INSTALLED_APPS, "debug_toolbar",)
 
-ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search",)
+ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search", "arches_json_importer",)
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
@@ -386,6 +387,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
+    "coral.middleware.GateCookieMiddleware",
     "django_otp.middleware.OTPMiddleware",
     # "coral.middleware.TwoFactorAuthMiddleware",  # DISABLED - 2FA now integrated into LoginView
     # "silk.middleware.SilkyMiddleware",
@@ -555,6 +557,8 @@ RATE_LIMIT = "5/m"
 
 # Sets default max upload size to 15MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
+
+GATEWAY_GATE_SECRET = os.environ.get("GATEWAY_GATE_SECRET", "")
 
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'

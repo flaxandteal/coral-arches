@@ -1,10 +1,10 @@
 from arches.app.models.tile import Tile
-from arches.app.models.models import EditLog 
+from coral.utils.hb_number import (
+    HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+    HB_NUMBER_NODE_ID,
+    used_hb_numbers,
+)
 import re
-
-
-HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "e71df5cc-3aad-11ef-a2d0-0242ac120003"
-HB_NUMBER_NODE_ID = "250002fe-3aae-11ef-91fd-0242ac120003"
 
 # get the latest id number - get list find the most recent suffix using the id number
 # generate the next suffix
@@ -30,41 +30,27 @@ class HbNumberSuffix:
     
     def increment_letter(self, suffix, attempts):
         if not suffix:
-            # attempts starts at 1, so the first try is 'A'
-            return chr(ord('A') + attempts - 1)
+            return 'A'
         if 'Z' in suffix:
             return 'A' * (len(suffix[0]) + 1)   
         return chr(ord(suffix[0]) + attempts) * len(suffix)
 
     def get_latest_suffix(self, resource_instance_id=None):
-        latest_id_number_tile = None
-        try:
-            id_number_generated = {
-                f"newvalue__{HB_NUMBER_NODE_ID}__icontains": f"{self.hb_number}",
-            }
-            query_result = EditLog.objects.filter(
-                nodegroupid=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-                edittype='tile create',
-                **id_number_generated
-            ).order_by("-timestamp")            
+        base_number = self.hb_number.strip()
+        pattern = re.compile(rf"{re.escape(base_number)}\s?([A-Z]+)$")
+        suffixes = []
+        for number in used_hb_numbers(base_number, resource_instance_id):
+            match = pattern.match(number)
+            if match:
+                suffixes.append(match.group(1))
 
-            if resource_instance_id:
-                query_result = query_result.exclude(resourceinstanceid=resource_instance_id)
-            latest_id_number_tile = query_result.first()
-        except Exception as e:
-            print(f"Failed querying for previous ID number tile: {e}")
-            raise e
-
-        if not latest_id_number_tile:
+        if not suffixes:
             return
 
-        latest_id_number = (
-            latest_id_number_tile.newvalue.get(HB_NUMBER_NODE_ID).get("en").get("value")
-        )
-
-        print(f"Previous ID number: {latest_id_number}")
-        base_number, suffix = self.parse_suffix(latest_id_number)
-        return {"suffix": suffix}
+        # "AA" follows "Z", so length sorts ahead of the letters themselves.
+        latest_suffix = max(suffixes, key=lambda suffix: (len(suffix), suffix))
+        print(f"Previous ID number: {base_number} {latest_suffix}")
+        return {"suffix": latest_suffix}
 
     def append_id_suffix(self, resource_instance_id=None, attempts=1):
         if attempts >= 20:
@@ -107,10 +93,9 @@ class HbNumberSuffix:
             return retry()
 
         # Offset attempts so it starts at 1 and will try to generate
-        # new increments for the total amount of allowed attempts. No previous
-        # suffix means this is the first one appended to that HB number.
+        # new increments for the total amount of allow attempts
         next_suffix = self.increment_letter(
-            latest_suffix['suffix'] if latest_suffix else '', attempts
+            latest_suffix["suffix"] if latest_suffix else "", attempts
         )
 
         if len(next_suffix) > 1:
@@ -139,6 +124,7 @@ class HbNumberSuffix:
         base_number, suffix = self.parse_suffix(id_number_value)
         if f"{base_number}{suffix}" not in id_number_value and f"{base_number} {suffix}" not in id_number_value:
             raise ValueError('The generated HB Number does not align with the selected HB Number.')
+        id_number_tile = None
         try:
             id_number_tile = Tile.objects.filter(
                 nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,

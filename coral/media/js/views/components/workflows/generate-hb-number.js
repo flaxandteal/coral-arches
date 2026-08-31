@@ -21,7 +21,8 @@ function viewModel(params) {
   this.wardDistrictUri = (value) => ko.unwrap(ko.unwrap(value)?.[0]?.uri) || '';
 
   this.wardDistrictPrefLabel = (value) => {
-    const labels = koMapping.toJS(ko.unwrap(ko.unwrap(value)?.[0]?.labels)) || [];
+    const rawLabels = ko.unwrap(ko.unwrap(value)?.[0]?.labels);
+    const labels = rawLabels ? koMapping.toJS(rawLabels) : [];
     const preferred = labels.find(
       (label) =>
         label.language_id === arches.activeLanguage && label.valuetype_id === 'prefLabel'
@@ -113,18 +114,20 @@ function viewModel(params) {
       selectedWardDistrictLabel: this.wardDistrictTypeValue(),
       method: 'new'
     };
-    const response = await $.ajax({
-      type: 'POST',
-      url: '/generate-hb-number',
-      dataType: 'json',
-      data: JSON.stringify(data),
-      context: this,
-      error: (response, status, error) => {
-        console.log(response, status, error);
-      }
-    });
-    this.setValue(response.hbNumber);
-    params.pageVm.loading(false);
+    try {
+      const response = await $.ajax({
+        type: 'POST',
+        url: '/generate-hb-number',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        context: this
+      });
+      this.setValue(response.hbNumber);
+    } catch (error) {
+      console.error('Error generating HB number: ', error);
+    } finally {
+      params.pageVm.loading(false);
+    }
   };
 
   this.appendHbNumber = async () => {
@@ -135,18 +138,20 @@ function viewModel(params) {
       selectedHBNumber: this.selectedHB(),
       method: 'append'
     };
-    const response = await $.ajax({
-      type: 'POST',
-      url: '/generate-hb-number',
-      dataType: 'json',
-      data: JSON.stringify(data),
-      context: this,
-      error: (response, status, error) => {
-        console.log(response, status, error);
-      }
-    });
-    this.setValue(response.hbNumber);
-    params.pageVm.loading(false);
+    try {
+      const response = await $.ajax({
+        type: 'POST',
+        url: '/generate-hb-number',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        context: this
+      });
+      this.setValue(response.hbNumber);
+    } catch (error) {
+      console.error('Error generating HB number: ', error);
+    } finally {
+      params.pageVm.loading(false);
+    }
   };
 
   this.setValue(this.getValue());

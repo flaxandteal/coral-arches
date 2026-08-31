@@ -1,7 +1,7 @@
 {
     "graph": [
         {
-            "author": "",
+            "author": "Philip Carlisle - Historic England",
             "cards": [
                 {
                     "active": true,
@@ -11,22 +11,21 @@
                         "displayAsTable": true
                     },
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": ""
                     },
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
                         "en": "Use to record details of applicants, owners and casework officers"
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Contacts"
                     },
@@ -39,12 +38,25 @@
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "17bfcc28-6fee-4a7c-a0f5-7bebe2d4cd06",
+                                        "language_id": "en",
+                                        "list_item_id": "90ca1444-2ce4-4f38-b9b4-98e70c64444a",
+                                        "value": "Owner",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/90ca1444-2ce4-4f38-b9b4-98e70c64444a"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Owner Role Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -56,7 +68,7 @@
                     "node_id": "5a50fb1f-9930-11ea-8138-f875a44e0e11",
                     "sortorder": 10,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
@@ -103,12 +115,25 @@
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "b2489138-dcc5-4151-999e-977809179bb3",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "b2489138-dcc5-4151-999e-977809179bb3",
+                                        "language_id": "en",
+                                        "list_item_id": "b18927cc-bbe5-4b8e-8e68-8b8de83ec740",
+                                        "value": "Applicant",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/b18927cc-bbe5-4b8e-8e68-8b8de83ec740"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Applicant Role Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -120,17 +145,30 @@
                     "node_id": "5a50fb26-9930-11ea-9d22-f875a44e0e11",
                     "sortorder": 13,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                                        "language_id": "en",
+                                        "list_item_id": "06b7d7f1-c7a4-4dd5-aca5-893f4b968970",
+                                        "value": "Role Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/06b7d7f1-c7a4-4dd5-aca5-893f4b968970"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Agent Role Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -142,17 +180,30 @@
                     "node_id": "5a50fb28-9930-11ea-85b4-f875a44e0e11",
                     "sortorder": 8,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "a69c21b4-34e2-4781-b6c8-5c539e6fe14a",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "a69c21b4-34e2-4781-b6c8-5c539e6fe14a",
+                                        "language_id": "en",
+                                        "list_item_id": "7c3f7e50-3fcb-4822-8dbb-55dbd826504f",
+                                        "value": "Agent",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/7c3f7e50-3fcb-4822-8dbb-55dbd826504f"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Agent Role Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -164,7 +215,7 @@
                     "node_id": "5a50fb22-9930-11ea-ad40-f875a44e0e11",
                     "sortorder": 7,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
@@ -190,12 +241,25 @@
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                                        "language_id": "en",
+                                        "list_item_id": "06b7d7f1-c7a4-4dd5-aca5-893f4b968970",
+                                        "value": "Role Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/06b7d7f1-c7a4-4dd5-aca5-893f4b968970"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Owner Role Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -207,7 +271,7 @@
                     "node_id": "5a50fb1e-9930-11ea-804b-f875a44e0e11",
                     "sortorder": 11,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
@@ -254,12 +318,25 @@
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                                        "language_id": "en",
+                                        "list_item_id": "06b7d7f1-c7a4-4dd5-aca5-893f4b968970",
+                                        "value": "Role Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/06b7d7f1-c7a4-4dd5-aca5-893f4b968970"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Applicant Role Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -271,17 +348,30 @@
                     "node_id": "5a50fb24-9930-11ea-9de2-f875a44e0e11",
                     "sortorder": 14,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "50a525cf-acd5-49cc-9123-4247f6418145",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "50a525cf-acd5-49cc-9123-4247f6418145",
+                                        "language_id": "en",
+                                        "list_item_id": "0d1d58e2-4b1d-4bc8-a264-9186f6b40709",
+                                        "value": "Casework Officer",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/0d1d58e2-4b1d-4bc8-a264-9186f6b40709"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Casework Officer Role Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -293,17 +383,30 @@
                     "node_id": "5a50fb2d-9930-11ea-a6e8-f875a44e0e11",
                     "sortorder": 4,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "31a0f492-2c6d-4c1b-8bfa-74da97fa14fc",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "31a0f492-2c6d-4c1b-8bfa-74da97fa14fc",
+                                        "language_id": "en",
+                                        "list_item_id": "cc0584c4-92ef-4baa-a7b8-78428ebf77f8",
+                                        "value": "Planning Officer",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/cc0584c4-92ef-4baa-a7b8-78428ebf77f8"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Planning Officer Role Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -315,17 +418,30 @@
                     "node_id": "5a50fb2a-9930-11ea-ba89-f875a44e0e11",
                     "sortorder": 1,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                                        "language_id": "en",
+                                        "list_item_id": "06b7d7f1-c7a4-4dd5-aca5-893f4b968970",
+                                        "value": "Role Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/06b7d7f1-c7a4-4dd5-aca5-893f4b968970"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Planning Officer Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -337,17 +453,30 @@
                     "node_id": "5a50fb1d-9930-11ea-80de-f875a44e0e11",
                     "sortorder": 2,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
-                        "defaultValue": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                        "defaultValue": [
+                            {
+                                "labels": [
+                                    {
+                                        "id": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
+                                        "language_id": "en",
+                                        "list_item_id": "06b7d7f1-c7a4-4dd5-aca5-893f4b968970",
+                                        "value": "Role Type",
+                                        "valuetype_id": "prefLabel"
+                                    }
+                                ],
+                                "list_id": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                                "uri": "http://localhost:8000/plugins/controlled-list-manager/item/06b7d7f1-c7a4-4dd5-aca5-893f4b968970"
+                            }
+                        ],
                         "i18n_properties": [
                             "placeholder"
                         ],
                         "label": "Casework Officer Role Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -359,14 +488,19 @@
                     "node_id": "5a50fb2c-9930-11ea-88c5-f875a44e0e11",
                     "sortorder": 5,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Planning Officer",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "5a50fb3f-9930-11ea-b1f8-f875a44e0e11",
                     "label": {
@@ -381,8 +515,13 @@
                     "card_id": "5a50fb1b-9930-11ea-a78d-f875a44e0e11",
                     "config": {
                         "defaultResourceInstance": [],
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
                         "label": "Casework Officer",
-                        "placeholder": ""
+                        "placeholder": {
+                            "en": ""
+                        }
                     },
                     "id": "5a50fb40-9930-11ea-88d6-f875a44e0e11",
                     "label": {
@@ -633,8 +772,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-group",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -643,6 +786,7 @@
             "nodegroups": [
                 {
                     "cardinality": "1",
+                    "grouping_node_id": "5a50d3fb-9930-11ea-82d8-f875a44e0e11",
                     "legacygroupid": null,
                     "nodegroupid": "5a50d3fb-9930-11ea-82d8-f875a44e0e11",
                     "parentnodegroup_id": null
@@ -659,6 +803,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
@@ -667,7 +812,8 @@
                     "nodeid": "5a50d3fb-9930-11ea-82d8-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "owners",
@@ -679,6 +825,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -687,20 +834,23 @@
                     "nodeid": "5a50fb1c-9930-11ea-8dad-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "planning_officer_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -709,20 +859,23 @@
                     "nodeid": "5a50fb1d-9930-11ea-80de-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "owner_role_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -731,20 +884,23 @@
                     "nodeid": "5a50fb1e-9930-11ea-804b-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "owner_role_type",
                     "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
+                        "controlledList": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -753,7 +909,8 @@
                     "nodeid": "5a50fb1f-9930-11ea-8138-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "agents",
@@ -765,6 +922,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -773,7 +931,8 @@
                     "nodeid": "5a50fb20-9930-11ea-887b-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "casework_officers",
@@ -785,6 +944,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -793,20 +953,23 @@
                     "nodeid": "5a50fb21-9930-11ea-93cb-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "agent_role_type",
                     "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
+                        "controlledList": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -815,7 +978,8 @@
                     "nodeid": "5a50fb22-9930-11ea-ad40-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "applicant",
@@ -844,6 +1008,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -852,20 +1017,23 @@
                     "nodeid": "5a50fb23-9930-11ea-9cf5-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "applicant_role_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -874,7 +1042,8 @@
                     "nodeid": "5a50fb24-9930-11ea-9de2-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "agent",
@@ -900,6 +1069,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -908,20 +1078,23 @@
                     "nodeid": "5a50fb25-9930-11ea-a0aa-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "applicant_role_type",
                     "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
+                        "controlledList": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -930,7 +1103,8 @@
                     "nodeid": "5a50fb26-9930-11ea-9d22-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "owner",
@@ -959,6 +1133,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -967,20 +1142,23 @@
                     "nodeid": "5a50fb27-9930-11ea-a30a-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E39_Actor",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "agent_role_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -989,7 +1167,8 @@
                     "nodeid": "5a50fb28-9930-11ea-85b4-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "planning_officer",
@@ -1013,6 +1192,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1021,20 +1201,25 @@
                     "nodeid": "5a50fb29-9930-11ea-b97f-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "planning_officer_role_type",
                     "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
+                        "controlledList": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
-                    "description": "",
+                    "datatype": "reference",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1043,7 +1228,8 @@
                     "nodeid": "5a50fb2a-9930-11ea-ba89-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "applicants",
@@ -1055,6 +1241,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1063,20 +1250,23 @@
                     "nodeid": "5a50fb2b-9930-11ea-89ac-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "casework_officer_role_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1085,20 +1275,25 @@
                     "nodeid": "5a50fb2c-9930-11ea-88c5-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "casework_officer_role_type",
                     "config": {
-                        "rdmCollection": "0cdf5418-d21b-4d01-9760-8edad86ac4f0"
+                        "controlledList": "0cdf5418-d21b-4d01-9760-8edad86ac4f0",
+                        "multiValue": false
                     },
-                    "datatype": "concept",
-                    "description": "",
+                    "datatype": "reference",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1107,7 +1302,8 @@
                     "nodeid": "5a50fb2d-9930-11ea-a6e8-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "casework_officer",
@@ -1131,6 +1327,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1139,7 +1336,8 @@
                     "nodeid": "5a50fb2e-9930-11ea-8a8e-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E21_Person",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "planning_officers",
@@ -1151,6 +1349,7 @@
                     "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1159,16 +1358,17 @@
                     "nodeid": "5a50fb2f-9930-11ea-b4a9-f875a44e0e11",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P107_has_current_or_former_member",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
             "publication": {
                 "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
-                "notes": null,
-                "publicationid": "a2b4643e-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:52.575",
-                "user_id": 1
+                "most_recent_edit_id": null,
+                "notes": "Migrated concept/concept-list nodes to reference datatype",
+                "publicationid": "540c899e-9df2-42d5-b843-038b11d6eba1",
+                "published_time": "2025-10-22T19:36:57.332+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -1182,6 +1382,7 @@
                 "graph_id": "5a50d3fa-9930-11ea-b7b2-f875a44e0e11",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
@@ -1189,13 +1390,17 @@
                 "nodegroup_id": "5a50d3fb-9930-11ea-82d8-f875a44e0e11",
                 "nodeid": "5a50d3fb-9930-11ea-82d8-f875a44e0e11",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "contacts",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000004",
+            "user_permissions": {},
             "version": ""
         }
     ]

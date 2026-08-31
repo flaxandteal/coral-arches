@@ -1,30 +1,28 @@
 {
     "graph": [
         {
-            "author": "",
+            "author": "Philip Carlisle - Historic England",
             "cards": [
                 {
                     "active": true,
                     "cardid": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": ""
                     },
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "helpenabled": false,
                     "helptext": {
-                        "en": null
+                        "en": ""
                     },
                     "helptitle": {
-                        "en": null
+                        "en": ""
                     },
                     "instructions": {
-                        "en": null
+                        "en": ""
                     },
-                    "is_editable": true,
+                    "is_editable": null,
                     "name": {
                         "en": "Construction Phases"
                     },
@@ -42,40 +40,6 @@
                             "placeholder"
                         ],
                         "label": "Confidence of Dating",
-                        "options": [
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "ef70b9c8-2317-46de-b8b3-73497d9d2fed",
-                                "id": "ab5445d1-514c-4ab5-9f92-c7d0c68c46f1",
-                                "sortorder": "",
-                                "text": "Certain"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "9333e08e-6407-434d-95b3-798c9cf5537c",
-                                "id": "a833c81c-c545-44c7-9a8d-f30caa20d0f7",
-                                "sortorder": "",
-                                "text": "Possible"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "179a8de4-4ad6-468c-97c4-4a62780cc98d",
-                                "id": "5098a178-ec32-4041-8999-a10d73cd826e",
-                                "sortorder": "",
-                                "text": "Probable"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "faea4c23-e89f-477a-b97c-50bc08f489c1",
-                                "id": "2d32062f-80b4-4293-94aa-46653ba5c632",
-                                "sortorder": "",
-                                "text": "Uncertain"
-                            }
-                        ],
                         "placeholder": {
                             "en": "Select an option"
                         },
@@ -86,9 +50,9 @@
                         "en": "Confidence of Dating"
                     },
                     "node_id": "3e46e65c-efd9-11eb-9f34-a87eeabdefba",
-                    "sortorder": 8,
+                    "sortorder": 10,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000009"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -98,7 +62,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Method",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -108,9 +71,9 @@
                         "en": "Construction Method"
                     },
                     "node_id": "3e46e660-efd9-11eb-bdf5-a87eeabdefba",
-                    "sortorder": 21,
+                    "sortorder": 23,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -120,7 +83,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Phase Evidence Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -130,9 +92,9 @@
                         "en": "Construction Phase Evidence Type"
                     },
                     "node_id": "3e46d029-efd9-11eb-a4df-a87eeabdefba",
-                    "sortorder": 13,
+                    "sortorder": 15,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -142,7 +104,6 @@
                             "placeholder"
                         ],
                         "label": "Covering Material",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -152,9 +113,9 @@
                         "en": "Covering Material"
                     },
                     "node_id": "3e46d02b-efd9-11eb-ab05-a87eeabdefba",
-                    "sortorder": 19,
+                    "sortorder": 21,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -164,7 +125,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Phase Date Qualifier Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -174,9 +134,9 @@
                         "en": "Construction Phase Date Qualifier Metatype"
                     },
                     "node_id": "3e46d024-efd9-11eb-b39b-a87eeabdefba",
-                    "sortorder": 6,
+                    "sortorder": 8,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -186,7 +146,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Phase Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -196,9 +155,9 @@
                         "en": "Construction Phase Metatype"
                     },
                     "node_id": "3e46e65d-efd9-11eb-8001-a87eeabdefba",
-                    "sortorder": 26,
+                    "sortorder": 3,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -207,20 +166,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Heritage Asset Type",
-                        "options": [],
+                        "label": "Monument Type",
                         "placeholder": {
                             "en": "Select an option"
                         }
                     },
                     "id": "3e46e672-efd9-11eb-8d46-a87eeabdefba",
                     "label": {
-                        "en": "Heritage Asset Type"
+                        "en": "Monument Type"
                     },
                     "node_id": "3e46e667-efd9-11eb-93ac-a87eeabdefba",
                     "sortorder": 0,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -239,7 +197,7 @@
                         "en": "Cultural Period"
                     },
                     "node_id": "3e46e661-efd9-11eb-814a-a87eeabdefba",
-                    "sortorder": 2,
+                    "sortorder": 4,
                     "visible": true,
                     "widget_id": "31f3728c-7613-11e7-a139-784f435179ea"
                 },
@@ -251,7 +209,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Technique",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -261,9 +218,9 @@
                         "en": "Construction Technique"
                     },
                     "node_id": "3e46d02a-efd9-11eb-a80e-a87eeabdefba",
-                    "sortorder": 23,
+                    "sortorder": 25,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -273,52 +230,19 @@
                             "placeholder"
                         ],
                         "label": "Confidence of Interpretation",
-                        "options": [
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "ef70b9c8-2317-46de-b8b3-73497d9d2fed",
-                                "id": "ab5445d1-514c-4ab5-9f92-c7d0c68c46f1",
-                                "sortorder": "",
-                                "text": "Certain"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "9333e08e-6407-434d-95b3-798c9cf5537c",
-                                "id": "a833c81c-c545-44c7-9a8d-f30caa20d0f7",
-                                "sortorder": "",
-                                "text": "Possible"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "179a8de4-4ad6-468c-97c4-4a62780cc98d",
-                                "id": "5098a178-ec32-4041-8999-a10d73cd826e",
-                                "sortorder": "",
-                                "text": "Probable"
-                            },
-                            {
-                                "children": [],
-                                "collector": "",
-                                "conceptid": "faea4c23-e89f-477a-b97c-50bc08f489c1",
-                                "id": "2d32062f-80b4-4293-94aa-46653ba5c632",
-                                "sortorder": "",
-                                "text": "Uncertain"
-                            }
-                        ],
                         "placeholder": {
                             "en": "Select an option"
-                        }
+                        },
+                        "url": "/concepts/dropdown?conceptid=2b0f86cc-6d4a-483b-973e-9000c9d8b34d"
                     },
                     "id": "3e46e675-efd9-11eb-98ed-a87eeabdefba",
                     "label": {
                         "en": "Confidence of Interpretation"
                     },
                     "node_id": "3e46e666-efd9-11eb-b5fc-a87eeabdefba",
-                    "sortorder": 15,
+                    "sortorder": 17,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000009"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -328,7 +252,6 @@
                             "placeholder"
                         ],
                         "label": "Confidence of Dating Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -338,9 +261,9 @@
                         "en": "Confidence of Dating Metatype"
                     },
                     "node_id": "3e46d023-efd9-11eb-bf24-a87eeabdefba",
-                    "sortorder": 9,
+                    "sortorder": 11,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -350,7 +273,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Technique Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -360,9 +282,9 @@
                         "en": "Construction Technique Metatype"
                     },
                     "node_id": "3e46e66b-efd9-11eb-88ac-a87eeabdefba",
-                    "sortorder": 24,
+                    "sortorder": 26,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -381,7 +303,7 @@
                         "en": "Construction Phase Start Date"
                     },
                     "node_id": "3e46d026-efd9-11eb-aca9-a87eeabdefba",
-                    "sortorder": 3,
+                    "sortorder": 5,
                     "visible": true,
                     "widget_id": "adfd15ce-dbab-11e7-86d1-0fcf08612b27"
                 },
@@ -393,7 +315,6 @@
                             "placeholder"
                         ],
                         "label": "Confidence of Interpretation Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -403,9 +324,9 @@
                         "en": "Confidence of Interpretation Metatype"
                     },
                     "node_id": "3e46e668-efd9-11eb-95bd-a87eeabdefba",
-                    "sortorder": 16,
+                    "sortorder": 18,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -415,7 +336,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Phase Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -425,9 +345,9 @@
                         "en": "Construction Phase Type"
                     },
                     "node_id": "3e46d025-efd9-11eb-8e03-a87eeabdefba",
-                    "sortorder": 25,
+                    "sortorder": 2,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -446,6 +366,7 @@
                         "placeholder": {
                             "en": "Enter text"
                         },
+                        "uneditable": false,
                         "width": "100%"
                     },
                     "id": "3e46fa62-efd9-11eb-b3d9-a87eeabdefba",
@@ -453,7 +374,7 @@
                         "en": "Phase Description"
                     },
                     "node_id": "3e46e45d-efd9-11eb-94b2-a87eeabdefba",
-                    "sortorder": 10,
+                    "sortorder": 12,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000005"
                 },
@@ -474,19 +395,14 @@
                         "en": "Construction Phase End Date"
                     },
                     "node_id": "3e46e663-efd9-11eb-bc0e-a87eeabdefba",
-                    "sortorder": 4,
+                    "sortorder": 6,
                     "visible": true,
                     "widget_id": "adfd15ce-dbab-11e7-86d1-0fcf08612b27"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
                     "config": {
-                        "defaultValue": {
-                            "en": {
-                                "direction": "ltr",
-                                "value": ""
-                            }
-                        },
+                        "defaultValue": "",
                         "i18n_properties": [
                             "placeholder"
                         ],
@@ -503,7 +419,7 @@
                         "en": "Construction Phase Display Date"
                     },
                     "node_id": "3e46d022-efd9-11eb-93cb-a87eeabdefba",
-                    "sortorder": 7,
+                    "sortorder": 9,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
                 },
@@ -515,7 +431,6 @@
                             "placeholder"
                         ],
                         "label": "Main Construction Material Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -525,9 +440,9 @@
                         "en": "Main Construction Material Metatype"
                     },
                     "node_id": "3e46e65e-efd9-11eb-87f0-a87eeabdefba",
-                    "sortorder": 18,
+                    "sortorder": 20,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -537,7 +452,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Phase Evidence Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -547,9 +461,9 @@
                         "en": "Construction Phase Evidence Metatype"
                     },
                     "node_id": "3e46e65b-efd9-11eb-81a3-a87eeabdefba",
-                    "sortorder": 14,
+                    "sortorder": 16,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -558,20 +472,19 @@
                         "i18n_properties": [
                             "placeholder"
                         ],
-                        "label": "Heritage Asset Metatype",
-                        "options": [],
+                        "label": "Monument Metatype",
                         "placeholder": {
                             "en": "Select an option"
                         }
                     },
                     "id": "3e46fba8-efd9-11eb-9a7b-a87eeabdefba",
                     "label": {
-                        "en": "Heritage Asset Metatype"
+                        "en": "Monument Metatype"
                     },
                     "node_id": "3e46e66a-efd9-11eb-bb91-a87eeabdefba",
                     "sortorder": 1,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -581,7 +494,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Method Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -591,9 +503,9 @@
                         "en": "Construction Method Metatype"
                     },
                     "node_id": "3e46e664-efd9-11eb-ab80-a87eeabdefba",
-                    "sortorder": 22,
+                    "sortorder": 24,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -603,7 +515,6 @@
                             "placeholder"
                         ],
                         "label": "Construction Phase Date Qualifier",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -613,9 +524,9 @@
                         "en": "Construction Phase Date Qualifier"
                     },
                     "node_id": "3e46e45c-efd9-11eb-836a-a87eeabdefba",
-                    "sortorder": 5,
+                    "sortorder": 7,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -625,7 +536,6 @@
                             "placeholder"
                         ],
                         "label": "Phase Desctiption Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -635,9 +545,9 @@
                         "en": "Phase Desctiption Metatype"
                     },
                     "node_id": "3e46e669-efd9-11eb-adf2-a87eeabdefba",
-                    "sortorder": 12,
+                    "sortorder": 14,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -647,7 +557,6 @@
                             "placeholder"
                         ],
                         "label": "Phase Description Type",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -657,9 +566,9 @@
                         "en": "Phase Description Type"
                     },
                     "node_id": "3e46e662-efd9-11eb-9fe0-a87eeabdefba",
-                    "sortorder": 11,
+                    "sortorder": 13,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -669,7 +578,6 @@
                             "placeholder"
                         ],
                         "label": "Main Construction Material",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -679,9 +587,9 @@
                         "en": "Main Construction Material"
                     },
                     "node_id": "3e46e65f-efd9-11eb-a40a-a87eeabdefba",
-                    "sortorder": 17,
+                    "sortorder": 19,
                     "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 },
                 {
                     "card_id": "3e46d021-efd9-11eb-81e0-a87eeabdefba",
@@ -691,7 +599,6 @@
                             "placeholder"
                         ],
                         "label": "Covering Material Metatype",
-                        "options": [],
                         "placeholder": {
                             "en": "Select an option"
                         }
@@ -701,9 +608,9 @@
                         "en": "Covering Material Metatype"
                     },
                     "node_id": "3e46e65a-efd9-11eb-8ecc-a87eeabdefba",
-                    "sortorder": 20,
+                    "sortorder": 22,
                     "visible": false,
-                    "widget_id": "10000000-0000-0000-0000-000000000002"
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
                 }
             ],
             "color": "rgba(119,169,66,1)",
@@ -1020,8 +927,12 @@
             ],
             "functions_x_graphs": [],
             "graphid": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
+            "group_permissions": {},
+            "has_unpublished_changes": false,
             "iconclass": "fa fa-map-marker",
-            "is_editable": true,
+            "is_active": false,
+            "is_copy_immutable": false,
+            "is_editable": null,
             "isresource": false,
             "jsonldcontext": null,
             "name": {
@@ -1030,6 +941,7 @@
             "nodegroups": [
                 {
                     "cardinality": "n",
+                    "grouping_node_id": "3e46d01f-efd9-11eb-9f8c-a87eeabdefba",
                     "legacygroupid": null,
                     "nodegroupid": "3e46d01f-efd9-11eb-9f8c-a87eeabdefba",
                     "parentnodegroup_id": null
@@ -1042,12 +954,15 @@
                         "fillColor": "rgba(233,112,111,0.8)"
                     },
                     "datatype": "semantic",
-                    "description": "",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": "",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": true,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": true,
@@ -1056,7 +971,8 @@
                     "nodeid": "3e46d01f-efd9-11eb-9f8c-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E11_Modification",
                     "parentproperty": "",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_display_date",
@@ -1068,6 +984,7 @@
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1076,20 +993,22 @@
                     "nodeid": "3e46d022-efd9-11eb-93cb-a87eeabdefba",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "confidence_of_dating_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1098,20 +1017,22 @@
                     "nodeid": "3e46d023-efd9-11eb-bf24-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_date_qualifier_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1120,20 +1041,22 @@
                     "nodeid": "3e46d024-efd9-11eb-b39b-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_type",
                     "config": {
-                        "rdmCollection": "6ae2f1fd-a58e-4525-ba05-784af121d9b7"
+                        "controlledList": "6ae2f1fd-a58e-4525-ba05-784af121d9b7"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Phase_type",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1142,7 +1065,8 @@
                     "nodeid": "3e46d025-efd9-11eb-8e03-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_start_date",
@@ -1162,6 +1086,7 @@
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1170,7 +1095,8 @@
                     "nodeid": "3e46d026-efd9-11eb-aca9-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "phase_classification_description",
@@ -1182,6 +1108,7 @@
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1190,18 +1117,22 @@
                     "nodeid": "3e46d027-efd9-11eb-a32c-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "phase_classification",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1210,20 +1141,23 @@
                     "nodeid": "3e46d028-efd9-11eb-901e-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E17_Type_Assignment",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P41i_was_classified_by",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_evidence_type",
                     "config": {
-                        "rdmCollection": "02da8114-6a70-4fde-a022-2ee07acf17a3"
+                        "controlledList": "02da8114-6a70-4fde-a022-2ee07acf17a3",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Evid_type",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1232,20 +1166,24 @@
                     "nodeid": "3e46d029-efd9-11eb-a4df-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P32_used_general_technique",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_technique",
                     "config": {
-                        "rdmCollection": "40f560d6-2849-4d43-a2bd-7e0ae1dc5907"
+                        "controlledList": "40f560d6-2849-4d43-a2bd-7e0ae1dc5907"
                     },
-                    "datatype": "concept",
-                    "description": "Represents a single node in a graph",
+                    "datatype": "reference",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": true,
                     "fieldname": "Cons_tech",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1254,20 +1192,23 @@
                     "nodeid": "3e46d02a-efd9-11eb-a80e-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E29_Design_or_Procedure",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P33_used_specific_technique",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "covering_material",
                     "config": {
-                        "rdmCollection": "e5babb70-bcfa-48aa-81df-79b11ce9b1ae"
+                        "controlledList": "e5babb70-bcfa-48aa-81df-79b11ce9b1ae",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Cover_mat",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1276,20 +1217,22 @@
                     "nodeid": "3e46d02b-efd9-11eb-ab05-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E57_Material",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P126_employed",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_date_qualifier",
                     "config": {
-                        "rdmCollection": "366686d6-deb0-4245-81a3-f94d791a388c"
+                        "controlledList": "366686d6-deb0-4245-81a3-f94d791a388c"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Date_qual",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1298,7 +1241,8 @@
                     "nodeid": "3e46e45c-efd9-11eb-836a-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "phase_description",
@@ -1310,6 +1254,7 @@
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1318,20 +1263,22 @@
                     "nodeid": "3e46e45d-efd9-11eb-94b2-a87eeabdefba",
                     "ontologyclass": "http://www.w3.org/2000/01/rdf-schema#Literal",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P3_has_note",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "covering_material_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1340,20 +1287,22 @@
                     "nodeid": "3e46e65a-efd9-11eb-8ecc-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_evidence_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1362,20 +1311,24 @@
                     "nodeid": "3e46e65b-efd9-11eb-81a3-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "confidence_of_dating",
                     "config": {
-                        "rdmCollection": "2b0f86cc-6d4a-483b-973e-9000c9d8b34d"
+                        "controlledList": "2b0f86cc-6d4a-483b-973e-9000c9d8b34d"
                     },
-                    "datatype": "concept",
-                    "description": "Allows a concept collection to be typed. Useful for data sharing.",
+                    "datatype": "reference",
+                    "description": {
+                        "en": "Allows a concept collection to be typed. Useful for data sharing."
+                    },
                     "exportable": true,
                     "fieldname": "Confidence",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1384,20 +1337,22 @@
                     "nodeid": "3e46e65c-efd9-11eb-9f34-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1406,20 +1361,22 @@
                     "nodeid": "3e46e65d-efd9-11eb-8001-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "main_construction_material_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1428,20 +1385,23 @@
                     "nodeid": "3e46e65e-efd9-11eb-87f0-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "main_construction_material",
                     "config": {
-                        "rdmCollection": "e5babb70-bcfa-48aa-81df-79b11ce9b1ae"
+                        "controlledList": "e5babb70-bcfa-48aa-81df-79b11ce9b1ae",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Build_mat",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1450,20 +1410,24 @@
                     "nodeid": "3e46e65f-efd9-11eb-a40a-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E57_Material",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P126_employed",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_method",
                     "config": {
-                        "rdmCollection": "904c8854-f31e-4282-9935-97542265cf42"
+                        "controlledList": "904c8854-f31e-4282-9935-97542265cf42"
                     },
-                    "datatype": "concept",
-                    "description": "Represents a single node in a graph",
+                    "datatype": "reference",
+                    "description": {
+                        "en": "Represents a single node in a graph"
+                    },
                     "exportable": true,
                     "fieldname": "Con_method",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1472,7 +1436,8 @@
                     "nodeid": "3e46e660-efd9-11eb-bdf5-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E29_Design_or_Procedure",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P33_used_specific_technique",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "cultural_period",
@@ -1493,6 +1458,7 @@
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1501,20 +1467,22 @@
                     "nodeid": "3e46e661-efd9-11eb-814a-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E4_Period",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P10_falls_within",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "phase_description_type",
                     "config": {
-                        "rdmCollection": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d"
+                        "controlledList": "0ff39ed3-cc95-4c60-9321-6d4e65fb1f2d"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": true,
                     "fieldname": "PDesc_type",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1523,7 +1491,8 @@
                     "nodeid": "3e46e662-efd9-11eb-9fe0-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_end_date",
@@ -1543,6 +1512,7 @@
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1551,20 +1521,22 @@
                     "nodeid": "3e46e663-efd9-11eb-bc0e-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_method_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1573,18 +1545,22 @@
                     "nodeid": "3e46e664-efd9-11eb-ab80-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_phase_timespan",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "",
+                    "description": {
+                        "en": ""
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1593,20 +1569,22 @@
                     "nodeid": "3e46e665-efd9-11eb-bf3a-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "phase_certainty",
                     "config": {
-                        "rdmCollection": "2b0f86cc-6d4a-483b-973e-9000c9d8b34d"
+                        "controlledList": "2b0f86cc-6d4a-483b-973e-9000c9d8b34d"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": true,
                     "fieldname": "Certainty",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
@@ -1615,42 +1593,47 @@
                     "nodeid": "3e46e666-efd9-11eb-b5fc-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P141_assigned",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "monument_type",
                     "config": {
-                        "rdmCollection": "9222b257-6015-4808-9dac-7b962a2679a8"
+                        "controlledList": "b82ee4cf-2f90-4dab-bed7-bda3feaf6d64",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": true,
-                    "fieldname": "Monument_Type",
+                    "fieldname": "Monument_T",
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": true,
                     "istopnode": false,
-                    "name": "Heritage Asset Type",
+                    "name": "Monument Type",
                     "nodegroup_id": "3e46d01f-efd9-11eb-9f8c-a87eeabdefba",
                     "nodeid": "3e46e667-efd9-11eb-93ac-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P42_assigned",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "phase_certainty_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1659,20 +1642,22 @@
                     "nodeid": "3e46e668-efd9-11eb-95bd-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "phase_desctiption_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1681,42 +1666,46 @@
                     "nodeid": "3e46e669-efd9-11eb-adf2-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "monument_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
-                    "name": "Heritage Asset Metatype",
+                    "name": "Monument Metatype",
                     "nodegroup_id": "3e46d01f-efd9-11eb-9f8c-a87eeabdefba",
                     "nodeid": "3e46e66a-efd9-11eb-bb91-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 },
                 {
                     "alias": "construction_technique_metatype",
                     "config": {
-                        "rdmCollection": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
+                        "controlledList": "1e63c514-eb9d-48d3-94b5-35e060e5f368"
                     },
-                    "datatype": "concept",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                     "hascustomalias": false,
                     "is_collector": false,
+                    "is_immutable": false,
                     "isrequired": false,
                     "issearchable": false,
                     "istopnode": false,
@@ -1725,17 +1714,12 @@
                     "nodeid": "3e46e66b-efd9-11eb-88ac-a87eeabdefba",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E55_Type",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P2_has_type",
-                    "sortorder": 0
+                    "sortorder": 0,
+                    "sourcebranchpublication_id": null
                 }
             ],
             "ontology_id": "e6e8db47-2ccf-11e6-927e-b8f6b115d7dd",
-            "publication": {
-                "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
-                "notes": null,
-                "publicationid": "9f771b90-06d9-11ed-ad22-acde48001122",
-                "published_time": "2022-07-18T15:38:47.140",
-                "user_id": 1
-            },
+            "publication": null,
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
             "root": {
@@ -1744,12 +1728,15 @@
                     "fillColor": "rgba(233,112,111,0.8)"
                 },
                 "datatype": "semantic",
-                "description": "",
+                "description": {
+                    "en": ""
+                },
                 "exportable": false,
                 "fieldname": "",
                 "graph_id": "3e46d01e-efd9-11eb-be69-a87eeabdefba",
                 "hascustomalias": false,
                 "is_collector": true,
+                "is_immutable": false,
                 "isrequired": false,
                 "issearchable": true,
                 "istopnode": true,
@@ -1757,13 +1744,17 @@
                 "nodegroup_id": "3e46d01f-efd9-11eb-9f8c-a87eeabdefba",
                 "nodeid": "3e46d01f-efd9-11eb-9f8c-a87eeabdefba",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E11_Modification",
-                "sortorder": 0
+                "parentproperty": null,
+                "sortorder": 0,
+                "sourcebranchpublication_id": null
             },
             "slug": "construction_phases",
+            "spatial_views": [],
             "subtitle": {
                 "en": ""
             },
             "template_id": "50000000-0000-0000-0000-000000000002",
+            "user_permissions": {},
             "version": ""
         }
     ]
