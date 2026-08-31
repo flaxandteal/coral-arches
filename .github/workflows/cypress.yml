@@ -12,7 +12,7 @@ env:
   ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a4-v4
   CYPRESS_IMAGE: cypress/included:15.18.1
   COMPOSE_PROJECT: coral-e2e
-  CORAL_GRAPHS_REF: fix/missing-ha-widget-labels
+  CORAL_GRAPHS_REF: v2
 
 jobs:
   Cypress-E2E:
