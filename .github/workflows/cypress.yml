@@ -224,11 +224,20 @@ jobs:
         run: |
           missing=0
           for name in "HA/02 Testing" "SMR-TEST-004 Testing" "HA/07 Garden Test" "Test Bibliographic Source"; do
-            hits="$($COMPOSE exec -T arches curl -s \
-              "http://elasticsearch:9200/${ARCHES_PROJECT}_resources/_search" \
-              -H 'Content-Type: application/json' \
-              -d "{\"size\":1,\"query\":{\"nested\":{\"path\":\"displayname\",\"query\":{\"term\":{\"displayname.value\":\"${name}\"}}}}}" \
-              | tr -d '\r' | grep -o '"value":[0-9]*' | head -1 | cut -d: -f2)"
+            hits=0
+            # A Heritage Asset with a reference number (SMR/IHR/HB/HPG) gets its
+            # display name from a second, function-triggered tile save
+            # (generate_ha_name_function's post_save cascade), which lags behind
+            # the direct-write case just enough to race a single immediate check.
+            for i in $(seq 1 10); do
+              hits="$($COMPOSE exec -T arches curl -s \
+                "http://elasticsearch:9200/${ARCHES_PROJECT}_resources/_search" \
+                -H 'Content-Type: application/json' \
+                -d "{\"size\":1,\"query\":{\"nested\":{\"path\":\"displayname\",\"query\":{\"term\":{\"displayname.value\":\"${name}\"}}}}}" \
+                | tr -d '\r' | grep -o '"value":[0-9]*' | head -1 | cut -d: -f2)"
+              [ "${hits:-0}" -ge 1 ] && break
+              sleep 1.5
+            done
             echo "ES match_phrase '${name}' -> ${hits:-0} hit(s)"
             [ "${hits:-0}" -ge 1 ] || missing=1
           done
