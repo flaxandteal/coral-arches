@@ -1,0 +1,319 @@
+name: Cypress E2E
+run-name: Cypress E2E
+on:
+  pull_request:
+    branches:
+      - dev
+      - main
+  workflow_dispatch:
+
+env:
+  ARCHES_PROJECT: coral
+  ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a4-v4
+  CYPRESS_IMAGE: cypress/included:15.18.1
+  COMPOSE_PROJECT: coral-e2e
+  CORAL_GRAPHS_REF: v2
+
+jobs:
+  Cypress-E2E:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'true'
+          path: ${{ env.ARCHES_PROJECT }}
+
+      # coral-graphs is a separate private repo (flaxandteal/coral-graphs),
+      # so GITHUB_TOKEN (scoped to this repo) cannot clone it - needs a PAT
+      # with read access, stored as the CORAL_GRAPHS_PAT secret.
+      - name: Check out coral-graphs (${{ env.CORAL_GRAPHS_REF }})
+        uses: actions/checkout@v3
+        with:
+          repository: flaxandteal/coral-graphs
+          ref: ${{ env.CORAL_GRAPHS_REF }}
+          token: ${{ secrets.CORAL_GRAPHS_PAT }}
+          submodules: 'true'
+          path: coral-graphs
+
+      - name: Build the Arches package from coral-graphs
+        working-directory: coral-graphs
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --quiet -r requirements.txt
+          .venv/bin/python run.py --pkg-dir arches-her/arches_her/pkg
+
+      - name: Install the built package as coral/pkg
+        run: |
+          rm -rf ${{ env.ARCHES_PROJECT }}/coral/pkg
+          cp -R coral-graphs/output ${{ env.ARCHES_PROJECT }}/coral/pkg
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set derived environment
+        run: |
+          echo "ARCHES_PROJECT_ROOT=${{ github.workspace }}/${{ env.ARCHES_PROJECT }}/" >> "$GITHUB_ENV"
+          echo "COMPOSE=docker compose -p ${{ env.COMPOSE_PROJECT }} -f ${{ env.ARCHES_PROJECT }}/docker-compose.ci.yml" >> "$GITHUB_ENV"
+
+      - name: Tear down any leftover stack
+        run: $COMPOSE down -v --remove-orphans || true
+
+      - name: Build and start the app stack
+        run: $COMPOSE up -d --build
+
+      - name: Wait for Arches to bootstrap and become healthy
+        run: |
+          cid="$($COMPOSE ps -q arches)"
+          for i in $(seq 1 120); do
+            status="$(docker inspect --format '{{.State.Health.Status}}' "$cid" 2>/dev/null || echo missing)"
+            echo "attempt $i: arches health=$status"
+            if [ "$status" = "healthy" ]; then
+              echo "Arches is healthy"; exit 0
+            fi
+            if [ "$status" = "missing" ]; then
+              echo "arches container is gone"; break
+            fi
+            sleep 15
+          done
+          echo "::error::Arches did not become healthy in time"
+          $COMPOSE logs --no-color arches
+          exit 1
+
+      - name: Verify the resolved Arches dependency set
+        run: |
+          pkgs="$($COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && pip list --format=freeze' | tr -d '\r')"
+          echo "$pkgs" | grep -iE '^arches' || true
+
+          ver() { echo "$pkgs" | grep -iE "^$1==" | head -1 | cut -d= -f3; }
+
+          rc=0
+          arches_v="$(ver arches)"
+          mr_v="$(ver 'arches[-_]modular[-_]reports')"
+          vc_v="$(ver 'arches[-_]vue[-_]components')"
+          cl_v="$(ver 'arches[-_]component[-_]lab')"
+
+          case "$arches_v" in
+            8.*) ;;
+            *) echo "::error::arches resolved to '$arches_v', expected 8.x"; rc=1 ;;
+          esac
+          if [ "$mr_v" != "2.0.0" ]; then
+            echo "::error::arches-modular-reports resolved to '$mr_v', expected 2.0.0"
+            rc=1
+          fi
+          if [ -n "$vc_v" ] && [ -n "$cl_v" ]; then
+            echo "::error::arches-vue-components ($vc_v) and arches-component-lab ($cl_v) are both installed; they cannot coexist (duplicate WidgetMapping -> fields.E304)"
+            rc=1
+          fi
+          exit $rc
+
+      - name: Build the webpack bundle
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            'cd /web_root/${ARCHES_PROJECT} && npx cross-env webpack --config ./webpack/webpack.config.dev.js'
+
+      - name: Verify the login page renders
+        run: |
+          for i in $(seq 1 20); do
+            code="$($COMPOSE exec -T arches \
+              curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/auth/ || echo 000)"
+            echo "attempt $i: GET /auth/ -> $code"
+            if [ "$code" = "200" ]; then
+              echo "/auth/ renders"; exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::/auth/ never returned 200 — the frontend bundle is likely missing or broken"
+          $COMPOSE logs --no-color --tail 300 arches
+          exit 1
+
+      - name: Create the DatabaseCache tables
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py createcachetable'
+
+      - name: Activate the resource models
+        run: |
+          activated="$($COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py shell -c "from arches.app.models.models import GraphModel; print(GraphModel.objects.filter(isresource=True, draft=None, publication__isnull=False).update(is_active=True))"' \
+            | tr -d '\r' | tail -1)"
+          echo "activated ${activated} graph(s)"
+          if ! [ "${activated:-0}" -ge 1 ] 2>/dev/null; then
+            echo "::error::No resource models were activated — tile saves will fail with 'Verify model status is active'"
+            exit 1
+          fi
+
+      - name: Seed the RBAC groups and a login per group
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && cd /web_root/${ARCHES_PROJECT} && python manage.py seed_test_permissions'
+
+      - name: Verify the seeded logins reach the Casbin policy table
+        run: |
+          # Queried straight from postgres rather than through manage.py shell:
+          # the policy rows are the whole point of the seed, and this avoids
+          # nesting a third level of quoting inside `exec -T ... bash -lc '...'`.
+          policies="$($COMPOSE exec -T db psql -U postgres -d arches -tAc \
+            "SELECT count(*) FROM casbin_rule WHERE ptype = 'g' AND v0 LIKE 'u:%'" \
+            | tr -d '\r' | tail -1)"
+          echo "user -> group grouping policies: ${policies}"
+          if ! [ "${policies:-0}" -ge 1 ] 2>/dev/null; then
+            echo "::error::No user grouping policies were written — the seeded logins have no permissions"
+            exit 1
+          fi
+
+      # Heritage Asset seeding runs after RBAC group seeding: some HA fields
+      # (council/sign-off relations) default to Group resources that
+      # coral/pkg/business_data doesn't ship (only Enforcement/Excavation/
+      # Planning/Root) - seed_test_permissions creates the rest. Seeding HA
+      # first leaves those relation targets missing, which async index_resource
+      # Celery tasks then fail against once the tile is re-saved after the
+      # target resource-instance later appears (TileModel.DoesNotExist).
+      - name: Seed the E2E baseline resources
+        run: |
+          python3 -m venv "${RUNNER_TEMP}/seedenv"
+          "${RUNNER_TEMP}/seedenv/bin/pip" install --quiet \
+            -r ${{ env.ARCHES_PROJECT }}/cypress/seed/requirements.txt
+
+          "${RUNNER_TEMP}/seedenv/bin/python" \
+            ${{ env.ARCHES_PROJECT }}/cypress/seed/seed.py \
+            --pkg-dir ${{ env.ARCHES_PROJECT }}/coral/pkg \
+            --graphs "Heritage Asset" -n 9 \
+            --only-aliases monument_name,resourceid,smr_number,ihr_number,hb_number,historic_parks_and_gardens \
+            --overrides ${{ env.ARCHES_PROJECT }}/cypress/seed/coral_e2e_overrides.json \
+            -o "${RUNNER_TEMP}/seeded.json"
+
+          # The CI stack does not bind-mount the checkout into the arches
+          # container (the image COPYs it at build time), so hand the file over.
+          cid="$($COMPOSE ps -q arches)"
+          docker cp "${RUNNER_TEMP}/seeded.json" "$cid:/tmp/seeded.json"
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && cd /web_root/${ARCHES_PROJECT} && python manage.py packages -o import_business_data -s /tmp/seeded.json -ow overwrite'
+
+      - name: Seed a citation (Bibliographic Source) resource
+        run: |
+          # Add Garden's Heritage Asset Details tab picks a citation from a
+          # resource-instance-list search with no typed query. With zero
+          # Bibliographic Source resources in the DB, that search returns no
+          # results and the first select2 option becomes Arches' "create a
+          # new related resource inline" affordance instead of an existing
+          # citation, so the Source Number/Page(s)/etc. fields never appear.
+          "${RUNNER_TEMP}/seedenv/bin/python" \
+            ${{ env.ARCHES_PROJECT }}/cypress/seed/seed.py \
+            --pkg-dir ${{ env.ARCHES_PROJECT }}/coral/pkg \
+            --graphs "Bibliographic Source" -n 1 \
+            --only-aliases bibliographic_source_name \
+            --overrides ${{ env.ARCHES_PROJECT }}/cypress/seed/coral_e2e_bibliographic_source_overrides.json \
+            -o "${RUNNER_TEMP}/seeded_biblio.json"
+
+          cid="$($COMPOSE ps -q arches)"
+          docker cp "${RUNNER_TEMP}/seeded_biblio.json" "$cid:/tmp/seeded_biblio.json"
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && cd /web_root/${ARCHES_PROJECT} && python manage.py packages -o import_business_data -s /tmp/seeded_biblio.json -ow overwrite'
+
+      - name: Verify the seeded resources are searchable
+        run: |
+          missing=0
+          for name in "HA/02 Testing" "SMR-TEST-004 Testing" "HA/07 Garden Test" "Test Bibliographic Source"; do
+            hits=0
+            # A Heritage Asset with a reference number (SMR/IHR/HB/HPG) gets its
+            # display name from a second, function-triggered tile save
+            # (generate_ha_name_function's post_save cascade), which lags behind
+            # the direct-write case just enough to race a single immediate check.
+            for i in $(seq 1 10); do
+              hits="$($COMPOSE exec -T arches curl -s \
+                "http://elasticsearch:9200/${ARCHES_PROJECT}_resources/_search" \
+                -H 'Content-Type: application/json' \
+                -d "{\"size\":1,\"query\":{\"nested\":{\"path\":\"displayname\",\"query\":{\"term\":{\"displayname.value\":\"${name}\"}}}}}" \
+                | tr -d '\r' | grep -o '"value":[0-9]*' | head -1 | cut -d: -f2)"
+              [ "${hits:-0}" -ge 1 ] && break
+              sleep 1.5
+            done
+            echo "ES match_phrase '${name}' -> ${hits:-0} hit(s)"
+            [ "${hits:-0}" -ge 1 ] || missing=1
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::Seeded Heritage Assets are not searchable in Elasticsearch"
+            exit 1
+          fi
+
+      - name: Seed an Issue Report to open
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_issue_report'
+
+      - name: Seed the admin test 2FA (TOTP) device
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_totp'
+
+      - name: Export the seeded login map for Cypress
+        run: |
+          # Same reason as frontend_configuration below: the Cypress container
+          # mounts the host checkout, which the arches container cannot write to.
+          cid="$($COMPOSE ps -q arches)"
+          docker cp "$cid:/web_root/${ARCHES_PROJECT}/cypress/fixtures/permission_users.json" \
+            "${ARCHES_PROJECT_ROOT}cypress/fixtures/permission_users.json"
+          cat "${ARCHES_PROJECT_ROOT}cypress/fixtures/permission_users.json"
+
+      - name: Export generated frontend configuration for Cypress
+        run: |
+          cid="$($COMPOSE ps -q arches)"
+          mkdir -p "${ARCHES_PROJECT_ROOT}frontend_configuration"
+          docker cp "$cid:/web_root/${ARCHES_PROJECT}/frontend_configuration/." \
+            "${ARCHES_PROJECT_ROOT}frontend_configuration/"
+          ls -la "${ARCHES_PROJECT_ROOT}frontend_configuration/"
+
+      - name: Run Cypress
+        run: |
+          docker run --rm \
+            --network ${{ env.COMPOSE_PROJECT }}_default \
+            -v "${{ github.workspace }}/${{ env.ARCHES_PROJECT }}":/e2e \
+            -w /e2e \
+            -e CYPRESS_BASE_URL=http://arches:8000 \
+            "${{ env.CYPRESS_IMAGE }}" --browser electron
+
+      - name: Fix artifact ownership
+        if: always()
+        run: |
+          docker run --rm --entrypoint sh \
+            -v "${{ github.workspace }}/${{ env.ARCHES_PROJECT }}":/e2e \
+            "${{ env.CYPRESS_IMAGE }}" \
+            -c "chown -R $(id -u):$(id -g) /e2e/cypress || true" || true
+
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: ${{ env.ARCHES_PROJECT }}/cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload Cypress videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: ${{ env.ARCHES_PROJECT }}/cypress/videos
+          if-no-files-found: ignore
+
+      - name: Dump Arches logs on failure or cancellation
+        if: failure() || cancelled()
+        run: |
+          $COMPOSE logs --no-color arches || true
+          echo "::group::celery worker"
+          $COMPOSE logs --no-color --tail 300 arches_worker || true
+          echo "::endgroup::"
+
+      - name: Tear down the app stack
+        if: always()
+        run: $COMPOSE down -v --remove-orphans || true

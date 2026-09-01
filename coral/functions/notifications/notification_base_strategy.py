@@ -64,11 +64,17 @@ class NotificationStrategy():
     def notify_groups(self):
         from querysets_shim.models import Group, Person
         with admin():
-            group_list = self.config.get('groups_to_notify', None)
+            group_list = self.config.get('groups_to_notify', None) or []
             for group_id in group_list:
                 group = Group.find(group_id)
+                # A configured notify-group may not exist as a resource (e.g. a
+                # fresh/partial database or a group that was deleted). Skip it
+                # rather than letting the whole tile save fail with a 500.
+                if group is None or getattr(group, 'members', None) is None:
+                    logging.warning(f"Notify: group {group_id} not found or has no members; skipping")
+                    continue
                 person_list = [Person.find(member.id) for member in group.members if isinstance(member, Person)]
-                
+
                 for person in person_list:
                     if self.user is None or person != self.user:
                         self.notify_user(person)
@@ -89,6 +95,8 @@ class NotificationStrategy():
         self.notification.context['email'] = user.email
     
     def _build_url(self):
+        if self.request is None:
+            return "/index.htm"
         return self.request.build_absolute_uri(f"/index.htm")
     
     def get_domain_value_string(self, value_id, node_id):

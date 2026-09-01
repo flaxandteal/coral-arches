@@ -204,11 +204,12 @@ class CasbinPermissionFramework(ArchesPermissionBase):
             if group_key in groups_seen:
                 return groups_seen[group_key]
             users = []
-            print(" " * len(ancestors), len(group.members), "members")
-            for n, member in enumerate(group.members):
+            members = group.members or []
+            print(" " * len(ancestors), len(members), "members")
+            for n, member in enumerate(members):
                 if isinstance(member, Group):
                     member_key = self._subj_to_str(member)
-                    print(" " * (1 + len(ancestors)), n, "/", len(group.members), member_key)
+                    print(" " * (1 + len(ancestors)), n, "/", len(members), member_key)
                     # This is the reverse of what might be expected, as the more deeply
                     # nested a group is, the _fewer_ permissions it has. Conversely, the
                     # top groups gather all the permissions from the groups below them,
@@ -273,9 +274,19 @@ class CasbinPermissionFramework(ArchesPermissionBase):
                 if not gp or gp.pk is None or isinstance(gp, MissingDjangoGroupViewModel):
                     logging.warn("Missing Django Group in a group: %s for %s", group_key, str(gp.pk) if gp else str(gp))
                     continue
-                if list(gp.user_set.all()) != users:
-                    gp.user_set.set(users)
-                    gp.save()
+                # Assigned from the User side, one at a time, rather than with
+                # gp.user_set.set(users). Arches' m2m_changed receiver for
+                # User.groups (arches/app/signals.py) does not check `reverse`,
+                # so a reverse-side assignment hands the *Group* to
+                # update_groups_for_user(), which immediately reads
+                # `user.groups` -> AttributeError. Going forwards keeps
+                # `instance` a User, which is what that receiver expects.
+                current = set(gp.user_set.all())
+                wanted = set(users)
+                for user in current - wanted:
+                    user.groups.remove(gp)
+                for user in wanted - current:
+                    user.groups.add(gp)
             groups_seen[group_key] = users
             return users
 

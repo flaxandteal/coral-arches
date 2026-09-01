@@ -18,6 +18,7 @@ from .concepts import (
 from .node_list import NodeListViewModel
 from .resources import (
     RelatedResourceInstanceListViewModel,
+    SingleRelatedResourceInstanceViewModel,
     ResourceInstanceViewModel,
 )
 from .semantic import SemanticViewModel
@@ -31,6 +32,7 @@ __all__ = [
     "NodeListViewModel",
     "ResourceInstanceViewModel",
     "RelatedResourceInstanceListViewModel",
+    "SingleRelatedResourceInstanceViewModel",
     "SemanticViewModel",
     "StringViewModel",
 ]
