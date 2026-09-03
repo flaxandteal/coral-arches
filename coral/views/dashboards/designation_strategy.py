@@ -1,7 +1,6 @@
 from datetime import datetime
 from dateutil import parser
 from coral.views.dashboards.base_strategy import TaskStrategy
-from coral.views.dashboards.dashboard_utils import Utilities
 from querysets_shim.view_models import ConceptListValueViewModel, ConceptValueViewModel
 from coral.views.dashboards.sql_query.builder import build_query
 from coral.views.dashboards.sql_query.config.designation_config import DESIGNATION_SQL_QUERY_CONFIG
@@ -173,21 +172,29 @@ class DesignationTaskStrategy(TaskStrategy):
     def build_data(self, resource, groupId):
         from querysets_shim.models import Monument, MonumentRevision
 
-        utilities = Utilities()
+        # A nodegroup with no tile reads as None, and a cardinality-n one as [].
+        # system_reference_numbers is always present: the query selects on it.
+        references = resource.heritage_asset_references
+        hmc_reference = resource.hmc_reference
+        sign_off = resource.sign_off
+        phases = resource.construction_phases
+        approvals = resource.approvals
 
         resource_data = {
-            'id': utilities.node_check(lambda: str(resource.id)),
-            'resourceid': utilities.node_check(lambda: resource.system_reference_numbers.uuid.resourceid),
+            'id': str(resource.id),
+            'resourceid': resource.system_reference_numbers.resourceid,
             'state': 'HeritageAsset',
-            'displayname': utilities.node_check(lambda: resource._.resource.descriptors['en']['name']),
-            'hmcreferencenumber': utilities.node_check(lambda: resource.hmc_reference.hmc_reference_number),
-            'historicparksandgardens': utilities.node_check(lambda: resource.heritage_asset_references.historic_parks_and_gardens),
-            'ihrnumber': utilities.node_check(lambda: resource.heritage_asset_references.ihr_number),
-            'hbnumber': utilities.node_check(lambda: resource.heritage_asset_references.hb_number),
-            'smrnumber': utilities.node_check(lambda: resource.heritage_asset_references.smr_number),
-            'monumenttype': self.extract_value(utilities.node_check(lambda: resource.construction_phases[0].phase_classification.monument_type)),
-            'inputdatevalue': utilities.node_check(lambda: resource.sign_off.input_date.input_date_value),
-            'statutoryconsulteenotificationdatevalue': utilities.node_check(lambda: resource.approvals[0].statutory_consultee_notification_date.statutory_consultee_notification_date_value)
+            'displayname': resource._.resource.descriptors.get('en', {}).get('name'),
+            'hmcreferencenumber': hmc_reference.hmc_reference_number if hmc_reference else None,
+            'historicparksandgardens': references.historic_parks_and_gardens if references else None,
+            'ihrnumber': references.ihr_number if references else None,
+            'hbnumber': references.hb_number if references else None,
+            'smrnumber': references.smr_number if references else None,
+            'monumenttype': self.reference_labels(phases[0].monument_type) if phases else None,
+            'inputdatevalue': sign_off.input_date_value if sign_off else None,
+            'statutoryconsulteenotificationdatevalue': (
+                approvals[0].statutory_consultee_notification_date_value if approvals else None
+            ),
         }
 
         if isinstance(resource, Monument):
@@ -225,12 +232,12 @@ class DesignationTaskStrategy(TaskStrategy):
     def build_meeting_data(self, resource):
         resource_data = {
             'id': str(resource.id),
-            'resourceid': resource.system_reference_numbers.uuid.resourceid,
+            'resourceid': resource.system_reference_numbers.resourceid,
             'state': 'Meeting',
             'model': 'Evaluation Meeting',
             'displaynamevalue': resource.display_name.display_name_value,
             'logdate': resource.consultation_dates.log_date,
-            'followupmeetingdatevalue': resource.evaluation.follow_up_meeting_date.follow_up_meeting_date_value,
+            'followupmeetingdatevalue': resource.evaluation.follow_up_meeting_date_value,
             'council': resource.location_data.council,
             'slugs': [{'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'}]
         }
@@ -255,6 +262,16 @@ class DesignationTaskStrategy(TaskStrategy):
                 resource_data[value] = self.convert_date_str(resource_data[value])
 
         return resource_data  
+
+    def reference_labels(self, references):
+        """Labels of a v8 reference node — the card renders these as the Type."""
+        labels = []
+        for reference in references or []:
+            for label in reference.labels or []:
+                if label.valuetype_id == 'prefLabel':
+                    labels.append(label.value)
+                    break
+        return labels
 
     def extract_value(self, item):
         """Helper function to extract the value from different datatypes"""

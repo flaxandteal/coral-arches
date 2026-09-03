@@ -114,6 +114,17 @@ def test_displayed_fields_are_actually_populated():
         assert any(t.get('hbnumber') for t in tasks), 'no hbnumber on any row'
         assert all(t.get('model') for t in tasks), 'a row lost its model label'
         assert all(t.get('id') for t in tasks), 'a row lost its id'
+        # These read through nodegroups whose paths changed in v8.
+        assert any(t.get('resourceid') for t in tasks), 'no resourceid on any row'
+        assert any(t.get('inputdatevalue') for t in tasks), 'no input date on any row'
+        # The card does `foreach: data.monumenttype`, so it must be a list of
+        # label strings, not the Reference objects the reference node holds.
+        types = [t.get('monumenttype') for t in tasks if t.get('monumenttype')]
+        assert types, 'no monument type on any row'
+        assert all(
+            isinstance(v, list) and all(isinstance(label, str) for label in v)
+            for v in types
+        ), f'monumenttype must be a list of strings, got {types[0]!r}'
 
 
 def test_narrowed_page_matches_full_graph():
