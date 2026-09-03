@@ -27,6 +27,8 @@ from typing import (
     Type,
 )
 
+from django.core.exceptions import FieldError
+
 from . import adapter
 
 logger = logging.getLogger(__name__)
@@ -342,29 +344,40 @@ class QueryBuilder:
         ids = [str(ri["resourceinstanceid"]) for ri in qs.values("resourceinstanceid")]
 
         if tile_filters:
-            kept: List[str] = []
-            for rid in ids:
-                inst = self._model_cls.find(rid)
-                if inst is None:
-                    continue
-                if _matches_tile_filters(inst, tile_filters):
-                    kept.append(rid)
-            return kept
+            tile_ids = self._tile_filtered_ids(tile_filters)
+            # Only intersect when something above narrowed or ordered `ids`.
+            if django_filters or self._order_by:
+                allowed = set(tile_ids)
+                return [rid for rid in ids if rid in allowed]
+            return tile_ids
         return ids
 
+    def _tile_filtered_ids(self, tile_filters: Dict[str, Any]) -> List[str]:
+        """Resolve node-alias filters to resource ids in SQL.
 
-def _matches_tile_filters(inst: "ResourceModel", filters: Dict[str, Any]) -> bool:
-    for alias, expected in filters.items():
+        No per-resource fallback: hydrating a whole graph to compare one
+        attribute takes hours, so an unsupported filter fails loudly instead.
+        """
+        from arches_querysets.models import ResourceTileTree
+
+        slug = self._model_cls._get_graph_slug()
+        if not slug:
+            raise FieldError(
+                f"{self._model_cls.__name__}.where({', '.join(sorted(tile_filters))}) "
+                "needs a graph slug to filter on node aliases, and this graph has none."
+            )
+        # Annotating a whole graph costs seconds; we only need the filtered aliases.
+        nodes_by_alias = self._model_cls._._node_objects_by_alias()
         try:
-            actual = getattr(inst, alias, None)
-        except AttributeError:
-            return False
-        if actual is None:
-            return False
-        actual_str = str(actual)
-        if str(expected) != actual_str:
-            return False
-    return True
+            nodes = [nodes_by_alias[alias.split("__")[0]] for alias in tile_filters]
+        except KeyError as exc:
+            raise FieldError(
+                f"{self._model_cls.__name__}.where(): no node alias {exc} on this graph."
+            ) from exc
+        qs = ResourceTileTree.get_tiles(slug, nodes=nodes)
+        return [
+            str(pk) for pk in qs.filter(**tile_filters).values_list("pk", flat=True)
+        ]
 
 
 class _WrapperMeta:
