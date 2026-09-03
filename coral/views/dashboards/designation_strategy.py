@@ -11,7 +11,30 @@ from typing import List
 
 
 class DesignationTaskStrategy(TaskStrategy):
-    
+
+    # Aliases build_data/build_meeting_data read. `nodes` caps how many alias
+    # expressions get built, which is where the seconds go; it does not restrict
+    # the tile data returned, so listing these is a speed hint, not a filter.
+    DISPLAY_ALIASES = {
+        'Monument': [
+            'resourceid', 'hmc_reference_number', 'historic_parks_and_gardens',
+            'ihr_number', 'hb_number', 'smr_number', 'monument_type',
+            'input_date_value', 'statutory_consultee_notification_date_value',
+        ],
+        'Consultation': [
+            'resourceid', 'display_name_value', 'log_date',
+            'follow_up_meeting_date_value', 'council', 'related_monuments_and_areas',
+        ],
+    }
+    DISPLAY_ALIASES['MonumentRevision'] = DISPLAY_ALIASES['Monument']
+
+    def display_nodes(self, model_cls, model_name):
+        """Node objects for the aliases this dashboard displays, if resolvable."""
+        by_alias = model_cls._._node_objects_by_alias()
+        nodes = [by_alias[a] for a in self.DISPLAY_ALIASES[model_name] if a in by_alias]
+        return nodes or None
+
+
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceid', sort_order='desc', filter='all'):
         from querysets_shim.models import Monument, MonumentRevision, Consultation
         with admin():
@@ -57,19 +80,27 @@ class DesignationTaskStrategy(TaskStrategy):
                 return counts
                 
             results = run_sql_query()
-            resources = []
-            for item in results:
-                model = item[2]
-                id = item[0]
-                instance = None
-                if model == 'Monument':
-                    instance = Monument.find(str(id))
-                elif model == 'MonumentRevision':
-                    instance = MonumentRevision.find(str(id))
-                elif model == 'Consultation':
-                    instance = Consultation.find(str(id))
-                if instance:
-                    resources.append(instance)
+            models = {
+                'Monument': Monument,
+                'MonumentRevision': MonumentRevision,
+                'Consultation': Consultation,
+            }
+
+            ordered_ids = []
+            ids_by_model = {}
+            for raw_id, _, model in results:
+                resource_id = str(raw_id)
+                ordered_ids.append(resource_id)
+                if model in models:
+                    ids_by_model.setdefault(model, []).append(resource_id)
+
+            found = {}
+            for model, ids in ids_by_model.items():
+                cls = models[model]
+                for instance in cls.find_many(ids, nodes=self.display_nodes(cls, model)):
+                    found[str(instance.id)] = instance
+
+            resources = [found[id] for id in ordered_ids if id in found]
 
             resource_counts = get_counts()
             total_resources = resource_counts.get('total', 0)

@@ -325,10 +325,7 @@ class QueryBuilder:
             ids = ids[self._offset:]
         if self._limit is not None:
             ids = ids[:self._limit]
-        for rid in ids:
-            inst = self._model_cls.find(rid)
-            if inst is not None:
-                yield inst
+        yield from self._model_cls.find_many(ids)
 
     def _resource_ids(self) -> List[str]:
         from arches.app.models.models import ResourceInstance
@@ -556,17 +553,31 @@ class ResourceModel:
         return cls._find_via_tiles(rid)
 
     @classmethod
-    def _find_via_querysets(cls, rid: str, slug: str) -> Optional["ResourceModel"]:
-        """Load using arches-querysets ResourceTileTree."""
+    def find_many(
+        cls, resource_ids: Any, nodes: Optional[List[Any]] = None
+    ) -> List["ResourceModel"]:
+        """Load many resources in one query, in the order the ids were given."""
         from arches_querysets.models import ResourceTileTree
 
-        try:
-            qs = ResourceTileTree.get_tiles(slug, resource_ids=[rid])
-            rtt = qs.get(pk=rid)
-        except (ResourceTileTree.DoesNotExist, ValueError) as exc:
-            logger.debug("querysets_shim: find via querysets failed for %s: %s", rid, exc)
-            return None
+        rids = [str(rid) for rid in resource_ids if rid]
+        if not rids:
+            return []
 
+        slug = cls._get_graph_slug()
+        if not slug:
+            return [inst for rid in rids if (inst := cls._find_via_tiles(rid))]
+
+        try:
+            qs = ResourceTileTree.get_tiles(slug, resource_ids=rids, nodes=nodes)
+            by_id = {str(rtt.pk): rtt for rtt in qs}
+        except ValueError as exc:
+            logger.debug("querysets_shim: find_many failed for %s: %s", slug, exc)
+            return []
+        return [cls._hydrate(rid, by_id[rid]) for rid in rids if rid in by_id]
+
+    @classmethod
+    def _hydrate(cls, rid: str, rtt: Any) -> "ResourceModel":
+        """Build an instance around an arches-querysets ResourceTileTree row."""
         tree = _rtt_aliased_data_to_tree(rtt)
 
         inst = cls(resource_id=rid)
@@ -579,6 +590,20 @@ class ResourceModel:
             model_remapping=cls._wkrm.get("remapping", {}),
         )
         return inst
+
+    @classmethod
+    def _find_via_querysets(cls, rid: str, slug: str) -> Optional["ResourceModel"]:
+        """Load using arches-querysets ResourceTileTree."""
+        from arches_querysets.models import ResourceTileTree
+
+        try:
+            qs = ResourceTileTree.get_tiles(slug, resource_ids=[rid])
+            rtt = qs.get(pk=rid)
+        except (ResourceTileTree.DoesNotExist, ValueError) as exc:
+            logger.debug("querysets_shim: find via querysets failed for %s: %s", rid, exc)
+            return None
+
+        return cls._hydrate(rid, rtt)
 
     @classmethod
     def _find_via_tiles(cls, rid: str) -> Optional["ResourceModel"]:
