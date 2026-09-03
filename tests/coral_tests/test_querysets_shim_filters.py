@@ -4,8 +4,9 @@
 83,975 of them) to compare one attribute. Filters now resolve in SQL, and an
 unsupported one must raise rather than fall back to that scan.
 
-Needs Django but no database. Run inside the app container:
-`docker exec -i coral-arches-1 /web_root/ENV/bin/python manage.py shell < tests/coral_tests/test_querysets_shim_filters.py`
+Needs Django but no database. Run inside the app container (`manage.py shell < file`
+exec's stdin with the shell module's own __name__, so the guard below would not fire):
+`docker exec -i coral-arches-1 /web_root/ENV/bin/python manage.py shell -c "exec(open('tests/coral_tests/test_querysets_shim_filters.py').read(), {'__name__': '__main__'})"`
 """
 
 from django.core.exceptions import FieldError
@@ -17,6 +18,9 @@ from querysets_shim.wrapper import QueryBuilder, ResourceModel, _SemanticNode
 class _StubNode:
     def __init__(self, alias):
         self.alias = alias
+        self.pk = self.nodegroup_id = alias
+        self.nodegroup = None
+        self.datatype = 'string'
 
 
 class _StubMeta:

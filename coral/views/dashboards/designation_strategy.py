@@ -5,7 +5,8 @@ from querysets_shim.view_models import ConceptListValueViewModel, ConceptValueVi
 from coral.views.dashboards.sql_query.builder import build_query
 from coral.views.dashboards.sql_query.config.designation_config import DESIGNATION_SQL_QUERY_CONFIG
 from django.db import connection, DatabaseError
-from querysets_shim.adapter import admin 
+from arches_controlled_lists.models import ListItem
+from querysets_shim.adapter import admin
 from typing import List
 
 
@@ -41,22 +42,19 @@ class DesignationTaskStrategy(TaskStrategy):
             resources = []
             tasks = []
 
+            filter_options = self.get_filter_options(groupId)
+            filter_option = next((option for option in filter_options if option['id'] == filter), None)
+            filter_dict = {'id': filter_option['id'], 'type': filter_option['type']}
+
             def run_sql_query(
-                    sort_by=sort_by, 
-                    sort_order=sort_order, 
-                    filter=filter, 
-                    page=page, 
-                    page_size=page_size, 
+                    sort_by=sort_by,
+                    sort_order=sort_order,
+                    page=page,
+                    page_size=page_size,
                     count=False
                 ):
                 offset = (page-1)*page_size
                 limit = page_size if isinstance(page_size, int) else 8
-
-                filter_options = self.get_filter_options(groupId)
-                filter_option = next((option for option in filter_options if option['id'] == filter), None)
-                filter_type = filter_option['type']
-                filter_id = filter_option['id']
-                filter_dict = {'id': filter_id, 'type': filter_type}
 
                 if count:
                     query = build_query(sort_by, count=True, filter=filter_dict, config=DESIGNATION_SQL_QUERY_CONFIG)
@@ -126,7 +124,6 @@ class DesignationTaskStrategy(TaskStrategy):
     
     def get_filter_options(self, groupId=None):
         from querysets_shim.models import Monument
-        from arches_controlled_lists.models import ListItem
         with admin():
             """Return the available filter options for the designation tasks."""
             # Create the entries for the council filter options. Council is a
@@ -138,9 +135,7 @@ class DesignationTaskStrategy(TaskStrategy):
             node_alias = Monument._._node_objects_by_alias()
             council_list_id = node_alias['council'].config['controlledList']
 
-            council_items = ListItem.objects.filter(
-                list_id=council_list_id
-            ).prefetch_related('list_item_values')
+            council_items = ListItem.objects.filter(list_id=council_list_id)
 
             domain_values = []
             for item in council_items:
@@ -230,27 +225,28 @@ class DesignationTaskStrategy(TaskStrategy):
         return resource_data 
     
     def build_meeting_data(self, resource):
+        references = resource.system_reference_numbers
+        display_name = resource.display_name
+        dates = resource.consultation_dates
+        evaluation = resource.evaluation
+        location = resource.location_data
+
         resource_data = {
             'id': str(resource.id),
-            'resourceid': resource.system_reference_numbers.resourceid,
+            'resourceid': references.resourceid if references else None,
             'state': 'Meeting',
             'model': 'Evaluation Meeting',
-            'displaynamevalue': resource.display_name.display_name_value,
-            'logdate': resource.consultation_dates.log_date,
-            'followupmeetingdatevalue': resource.evaluation.follow_up_meeting_date_value,
-            'council': resource.location_data.council,
+            'displaynamevalue': display_name.display_name_value if display_name else None,
+            'logdate': dates.log_date if dates else None,
+            'followupmeetingdatevalue': evaluation.follow_up_meeting_date_value if evaluation else None,
+            'council': self.reference_labels(location.council) if location else None,
             'slugs': [{'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'}]
         }
 
-        # Additional display values
-        related_monuments = resource.related_monuments_and_areas
-
-        ha_names = []
-        for ha in related_monuments:
-            ha_name = ha._.resource.descriptors['en']['name']
-            ha_names.append(ha_name)
-        
-        resource_data['relatedmonumentsandareas'] = ha_names
+        resource_data['relatedmonumentsandareas'] = [
+            ha._instance.descriptors.get('en', {}).get('name')
+            for ha in resource.related_monuments_and_areas
+        ]
         
         # transform returned values
         date_values = [
@@ -265,13 +261,11 @@ class DesignationTaskStrategy(TaskStrategy):
 
     def reference_labels(self, references):
         """Labels of a v8 reference node — the card renders these as the Type."""
-        labels = []
-        for reference in references or []:
-            for label in reference.labels or []:
-                if label.valuetype_id == 'prefLabel':
-                    labels.append(label.value)
-                    break
-        return labels
+        labels = [
+            ListItem.find_best_label_from_set(reference.labels, 'en')
+            for reference in references or []
+        ]
+        return [label for label in labels if label]
 
     def extract_value(self, item):
         """Helper function to extract the value from different datatypes"""

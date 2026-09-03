@@ -142,8 +142,7 @@ class Dashboard(View):
         userGroupIds = []
 
         for group in groups:
-            # members is None, not [], for a group nobody has been added to
-            for member in group.members or []:
+            for member in group.members:
                 if member.id == userId:
                     userGroupIds.append(str(group.id)) #needs to be a string and not uuid
 

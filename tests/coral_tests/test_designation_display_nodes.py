@@ -10,8 +10,9 @@ without restricting the tile data returned. test_narrowed_page_matches_full_grap
 therefore cannot fail on the current arches-querysets; it is kept as a canary for
 the day `nodes` starts filtering data, which would blank unlisted fields.
 
-Needs a populated database. Run inside the app container:
-`docker exec -i coral-arches-1 /web_root/ENV/bin/python manage.py shell < tests/coral_tests/test_designation_display_nodes.py`
+Needs a populated database. Run inside the app container (`manage.py shell < file`
+exec's stdin with the shell module's own __name__, so the guard below would not fire):
+`docker exec -i coral-arches-1 /web_root/ENV/bin/python manage.py shell -c "exec(open('tests/coral_tests/test_designation_display_nodes.py').read(), {'__name__': '__main__'})"`
 """
 
 import json
