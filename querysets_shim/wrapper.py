@@ -125,6 +125,11 @@ def _rtt_aliased_data_to_tree(obj: Any) -> Dict[str, Any]:
     return result
 
 
+def _holds_own_alias(value: Any, alias: str) -> bool:
+    """True for a nodegroup dict carrying a node of the nodegroup's own alias."""
+    return isinstance(value, dict) and alias in value
+
+
 class _SemanticNode:
     """
     Sync walker over a dict tree.
@@ -189,11 +194,19 @@ class _SemanticNode:
 
     def _lookup(self, name: str) -> Any:
         if isinstance(self._data, dict):
-            if name not in self._data:
-                raise AttributeError(
-                    f"{self._path or '<root>'}: no such attribute {name!r}"
-                )
-            return _wrap_value(self._data[name], f"{self._path}.{name}")
+            if name in self._data:
+                value = self._data[name]
+                # A node repeating its nodegroup's alias is what the caller means.
+                if _holds_own_alias(value, name):
+                    return _wrap_value(value[name], f"{self._path}.{name}")
+                return _wrap_value(value, f"{self._path}.{name}")
+            # Nodes sharing a collapsed nodegroup would otherwise become unreachable.
+            for group, value in self._data.items():
+                if _holds_own_alias(value, group) and name in value:
+                    return _wrap_value(value[name], f"{self._path}.{group}.{name}")
+            raise AttributeError(
+                f"{self._path or '<root>'}: no such attribute {name!r}"
+            )
         if isinstance(self._data, list):
             return [_wrap_value(item, f"{self._path}[*]")._lookup(name) for item in self._data]  # type: ignore[union-attr]
         raise AttributeError(name)

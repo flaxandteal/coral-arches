@@ -11,7 +11,7 @@ Needs Django but no database. Run inside the app container:
 from django.core.exceptions import FieldError
 
 import arches_querysets.models as aq_models
-from querysets_shim.wrapper import QueryBuilder
+from querysets_shim.wrapper import QueryBuilder, _SemanticNode
 
 
 class _StubNode:
@@ -134,7 +134,42 @@ def test_missing_slug_raises_rather_than_scanning():
     assert model.find_calls == [], model.find_calls
 
 
+def test_single_node_nodegroup_collapses_to_its_node():
+    """arches-querysets nests {'members': {'members': [...]}}; callers mean the list."""
+    node = _SemanticNode({'members': {'members': ['a', 'b']}}, path='Group')
+    # Iterating the uncollapsed dict used to yield the key 'members' as a string.
+    assert list(node.members) == ['a', 'b'], list(node.members)
+    assert len(node.members) == 2, len(node.members)
+
+
+def test_nodegroup_without_matching_node_is_left_alone():
+    """`title` holds only `title_text`, so it must stay walkable (wkrm remapping)."""
+    node = _SemanticNode({'title': {'title_text': 'Set A'}}, path='Set')
+    assert node.title.title_text == 'Set A', node.title.title_text
+
+
+def test_siblings_of_a_collapsed_nodegroup_stay_reachable():
+    tree = {'display_name': {'display_name': 'HA 1', 'show_hb_number': True}}
+    node = _SemanticNode(tree, path='Monument')
+    assert node.display_name == 'HA 1', node.display_name
+    assert node.show_hb_number is True, node.show_hb_number
+
+
+def test_missing_attribute_still_raises():
+    node = _SemanticNode({'members': {'members': []}}, path='Group')
+    try:
+        node.nope
+    except AttributeError as exc:
+        assert 'nope' in str(exc), exc
+    else:
+        raise AssertionError('missing attribute silently accepted')
+
+
 if __name__ == '__main__':
+    test_single_node_nodegroup_collapses_to_its_node()
+    test_nodegroup_without_matching_node_is_left_alone()
+    test_siblings_of_a_collapsed_nodegroup_stay_reachable()
+    test_missing_attribute_still_raises()
     test_filters_go_to_sql_and_never_hydrate()
     test_only_filtered_nodes_are_annotated()
     test_lookup_suffix_resolves_to_its_node()
