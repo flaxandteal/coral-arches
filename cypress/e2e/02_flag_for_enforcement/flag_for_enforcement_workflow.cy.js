@@ -31,7 +31,6 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.get('[aria-label="Case Reference"]').should('be.visible').type('Case Ref');
         cy.wait(2000);
         cy.type_ckeditor('editor2', 'test reason for enforcement');
-        cy.pickRelationshipFirst('Flagged by');
 
         // Flagged Date has to be typed in. Nothing defaults it — the constants
         // in coral/functions/notify_enforcement.py are unused — so leaving it
@@ -42,6 +41,22 @@ describe('Going through the Flag For Enforcement Workflow', function () {
             .type(`${todayString()}{enter}`, { force: true });
         cy.get('input[aria-label^="Flagged Date"]').filter(':visible').first()
             .should('have.value', todayString());
+
+        // Capture the actor's display name so the summary step assertion
+        // below can verify it round-tripped, since pickRelationshipFirst
+        // picks whichever option happens to be first.
+        cy.openRelationship('Flagged by');
+        cy.get('.select2-results__option')
+            .not('.loading-results')
+            .not('.select2-results__option--load-more')
+            .first()
+            .invoke('text')
+            .as('flaggedByName');
+        cy.get('.select2-results__option')
+            .not('.loading-results')
+            .not('.select2-results__option--load-more')
+            .first()
+            .click();
 
         cy.get('[aria-label="Select resources, Add new Relationship"]').click();
         cy.wait(1000);
@@ -59,6 +74,9 @@ describe('Going through the Flag For Enforcement Workflow', function () {
 
         cy.contains('Flagged Date Value:').siblings().should('contain', todayString());
         cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing');
+        cy.get('@flaggedByName').then((name) => {
+            cy.contains('Actor:').siblings().should('have.text', name.trim());
+        });
         cy.wait(900);
         cy.contains('Save and Complete Workflow').click();
     });
@@ -150,13 +168,27 @@ describe('Going through the Flag For Enforcement Workflow', function () {
 
         // Enforcement Details Tab
         cy.get('[aria-label="Case Reference"]', { timeout: 20000 }).should('be.visible');
-        cy.pickRelationshipFirst('Flagged by');
+        cy.openRelationship('Flagged by');
+        cy.get('.select2-results__option')
+            .not('.loading-results')
+            .not('.select2-results__option--load-more')
+            .first()
+            .invoke('text')
+            .as('flaggedByName');
+        cy.get('.select2-results__option')
+            .not('.loading-results')
+            .not('.select2-results__option--load-more')
+            .first()
+            .click();
         cy.wait(500);
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
+        cy.get('@flaggedByName').then((name) => {
+            cy.contains('Actor:').siblings().should('have.text', name.trim());
+        });
         cy.contains('Save and Complete Workflow').click();
     });
 
