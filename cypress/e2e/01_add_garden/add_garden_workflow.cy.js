@@ -25,7 +25,7 @@ describe('Going through the Add Garden Workflow', function () {
 
         cy.contains('Heritage Asset Type').should('be.visible');
         cy.wait(2000);
-        cy.get('[aria-label="Heritage Asset Type"]').click();
+        cy.get('input[aria-label="Heritage Asset Type"]').click();
         cy.wait(4000);
         cy.get('.select2-results__option').first().click();
 
@@ -37,7 +37,7 @@ describe('Going through the Add Garden Workflow', function () {
         // cy.wait(4000);
 
         cy.contains('Bibliographic Source').scrollIntoView();
-        cy.wait(2000)
+        cy.wait(2000);
         cy.get('[aria-label="Citations, Add new Relationship"]').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
@@ -82,11 +82,11 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000);
         cy.get('[aria-label="Postcode"]').first().click().type('Testing Labs');
         cy.wait(2000);
-        // missing concepts 
-        // cy.get('[aria-label="County, Select an option"]').contains('Select an option').click().contains('Down').click();
-        // cy.wait(2000);
-        // cy.get('[aria-label="Townland, Select an option"]').contains('Select an option').click().contains(" LITTLE MINNIS'S ISLAND").click();
+        cy.get('[aria-label="County, Select an option"]').contains('Select an option').click().contains('Down').click();
         cy.wait(2000);
+        cy.get('[aria-label="Townland, Select an option"]').contains('Select an option').click().contains("Acres").click();
+        cy.wait(2000);
+
         cy.get('.council').contains('Select an option').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
@@ -161,7 +161,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.gar_approved_by_value').should('be.visible');
 
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
-    })
+    });
 
     it('Heritage Asset Details tab specific tests', function () {
         cy.contains('Workflows');
@@ -197,10 +197,10 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
 
         cy.contains('Heritage Asset Type').should('be.visible');
-        cy.get('[aria-label="Heritage Asset Type"]').click();
+        cy.get('input[aria-label="Heritage Asset Type"]').click();
         cy.wait(2000);
         cy.get('.select2-results__option').eq(2).click();
-        cy.wait(2000)
+        cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible');
 
@@ -218,7 +218,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').should('be.visible');
 
         cy.contains('Bibliographic Source').scrollIntoView();
-        cy.wait(2000)
+        cy.wait(2000);
         cy.get(':nth-child(1) > .widget-wrapper > .form-group > .row > .col-xs-12 > .select2 > .selection > .select2-selection').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
@@ -271,7 +271,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.type_ckeditor('editor3', 'test, Description');
 
         cy.get('.btn-success').contains('Add').click();
-    })
+    });
 
     it('Location Details tab specific tests', function () {
         cy.contains('Workflows');
@@ -383,7 +383,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Unique Building ID"]').click().type('01');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
         cy.get('[aria-label="Unique Building ID"]').first().click().clear();
         // cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
@@ -392,7 +392,7 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="LP Fusion ID"]').scrollIntoView().click().type('02');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
         cy.get('[aria-label="LP Fusion ID"]').first().click().clear();
         // cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step');
@@ -401,11 +401,11 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="BU Fusion ID"').click().type('03');
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue')
+        cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
         cy.get('[aria-label="BU Fusion ID"]').first().click().clear();
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue');
-    })
+    });
 
     // Map section is to be manually tested, keeping in encase needed in future
 
@@ -531,5 +531,5 @@ describe('Going through the Add Garden Workflow', function () {
         // cy.get('.select2-results__option').first().click();
 
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
-    })
-})
+    });
+});
