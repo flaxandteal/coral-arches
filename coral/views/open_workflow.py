@@ -4,6 +4,7 @@ from arches.app.models import models
 from arches.app.utils.response import JSONResponse
 import json
 import uuid
+from arches.app.datatypes.datatypes import DataTypeFactory
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 
@@ -322,6 +323,18 @@ class OpenWorkflow(View):
             "dc973fc8-dbd0-11ee-8835-0242ac120006": "5ef1c85d-13e5-4995-93ce-1fbc3d62f7cf",
             "fbebba34-dbd0-11ee-b0db-0242ac120006": "b81d4b16-0633-4d7a-b4b2-5c2d3e2e782e",
         }
+
+        # The template above stores reference-datatype defaults as bare list-item
+        # ids, but that datatype's tile value needs to be the full serialized
+        # reference (uri/labels/list_id), so resolve each one before saving.
+        datatype_factory = DataTypeFactory()
+        for node_id, value in approval_tile_data_template.items():
+            node = self.nodes.get(node_id)
+            if node is not None and node.datatype == "reference" and value is not None:
+                reference_datatype = datatype_factory.get_instance("reference")
+                approval_tile_data_template[node_id] = reference_datatype.transform_value_for_tile(
+                    value, controlledList=node.config.get("controlledList")
+                )
 
         revision_approvals_resource_id_query = {
             f"data__{REVISION_APPROVALS_RESOURCE_NODE_ID}__en__value__icontains": self.resource_id,
