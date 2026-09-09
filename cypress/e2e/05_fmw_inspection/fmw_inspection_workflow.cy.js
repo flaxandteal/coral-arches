@@ -47,10 +47,16 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.workflowNext();
 
         cy.wait(4000);
-        cy.get('.irish_grid_tm65_ > .row > .form-group > :nth-child(3) > span > ul > :nth-child(1)').click();
-        cy.get('.irish_grid_tm65_ > .row > .form-group > :nth-child(3) > #coordinatePoint').clear('J1025169962');
-        cy.get('.irish_grid_tm65_ > .row > .form-group > :nth-child(3) > #coordinatePoint').type('J1025169962{enter}');
-        cy.get('.irish_grid_tm65_ > .row').click();
+        // #coordinatePoint is a unique id on this step, so target it directly
+        // rather than through the widget's internal row/form-group/nth-child
+        // structure (irishGrid.htm), which is presentational and not a stable
+        // contract. Blur afterwards (instead of clicking an unrelated
+        // wrapper row) to drop hasFocus/isSelected and trigger the widget's
+        // own preview/validation computed (see tm65point.js).
+        cy.get('#coordinatePoint').filter(':visible').first()
+            .clear()
+            .type('J1025169962{enter}')
+            .blur();
 
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').click();
@@ -75,5 +81,9 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.get('.btn-primary').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click();
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
+
+        // Workflow completes and returns to the workflow launcher list.
+        cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');
+        cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     });
 });

@@ -53,5 +53,9 @@ describe('Going through the state care Workflow', function () {
             .click();
         cy.wait(4000);
         cy.get('.workflow-top-control > .btn-success > .verbose').click();
+
+        // Workflow completes and returns to the workflow launcher list.
+        cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');
+        cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     });
 });

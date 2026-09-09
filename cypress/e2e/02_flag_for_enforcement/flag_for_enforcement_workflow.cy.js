@@ -58,10 +58,13 @@ describe('Going through the Flag For Enforcement Workflow', function () {
             .first()
             .click();
 
+        // Capture the matched option's display text, same as flaggedByName
+        // above, rather than hardcoding the fixture's current label.
         cy.get('[aria-label="Select resources, Add new Relationship"]').click();
         cy.wait(1000);
         cy.select2Search('HA/02');
         cy.wait(1500);
+        cy.get('.select2-results__option').contains('HA/02').invoke('text').as('associatedResourceName');
         cy.get('.select2-results__option').contains('HA/02').click();
         cy.contains('Save and Continue').click();
 
@@ -73,7 +76,9 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.contains('Description:').siblings().should('have.text', 'test reason for enforcement');
 
         cy.contains('Flagged Date Value:').siblings().should('contain', todayString());
-        cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing');
+        cy.get('@associatedResourceName').then((name) => {
+            cy.contains('Associated Resources:').siblings().should('have.text', name.trim());
+        });
         cy.get('@flaggedByName').then((name) => {
             cy.contains('Actor:').siblings().should('have.text', name.trim());
         });
@@ -102,10 +107,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
 
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
-        cy.contains('ResourceID:').siblings().invoke('text').as('enforcementId')
         cy.contains('Save and Complete Workflow').click();
-
-        cy.visit('/search?paging-filter=1&tiles=true');
     });
 
     it('Workflow with only Case Reference', function () {

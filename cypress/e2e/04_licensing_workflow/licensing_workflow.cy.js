@@ -74,9 +74,15 @@ describe('Going through the licensing Workflow', function () {
         cy.get('.council').filter(':visible').first().find('.select2-selection').first().click();
         cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
         cy.get('.select2-results__option').contains('Causeway Coast and Glens').click();
-        cy.get(':nth-child(3) > span > ul > :nth-child(1)').click();
-        cy.get('#coordinatePoint').clear('J1025169962');
-        cy.get('#coordinatePoint').type('J1025169962');
+        // #coordinatePoint is a unique id on this step, so target it directly
+        // rather than through the widget's internal row/form-group/nth-child
+        // structure (irishGrid.htm), which is presentational and not a stable
+        // contract. Blur afterwards to drop hasFocus/isSelected and trigger the
+        // widget's own preview/validation computed (see tm65point.js).
+        cy.get('#coordinatePoint').filter(':visible').first()
+            .clear()
+            .type('J1025169962')
+            .blur();
         cy.type_ckeditor('editor7', 'test, Description');
 
         cy.workflowNext();          // Location Details   -> Geospatial Details
@@ -172,6 +178,24 @@ describe('Going through the licensing Workflow', function () {
                 cy.get('.ep-form-alert-buttons .btn').first().click();
             }
         });
+        cy.wait(2000);
+
+        // The click above lands on the final "Final Report" -> "Summary"
+        // (licence-complete) transition, step 11/11, so the workflow is not
+        // actually complete yet. Finish it from the summary step too.
+        cy.get('.tabbed-workflow-footer-button-container')
+            .contains(/Save and Complete|Save and Continue|Next Step|Save/)
+            .click({ force: true });
+        cy.wait(4000);
+        cy.get('body').then(($b) => {
+            if ($b.find('.ep-form-alert-buttons .btn').length) {
+                cy.get('.ep-form-alert-buttons .btn').first().click();
+            }
+        });
+
+        // Workflow completes and returns to the workflow launcher list.
+        cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');
+        cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     })
 
     it('Should transfer licence', function () {
@@ -216,6 +240,10 @@ describe('Going through the licensing Workflow', function () {
         cy.get('[style="display: flex; justify-content: flex-end; padding: 0 18px;"] > .btn-success').contains('Add').click({ multiple: true });
         cy.wait(2000);
         cy.get('.tabbed-workflow-footer-button-container').contains('Save and Continue').should('be.visible').click({force: true});
+        cy.wait(2000);
+        // Confirm the transfer save didn't fail (see 'ep-alert-red' in
+        // coral/media/js/viewmodels/workflow.js's tile-save error path).
+        cy.get('.ep-alert-red').should('not.exist');
     })
 
     it('Should extend licence', function () {
@@ -269,5 +297,9 @@ describe('Going through the licensing Workflow', function () {
         cy.get(':nth-child(2) > .workflow-component > .workflow-component-element > .card-component > .new-provisional-edit-card-container > .card > .widgets > :nth-child(1) > :nth-child(20) > .row > .form-group').click( {force: true});
         cy.get(':nth-child(2) > .workflow-component > [style="display: flex; justify-content: flex-end; padding: 0 18px;"] > .btn-success').click();
         cy.get('.tabbed-workflow-footer-button-container > .btn-success > .verbose').click();
+        cy.wait(2000);
+        // Confirm the extension save didn't fail (see 'ep-alert-red' in
+        // coral/media/js/viewmodels/workflow.js's tile-save error path).
+        cy.get('.ep-alert-red').should('not.exist');
     })
 })

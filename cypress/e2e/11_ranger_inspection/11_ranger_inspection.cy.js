@@ -24,8 +24,11 @@ describe('Going through the ranger inspection Workflow', function () {
                 cy.get(`.card_component.${cls}`).find('input').first()
                     .type('test', { force: true });
             });
-        cy.get('.card_component.map_of_state_care_present > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"]').click();
-        cy.get('.card_component.copy_of_ra_present > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"] > span').click();
+        // Radio-boolean widgets: use the same helper 04_licensing_workflow
+        // relies on (setBooleanTrue) instead of reaching into the
+        // data-bind-attribute markup directly.
+        cy.setBooleanTrue('map_of_state_care_present');
+        cy.setBooleanTrue('copy_of_ra_present');
         cy.workflowNext();
         cy.wait(4000);
         cy.workflowNext();
@@ -34,9 +37,9 @@ describe('Going through the ranger inspection Workflow', function () {
         // aria-label embeds the current value, so match on the prefix.
         cy.pickOptionByLabelPrefix('Area or Feature, ');
 
-        cy.get('.card_component.checked > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"]').click();
-        cy.get('.card_component.issues > .row > .form-group > .col-xs-12 > .pad-hor > [data-bind="css: { \'active\': value() === true, \'disabled\': disabled }, onEnterkeyClick, onSpacekeyClick, click: function(e){setValue(true)}, attr: {\'aria-checked\': value() === true}"]').click();
-        
+        cy.setBooleanTrue('checked');
+        cy.setBooleanTrue('issues');
+
         cy.pickOptionByLabelPrefix('Description Type, ');
 
         cy.get('.form-control').clear('t');
@@ -55,5 +58,9 @@ describe('Going through the ranger inspection Workflow', function () {
             .click();
         cy.wait(4000);
         cy.get('.workflow-top-control > .btn-success > .verbose').click();
+
+        // Workflow completes and returns to the workflow launcher list.
+        cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');
+        cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     });
 });

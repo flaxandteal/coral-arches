@@ -191,9 +191,8 @@ describe('Going through the Incident Report', function () {
         cy.get('.select2-dropdown').contains('Finished').click();
 
         cy.get('.card_component.work_finish_date_value').contains('Work Finish Date');
-        cy.get('[aria-label="Work Finish Date"]').click();
-        cy.get('.card_component.work_finish_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
-        
+        cy.fillDate('work_finish_date_value');
+
         // The admin test user has no sign-off permission, so the Signed Off By
         // widget renders a "You do not have permission to sign off" message
         // instead of a picker; just confirm the card is present.
@@ -202,5 +201,9 @@ describe('Going through the Incident Report', function () {
 
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save');
         cy.get('.workflow-top-control').contains(/Save and [Cc]omplete Workflow/).scrollIntoView().click();
+
+        // Workflow completes and returns to the workflow launcher list.
+        cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');
+        cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     });
 });
