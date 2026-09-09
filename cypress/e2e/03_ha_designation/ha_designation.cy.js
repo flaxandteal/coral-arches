@@ -9,6 +9,8 @@ describe('Going through the HA Designation Workflow', function () {
     const HA_SELECT = '[aria-label="Select Heritage Asset, Please select a Heritage Asset"]';
     const REVISION_SELECT = '[aria-label="Select Heritage Asset Revision, Please select a Heritage Asset Revision"]';
     const REAL_OPTION = '.select2-results__option:not(.loading-results):not(.select2-results__option--load-more):not(.select2-results__message)';
+    const UPLOAD_FIXTURE = 'cypress/e2e/03_ha_designation/ha-designation-test-upload.txt';
+    const UPLOAD_NAME = 'ha-designation-test-upload.txt';
 
     // Open the launcher and pick the Heritage Asset to designate. Always the
     // FIRST 'Testing' match: the launcher sorts results ascending, so repeating
@@ -87,23 +89,159 @@ describe('Going through the HA Designation Workflow', function () {
         cy.get('.card_component.building_name_value input').filter(':visible').first().type('test');
         cy.get('.card_component.street_value input').filter(':visible').first().type('test');
         cy.get('.card_component.town_or_city_value input').filter(':visible').first().type('test');
+        // County is a concept dropdown. Unlike townland/council, "county" is
+        // a semantic grouping node with no widget of its own — the actual
+        // reference field is county_value (county_type only classifies it).
+        cy.get('.county_value').filter(':visible').first().scrollIntoView();
+        cy.get('.county_value').filter(':visible').first().find('.select2-selection').first().click();
+        cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+        cy.get('.select2-results__option').contains('Antrim').click();
         cy.get('.card_component.postcode_value input').filter(':visible').first().type('test');
+        // Townland is a concept dropdown; open it and pick a specific townland.
+        cy.get('.townland').filter(':visible').first().scrollIntoView();
+        cy.get('.townland').filter(':visible').first().find('.select2-selection').first().click();
+        cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+        cy.get('.select2-results__option').contains('Abohill').click();
         // Council is a concept dropdown; open it and pick a specific authority.
         cy.get('.council').filter(':visible').first().scrollIntoView();
         cy.get('.council').filter(':visible').first().find('.select2-selection').first().click();
         cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
         cy.get('.select2-results__option').contains('Causeway Coast and Glens').click();
+
+        // Area Assignments is a repeatable card: pick Area Type and Area
+        // Name, click Add, then confirm both picked values now appear in
+        // the tile list Arches renders above the form.
+        cy.get('.card_component.area_type').filter(':visible').first().scrollIntoView();
+        cy.get('.card_component.area_type').filter(':visible').first()
+            .find('.select2-selection').first().click();
+        cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more')
+            .first().invoke('text').then((areaTypeText) => {
+                areaTypeText = areaTypeText.trim();
+                cy.get('.select2-results__option').contains(areaTypeText).click();
+
+                cy.get('.card_component.area_name').filter(':visible').first().scrollIntoView();
+                cy.get('.card_component.area_name').filter(':visible').first()
+                    .find('.select2-selection').first().click();
+                cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+                cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more')
+                    .first().invoke('text').then((areaNameText) => {
+                        areaNameText = areaNameText.trim();
+                        cy.get('.select2-results__option').contains(areaNameText).click();
+
+                        cy.get('.btn-success').contains('Add').click();
+                        cy.wait(2000);
+                        // The new tile renders above the form, off the current
+                        // scroll position, so it's clipped by the scrollable
+                        // container until scrolled into view.
+                        cy.contains(areaTypeText).scrollIntoView().should('be.visible');
+                        cy.contains(areaNameText).scrollIntoView().should('be.visible');
+                    });
+            });
+
+        // Location Descriptions is also a repeatable card: type free text,
+        // click Add, and confirm it shows up in the tile list. Description
+        // Type is NOT filled here: this card's own workflow step config
+        // (address-step's Location Descriptions componentConfig in
+        // heritage-asset-designation-workflow.json) lists that node's real
+        // graph id (4680d6d9-9167-4607-bf72-9d4fb708c74d) in hiddenNodes, so
+        // the widget renders with visible: false (display:none) on this step
+        // and can never be interacted with here — confirmed by inspecting
+        // the live DOM, not a scroll/render-timing issue.
+        //
+        // location_description itself is a rich-text-widget (CKEditor), not
+        // a plain <input>, so cy.typeInCard (which only matches
+        // input.form-control) can never find it either; use type_ckeditor
+        // instead, same as other specs' rich-text fields.
+        cy.type_ckeditor('location_description', 'Test location description');
+        cy.get('.btn-success').contains('Add').click();
+        cy.wait(2000);
+        cy.contains('Test location description').scrollIntoView().should('be.visible');
+
         // Walk the remaining tabs. Each step needs its own wait — two
         // back-to-back workflowNext() calls re-click the same stale button and
         // silently skip a tab.
         cy.workflowNext();          // Location Details -> Map
         cy.wait(3000);
+        // Map tab — besides the draw widget, it has a Feature Shape concept
+        // dropdown (alias feature_shape); pick an option for it.
+        cy.get('.card_component.feature_shape').filter(':visible').first().scrollIntoView();
+        cy.get('.card_component.feature_shape').filter(':visible').first()
+            .find('.select2-selection').first().click();
+        cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more')
+            .first().click();
+        cy.wait(1000);
         cy.workflowNext();          // Map -> Assessment
         cy.wait(3000);
+        // Assessment tab — the workflow config marks Designation Description
+        // Type and Designation Description as required on this step (see
+        // nodeOptions on assessment-step in heritage-asset-designation-workflow.json),
+        // so Next Step won't advance until they're filled in and added.
+        cy.get('.card_component.designation_description_type').filter(':visible').first().scrollIntoView();
+        cy.get('.card_component.designation_description_type').filter(':visible').first()
+            .find('.select2-selection').first().click();
+        cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more')
+            .first().click();
+        cy.typeInCard('designation_description', 'Test designation description');
+        cy.get('.btn-success').contains('Add').click();
+        cy.wait(2000);
+
+        // Designation and Protection Assignment — single tile, all its
+        // visible fields (everything not in the step's hiddenNodes list).
+        const designationConceptFields = [
+            'scheduling_criteria', 'listing_criteria', 'land_use_site', 'grade_metatype', 'grade',
+            'date_qualifier', 'recommended_designation_type', 'risk_status_metatype', 'designation_name_type',
+            'local_heritage_list_criteria_metatype', 'designation_or_protection_metatype',
+            'date_qualifier_metatype', 'designation_name_metatype', 'designation_name_use_metatype',
+        ];
+        designationConceptFields.forEach((field) => cy.pickCardOption(field));
+        cy.typeInCard('land_folio_number', 'Test folio number');
+
+        // Records NI (CM Reference) — single tile.
+        cy.pickCardOption('cm_reference_description_type');
+        cy.typeInCard('cm_reference_number', 'Test CM reference number');
+        cy.pickCardOption('cm_reference_source');
+        cy.typeInCard('cm_reference_description', 'Test CM reference description');
+        cy.pickCardOption('cm_reference_description_metatype');
+
+        // HMC Reference — single tile.
+        cy.typeInCard('hmc_reference_number', 'Test HMC reference number');
+        cy.pickCardOption('hmc_reference_source');
+
         cy.workflowNext();          // Assessment -> Relevant Parties
         cy.wait(4000);
+        // Relevant Parties tab — Applicant, Agent and Field Worker are
+        // hidden on this step (see hiddenNodes on relevant-parties-step),
+        // leaving Owner and Occupier as the visible resource-instance
+        // relationships, plus their role/metatype concept dropdowns.
+        cy.pickRelationshipFirst('Owner');
+        cy.pickCardOption('owner_role_type');
+        cy.pickCardOption('owner_role_metatype');
+        cy.pickRelationshipFirst('Occupier');
+        cy.pickCardOption('occupier_role_type');
+        cy.pickCardOption('occupier_metatype');
+        cy.wait(2000);
         cy.workflowNext();          // Relevant Parties -> Documentation
         cy.wait(4000);
+        // Documentation tab — upload a fixture file through the dropzone.
+        // The dropzone's own <input type="file"> is hidden, hence
+        // { force: true }.
+        cy.get('.bord-top > .btn', { timeout: 60000 }).contains('Select Files');
+        cy.wait(2000);
+        cy.get('input.dz-hidden-input').first().selectFile(UPLOAD_FIXTURE, { force: true });
+        cy.get('.card-component', { timeout: 30000 }).should('contain.text', UPLOAD_NAME);
+        cy.contains('files uploaded').should('be.visible');
+        // An attached-but-unsaved file changes the footer button to "Save and
+        // Continue" instead of "Next Step". Clicking it saves/uploads the
+        // file and stays on this tab; "Next Step" then appears and actually
+        // advances.
+        cy.get('.tabbed-workflow-footer-button-container')
+            .find('button:not([disabled])')
+            .contains('Save and Continue')
+            .click();
+        cy.wait(3000);
         cy.workflowNext();          // Documentation -> Letters
         cy.wait(4000);
         cy.workflowNext();          // Letters -> Approvals
@@ -118,6 +256,39 @@ describe('Going through the HA Designation Workflow', function () {
         cy.fillDate('local_authority_notification_date_value');
         cy.fillDate('statutory_consultee_notification_date_value');
         cy.fillDate('director_sign_off_date_value');
+
+        // Every date above has its own qualifier + qualifier metatype concept
+        // dropdowns alongside it.
+        const approvalQualifierFields = [
+            'assessment_date_qualifier', 'assessment_date_qualifier_metatype',
+            'desg_approved_date_qualifier', 'desg_approved_date_qualifier_metatype',
+            'owner_notified_date_qualifier', 'owner_notified_date_qualifier_metatype',
+            'local_authority_notification_date_qualifier', 'local_authority_notification_date_qualifier_metatype',
+            'statutory_consultee_notification_date_qualifier', 'statutory_consultee_notification_date_qualifier_metatype',
+            'director_sign_off_date_qualifier', 'director_sign_off_date_qualifier_metatype',
+        ];
+        approvalQualifierFields.forEach((field) => cy.pickCardOption(field));
+
+        // Role type/metatype for the two sign-off people (Assessment Done By,
+        // Approved By) are plain concept dropdowns, independent of the
+        // sign-off widgets themselves.
+        cy.pickCardOption('assessment_done_by_role_type');
+        cy.pickCardOption('assessment_done_by_role_metatype');
+        cy.pickCardOption('desg_approver_role_type');
+        cy.pickCardOption('desg_approver_role_metatype');
+
+        cy.typeInCard('council_response', 'Test council response');
+
+        // Assessment Done By / Approved By are user-to-model-select sign-off
+        // widgets: clicking only sets a value if the logged-in user's Person
+        // belongs to one of the configured signOffGroups. The admin login used
+        // here isn't in those groups, so (as already established in
+        // 07_incident_report.cy.js) the widget just renders "You do not have
+        // permission to sign off" — confirm the cards are present rather than
+        // trying to click them.
+        cy.get('.card_component.assessment_done_by_value').should('be.visible');
+        cy.get('.card_component.desg_approved_by').should('be.visible');
+
         // Advance off Approvals. Match on the button text rather than
         // '> .btn-success > .verbose' — the footer's forward control is a plain
         // "Save" on the last tabs, so that structural selector is not always there.
@@ -126,9 +297,35 @@ describe('Going through the HA Designation Workflow', function () {
             .contains(/Save and Continue|Next Step|Save/)
             .click();
         cy.wait(4000);
+
+        // Apply Revision tab — the summary lists back everything we filled
+        // in on the Approvals tab (see approval-summary.js's renderNodeIds).
+        // The two sign-off fields should read "Not provided": no login used
+        // in this suite belongs to a signOffGroup, so those widgets could
+        // never be filled (see the Approvals tab comment above).
+        [
+            'Assessment Date', 'Approved Date', 'Owner Notified Date',
+            'Local Authority Notification Date', 'Statutory Consultee Notification Date',
+            'Director Sign Off Date',
+        ].forEach((label) => {
+            cy.contains('.block-item', `${label}:`).should('not.contain.text', 'Not provided');
+        });
+        ['Assessment Done By', 'Approved By'].forEach((label) => {
+            cy.contains('.block-item', `${label}:`).should('contain.text', 'Not provided');
+        });
+
+        // "Apply Revision" stays disabled until the acknowledgement checkbox
+        // is checked (see hasAcknowledgedProcess in start-remap-and-merge.js).
+        cy.get('.widgets > :nth-child(2) > .btn').should('be.disabled');
         cy.get('.form-checkbox').click();
+        cy.get('.widgets > :nth-child(2) > .btn').should('not.be.disabled');
         cy.get('.widgets > :nth-child(2) > .btn > span').click();
-        cy.get('.widgets > :nth-child(2) > .btn > span').click();
+
+        // Clicking it raises an "Are you sure?" confirm alert; confirming
+        // POSTs /remap-revision-to-monument and redirects back to the
+        // workflow launcher once the merge is done.
+        cy.get('.ep-alert-blue', { timeout: 10000 }).should('contain.text', 'Are you sure?');
         cy.get('.ep-form-alert-buttons > .btn-primary > span').click();
-    })
-})
+        cy.location('pathname', { timeout: 30000 }).should('include', '/plugins/init-workflow');
+    });
+});
