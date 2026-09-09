@@ -40,15 +40,23 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.wait(500);
         cy.workflowNext();
 
-        // Repository Storage Location
+        // Repository Storage Location. Responsible Team is a
+        // resource-instance-select (Archive Source.json, widget
+        // ff3c400a-76ec-...), so open and pick it the same way every other
+        // relationship field in this suite does; the previous blind
+        // `.siblings('.row').click()` didn't select anything. Storage
+        // Building Name is a plain text widget (Associated Archive
+        // Material.json, widget_id 10000000-...-000000000001, same family as
+        // Storage Room/Shelf/Box Name below it), so type into it directly
+        // rather than clicking a sibling element.
         cy.wait(1000);
-        cy.get('span').contains('Responsible Team').should('be.visible').siblings('.row').click({force: true});
-        cy.wait(500);
-        cy.get('span').contains('Storage Building Name').should('be.visible').siblings('.col-xs-12').click({force: true});
+        cy.pickRelationshipFirst('Responsible Team');
+        cy.wait(1000);
+        cy.get('input[aria-label="Storage Building Name"]').should('be.visible').type('Test Storage Building Name');
         cy.get('input[aria-label="Storage Room Name"]').should('be.visible').type('Test Storage Room Name');
         cy.get('input[aria-label="Storage Shelf Name"]').should('be.visible').type('Test Storage Shelf Name');
         cy.get('input[aria-label="Storage Box Name"]').should('be.visible').type('Test Storage Box Name');
-        cy.contains('Save and Continue').click();
+        cy.workflowNext();          // Repository Storage Location -> Archive Loan History
 
         // Archive Loan History
         cy.wait(500);
@@ -61,5 +69,9 @@ describe('Going through the Archive Cataloguing Workflow', function () {
             .type('28-07-2026{enter}', { force: true });
         cy.get('.workflow-component-element').get('.btn.btn-workflow-tile.btn-success').should('be.visible').contains('Add').click();
         cy.get('.workflow-top-control > .btn-success > .verbose').click();
+
+        // Workflow completes and returns to the workflow launcher list.
+        cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');
+        cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     });
 });
