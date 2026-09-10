@@ -40,9 +40,9 @@ function viewModel(params) {
     '1edc61a9-b64b-51ae-9077-536908761903': 'Historic Parks and Gardens Number'
   }
 
-  const MONUMENT_COUNT_NODE = "dc809034-04ba-11f0-8d60-9e7c335817fb";
-  const SCHEDULED_MONUMENT_COUNT_NODE = "49d44590-04bb-11f0-8d60-9e7c335817fb";
-  const HA_NODE = "2b4cfdac-04ba-11f0-9182-9e7c335817fb";
+  const MONUMENT_COUNT_NODE = "a7d5d94e-1094-568a-ab49-bdd9362a1485";
+  const SCHEDULED_MONUMENT_COUNT_NODE = "4cbfed23-7989-500c-9a0f-c63307d15beb";
+  const HA_NODE = "0f74af35-a8d7-5a12-953a-1773d3981fec";
 
   this.labels = params.labels || [];
 
