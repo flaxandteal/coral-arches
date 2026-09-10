@@ -110,6 +110,7 @@ Cypress.Commands.add("pickDomainByLabel", (labelPrefix, optionText) => {
     cy.get('.select2-results__option')
         .not('.loading-results')
         .not('.select2-results__option--load-more')
+        .not('.select2-results__message')
         .contains(optionText)
         .click();
 });
