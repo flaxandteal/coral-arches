@@ -46,17 +46,20 @@ describe('Going through the Incident Report', function () {
         // Record of the incident
         cy.wait(4000)
 
-        // cy.get('aria-label="Damage Type"').contains('Select an option').click({force: true}); // Damage type dropdown
-        // cy.wait(2000);
-        // cy.get('.select2-results__option').first().click();
+        cy.get('.card_component.damage_type .select2-selection').click(); // Damage type dropdown
+        cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more').not('.select2-results__message').first().click();
+        cy.wait(1000);
 
-        // cy.get('.card_component.material_fabric_damage_type').contains('Select an option').click({force: true}); // Material/ fabric damage type dropdown
-        // cy.wait(2000);
-        // cy.get('.select2-results__option').first().click({force: true});
+        cy.get('.card_component.material_fabric_damage_type .select2-selection').click(); // Material/Fabric damage type dropdown
+        cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more').not('.select2-results__message').first().click();
+        cy.wait(1000);
 
-        // cy.get('.card_component.component_damage_type').contains('Select an option').click({force: true}); // Component damage type
-        // cy.wait(2000);
-        // cy.get('.select2-results__option').first().click({force: true});
+        cy.get('.card_component.component_damage_type .select2-selection').click(); // Component damage type dropdown
+        cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more').not('.select2-results__message').first().click();
+        cy.wait(1000);
 
         /*
             section for notes rich text editor
