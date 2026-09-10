@@ -100,10 +100,21 @@ class NotificationStrategy():
         return self.request.build_absolute_uri(f"/index.htm")
     
     def get_domain_value_string(self, value_id, node_id):
+        # `reference` datatype nodes (arches_controlled_lists) carry their own
+        # label text on the value itself: [{"uri", "labels": [...], "list_id"}].
+        # Older `domain-value-list` nodes instead store a bare option id and
+        # need the label looked up from the node's config.
+        if isinstance(value_id, list):
+            for reference in value_id:
+                for label in reference.get("labels", []):
+                    if label.get("language_id") == "en" and label.get("valuetype_id") == "prefLabel":
+                        return label.get("value")
+            return None
+
         node = models.Node.objects.filter(
-            pk = node_id,   
+            pk = node_id,
         ).first()
-        options = node.config.get("options")
+        options = node.config.get("options") or []
         value_string = next((option.get("text").get("en") for option in options if option.get("id") == value_id), None)
         return value_string
 

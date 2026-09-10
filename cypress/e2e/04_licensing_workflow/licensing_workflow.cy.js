@@ -57,9 +57,12 @@ describe('Going through the licensing Workflow', function () {
         cy.fillDate('actual_end_date');
         cy.type_ckeditor('editor3', 'test, Description');
         cy.wait(2000);
-        cy.get('[aria-label="Stage of Application, Received"]').click();
+        // Stage of Application starts unset (its old init default pointed at a
+        // stale/orphaned reference id and has been nulled out), so match by
+        // the card's alias rather than a hard-coded current-value label.
+        cy.get('.card_component.application_stage_type .select2-selection').scrollIntoView().click();
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more').not('.select2-results__message').first().click();
         // issue with multi select
         // cy.get('[label="Excavation Reason(s)"]').click();
         // cy.wait(2000);
@@ -76,16 +79,16 @@ describe('Going through the licensing Workflow', function () {
         cy.get('.council').filter(':visible').first().find('.select2-selection').first().click();
         cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
         cy.get('.select2-results__option').contains('Causeway Coast and Glens').click();
-        // #coordinatePoint is a unique id on this step, so target it directly
-        // rather than through the widget's internal row/form-group/nth-child
-        // structure (irishGrid.htm), which is presentational and not a stable
-        // contract. Blur afterwards to drop hasFocus/isSelected and trigger the
-        // widget's own preview/validation computed (see tm65point.js).
-        cy.get('#coordinatePoint').filter(':visible').first()
-            .clear()
-            .type('J1025169962')
-            .blur();
-        cy.type_ckeditor('editor7', 'test, Description');
+    }
+
+    // Geospatial Details renders the standard Mapbox GL geometry widget, not
+    // a text-entry coordinate field. No Mapbox token is configured in this
+    // dev environment ("An API access token is required to use Mapbox GL"),
+    // so the map itself cannot be driven headlessly -- same situation as the
+    // Map tab skipped in 07_incident_report. The step is optional
+    // (required: false), so just confirm it rendered and move on.
+    function fillGeospatialDetailsTab() {
+        cy.contains('Geospatial Coordinates');
     }
 
     function fillAdditionalFilesTab() {
@@ -101,9 +104,12 @@ describe('Going through the licensing Workflow', function () {
     }
 
     function fillRecordDecisionTab() {
-        cy.get('[aria-label="Cur Grade E Decision, Grant licence"]').click();
+        // Cur Grade E Decision is now a reference (controlled-list) field, so
+        // its current-value label text no longer includes "Grant licence" --
+        // match by aria-label prefix and take whatever option is available.
+        cy.get('.select2-selection[aria-label^="Cur Grade E Decision, "]').filter(':visible').first().scrollIntoView().click();
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more').not('.select2-results__message').first().click();
         cy.wait(2000);
         cy.pickRelationshipFirst('Made By');
         cy.wait(1000);
@@ -151,9 +157,15 @@ describe('Going through the licensing Workflow', function () {
         cy.fillDate('classification_date_value');
         cy.pickRelationshipFirst('Classified By');
         cy.wait(1000);
-        cy.get('[type="radio"]').first().click({force: true});
-        cy.get('[type="radio"]').first().click({force: true});
-        cy.get('[type="radio"]').first().click({force: true});
+        // GIS Dataset Received / GIS Dataset Checked & Correct / Archaeology
+        // Found used to be booleans (radio buttons); they are now reference
+        // (controlled-list) yes/no fields rendered as select2 dropdowns.
+        cy.pickCardOption('gis_dataset_received');
+        cy.wait(1000);
+        cy.pickCardOption('gis_dataset_checked_correct');
+        cy.wait(1000);
+        cy.pickCardOption('archaeology_found');
+        cy.wait(1000);
         cy.fillDate('date_reported_value');
         // NB: click() takes a SINGLE options object — click({force:true},
         // {multiple:true}) is read as (position, options), so `multiple` is
@@ -168,9 +180,24 @@ describe('Going through the licensing Workflow', function () {
     // (licence-complete) transition, step 11/11, so the workflow is not
     // actually complete yet — call this twice, once per step.
     function saveAndConfirmAlert() {
-        cy.get('.tabbed-workflow-footer-button-container')
-            .contains(/Save and Complete|Save and Continue|Next Step|Save/)
-            .click({ force: true });
+        // On the final (Summary) step the footer only shows "Previous Step" --
+        // completion instead happens via the top "Save and Complete Workflow"
+        // control, so fall back to that when the footer has no forward button.
+        cy.get('body').then(($b) => {
+            const $footerBtn = $b
+                .find('.tabbed-workflow-footer-button-container')
+                .filter((_, el) => /Save and Complete|Save and Continue|Next Step|Save/.test(el.textContent));
+            if ($footerBtn.length) {
+                cy.get('.tabbed-workflow-footer-button-container')
+                    .contains(/Save and Complete|Save and Continue|Next Step|Save/)
+                    .click({ force: true });
+            } else {
+                cy.get('.workflow-top-control')
+                    .contains(/Save and [Cc]omplete Workflow/)
+                    .scrollIntoView()
+                    .click({ force: true });
+            }
+        });
         cy.wait(4000);
         cy.get('body').then(($b) => {
             if ($b.find('.ep-form-alert-buttons .btn').length) {
@@ -189,6 +216,8 @@ describe('Going through the licensing Workflow', function () {
         fillLocationDetailsTab();
         cy.workflowNext();          // Location Details   -> Geospatial Details
         cy.wait(4000);
+
+        fillGeospatialDetailsTab();
         cy.workflowNext();          // Geospatial Details -> Additional Files
         cy.wait(4000);
 
