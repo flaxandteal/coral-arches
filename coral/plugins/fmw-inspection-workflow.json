@@ -42,7 +42,7 @@
                   "requiredParentTiles": [
                     {
                       "lookupName": "locationData",
-                      "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
+                      "parentNodegroupId": "de90c7cf-6764-5f5b-bfb3-73369cfd9021"
                     }
                   ],
                   "labels": [
@@ -102,13 +102,20 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "083f5538-ca61-11ee-afca-0242ac180006",
-                    "083eb0b0-ca61-11ee-afca-0242ac180006",
-                    "083ec456-ca61-11ee-afca-0242ac180006",
-                    "083ecd52-ca61-11ee-afca-0242ac180006",
-                    "083e9df0-ca61-11ee-afca-0242ac180006"
+                    "0e6b2800-8d00-52e4-aed6-2cfaa460bed7",
+                    "98ff94f1-b809-5117-82c0-67d90e8a30bb",
+                    "f849caa2-3582-5d90-b89c-8700280408f5",
+                    "852539e2-2993-54ef-8475-4e1ebe7196b8",
+                    "def5f965-2f1b-534a-86b7-21d5ac0395a0",
+                    "264f5bc3-1cbc-54cc-b92e-2bca15c1439d",
+                    "01527009-9bc1-508c-9007-fe4b2cefe77d",
+                    "be67266b-f3d9-5a9e-b746-1ee11abe4275",
+                    "67ac580d-661e-52bf-9fd0-952693555fc8",
+                    "00d803a7-7e08-5ac9-8e64-a873d8cf5a2c",
+                    "aaaaf8b7-5445-5b41-9527-653a297e5b4a",
+                    "068b8140-53b1-5241-b28e-e0f8835c92e8"
                   ],
-                  "nodegroupid": "083df90e-ca61-11ee-afca-0242ac180006",
+                  "nodegroupid": "ac540276-67b2-5aa9-aef2-8e95de43a70f",
                   "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']",
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
@@ -178,10 +185,10 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "40eff4ce-893a-11ea-ae2e-f875a44e0e11",
-                    "7224417b-893a-11ea-b383-f875a44e0e11"
+                    "1cf746f3-1853-11eb-9bba-f875a44e0e11",
+                    "1cf746f4-1853-11eb-88e6-f875a44e0e11"
                   ],
-                  "nodegroupid": "40eff4c9-893a-11ea-ac3a-f875a44e0e11",
+                  "nodegroupid": "066cb8f0-a251-11e9-85d5-00224800b26d",
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
                       "config": {
@@ -244,9 +251,9 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "a1daff8e-0c52-11ef-a9bf-0242ac140006"
+                    "dabcfb5c-a7d0-5224-b824-da3ab24c7d00"
                   ],
-                  "nodegroupid": "eabbfd96-0c4f-11ef-a9bf-0242ac140006",
+                  "nodegroupid": "b218c165-a03e-5bae-ac5a-8422a91af211",
                   "semanticName": "Composite Score"
                 },
                 "tilesManaged": "one",
@@ -257,7 +264,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "fc5c8c46-fb15-11ee-b5d2-0242ac190006"
+                  "nodegroupid": "b3390b37-4ff0-5717-a4e4-0f5c36b5ea36"
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -267,7 +274,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "e26ffc04-fb16-11ee-b5d2-0242ac190006",
+                  "nodegroupid": "1809d513-c297-5d76-84e7-3a7a072350d3",
                   "labels": [
                     [
                       "Description",
@@ -307,7 +314,6 @@
                     "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
                     "4ea4c884-184f-11eb-b64d-f875a44e0e11",
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba",
-                    "4ea4a197-184f-11eb-9152-f875a44e0e11",
                     "4ea4a19a-184f-11eb-aef8-f875a44e0e11",
                     "53388daa-24d1-11ef-a3a4-0242ac130006",
                     "54131242-24cf-11ef-a3a4-0242ac130006",
@@ -337,12 +343,12 @@
             "componentConfigs": [
               {
                 "parameters": {
-                  "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
+                  "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "c9e13300-386b-11ef-8caf-0242ac120006"
+                    "8eeeb993-575e-56e6-b12a-26abd61c0146"
                   ],
-                  "nodegroupid": "083e226c-ca61-11ee-afca-0242ac180006",
+                  "nodegroupid": "ea3cf6bc-4cd8-5eb3-b9aa-dc81e3a0bc2a",
                   "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Irish Grid Reference"
                 },
@@ -369,7 +375,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
+                  "nodegroupid": "1b987d55-2867-51c2-ab2a-f60302efa5b8",
                   "parenttileid": "['start-step']['system-reference'][0]['resourceid']['locationData']"
                 },
                 "tilesManaged": "one",
@@ -422,12 +428,10 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "93199292-fb24-11ee-838d-0242ac190006",
+                  "nodegroupid": "9a1a435f-a540-5c98-96c7-fdb9b54d29d9",
                   "hiddenNodes": [
-                    "5c9ac7f6-eedd-11ef-b863-0242ac120006",
-                    "903b4ec8-eedd-11ef-b863-0242ac120006",
-                    "9bcf2ec2-018a-4ccc-a895-f45ffc22239e",
-                    "bacad6b8-eedd-11ef-829a-0242ac120006"
+                    "54d1c99f-0d8e-5096-9065-3c7aef2b3e73",
+                    "11e1ddbb-03c5-5284-9eed-164fdf599ca1"
                   ],
                   "nodeOptions": {
                     "42ec3232-fb26-11ee-838d-0242ac190006": {

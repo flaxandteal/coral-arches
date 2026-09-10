@@ -11,34 +11,33 @@ function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
   this.disabled = ko.observable(true);
 
-  this.CONDITION_SCORE_NODE_ID = '73679068-0c52-11ef-a9bf-0242ac140006';
-  this.RISK_SCORE_NODE_ID = '094eb7ce-0c52-11ef-8f48-0242ac140006';
+  this.CONDITION_SCORE_NODE_ID = 'd1cd09d6-bc22-59e6-b840-46e8a1514442';
+  this.RISK_SCORE_NODE_ID = '402dc4cb-4825-5a2b-8366-a5aea6045054';
 
-  this.scoreLookup = {
-    'd81fa421-35f3-4f30-95fa-c042f424c83a': 1,
-    '56342ba4-538c-4650-8285-23af0a3cc523': 2,
-    '7b758df3-5722-4c76-8785-ea9a715e420e': 3,
-    'd2db1732-5b6e-4a7d-b84f-8bff6e541cff': 4,
-    'ef491947-178e-4f62-92ac-192fa6424592': 5
+  // Condition Score / Risk Score are reference (controlled-list) fields, so
+  // the tile value is [{uri, labels, list_id}]; each list item's prefLabel
+  // is itself the numeric score ("1".."5"), so just parse it directly.
+  this.getScoreValue = (value) => {
+    const reference = value && value[0];
+    const label = reference?.labels?.find((l) => l.valuetype_id === 'prefLabel');
+    const parsed = label ? parseInt(label.value, 10) : NaN;
+    return isNaN(parsed) ? 0 : parsed;
   };
 
   this.totalCompositeScore = ko.observable(
-    this.tile.data[this.CONDITION_SCORE_NODE_ID]() && this.tile.data[this.RISK_SCORE_NODE_ID]()
-      ? this.scoreLookup[this.tile.data[this.CONDITION_SCORE_NODE_ID]()] *
-          this.scoreLookup[this.tile.data[this.RISK_SCORE_NODE_ID]()]
-      : 0
+    this.getScoreValue(this.tile.data[this.CONDITION_SCORE_NODE_ID]()) *
+      this.getScoreValue(this.tile.data[this.RISK_SCORE_NODE_ID]())
   );
 
   this.tile.data[this.CONDITION_SCORE_NODE_ID].subscribe((value) => {
-    const conditionScoreValue = this.scoreLookup[value] || 0;
-    const riskScoreValue = this.scoreLookup[this.tile.data[this.RISK_SCORE_NODE_ID]()] || 0;
+    const conditionScoreValue = this.getScoreValue(value);
+    const riskScoreValue = this.getScoreValue(this.tile.data[this.RISK_SCORE_NODE_ID]());
     this.totalCompositeScore(conditionScoreValue * riskScoreValue);
   }, this);
 
   this.tile.data[this.RISK_SCORE_NODE_ID].subscribe((value) => {
-    const riskScoreValue = this.scoreLookup[value] || 0;
-    const conditionScoreValue =
-      this.scoreLookup[this.tile.data[this.CONDITION_SCORE_NODE_ID]()] || 0;
+    const riskScoreValue = this.getScoreValue(value);
+    const conditionScoreValue = this.getScoreValue(this.tile.data[this.CONDITION_SCORE_NODE_ID]());
     this.totalCompositeScore(conditionScoreValue * riskScoreValue);
   }, this);
 }
