@@ -139,8 +139,9 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
 });
 
 Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
-    cy.get(`.widget-wrapper.${cardClass}`).filter(':visible').first().as('dateCard');
+    cy.get(`.widget-wrapper.${cardClass}`).first().as('dateCard');
     cy.get('@dateCard').scrollIntoView();
+    cy.get('@dateCard').filter(':visible').should('exist');
     cy.get('@dateCard').find('input.form-control').filter(':visible').first()
         .type(`${date}{enter}`, { force: true });
     cy.get('@dateCard').find('input.form-control').filter(':visible').first()
