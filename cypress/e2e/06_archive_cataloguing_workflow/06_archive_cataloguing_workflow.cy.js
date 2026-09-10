@@ -45,14 +45,16 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         // ff3c400a-76ec-...), so open and pick it the same way every other
         // relationship field in this suite does; the previous blind
         // `.siblings('.row').click()` didn't select anything. Storage
-        // Building Name is a plain text widget (Associated Archive
-        // Material.json, widget_id 10000000-...-000000000001, same family as
-        // Storage Room/Shelf/Box Name below it), so type into it directly
-        // rather than clicking a sibling element.
+        // Building Name is now a controlled-list reference widget
+        // (Archive Source.json node f1553fe4-ba03-..., datatype "reference"),
+        // rendered as a select2 dropdown rather than a text input, so pick
+        // an option like the other reference widgets in this suite instead
+        // of typing into it. Storage Room/Shelf/Box Name below it are still
+        // plain string widgets.
         cy.wait(1000);
         cy.pickRelationshipFirst('Responsible Team');
         cy.wait(1000);
-        cy.get('input[aria-label="Storage Building Name"]').should('be.visible').type('Test Storage Building Name');
+        cy.pickOptionByLabelPrefix('Storage Building Name, ');
         cy.get('input[aria-label="Storage Room Name"]').should('be.visible').type('Test Storage Room Name');
         cy.get('input[aria-label="Storage Shelf Name"]').should('be.visible').type('Test Storage Shelf Name');
         cy.get('input[aria-label="Storage Box Name"]').should('be.visible').type('Test Storage Box Name');
