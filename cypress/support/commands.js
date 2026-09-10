@@ -70,9 +70,14 @@ Cypress.Commands.add("loginAs", (groupName) => {
     });
 });
 
+// .widget-wrapper (not .card_component) is the selector here: .card_component
+// only gets added by default.htm's componentCssClasses binding, which
+// default-card-util and file-template cards (e.g. Records NI, HMC Reference,
+// Letters) never apply. .widget-wrapper comes from the widget's own template
+// and is present no matter which card component renders it.
 Cypress.Commands.add("pickCardOption", (cardClass, index = 0) => {
-    cy.get(`.card_component.${cardClass}`).scrollIntoView();
-    cy.get(`.card_component.${cardClass}`).find('.select2-selection').first().click();
+    cy.get(`.widget-wrapper.${cardClass}`).scrollIntoView();
+    cy.get(`.widget-wrapper.${cardClass}`).find('.select2-selection').first().click();
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
     cy.get('.select2-results__option')
         .not('.loading-results')
@@ -134,7 +139,7 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
 });
 
 Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
-    cy.get(`.card_component.${cardClass}`).filter(':visible').first().as('dateCard');
+    cy.get(`.widget-wrapper.${cardClass}`).filter(':visible').first().as('dateCard');
     cy.get('@dateCard').scrollIntoView();
     cy.get('@dateCard').find('input.form-control').filter(':visible').first()
         .type(`${date}{enter}`, { force: true });
@@ -145,7 +150,7 @@ Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
 
 Cypress.Commands.add("typeInCard", (cardClass, text) => {
     const input = () =>
-        cy.get(`.card_component.${cardClass} input.form-control`).filter(':visible').first();
+        cy.get(`.widget-wrapper.${cardClass} input.form-control`).filter(':visible').first();
     input().scrollIntoView();
     input().clear({ force: true });
     input().type(text, { force: true });
@@ -153,7 +158,7 @@ Cypress.Commands.add("typeInCard", (cardClass, text) => {
 });
 
 Cypress.Commands.add("setBooleanTrue", (cardClass) => {
-    const card = `.card_component.${cardClass}`;
+    const card = `.widget-wrapper.${cardClass}`;
     cy.get(`${card} label[role="radio"]`).filter(':visible').first().scrollIntoView();
     cy.get(`${card} label[role="radio"]`).filter(':visible').first().click({ force: true });
     cy.get(`${card} label[aria-checked="true"]`).should('have.length', 1);
@@ -225,22 +230,29 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 Cypress.Commands.add("type_ckeditor", (element, content) => {
+    // A CKEDITOR instance is registered as soon as creation starts, well
+    // before its iframe document finishes loading. Calling setData() on a
+    // not-yet-ready instance gets silently discarded once CKEditor finishes
+    // initializing and loads the field's original (empty) value, leaving
+    // the editor visibly empty even though this command reported success.
+    // So wait for a ready, on-screen instance before touching it, not just
+    // for any instance to be registered.
+    const findVisibleReady = (win) => {
+        const names = Object.keys(win.CKEDITOR.instances);
+        return names.find((n) => {
+            const inst = win.CKEDITOR.instances[n];
+            const el = inst && inst.container && inst.container.$;
+            return inst.status === 'ready' && el && el.offsetParent !== null;
+        });
+    };
     cy.window().should((win) => {
         expect(win.CKEDITOR, 'CKEDITOR global to exist').to.exist;
-        expect(
-            Object.keys(win.CKEDITOR.instances).length,
-            'at least one CKEDITOR instance'
-        ).to.be.greaterThan(0);
+        const preferred = win.CKEDITOR.instances[element];
+        const ready = (preferred && preferred.status === 'ready') || findVisibleReady(win);
+        expect(ready, 'a visible, ready CKEDITOR instance to exist').to.be.ok;
     }).then((win) => {
-        let name = element;
-        if (!win.CKEDITOR.instances[name]) {
-            const names = Object.keys(win.CKEDITOR.instances);
-            name = names.find((n) => {
-                const inst = win.CKEDITOR.instances[n];
-                const el = inst && inst.container && inst.container.$;
-                return el && el.offsetParent !== null;
-            }) || names[names.length - 1];
-        }
+        const preferred = win.CKEDITOR.instances[element];
+        const name = (preferred && preferred.status === 'ready') ? element : findVisibleReady(win);
         const inst = win.CKEDITOR.instances[name];
         inst.setData(content);
         inst.updateElement();
@@ -249,7 +261,7 @@ Cypress.Commands.add("type_ckeditor", (element, content) => {
 });
   
 Cypress.Commands.add("typeRichText", (cardClass, content) => {
-    cy.get(`.card_component.${cardClass}`).should('exist');
+    cy.get(`.widget-wrapper.${cardClass}`).should('exist');
     cy.window().should((win) => {
         expect(win.CKEDITOR, 'CKEDITOR global to exist').to.exist;
         expect(
@@ -259,9 +271,9 @@ Cypress.Commands.add("typeRichText", (cardClass, content) => {
     }).then((win) => {
         const name = Object.keys(win.CKEDITOR.instances).find((n) => {
             const el = win.CKEDITOR.instances[n]?.container?.$;
-            return el && el.closest(`.card_component.${cardClass}`);
+            return el && el.closest(`.widget-wrapper.${cardClass}`);
         });
-        expect(name, `CKEDITOR instance inside .card_component.${cardClass}`).to.exist;
+        expect(name, `CKEDITOR instance inside .widget-wrapper.${cardClass}`).to.exist;
         const inst = win.CKEDITOR.instances[name];
         inst.setData(content);
         inst.updateElement();
