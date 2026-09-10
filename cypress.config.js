@@ -23,7 +23,6 @@ module.exports = {
   video: true,
   e2e: {
     chromeWebSecurity: false,
-    experimentalStudio: true,
     // The licensing spec now waits for each slow step to actually commit, so a
     // single test can hold the browser for five-plus minutes and the Electron
     // renderer runs out of heap ("We detected that the Electron Renderer
