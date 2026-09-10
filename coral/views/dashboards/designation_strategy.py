@@ -1,25 +1,40 @@
 from datetime import datetime
 from dateutil import parser
 from coral.views.dashboards.base_strategy import TaskStrategy
-from coral.views.dashboards.dashboard_utils import Utilities
 from querysets_shim.view_models import ConceptListValueViewModel, ConceptValueViewModel
 from coral.views.dashboards.sql_query.builder import build_query
 from coral.views.dashboards.sql_query.config.designation_config import DESIGNATION_SQL_QUERY_CONFIG
 from django.db import connection, DatabaseError
-from querysets_shim.adapter import admin 
+from arches_controlled_lists.models import ListItem
+from querysets_shim.adapter import admin
 from typing import List
-import pdb
 
-SECOND_SURVEY_GROUP = '1ce90bd5-4063-4984-931a-cc971414d7db'
-DESIGNATIONS_GROUP = '7e044ca4-96cd-4550-8f0c-a2c860f99f6b'
-
-APPROVED = "294f38d0-e391-4f7d-af83-72fbf7fcdfcb"
-PROVISIONAL = "7f81d135-45ac-483f-96f4-2fa8ca882d79"
-
-COUNCIL_NODE = "447973ce-d7e2-11ee-a4a1-0242ac120006"
 
 class DesignationTaskStrategy(TaskStrategy):
-    
+
+    # Aliases build_data/build_meeting_data read. `nodes` caps how many alias
+    # expressions get built, which is where the seconds go; it does not restrict
+    # the tile data returned, so listing these is a speed hint, not a filter.
+    DISPLAY_ALIASES = {
+        'Monument': [
+            'resourceid', 'hmc_reference_number', 'historic_parks_and_gardens',
+            'ihr_number', 'hb_number', 'smr_number', 'monument_type',
+            'input_date_value', 'statutory_consultee_notification_date_value',
+        ],
+        'Consultation': [
+            'resourceid', 'display_name_value', 'log_date',
+            'follow_up_meeting_date_value', 'council', 'related_monuments_and_areas',
+        ],
+    }
+    DISPLAY_ALIASES['MonumentRevision'] = DISPLAY_ALIASES['Monument']
+
+    def display_nodes(self, model_cls, model_name):
+        """Node objects for the aliases this dashboard displays, if resolvable."""
+        by_alias = model_cls._._node_objects_by_alias()
+        nodes = [by_alias[a] for a in self.DISPLAY_ALIASES[model_name] if a in by_alias]
+        return nodes or None
+
+
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceid', sort_order='desc', filter='all'):
         from querysets_shim.models import Monument, MonumentRevision, Consultation
         with admin():
@@ -27,22 +42,19 @@ class DesignationTaskStrategy(TaskStrategy):
             resources = []
             tasks = []
 
+            filter_options = self.get_filter_options(groupId)
+            filter_option = next((option for option in filter_options if option['id'] == filter), None)
+            filter_dict = {'id': filter_option['id'], 'type': filter_option['type']}
+
             def run_sql_query(
-                    sort_by=sort_by, 
-                    sort_order=sort_order, 
-                    filter=filter, 
-                    page=page, 
-                    page_size=page_size, 
+                    sort_by=sort_by,
+                    sort_order=sort_order,
+                    page=page,
+                    page_size=page_size,
                     count=False
                 ):
                 offset = (page-1)*page_size
                 limit = page_size if isinstance(page_size, int) else 8
-
-                filter_options = self.get_filter_options(groupId)
-                filter_option = next((option for option in filter_options if option['id'] == filter), None)
-                filter_type = filter_option['type']
-                filter_id = filter_option['id']
-                filter_dict = {'id': filter_id, 'type': filter_type}
 
                 if count:
                     query = build_query(sort_by, count=True, filter=filter_dict, config=DESIGNATION_SQL_QUERY_CONFIG)
@@ -65,19 +77,27 @@ class DesignationTaskStrategy(TaskStrategy):
                 return counts
                 
             results = run_sql_query()
-            resources = []
-            for item in results:
-                model = item[2]
-                id = item[0]
-                instance = None
-                if model == 'Monument':
-                    instance = Monument.find(str(id))
-                elif model == 'MonumentRevision':
-                    instance = MonumentRevision.find(str(id))
-                elif model == 'Consultation':
-                    instance = Consultation.find(str(id))
-                if instance:
-                    resources.append(instance)
+            models = {
+                'Monument': Monument,
+                'MonumentRevision': MonumentRevision,
+                'Consultation': Consultation,
+            }
+
+            ordered_ids = []
+            ids_by_model = {}
+            for raw_id, _, model in results:
+                resource_id = str(raw_id)
+                ordered_ids.append(resource_id)
+                if model in models:
+                    ids_by_model.setdefault(model, []).append(resource_id)
+
+            found = {}
+            for model, ids in ids_by_model.items():
+                cls = models[model]
+                for instance in cls.find_many(ids, nodes=self.display_nodes(cls, model)):
+                    found[str(instance.id)] = instance
+
+            resources = [found[id] for id in ordered_ids if id in found]
 
             resource_counts = get_counts()
             total_resources = resource_counts.get('total', 0)
@@ -106,11 +126,25 @@ class DesignationTaskStrategy(TaskStrategy):
         from querysets_shim.models import Monument
         with admin():
             """Return the available filter options for the designation tasks."""
-            # create the entries for the council filter options
+            # Create the entries for the council filter options. Council is a
+            # `reference` node, so its options come from a controlled list rather
+            # than from the node config. Heritage Asset and Heritage Asset Revision
+            # use separate council lists whose item ids differ, so the filter value
+            # is the LA code from the label ("LA01 - Causeway Coast..." -> "LA01"),
+            # which both lists share and which the SQL matches on.
             node_alias = Monument._._node_objects_by_alias()
-            domain_options = node_alias['council'].config['options']
+            council_list_id = node_alias['council'].config['controlledList']
 
-            domain_values = [{'id': option.get("id"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+            council_items = ListItem.objects.filter(list_id=council_list_id)
+
+            domain_values = []
+            for item in council_items:
+                label = item.find_best_label('en')
+                if not label:
+                    continue
+                code = label.split(' - ')[0]
+                domain_values.append({'id': code, 'name': label, 'type': 'council'})
+            domain_values.sort(key=lambda council: council['id'])
 
             return [
                 {'id': 'all', 'name': 'All', 'type': 'default'},
@@ -133,21 +167,29 @@ class DesignationTaskStrategy(TaskStrategy):
     def build_data(self, resource, groupId):
         from querysets_shim.models import Monument, MonumentRevision
 
-        utilities = Utilities()
+        # A nodegroup with no tile reads as None, and a cardinality-n one as [].
+        # system_reference_numbers is always present: the query selects on it.
+        references = resource.heritage_asset_references
+        hmc_reference = resource.hmc_reference
+        sign_off = resource.sign_off
+        phases = resource.construction_phases
+        approvals = resource.approvals
 
         resource_data = {
-            'id': utilities.node_check(lambda: str(resource.id)),
-            'resourceid': utilities.node_check(lambda: resource.system_reference_numbers.uuid.resourceid),
+            'id': str(resource.id),
+            'resourceid': resource.system_reference_numbers.resourceid,
             'state': 'HeritageAsset',
-            'displayname': utilities.node_check(lambda: resource._.resource.descriptors['en']['name']),
-            'hmcreferencenumber': utilities.node_check(lambda: resource.hmc_reference.hmc_reference_number),
-            'historicparksandgardens': utilities.node_check(lambda: resource.heritage_asset_references.historic_parks_and_gardens),
-            'ihrnumber': utilities.node_check(lambda: resource.heritage_asset_references.ihr_number),
-            'hbnumber': utilities.node_check(lambda: resource.heritage_asset_references.hb_number),
-            'smrnumber': utilities.node_check(lambda: resource.heritage_asset_references.smr_number),
-            'monumenttype': self.extract_value(utilities.node_check(lambda: resource.construction_phases[0].phase_classification.monument_type)),
-            'inputdatevalue': utilities.node_check(lambda: resource.sign_off.input_date.input_date_value),
-            'statutoryconsulteenotificationdatevalue': utilities.node_check(lambda: resource.approvals[0].statutory_consultee_notification_date.statutory_consultee_notification_date_value)
+            'displayname': resource._.resource.descriptors.get('en', {}).get('name'),
+            'hmcreferencenumber': hmc_reference.hmc_reference_number if hmc_reference else None,
+            'historicparksandgardens': references.historic_parks_and_gardens if references else None,
+            'ihrnumber': references.ihr_number if references else None,
+            'hbnumber': references.hb_number if references else None,
+            'smrnumber': references.smr_number if references else None,
+            'monumenttype': self.reference_labels(phases[0].monument_type) if phases else None,
+            'inputdatevalue': sign_off.input_date_value if sign_off else None,
+            'statutoryconsulteenotificationdatevalue': (
+                approvals[0].statutory_consultee_notification_date_value if approvals else None
+            ),
         }
 
         if isinstance(resource, Monument):
@@ -183,27 +225,28 @@ class DesignationTaskStrategy(TaskStrategy):
         return resource_data 
     
     def build_meeting_data(self, resource):
+        references = resource.system_reference_numbers
+        display_name = resource.display_name
+        dates = resource.consultation_dates
+        evaluation = resource.evaluation
+        location = resource.location_data
+
         resource_data = {
             'id': str(resource.id),
-            'resourceid': resource.system_reference_numbers.uuid.resourceid,
+            'resourceid': references.resourceid if references else None,
             'state': 'Meeting',
             'model': 'Evaluation Meeting',
-            'displaynamevalue': resource.display_name.display_name_value,
-            'logdate': resource.consultation_dates.log_date,
-            'followupmeetingdatevalue': resource.evaluation.follow_up_meeting_date.follow_up_meeting_date_value,
-            'council': resource.location_data.council,
+            'displaynamevalue': display_name.display_name_value if display_name else None,
+            'logdate': dates.log_date if dates else None,
+            'followupmeetingdatevalue': evaluation.follow_up_meeting_date_value if evaluation else None,
+            'council': self.reference_labels(location.council) if location else None,
             'slugs': [{'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'}]
         }
 
-        # Additional display values
-        related_monuments = resource.related_monuments_and_areas
-
-        ha_names = []
-        for ha in related_monuments:
-            ha_name = ha._.resource.descriptors['en']['name']
-            ha_names.append(ha_name)
-        
-        resource_data['relatedmonumentsandareas'] = ha_names
+        resource_data['relatedmonumentsandareas'] = [
+            ha._instance.descriptors.get('en', {}).get('name')
+            for ha in resource.related_monuments_and_areas
+        ]
         
         # transform returned values
         date_values = [
@@ -215,6 +258,14 @@ class DesignationTaskStrategy(TaskStrategy):
                 resource_data[value] = self.convert_date_str(resource_data[value])
 
         return resource_data  
+
+    def reference_labels(self, references):
+        """Labels of a v8 reference node — the card renders these as the Type."""
+        labels = [
+            ListItem.find_best_label_from_set(reference.labels, 'en')
+            for reference in references or []
+        ]
+        return [label for label in labels if label]
 
     def extract_value(self, item):
         """Helper function to extract the value from different datatypes"""
