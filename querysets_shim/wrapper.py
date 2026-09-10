@@ -795,10 +795,10 @@ class ResourceModel:
         except ValueError as exc:
             logger.debug("querysets_shim: find_many failed for %s: %s", slug, exc)
             return []
-        return [cls._hydrate(rid, by_id[rid]) for rid in rids if rid in by_id]
+        return [cls._build_from_rtt(rid, by_id[rid]) for rid in rids if rid in by_id]
 
     @classmethod
-    def _hydrate(cls, rid: str, rtt: Any) -> "ResourceModel":
+    def _build_from_rtt(cls, rid: str, rtt: Any) -> "ResourceModel":
         """Build an instance around an arches-querysets ResourceTileTree row."""
         tree = _rtt_aliased_data_to_tree(rtt)
 
@@ -825,7 +825,7 @@ class ResourceModel:
             logger.debug("querysets_shim: find via querysets failed for %s: %s", rid, exc)
             return None
 
-        return cls._hydrate(rid, rtt)
+        return cls._build_from_rtt(rid, rtt)
 
     @classmethod
     def _find_via_tiles(cls, rid: str) -> Optional["ResourceModel"]:
