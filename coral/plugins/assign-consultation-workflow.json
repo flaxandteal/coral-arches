@@ -42,7 +42,7 @@
                   "requiredParentTiles": [
                     {
                       "lookupName": "locationData",
-                      "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
+                      "parentNodegroupId": "de90c7cf-6764-5f5b-bfb3-73369cfd9021"
                     }
                   ]
                 },
@@ -66,7 +66,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "b4974044-c768-11ee-a945-0242ac180006",
+                  "nodegroupid": "f7aa45ad-8811-5bcf-b9cf-ac24b4a593ec",
                   "semanticName": "Planning References"
                 },
                 "tilesManaged": "one",
@@ -77,7 +77,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
+                  "nodegroupid": "82b4d25a-e6d1-5c54-b2a5-0ecfcd55f9c6",
                   "semanticName": "CM References"
                 },
                 "tilesManaged": "one",
@@ -88,7 +88,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
+                  "nodegroupid": "4b195f82-50eb-5030-9f82-acdd3f7ba6c9",
                   "semanticName": "DfI Received Date",
                   "nodeOptions": {
                     "04494bbe-c769-11ee-82c4-0242ac180006": {
@@ -117,7 +117,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "86caf026-c76c-11ee-bf7c-0242ac180006",
+                  "nodegroupid": "b8145921-c586-5f67-9439-ed4d65b93091",
                   "semanticName": "Classification Type"
                 },
                 "tilesManaged": "one",
@@ -139,10 +139,10 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "bc64746e-cf4a-11ef-997c-0242ac120007",
+                  "nodegroupid": "fa23f9ec-2c03-5e94-9e00-d45a26a117b1",
                   "semanticName": "Related heritage asset(s)",
                   "nodeOptions": {
-                    "bc64746e-cf4a-11ef-997c-0242ac120007": {
+                    "fa23f9ec-2c03-5e94-9e00-d45a26a117b1": {
                       "allowInstanceCreation": false
                     }
                   }
@@ -230,7 +230,7 @@
                     "083e8c16-ca61-11ee-afca-0242ac180006",
                     "083e6c90-ca61-11ee-afca-0242ac180006"
                   ],
-                  "nodegroupid": "083e14f2-ca61-11ee-afca-0242ac180006",
+                  "nodegroupid": "f4908c19-4196-5af0-964c-aa01f61acf4d",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Addresses"
                 },
@@ -242,7 +242,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "69500360-d7c5-11ee-a011-0242ac120006",
+                  "nodegroupid": "4ddb3a60-3d1c-5873-8168-ed0ba1c92644",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Council"
                 },
@@ -257,7 +257,7 @@
                   "hiddenNodes": [
                     "083f0650-ca61-11ee-afca-0242ac180006"
                   ],
-                  "nodegroupid": "083dc93e-ca61-11ee-afca-0242ac180006",
+                  "nodegroupid": "1448f713-2d3d-5a71-8029-351537e5cadf",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas",
                   "nodeOptions": {
@@ -284,7 +284,7 @@
                   "hiddenNodes": [
                     "083f146a-ca61-11ee-afca-0242ac180006"
                   ],
-                  "nodegroupid": "083e1bb4-ca61-11ee-afca-0242ac180006",
+                  "nodegroupid": "8c2f532a-1a1b-5fd0-a9f7-fb66a934832e",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Location Descriptions"
                 },
@@ -311,7 +311,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
+                  "nodegroupid": "1b987d55-2867-51c2-ab2a-f60302efa5b8",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Geometry"
                 },
