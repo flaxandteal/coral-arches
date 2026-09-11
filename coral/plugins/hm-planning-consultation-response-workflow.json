@@ -39,7 +39,7 @@
                   "requiredParentTiles": [
                     {
                       "lookupName": "locationData",
-                      "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
+                      "parentNodegroupId": "de90c7cf-6764-5f5b-bfb3-73369cfd9021"
                     }
                   ]
                 },
@@ -66,7 +66,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "dc9bfb24-cfd9-11ee-8cc1-0242ac180006",
+                  "nodegroupid": "9898db6b-1a2f-5163-9df6-bf9cb92bf559",
                   "semanticName": "Assignment",
                   "hiddenNodes": [
                     "6b8f5866-2f0d-11ef-b37c-0242ac140006"
@@ -152,7 +152,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "083e003e-ca61-11ee-afca-0242ac180006",
+                  "nodegroupid": "1b987d55-2867-51c2-ab2a-f60302efa5b8",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Geometry"
                 },
@@ -179,7 +179,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "af7677ba-cfe2-11ee-8a4e-0242ac180006",
+                  "nodegroupid": "d6d47325-6fe7-5850-a3e3-389b11b00ea8",
                   "semanticName": "Response Action",
                   "hiddenNodes": [
                     "cd77b29c-2ef6-11ef-b1c4-0242ac140006"
