@@ -77,7 +77,7 @@ export default ko.components.register('relate-two-monuments-workflow', {
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
-                    nodegroupid: '35d8256a-d7d6-11ee-9916-0242ac120006',
+                    nodegroupid: '450ee1c9-8f79-59b6-a064-01bcb6ddbc2a',
                     resourceid: "['target-step']['target-record'][0]['selectedResourceId']",
                     parenttileid: "['relating-step']['relating-record'][0]['tileId']",
                     nodeOptions: {
@@ -215,7 +215,7 @@ export default ko.components.register('relate-two-monuments-workflow', {
                   tilesManaged: 'one',
                   parameters: {
                     graphid: '076f9381-7b00-11e9-8d6b-80000b44d1d9',
-                    nodegroupid: '76fc577c-d7d7-11ee-ade0-0242ac120006',
+                    nodegroupid: '3567a048-599c-5d3e-b9da-332140612855',
                     resourceid: "['target-step']['target-record'][0]['selectedResourceId']",
                     parenttileid: "['relating-step']['relating-record'][0]['tileId']",
                     nodeOptions: {
