@@ -8,8 +8,8 @@ describe('Going through the HA Designation Workflow', function () {
     const HA_SELECT = '[aria-label="Select Heritage Asset, Please select a Heritage Asset"]';
     const REVISION_SELECT = '[aria-label="Select Heritage Asset Revision, Please select a Heritage Asset Revision"]';
     const REAL_OPTION = '.select2-results__option:not(.loading-results):not(.select2-results__option--load-more):not(.select2-results__message)';
-    const UPLOAD_FIXTURE = 'cypress/e2e/03_ha_designation/ha-designation-test-upload.txt';
-    const UPLOAD_NAME = 'ha-designation-test-upload.txt';
+    const UPLOAD_FIXTURE = 'cypress/fixtures/test-upload.txt';
+    const UPLOAD_NAME = 'test-upload.txt';
 
     // Open the launcher and pick the Heritage Asset to designate. Always the
     // FIRST 'Testing' match: the launcher sorts results ascending, so repeating

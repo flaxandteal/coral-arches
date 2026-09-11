@@ -5,8 +5,8 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.visit('/plugins/init-workflow');
     });
 
-    const UPLOAD_FIXTURE = 'cypress/e2e/05_fmw_inspection/fmw-inspection-test-upload.txt';
-    const UPLOAD_NAME = 'fmw-inspection-test-upload.txt';
+    const UPLOAD_FIXTURE = 'cypress/fixtures/test-upload.txt';
+    const UPLOAD_NAME = 'test-upload.txt';
 
     function fillDocumentationTab() {
         // Upload a fixture file through the dropzone. The dropzone's own
@@ -60,7 +60,7 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.pickCardOption('land_use_classification');
         cy.wait(1000);
 
-        // Date of Visit is a datepicker — type rather than click the addon.
+        // Date of Visit is a datepicker - type rather than click the addon.
         cy.get('[aria-label="Date of Visit"]').filter(':visible').first()
             .type('28-07-2026{enter}', { force: true });
 

@@ -14,7 +14,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         cy.wait(6000);
         cy.workflowNext();
 
-        // Archive Source Details — the tab renders lazily, so wait for its
+        // Archive Source Details - the tab renders lazily, so wait for its
         // first widget rather than a fixed sub-second pause.
         cy.get('input[aria-label="File Title"]', { timeout: 60000 }).should('be.visible').type('Test Source Name');
         cy.get('[aria-label="Subtitle"]').should('be.visible').type('Test Subtitle');
@@ -31,7 +31,7 @@ describe('Going through the Archive Cataloguing Workflow', function () {
         // Archive Source Creation
         cy.get('input[aria-label="Author Name"]', { timeout: 60000 }).should('be.visible').type('Test Author Name');
         cy.get('input[aria-label="Editor Name(s)"]').should('be.visible').type('Test Editor Name');
-        // Type into the datepickers — clicking the addon opens no picker.
+        // Type into the datepickers - clicking the addon opens no picker.
         cy.get('input[aria-label="Start Date"]').filter(':visible').first()
             .type('28-07-2026{enter}', { force: true });
         cy.get('input[aria-label="End Date"]').filter(':visible').first()

@@ -130,7 +130,7 @@ describe('Going through the licensing Workflow', function () {
         cy.pickRelationshipFirst('Former Employing Body');
         cy.wait(1000);
         cy.fillDate('date_requested_value');
-        // Match the decision widgets by aria-label prefix — the label carries
+        // Match the decision widgets by aria-label prefix - the label carries
         // the current value, which differs from the hard-coded one.
         cy.pickDomainByLabel('Cur Grade E Decision', 'Do not approve transfer');
         cy.pickRelationshipFirst('Made By');
@@ -167,7 +167,7 @@ describe('Going through the licensing Workflow', function () {
         cy.pickCardOption('archaeology_found');
         cy.wait(1000);
         cy.fillDate('date_reported_value');
-        // NB: click() takes a SINGLE options object — click({force:true},
+        // NB: click() takes a SINGLE options object - click({force:true},
         // {multiple:true}) is read as (position, options), so `multiple` is
         // dropped and the call throws on a multi-element subject.
         cy.get('[style="display: flex; justify-content: flex-end; padding: 0 18px;"] > .btn-success')
@@ -178,7 +178,7 @@ describe('Going through the licensing Workflow', function () {
     // Save/complete the Final Report step and confirm the completion alert if
     // one is shown. The click lands on the final "Final Report" -> "Summary"
     // (licence-complete) transition, step 11/11, so the workflow is not
-    // actually complete yet — call this twice, once per step.
+    // actually complete yet - call this twice, once per step.
     function saveAndConfirmAlert() {
         // On the final (Summary) step the footer only shows "Previous Step" --
         // completion instead happens via the top "Save and Complete Workflow"
@@ -230,7 +230,7 @@ describe('Going through the licensing Workflow', function () {
         cy.wait(4000);
 
         fillRecordDecisionTab();
-        // No issue_date widget on this workflow — Record Decision ends at the
+        // No issue_date widget on this workflow - Record Decision ends at the
         // decision notes, then the (card-less) Letter tab, then Amendments.
         cy.workflowNext();          // Record Decision    -> Letter
         cy.wait(4000);
@@ -242,7 +242,7 @@ describe('Going through the licensing Workflow', function () {
         cy.wait(4000);
 
         fillFinalReportTab();
-        // Finish the workflow. Target the footer button explicitly — a blanket
+        // Finish the workflow. Target the footer button explicitly - a blanket
         // `.btn-success` click races the completion re-render and detaches.
         saveAndConfirmAlert();
         cy.wait(2000);
@@ -313,7 +313,7 @@ describe('Going through the licensing Workflow', function () {
     //     // edits; workflowNext() picks whichever forward label is live.
     //     cy.workflowNext();          // Application Details -> Location Details
     //     cy.wait(4000);
-    //     // Location Details is required — the footer forward button stays
+    //     // Location Details is required - the footer forward button stays
     //     // disabled until the address is filled in.
     //     fillLocationDetailsTab();
     //     cy.workflowNext();          // Location Details  -> Geospatial Details

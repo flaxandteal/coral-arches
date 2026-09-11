@@ -21,7 +21,7 @@ describe('Creating a bibliographic named Test Bibliographic if one doesnt exist'
                 cy.get('[aria-label="Bibliographic Source Name"]').click().type('Test Bibliographic');
                 cy.get('.btn').contains('Add').click();
             } else {
-                // Already seeded — assert it really is there rather than passing blindly.
+                // Already seeded - assert it really is there rather than passing blindly.
                 cy.get('.select2-results').should('contain', 'Test Bibliographic');
             }
         });

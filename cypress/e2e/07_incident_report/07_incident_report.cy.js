@@ -25,7 +25,7 @@ describe('Going through the Incident Report', function () {
         cy.wait(3000);
         // There is no "Start New" here. coral/plugins/open-issue-report-workflow.json
         // sets disableStartNew on the workflow, and the template only renders that
-        // button under `if: !workflow().disableStartNew` — so an Issue Report can
+        // button under `if: !workflow().disableStartNew` - so an Issue Report can
         // only be OPENED, never started, from this launcher.
         cy.pickDomainByLabel('Selected Issue Report', 'ISSUE-TEST-001');
         cy.wait(2000);
@@ -106,8 +106,8 @@ describe('Going through the Incident Report', function () {
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step');
 
         // The Location Details on an Issue Report are inherited (read-only) from
-        // the linked Heritage Asset — Building Name / Street / Town or City /
-        // Postcode / Townland are all disabled here — so there is nothing to fill;
+        // the linked Heritage Asset - Building Name / Street / Town or City /
+        // Postcode / Townland are all disabled here - so there is nothing to fill;
         // just confirm the tab rendered and continue.
         cy.get('[aria-label="Building Name"]').should('be.disabled');
 
@@ -177,7 +177,7 @@ describe('Going through the Incident Report', function () {
 
         cy.workflowNext();
 
-        // Documentation tab. Only assert the upload control is present — clicking
+        // Documentation tab. Only assert the upload control is present - clicking
         // it opens a native file dialog that Cypress cannot drive (spec 05 does
         // the same). The tab renders lazily, so allow time for it.
         cy.wait(4000);

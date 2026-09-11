@@ -32,8 +32,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.wait(2000);
         cy.type_ckeditor('editor2', 'test reason for enforcement');
 
-        // Flagged Date has to be typed in. Nothing defaults it — the constants
-        // in coral/functions/notify_enforcement.py are unused — so leaving it
+        // Flagged Date has to be typed in. Nothing defaults it - the constants
+        // in coral/functions/notify_enforcement.py are unused - so leaving it
         // blank made the summary step below render "Flagged Date: No data
         // provided for this input" and the assertion never found
         // "Flagged Date Value:".
@@ -100,7 +100,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         
         // Enforcement Details Tab
         // Nothing is filled in on this step, so it stays unmodified and the
-        // footer button reads "Next Step" rather than "Save and Continue" —
+        // footer button reads "Next Step" rather than "Save and Continue" -
         // see coral/templates/views/components/plugins/workflow.htm.
         cy.get('[aria-label="Case Reference"]', { timeout: 20000 }).should('be.visible');
         cy.workflowNext();

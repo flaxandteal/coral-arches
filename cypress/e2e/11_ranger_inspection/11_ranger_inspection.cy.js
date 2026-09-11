@@ -16,7 +16,7 @@ describe('Going through the ranger inspection Workflow', function () {
         cy.pickRelationshipFirst('Related Heritage Assets');
         cy.wait(1000);
 
-        // Details tab. Scroll each card in before typing — these sit below the
+        // Details tab. Scroll each card in before typing - these sit below the
         // fold once the Related Heritage Assets widget has expanded.
         ['weather_conditions', 'ground_conditions', 'time_of_arrival', 'time_of_departure']
             .forEach((cls) => {
