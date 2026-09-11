@@ -36,8 +36,9 @@ import template from 'templates/views/components/workflows/get-monument-details.
 
     this.COUNCIL = "447973ce-d7e2-11ee-a4a1-0242ac120006";
 
-    this.RECOMMENDED_DESIGNATION_NODE = "74ef37e0-37b5-11ef-9263-0242ac150006"
-    this.SCHEDULED_MONUMENT_CONCEPT = "40462188-3aa9-cdaf-8b1d-3ed8dfa57df9"
+    this.RECOMMENDED_DESIGNATION_NODEGROUP = '6af2a0cb-efc5-11eb-8436-a87eeabdefba';
+    this.RECOMMENDED_DESIGNATION_NODE = '5aa9d22a-29c6-5de0-8119-84ee1e93081f';
+    this.SCHEDULED_MONUMENT_URI = 'https://coral-her.flaxandteal.co.uk/1e898077-9144-9ef0-b6e1-08f4e4881972';
 
     // Switched out for Heritage Asset Type node under constrcution phases nodegroup
     // Monument Type seems to be a duplicate node 
@@ -138,10 +139,11 @@ import template from 'templates/views/components/workflows/get-monument-details.
           });
       });
 
-      if (tile.nodegroup === this.RECOMMENDED_DESIGNATION_NODE) {
-          const tileData = await this.fetchTileData(resourceId, RECOMMENDED_DESIGNATION_NODE);
+      if (tile.nodegroup === this.RECOMMENDED_DESIGNATION_NODEGROUP) {
+          const tileData = await this.fetchTileData(resourceId, this.RECOMMENDED_DESIGNATION_NODE);
           for(const tile of tileData){
-              if(tile.data[RECOMMENDED_DESIGNATION_NODE].includes(this.SCHEDULED_MONUMENT_CONCEPT)){
+              const designations = tile.data[this.RECOMMENDED_DESIGNATION_NODE] || [];
+              if(designations.some((item) => item.uri === this.SCHEDULED_MONUMENT_URI)){
                   scheduled("Yes");
               }
           }

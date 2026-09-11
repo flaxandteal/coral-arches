@@ -17,12 +17,9 @@ IHR_NUMBER_NODE = "1de9abf0-3aae-11ef-91fd-0242ac120003"
 HB_NUMBER_NODE = "250002fe-3aae-11ef-91fd-0242ac120003"
 HISTORIC_PARKS_NODE = "2c2d02fc-3aae-11ef-91fd-0242ac120003"
 
-# NOTE: the Risk Assessment launcher filters Heritage Assets on node
-# 74ef37e0-37b5-11ef-9263-0242ac150006 ("Recommended designation, identification
-# and protection") == concept value 8da10724-1bd3-c095-6d4d-fb8657574b40. That
-# value does not exist in the loaded reference data (arches rejects it with
-# "This UUID is not an available concept value"), so that workflow cannot be
-# seeded here — see the skipped spec in cypress/e2e/10_risk_assessment.
+# NOTE: the Risk Assessment launcher filters Heritage Assets by Recommended
+# Designation == "Scheduled Monument" - see seed_test_scheduled_monument for
+# that workflow's seed data.
 
 
 class Command(BaseCommand):

@@ -251,6 +251,11 @@ jobs:
           $COMPOSE exec -T arches bash -lc \
             '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_issue_report'
 
+      - name: Seed a Scheduled Monument for the Risk Assessment launcher
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_scheduled_monument'
+
       - name: Seed the admin test 2FA (TOTP) device
         run: |
           $COMPOSE exec -T arches bash -lc \

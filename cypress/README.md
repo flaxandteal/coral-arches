@@ -176,12 +176,14 @@ UUID5-derived, so a second import after a *failed* one leaves partial tiles and 
 ### 4.2 Management commands
 
 ```bash
-make manage CMD="seed_test_ha"             # gives an HA an SMR Number + reindexes it → unblocks 09_state_care
-make manage CMD="seed_test_issue_report"   # puts ISSUE-TEST-001 on HA/03 → unblocks 07_incident_report
+make manage CMD="seed_test_ha"                     # gives an HA an SMR Number + reindexes it → unblocks 09_state_care
+make manage CMD="seed_test_issue_report"           # puts ISSUE-TEST-001 on HA/03 → unblocks 07_incident_report
+make manage CMD="seed_test_scheduled_monument"     # gives an HA a Scheduled Monument designation + reindexes it → unblocks 10_risk_assessment
 ```
 
-`seed_test_ha` reindexes into Elasticsearch because the State Care launcher runs an
-*advanced search* for a non-null SMR Number — a DB-only write is invisible to it.
+`seed_test_ha` and `seed_test_scheduled_monument` reindex into Elasticsearch because
+their launchers run an *advanced search* (non-null SMR Number, and Recommended
+Designation == Scheduled Monument, respectively) — a DB-only write is invisible to it.
 
 ### 4.3 Resources the specs create for each other
 
@@ -300,7 +302,7 @@ functions and summary rendering.
 | `07_incident_report/` | 1 | `open-issue-report-workflow` | **Cannot be started, only opened** — the plugin config sets `disableStartNew`, so the template never renders that button. Opens `ISSUE-TEST-001` on `HA/03` (see `seed_test_issue_report`). Initialises eight tabs server-side, ~45s. |
 | `08_agri/` | 1 | Agriculture & Forestry Consultation | The most thorough single test. Asserts a generated Consultation ID; that **Due Date is computed** from Date Received + 14 days (`update-dates.js`); a file upload from `cypress/fixtures/`; that **Within Deadline is computed** by `update-deadline.js` rather than typed; and that the workflow returns to the launcher on completion. Two blockers are documented inline with the exact code to enable once fixed (see [§9](#9-known-blockers)). |
 | `09_state_care/` | 1 | State Care Condition Survey | Launcher does an advanced search for HAs with a non-null SMR Number — requires `seed_test_ha` or a seeded HA/04–06. Assessment type/works/condition/priority, CKEditor, sign-off dates. |
-| `10_risk_assessment/` | 0 (1 `it.skip`) | Risk Assessment | **Blocked, deliberately skipped** — see [§9](#9-known-blockers). Previously an empty body reporting a false pass. |
+| `10_risk_assessment/` | 1 | Risk Assessment | Launcher does an advanced search for HAs with Recommended Designation == Scheduled Monument — requires `seed_test_scheduled_monument`. |
 | `11_ranger_inspection/` | 1 | `ranger-inspection-workflow` | Related HAs, weather/ground conditions, arrival/departure times, boolean radio widgets, an inspection detail sub-tile (Add), review/submission dates. |
 
 ### 6.3 What is *not* covered
@@ -365,7 +367,7 @@ The sequence, which doubles as a checklist for reproducing CI locally:
    than mounting it, so the JSON is handed over with `docker cp`).
 9. Verify the seeded assets are **searchable in Elasticsearch** — a direct ES query
    for each of the three display names.
-10. `seed_test_issue_report`, `seed_test_totp`.
+10. `seed_test_issue_report`, `seed_test_scheduled_monument`, `seed_test_totp`.
 11. `docker cp` the generated `frontend_configuration/` out of the container into the
     checkout the Cypress container mounts.
 12. Run `cypress/included:15.18.1` on the compose network against
@@ -401,15 +403,6 @@ ffmpeg -i spec.mp4 -vf "fps=1,crop=...,tile=5x9" sheet.png
 ---
 
 ## 9. Known blockers
-
-**`10_risk_assessment` — cannot be fixed in spec code.**
-`open-risk-assessment-workflow.js` (`stateMonumentString`) filters HAs on node
-`74ef37e0-37b5-11ef-9263-0242ac150006` == concept value
-`8da10724-1bd3-c095-6d4d-fb8657574b40`. Neither that value nor the node's
-rdmCollection `34573061-2a22-decd-e2e3-559791d35efa` exists in the loaded reference
-data, and Arches rejects writing it ("This UUID is not an available concept value").
-The dropdown always says "No results found" and Start New stays disabled. Fix needs
-the missing reference data loaded, or the plugin's hard-coded concept id corrected.
 
 **`08_agri` — letter generation.** `/filetemplate` 404s because the `.docx`
 templates live in the gitignored `coral/docx`; with a template present it then 500s
