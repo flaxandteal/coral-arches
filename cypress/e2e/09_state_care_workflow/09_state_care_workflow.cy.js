@@ -5,6 +5,28 @@ describe('Going through the state care Workflow', function () {
         cy.visit('/plugins/init-workflow');
     });
 
+    const UPLOAD_FIXTURE = 'cypress/e2e/09_state_care_workflow/state-care-test-upload.txt';
+    const UPLOAD_NAME = 'state-care-test-upload.txt';
+
+    function fillDocumentationTab() {
+        // Upload a fixture file through the dropzone. The dropzone's own
+        // <input type="file"> is hidden, hence { force: true }.
+        cy.get('.bord-top > .btn', { timeout: 60000 }).contains('Select Files');
+        cy.wait(2000);
+        cy.get('input.dz-hidden-input').first().selectFile(UPLOAD_FIXTURE, { force: true });
+        cy.get('.card-component', { timeout: 30000 }).should('contain.text', UPLOAD_NAME);
+        cy.contains('files uploaded').should('be.visible');
+        // An attached-but-unsaved file changes the footer button to "Save and
+        // Continue" instead of "Next Step". Clicking it saves/uploads the
+        // file and stays on this tab; "Next Step" then appears and actually
+        // advances.
+        cy.get('.tabbed-workflow-footer-button-container')
+            .find('button:not([disabled])')
+            .contains('Save and Continue')
+            .click();
+        cy.wait(3000);
+    }
+
     it('Start new and go through the workflow and populate all fields', function () {
         cy.get('[href="/plugins/open-state-care-condition-survey-workflow?workflow-slug=state-care-condition-survey-workflow"] > .workflow-select-card > .workflow-select-wf-circle').click();
         cy.get('[aria-label="Select Heritage Asset, Please select a Heritage Asset"]').click();
@@ -37,11 +59,15 @@ describe('Going through the state care Workflow', function () {
         cy.wait(3000);
         cy.get('.workflow-component-element').get('.btn.btn-workflow-tile.btn-success').should('be.visible').contains('Add').click();
 
-        cy.type_ckeditor('editor1', 'test');
+        cy.typeRichText('notes', 'Notes for automated testing.');
+
         cy.get(':nth-child(2) > .workflow-component > .workflow-component-element > .card-component').click();
-        cy.workflowNext();
+        cy.workflowNext(); // Overall Scored Assessment -> Documentation
+
+        fillDocumentationTab();
         cy.wait(4000);
-        cy.workflowNext();
+        cy.workflowNext(); // Documentation -> Sign Off
+        
         cy.wait(5000);
         cy.fillDate('completed_on');
         cy.fillDate('signed_off_date');
