@@ -68,15 +68,9 @@ describe('Going through the risk assessment Workflow', function () {
             .type('Automated test paddock', { force: true });
         cy.fillDate('date_for_renewal');
         cy.setBooleanTrue('details_on_file');
-        // Property Status is left unfilled: the node is now the
-        // controlled-lists "reference" datatype (config: {controlledList}),
-        // but its widget is still the legacy "domain-multiselect-widget",
-        // which reads its option list from node.config.options - a key that
-        // does not exist on a reference-type node's config. That leaves the
-        // widget's `options` observable empty/undefined, so select2Query's
-        // init intermittently never runs and no .select2-selection ever
-        // appears - the same widget/datatype migration mismatch already
-        // found on the Risk Assessment launcher and get-ha-details.js.
+        cy.wait(2000);
+        cy.pickCardOption('property_status');
+        cy.wait(1000);
         cy.workflowNext();
 
         // Map - the actual geometry (geospatial_coordinates) is copied from
