@@ -64,10 +64,28 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.get('[aria-label="Date of Visit"]').filter(':visible').first()
             .type('28-07-2026{enter}', { force: true });
 
+
+        // Location Description is a CKEditor 4 rich-text widget: its
+        // <textarea data-bind="ckeditor: currentText"> stays
+        // visibility:hidden/display:none once CKEditor replaces it with an
+        // iframe-based WYSIWYG editor, so typing into the textarea directly
+        // does nothing. Drive the CKEDITOR instance's API instead, scoped to
+        // this widget's wrapper class so it doesn't pick up another
+        // rich-text widget on the same tab.
+        // same applies to all other rich-text widgets in this workflow
+        cy.typeRichText('location_description_1', 'Location description for automated testing.');
+        cy.pickRelationshipFirst('Location Description Type');
+        cy.wait(1000);
+
         // Condition/Risk Score aria-labels embed the current value, so match on
         // the prefix instead of a hard-coded score.
         cy.pickOptionByLabelPrefix('Condition Score, ');
         cy.pickOptionByLabelPrefix('Risk Score, ');
+
+
+        cy.typeRichText('inspection_report', 'Inspection report for automated testing.');
+        cy.typeRichText('recommendation_description', 'Recommendation for automated testing.');
+        cy.typeRichText('consultation_description', 'Notes for automated testing.');
 
         cy.pickRelationshipFirst('Archaeologist');
         cy.wait(1000);
