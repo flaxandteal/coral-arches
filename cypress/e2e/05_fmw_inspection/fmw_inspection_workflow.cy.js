@@ -5,6 +5,28 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.visit('/plugins/init-workflow');
     });
 
+    const UPLOAD_FIXTURE = 'cypress/e2e/05_fmw_inspection/fmw-inspection-test-upload.txt';
+    const UPLOAD_NAME = 'fmw-inspection-test-upload.txt';
+
+    function fillDocumentationTab() {
+        // Upload a fixture file through the dropzone. The dropzone's own
+        // <input type="file"> is hidden, hence { force: true }.
+        cy.get('.bord-top > .btn', { timeout: 60000 }).contains('Select Files');
+        cy.wait(2000);
+        cy.get('input.dz-hidden-input').first().selectFile(UPLOAD_FIXTURE, { force: true });
+        cy.get('.card-component', { timeout: 30000 }).should('contain.text', UPLOAD_NAME);
+        cy.contains('files uploaded').should('be.visible');
+        // An attached-but-unsaved file changes the footer button to "Save and
+        // Continue" instead of "Next Step". Clicking it saves/uploads the
+        // file and stays on this tab; "Next Step" then appears and actually
+        // advances.
+        cy.get('.tabbed-workflow-footer-button-container')
+            .find('button:not([disabled])')
+            .contains('Save and Continue')
+            .click();
+        cy.wait(3000);
+    }
+
     it('Go through the workflow and populate all fields', function () {
         cy.contains('Workflows');
         cy.contains('FMW Inspection').click();
@@ -47,12 +69,22 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.pickOptionByLabelPrefix('Condition Score, ');
         cy.pickOptionByLabelPrefix('Risk Score, ');
 
+        cy.pickRelationshipFirst('Archaeologist');
+        cy.wait(1000);
+        cy.pickRelationshipFirst('CWT Area Manager');
+        cy.wait(1000);
+        cy.pickRelationshipFirst('Historian');
+        cy.wait(1000);
+        cy.pickRelationshipFirst('Architect');
+        cy.wait(1000);
         cy.pickRelationshipFirst('Owner(s)');
         cy.wait(1000);
         cy.pickRelationshipFirst('Occupier(s)');
         cy.wait(1000);
         cy.pickRelationshipFirst('FM Warden(s)');
         cy.wait(4000);
+        cy.pickRelationshipFirst('HED Staff');
+        cy.wait(1000);
         // Required field on the same Contacts card; without it the tile save
         // fails with "This card requires values for the following: Casework
         // Officer". It renders further down the card than the other
@@ -64,14 +96,23 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.workflowNext();
 
         cy.wait(4000);
-        // The coordinate input (irishGrid.htm) renders read-only here --
-        // its visibility is bound to `card.isWritable`, which this step
-        // resolves to false regardless of the node/nodegroup wiring (an
-        // access-control condition outside this workflow's config, not a
-        // stale-id issue). The step is optional (required: false), so just
-        // confirm it rendered rather than trying to force-fill a disabled
-        // control.
         cy.contains('Coordinate Format');
+        // The coordinate input (irishGrid.htm) binds visibility to
+        // `!disabled()`, so wait for the writable, visible control before
+        // typing into it. Alphanumeric format matches the widget's own
+        // placeholder example.
+        //
+        // id="coordinatePoint" is not unique: bngpoint.htm's widget template
+        // hardcodes the same id, so `#coordinatePoint` can match more than
+        // one element and the `:visible` filter becomes unreliable. Scope on
+        // the `tm65Val` data-bind instead, which is specific to the Irish
+        // Grid TM65 widget's view model.
+        // The typed value is only parsed and committed to the tile on blur:
+        // tm65point.js's `preview` computed reads `isSelected` (bound to the
+        // input's `hasFocus`) and skips writing `this.value(pre)` while the
+        // field is still focused, so without a blur the tile never becomes
+        // dirty and "Save and Continue" won't advance the step.
+        cy.get('[data-bind*="tm65Val"]').filter(':visible').first().type('J1025169962', { force: true }).blur();
         cy.wait(2000);
         cy.workflowNext();          // Irish Grid Reference -> Map
 
@@ -82,24 +123,43 @@ describe('Going through the FWM Inspection Workflow', function () {
         // licensing workflow.
         cy.wait(4000);
         cy.contains('Geospatial Coordinates');
+        cy.pickRelationshipFirst('Feature Shape');
+        cy.wait(1000);
         cy.workflowNext();          // Map -> Documentation
 
         // Documentation tab
         cy.wait(2000);
-        cy.get('.bord-top > .btn').contains('Select Files')
-        //cy.get('.media-block').selectFile('cypress/e2e/04_curatorial_inspection_workflow/testFileForUpload.txt');
-        cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
+        fillDocumentationTab();
+        cy.workflowNext();
+        // cy.get('.tabbed-workflow-footer-button-container').contains('Next Step').click();
 
         // Sign Off tab
         cy.wait(2000);
-        cy.get('.widget-input-label').contains('Signed Off On');
-        cy.get('[aria-label="Signed Off On"]').click();
-        cy.get('.date-icon').first().click();
 
         // Send Papers is a switch-widget (a plain on/off toggle, no Yes/No
         // text), not the radio-boolean-widget the old assertion expected.
         cy.get('.send_papers').contains('Send Papers');
         cy.get('.send_papers .switch').click();
+
+        // Within Deadline is a radio-boolean-widget -- click the "Yes" label,
+        // not the underlying (visually hidden) radio input.
+        cy.get('[aria-label="Within Deadline"]').contains('Yes').click();
+        cy.wait(1000);
+
+        cy.get('.widget-input-label').contains('Signed Off On');
+        cy.get('[aria-label="Signed Off On"]').click();
+        cy.get('.date-icon').first().click();
+
+        cy.pickRelationshipFirst('Cur E');
+        cy.wait(2000);
+        cy.pickRelationshipFirst('Cur E Role Type');
+        cy.wait(2000);
+        cy.pickRelationshipFirst('Report Submitted By');
+        cy.wait(2000);
+        cy.pickRelationshipFirst('Reviewed By');
+        cy.wait(2000);
+        cy.pickRelationshipFirst('Cur E Role Metatype');
+        cy.wait(2000);
 
         cy.get('.btn-primary').contains('Previous Step');
         cy.get('.tabbed-workflow-footer-button-container > .btn-success').contains('Save').click();
