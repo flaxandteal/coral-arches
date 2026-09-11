@@ -82,18 +82,21 @@ describe('Going through the Add Garden Workflow', function () {
         cy.wait(2000);
         cy.get('[aria-label="Postcode"]').first().click().type('Testing Labs');
         cy.wait(2000);
-        cy.get('[aria-label="County, Select an option"]').contains('Select an option').click().contains('Down').click();
+
+        cy.pickRelationshipFirst('County');
         cy.wait(2000);
-        cy.get('[aria-label="Townland, Select an option"]').contains('Select an option').click().contains("Acres").click();
+        cy.pickRelationshipFirst('Townland');
+        cy.wait(2000);
+
+        cy.pickRelationshipFirst('Area Type');
+        cy.wait(2000);
+        cy.pickRelationshipFirst('Area Name');
         cy.wait(2000);
 
         cy.get('.council').contains('Select an option').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
-        cy.get('.area_type').contains('Select an option').scrollIntoView().click();
-        cy.wait(2000);
-        cy.get('.area_name').contains('Select an option').click();
-        cy.wait(2000);
+       
         cy.get('.control-label').contains('Location Description');
         cy.type_ckeditor('editor6', 'test, Location Description');
         cy.get('[aria-label="Unique Building ID"]').click().type('01');
