@@ -24,6 +24,14 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ### Changes
 
 - fix(functions): update retired v8 node ids in functions (#854)
+- fix(views): update retired v8 node ids in views (#855)
+- fix(workflows): the HB and HM planning consultation response workflows hide the other
+  team's response, assignment and response-file tiles again. The team nodes are
+  controlled-list references in v8, so the filter reads the selected list item id instead
+  of comparing against the retired domain-value option id (#855)
+- fix(notifications): planning and excavation notifications read controlled-list values
+  again, so the excavation decision, classification and stage-of-application labels come
+  back in their messages instead of being blank (#855)
 
 - fix(dashboards): convert designation dashboard to v8 node ids and controlled lists (#852)
 - fix(shim): resolve `where()` tile filters in SQL rather than loading every resource in the graph (#852)
@@ -32,3 +40,12 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(dashboards): correct designation card paths for v8 and drop `node_check` (#852)
 
 ### Notes
+
+- Consultation `Action Type` arrives from arches-her already bound to the "Mitigation
+  Type" controlled list, so coral's own Assign To HM / HB / Both and Reject options were
+  never carried into v8 — nothing failed, because the list it points at does exist, it is
+  just the wrong one. coral-graphs branch `fix/consultation-action-type-list` declares a
+  "Consultation Action Type" list and repoints the node. The `ASSIGN_*` constants in
+  `coral/functions/notify_planning.py` already hold the ids that list will carry, so the
+  assign-to-team notifications stay dormant until the rebuilt graphs are loaded, and need
+  no further code change when they are.
