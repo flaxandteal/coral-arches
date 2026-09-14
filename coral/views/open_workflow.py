@@ -6,6 +6,7 @@ import json
 import uuid
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
+from coral.utils.reference_values import has_list_item
 
 logger = logging.getLogger(__name__)
 
@@ -240,53 +241,41 @@ class OpenWorkflow(View):
         HM_RESPONSE_SLUG = 'hm-planning-consultation-response-workflow'
         HB_RESPONSE_SLUG = 'hb-planning-consultation-response-workflow'
 
-        RESPONSE_ACTION_NODEGROUP = 'af7677ba-cfe2-11ee-8a4e-0242ac180006'
-        RESPONSE_TEAM_NODE = 'cd77b29c-2ef6-11ef-b1c4-0242ac140006'
-        RESPONSE_TEAM_HM = '2628d62f-c206-4c06-b26a-3511e38ea243'
-        RESPONSE_TEAM_HB = '70fddadb-8172-4029-b8fd-87f9101a3a2d'
+        RESPONSE_ACTION_NODEGROUP = 'd6d47325-6fe7-5850-a3e3-389b11b00ea8'
+        RESPONSE_TEAM_NODE = 'cf6c76ac-3f89-5d22-a74b-2cdf80608b6e'
+        RESPONSE_TEAM_HM = '03ea2b65-1def-5fc4-ae4e-70b5869d9696'
+        RESPONSE_TEAM_HB = '8b7091c9-dcd2-578c-9775-814240a4ea01'
 
-        ASSIGNMENT_NODEGROUP = 'dc9bfb24-cfd9-11ee-8cc1-0242ac180006'
-        ASSIGNMENT_TEAM_NODE = '6b8f5866-2f0d-11ef-b37c-0242ac140006'
-        ASSIGNMENT_TEAM_HM = 'e377b8a9-ced0-4186-84ff-0b5c3ece9c78'
-        ASSIGNMENT_TEAM_HB = '18b628c9-149f-4c37-bc27-e8e0d714a037'
+        ASSIGNMENT_NODEGROUP = '9898db6b-1a2f-5163-9df6-bf9cb92bf559'
+        ASSIGNMENT_TEAM_NODE = '9f71504d-6c1e-53b7-8d33-f03f8e6ccdca'
+        ASSIGNMENT_TEAM_HM = '5d6363b4-8310-58df-be40-42d9b9096071'
+        ASSIGNMENT_TEAM_HB = '9ef9f72d-0d61-5376-934b-844698c3316e'
 
-        RESPONSE_FILES_NODEGROUP = '31e5ece6-5989-11ef-af2d-0242ac120006'
-        RESPONSE_FILES_TEAM_NODE = '983d73b0-5989-11ef-af2d-0242ac120006'
-        RESPONSE_FILES_TEAM_HM = '761b9622-3c45-4e78-9f7b-241ffd0f5ec1'
-        RESPONSE_FILES_TEAM_HB = 'b66e5025-7695-43b3-b931-e67f1222ec43'
+        RESPONSE_FILES_NODEGROUP = '26bd680e-976c-5087-82e2-e86d517f2113'
+        # Renamed "Response Files Team" -> "Response Team Files" in the v8 graph.
+        RESPONSE_FILES_TEAM_NODE = 'b2b19bbb-7f8a-5291-9e44-fe968a305e51'
+        RESPONSE_FILES_TEAM_HM = '89b800b0-8312-5910-b041-9b4dcac2cf26'
+        RESPONSE_FILES_TEAM_HB = 'ab9e62c9-0541-5377-9c05-2e0406eb119c'
 
-        response_tiles = self.grouped_tiles.get(RESPONSE_ACTION_NODEGROUP, [])
-        remove_ids = []
-        for tile in response_tiles:
-            if tile.data[RESPONSE_TEAM_NODE] == RESPONSE_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
-                remove_ids.append(tile.tileid)
-                continue
-            if tile.data[RESPONSE_TEAM_NODE] == RESPONSE_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
-                remove_ids.append(tile.tileid)
-                continue
-        self.grouped_tiles[RESPONSE_ACTION_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, response_tiles))
+        # Response, assignment and response-file tiles are team-owned: the HB workflow
+        # hides HM's tiles and vice versa. The team node is a controlled-list reference,
+        # so the tile holds a list of entries rather than the option id it held pre-v8 —
+        # and a tile saved before the team node existed has no key for it at all.
+        team_filters = [
+            (RESPONSE_ACTION_NODEGROUP, RESPONSE_TEAM_NODE, RESPONSE_TEAM_HM, RESPONSE_TEAM_HB),
+            (ASSIGNMENT_NODEGROUP, ASSIGNMENT_TEAM_NODE, ASSIGNMENT_TEAM_HM, ASSIGNMENT_TEAM_HB),
+            (RESPONSE_FILES_NODEGROUP, RESPONSE_FILES_TEAM_NODE, RESPONSE_FILES_TEAM_HM, RESPONSE_FILES_TEAM_HB),
+        ]
 
-        assignment_tiles = self.grouped_tiles.get(ASSIGNMENT_NODEGROUP, [])
-        remove_ids = []
-        for tile in assignment_tiles:
-            if tile.data[ASSIGNMENT_TEAM_NODE] == ASSIGNMENT_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
-                remove_ids.append(tile.tileid)
-                continue
-            if tile.data[ASSIGNMENT_TEAM_NODE] == ASSIGNMENT_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
-                remove_ids.append(tile.tileid)
-                continue
-        self.grouped_tiles[ASSIGNMENT_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, assignment_tiles))
+        hides_hm_tiles = self.workflow_slug == HB_RESPONSE_SLUG
 
-        response_files_tiles = self.grouped_tiles.get(RESPONSE_FILES_NODEGROUP, [])
-        remove_ids = []
-        for tile in response_files_tiles:
-            if tile.data[RESPONSE_FILES_TEAM_NODE] == RESPONSE_FILES_TEAM_HM and self.workflow_slug == HB_RESPONSE_SLUG:
-                remove_ids.append(tile.tileid)
-                continue
-            if tile.data[RESPONSE_FILES_TEAM_NODE] == RESPONSE_FILES_TEAM_HB and self.workflow_slug == HM_RESPONSE_SLUG:
-                remove_ids.append(tile.tileid)
-                continue
-        self.grouped_tiles[RESPONSE_FILES_NODEGROUP] = list(filter(lambda tile: tile.tileid not in remove_ids, response_files_tiles))
+        for nodegroup_id, team_node, hm_item, hb_item in team_filters:
+            unwanted_item = hm_item if hides_hm_tiles else hb_item
+            tiles = self.grouped_tiles.get(nodegroup_id, [])
+            self.grouped_tiles[nodegroup_id] = [
+                tile for tile in tiles
+                if not has_list_item(tile.data.get(team_node), unwanted_item)
+            ]
 
     def setup_designation(self):
         REVISION_APPROVALS_NODEGROUP_ID = "3c51740c-dbd0-11ee-8835-0242ac120006"
