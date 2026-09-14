@@ -41,6 +41,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 - fix(workflows-js): update retired v8 node ids in workflow JS (#856)
 
+- fix(plugins): update retired v8 node ids in workflow plugin definitions (#857)
+
 ### Notes
 
 - Consultation `Action Type` arrives from arches-her already bound to the "Mitigation
