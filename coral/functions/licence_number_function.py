@@ -4,6 +4,7 @@ from arches.app.search.mappings import RESOURCES_INDEX
 from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
+from coral.utils.reference_values import has_list_item
 import datetime
 import json
 from django.db.models import Max
@@ -21,11 +22,11 @@ SYSTEM_REF_RESOURCE_ID_NODE = "991c49b2-48b6-11ee-85af-0242ac140007"
 
 STATUS_NODEGROUP = "4f0f655c-48cf-11ee-8e4e-0242ac140007"
 STATUS_NODE = "a79fedae-bad5-11ee-900d-0242ac180006"
-STATUS_FINAL_VALUE = "8c454982-c470-437d-a9c6-87460b07b3d9"
+STATUS_FINAL_VALUE = "1b180b5b-14e9-5361-91db-5f13e95ea176"
 
 CUR_D_DECISION_NODEGROUP = "c9f504b4-c42d-11ee-94bf-0242ac180006"
 CUR_D_DECISION_NODE = "2a5151f0-c42e-11ee-94bf-0242ac180006"
-CUR_D_DECISION_APPROVED_VALUE = "0c888ace-b068-470a-91cb-9e5f57c660b4"
+CUR_D_DECISION_APPROVED_VALUE = "696f00b1-e806-59f0-916d-dc8a39c2ed6c"
 
 ASSOCIATED_ACTIVIY_NODEGROUP = "a9f53f00-48b6-11ee-85af-0242ac140007"
 ASSOCIATED_ACTIVIY_NODE = "a9f53f00-48b6-11ee-85af-0242ac140007"
@@ -209,30 +210,29 @@ class LicenceNumberFunction(BaseFunction):
                 return
 
         if tile_nodegroup_id == STATUS_NODEGROUP:
-            if tile.data.get(STATUS_NODE) != STATUS_FINAL_VALUE:
+            if not has_list_item(tile.data.get(STATUS_NODE), STATUS_FINAL_VALUE):
                 return
             try:
                 cur_d_tile = Tile.objects.get(
                     resourceinstance_id=resource_instance_id,
                     nodegroup_id=CUR_D_DECISION_NODEGROUP,
                 )
-                if (
-                    cur_d_tile.data.get(CUR_D_DECISION_NODE)
-                    != CUR_D_DECISION_APPROVED_VALUE
+                if not has_list_item(
+                    cur_d_tile.data.get(CUR_D_DECISION_NODE), CUR_D_DECISION_APPROVED_VALUE
                 ):
                     return
             except Tile.DoesNotExist:
                 return
 
         if tile_nodegroup_id == CUR_D_DECISION_NODEGROUP:
-            if tile.data.get(CUR_D_DECISION_NODE) != CUR_D_DECISION_APPROVED_VALUE:
+            if not has_list_item(tile.data.get(CUR_D_DECISION_NODE), CUR_D_DECISION_APPROVED_VALUE):
                 return
             try:
                 status_tile = Tile.objects.get(
                     resourceinstance_id=resource_instance_id,
                     nodegroup_id=STATUS_NODEGROUP,
                 )
-                if status_tile.data.get(STATUS_NODE) != STATUS_FINAL_VALUE:
+                if not has_list_item(status_tile.data.get(STATUS_NODE), STATUS_FINAL_VALUE):
                     return
             except Tile.DoesNotExist:
                 return

@@ -1,7 +1,7 @@
 from arches.app.functions.base import BaseFunction
 from coral.utils.ha_number import HaNumber
 from arches.app.models.tile import Tile
-from arches.app.models import models
+from coral.utils.reference_values import reference_label
 from coral.utils.smr_number import SmrNumber
 
 HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
@@ -52,9 +52,7 @@ class SmrNumberFunction(BaseFunction):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(GENERATED_SMR_NODE_ID, None)
 
-        map_sheet_id = models.Value.objects.filter(
-            valueid=tile.data.get(NISMR_NUMBERING_TYPE_NODE_ID, None)
-        ).first()
+        map_sheet_id = reference_label(tile.data.get(NISMR_NUMBERING_TYPE_NODE_ID))
 
         if not map_sheet_id and not id_number:
             # Clear SMR Number
@@ -64,7 +62,7 @@ class SmrNumberFunction(BaseFunction):
         if not map_sheet_id and id_number:
             raise ValueError('No selected NISMR Numbering selected but a generated ID was provided.')
 
-        sn = SmrNumber(map_sheet_id=map_sheet_id.value)
+        sn = SmrNumber(map_sheet_id=map_sheet_id)
 
         if sn.validate_id(id_number, resource_instance_id):
             print("SMR Number is valid: ", id_number)
