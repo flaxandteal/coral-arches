@@ -27,6 +27,8 @@ from typing import (
     Type,
 )
 
+from django.core.exceptions import FieldError
+
 from . import adapter
 
 logger = logging.getLogger(__name__)
@@ -123,6 +125,36 @@ def _rtt_aliased_data_to_tree(obj: Any) -> Dict[str, Any]:
     return result
 
 
+def _holds_own_alias(value: Any, alias: str) -> bool:
+    """True for a nodegroup dict carrying a node of the nodegroup's own alias."""
+    return isinstance(value, dict) and alias in value
+
+
+def _with_ancestor_nodegroups(nodes: List[Any], graph_nodes: Any) -> List[Any]:
+    """Add one node from each ancestor nodegroup that itself has a parent.
+
+    arches-querysets resolves a node's nodegroup ancestry through the nodes it
+    is handed, so a narrowed list KeyErrors on any alias nested two deep.
+    """
+    by_nodegroup: Dict[Any, Any] = {}
+    for node in graph_nodes:
+        current = by_nodegroup.get(node.nodegroup_id)
+        if current is None or current.datatype == "semantic":
+            by_nodegroup[node.nodegroup_id] = node
+
+    result = list(nodes)
+    seen = {node.pk for node in result}
+    for node in nodes:
+        nodegroup = node.nodegroup
+        while nodegroup is not None and nodegroup.parentnodegroup_id:
+            nodegroup = nodegroup.parentnodegroup
+            ancestor = by_nodegroup.get(nodegroup.pk)
+            if nodegroup.parentnodegroup_id and ancestor is not None and ancestor.pk not in seen:
+                result.append(ancestor)
+                seen.add(ancestor.pk)
+    return result
+
+
 class _SemanticNode:
     """
     Sync walker over a dict tree.
@@ -187,11 +219,19 @@ class _SemanticNode:
 
     def _lookup(self, name: str) -> Any:
         if isinstance(self._data, dict):
-            if name not in self._data:
-                raise AttributeError(
-                    f"{self._path or '<root>'}: no such attribute {name!r}"
-                )
-            return _wrap_value(self._data[name], f"{self._path}.{name}")
+            if name in self._data:
+                value = self._data[name]
+                # A node repeating its nodegroup's alias is what the caller means.
+                if _holds_own_alias(value, name):
+                    return _wrap_value(value[name], f"{self._path}.{name}")
+                return _wrap_value(value, f"{self._path}.{name}")
+            # Nodes sharing a collapsed nodegroup would otherwise become unreachable.
+            for group, value in self._data.items():
+                if _holds_own_alias(value, group) and name in value:
+                    return _wrap_value(value[name], f"{self._path}.{group}.{name}")
+            raise AttributeError(
+                f"{self._path or '<root>'}: no such attribute {name!r}"
+            )
         if isinstance(self._data, list):
             return [_wrap_value(item, f"{self._path}[*]")._lookup(name) for item in self._data]  # type: ignore[union-attr]
         raise AttributeError(name)
@@ -310,10 +350,7 @@ class QueryBuilder:
             ids = ids[self._offset:]
         if self._limit is not None:
             ids = ids[:self._limit]
-        for rid in ids:
-            inst = self._model_cls.find(rid)
-            if inst is not None:
-                yield inst
+        yield from self._model_cls.find_many(ids)
 
     def _resource_ids(self) -> List[str]:
         from arches.app.models.models import ResourceInstance
@@ -339,32 +376,64 @@ class QueryBuilder:
                     self._order_by,
                 )
 
-        ids = [str(ri["resourceinstanceid"]) for ri in qs.values("resourceinstanceid")]
-
+        tile_ids = None
         if tile_filters:
-            kept: List[str] = []
-            for rid in ids:
-                inst = self._model_cls.find(rid)
-                if inst is None:
-                    continue
-                if _matches_tile_filters(inst, tile_filters):
-                    kept.append(rid)
-            return kept
+            tile_ids = self._tile_filtered_ids(tile_filters)
+            # Only fetch and intersect when something above narrowed or ordered.
+            if not django_filters and not self._order_by:
+                return tile_ids
+
+        ids = [str(ri["resourceinstanceid"]) for ri in qs.values("resourceinstanceid")]
+        if tile_ids is not None:
+            allowed = set(tile_ids)
+            ids = [rid for rid in ids if rid in allowed]
         return ids
 
+    def _tile_filtered_ids(self, tile_filters: Dict[str, Any]) -> List[str]:
+        """Resolve node-alias filters to resource ids in SQL.
 
-def _matches_tile_filters(inst: "ResourceModel", filters: Dict[str, Any]) -> bool:
-    for alias, expected in filters.items():
+        No per-resource fallback: hydrating a whole graph to compare one
+        attribute takes hours, so an unsupported filter fails loudly instead.
+        """
+        from arches_querysets.models import ResourceTileTree
+        from arches_querysets.utils.models import (
+            any_nodegroup_in_hierarchy_is_cardinality_n,
+        )
+
+        model_name = self._model_cls.__name__
+        slug = self._model_cls._get_graph_slug()
+        if not slug:
+            raise FieldError(
+                f"{model_name}.where({', '.join(sorted(tile_filters))}) "
+                "needs a graph slug to filter on node aliases, and this graph has none."
+            )
+        # Annotating a whole graph costs seconds; we only need the filtered aliases.
+        nodes_by_alias = self._model_cls._._node_objects_by_alias()
         try:
-            actual = getattr(inst, alias, None)
-        except AttributeError:
-            return False
-        if actual is None:
-            return False
-        actual_str = str(actual)
-        if str(expected) != actual_str:
-            return False
-    return True
+            nodes = [nodes_by_alias[alias.split("__")[0]] for alias in tile_filters]
+        except KeyError as exc:
+            raise FieldError(
+                f"{model_name}.where(): no node alias {exc} on this graph."
+            ) from exc
+        nodes = _with_ancestor_nodegroups(nodes, nodes_by_alias.values())
+        # A cardinality-n alias annotates as a list; comparing it to a scalar
+        # is a Postgres DataError, so refuse it here where it can be caught.
+        for lookup, value in tile_filters.items():
+            alias = lookup.split("__")[0]
+            plain_scalar = "__" not in lookup and value is not None and not isinstance(value, (list, tuple))
+            if plain_scalar and any_nodegroup_in_hierarchy_is_cardinality_n(
+                nodes_by_alias[alias].nodegroup, nodes
+            ):
+                raise FieldError(
+                    f"{model_name}.where({alias}=...): {alias!r} is cardinality-n, so it "
+                    f"aggregates to an array of json that no value comparison matches. "
+                    f"Filter on a cardinality-1 alias, or test presence with "
+                    f"{alias}__isnull."
+                )
+        qs = ResourceTileTree.get_tiles(slug, nodes=nodes)
+        return [
+            str(pk) for pk in qs.filter(**tile_filters).values_list("pk", flat=True)
+        ]
 
 
 class _WrapperMeta:
@@ -484,20 +553,28 @@ class ResourceModel:
         object.__setattr__(self, "_dirty", True)
 
     def _is_string_field(self, alias: str) -> bool:
+        return alias in self._aliases_of_datatype("string", "concept")
+
+    def _is_list_field(self, alias: str) -> bool:
+        return alias in self._aliases_of_datatype(
+            "resource-instance-list", "concept-list", "file-list", "domain-value-list"
+        )
+
+    def _aliases_of_datatype(self, *datatypes: str) -> set:
         try:
             cls = type(self)
-            cache = cls.__dict__.get("_string_aliases_cache")
+            cache = cls.__dict__.get("_alias_datatype_cache")
             if cache is None:
+                cache = {}
+                setattr(cls, "_alias_datatype_cache", cache)
+            if datatypes not in cache:
                 nodes = cls._._node_objects_by_alias()
-                cache = {
-                    a
-                    for a, n in nodes.items()
-                    if getattr(n, "datatype", "") in ("string", "concept")
+                cache[datatypes] = {
+                    a for a, n in nodes.items() if getattr(n, "datatype", "") in datatypes
                 }
-                setattr(cls, "_string_aliases_cache", cache)
-            return alias in cache
+            return cache[datatypes]
         except Exception:
-            return False
+            return set()
 
     def __repr__(self) -> str:  # pragma: no cover
         return f"<{type(self).__name__} id={self.id}>"
@@ -530,17 +607,31 @@ class ResourceModel:
         return cls._find_via_tiles(rid)
 
     @classmethod
-    def _find_via_querysets(cls, rid: str, slug: str) -> Optional["ResourceModel"]:
-        """Load using arches-querysets ResourceTileTree."""
+    def find_many(
+        cls, resource_ids: Any, nodes: Optional[List[Any]] = None
+    ) -> List["ResourceModel"]:
+        """Load many resources in one query, in the order the ids were given."""
         from arches_querysets.models import ResourceTileTree
 
-        try:
-            qs = ResourceTileTree.get_tiles(slug, resource_ids=[rid])
-            rtt = qs.get(pk=rid)
-        except (ResourceTileTree.DoesNotExist, ValueError) as exc:
-            logger.debug("querysets_shim: find via querysets failed for %s: %s", rid, exc)
-            return None
+        rids = [str(rid) for rid in resource_ids if rid]
+        if not rids:
+            return []
 
+        slug = cls._get_graph_slug()
+        if not slug:
+            return [inst for rid in rids if (inst := cls._find_via_tiles(rid))]
+
+        try:
+            qs = ResourceTileTree.get_tiles(slug, resource_ids=rids, nodes=nodes)
+            by_id = {str(rtt.pk): rtt for rtt in qs}
+        except ValueError as exc:
+            logger.debug("querysets_shim: find_many failed for %s: %s", slug, exc)
+            return []
+        return [cls._hydrate(rid, by_id[rid]) for rid in rids if rid in by_id]
+
+    @classmethod
+    def _hydrate(cls, rid: str, rtt: Any) -> "ResourceModel":
+        """Build an instance around an arches-querysets ResourceTileTree row."""
         tree = _rtt_aliased_data_to_tree(rtt)
 
         inst = cls(resource_id=rid)
@@ -553,6 +644,20 @@ class ResourceModel:
             model_remapping=cls._wkrm.get("remapping", {}),
         )
         return inst
+
+    @classmethod
+    def _find_via_querysets(cls, rid: str, slug: str) -> Optional["ResourceModel"]:
+        """Load using arches-querysets ResourceTileTree."""
+        from arches_querysets.models import ResourceTileTree
+
+        try:
+            qs = ResourceTileTree.get_tiles(slug, resource_ids=[rid])
+            rtt = qs.get(pk=rid)
+        except (ResourceTileTree.DoesNotExist, ValueError) as exc:
+            logger.debug("querysets_shim: find via querysets failed for %s: %s", rid, exc)
+            return None
+
+        return cls._hydrate(rid, rtt)
 
     @classmethod
     def _find_via_tiles(cls, rid: str) -> Optional["ResourceModel"]:
@@ -671,9 +776,13 @@ class ResourceModel:
         if sem is None:
             return None
         try:
-            return getattr(sem, name)
+            value = getattr(sem, name)
         except AttributeError:
             return None
+        # A list-typed node with no tile is an empty list to callers, not None.
+        if value is None and self._is_list_field(name):
+            return []
+        return value
 
     def _get_resource_row(self) -> Any:
         if self._resource_row is not None:

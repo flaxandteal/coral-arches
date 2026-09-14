@@ -163,6 +163,41 @@ Initializes the permission table, it allows all of the users within the system t
 make manage CMD="print_permissions_table"
 ```
 
+## Importing business data
+
+Bulk business-data loads now go through
+[arches-json-importer](https://github.com/flaxandteal/arches-json-importer),
+installed as an Arches application (see `ARCHES_APPLICATIONS` in
+`coral/settings.py`). It replaces `packages -o import_business_data` for
+anything large: it writes tiles directly instead of staging a second copy of the
+data in Postgres, and it takes `.jsonl` so a big export streams rather than
+being parsed whole.
+
+In the UI it is *Bulk Data Manager -> Import -> Import Arches JSON*. The Bulk
+Data Manager plugin ships hidden (`{"show": false}` on the plugin row), so it is
+usually absent from the sidebar - go straight to the URL:
+
+```
+<host>/plugins/bulk-data-manager
+```
+
+e.g. http://localhost:8000/plugins/bulk-data-manager locally.
+
+Headless, which is what to use for a full load:
+
+```
+echo '{"overwrite": true}' > etl-config.json
+
+make manage CMD="etl arches-json-importer -s coral/pkg/business_data/all_business_data.jsonl -c etl-config.json -mp -mxp 15"
+```
+
+`manage.py etl` has no `-ow` flag - that is `packages` only. Overwrite is a load
+option, so it goes in the `-c` config file (written into the project dir, since
+`make manage` resolves the path inside the container); without it a resourceid that already
+exists is a validation failure rather than a replacement. `-mp`/`-mxp` index the
+loaded resources across subprocesses. The importer's README covers the flags and
+the version pinning.
+
 ## Updating Arches Versions
 
 If updating the arches version there are several places to update the version number to ensure arches is synced locally and in the build.

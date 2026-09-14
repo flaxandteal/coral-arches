@@ -23,6 +23,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(functions): update retired v8 node ids in functions (#854)
 - fix(views): update retired v8 node ids in views (#855)
 - fix(workflows): the HB and HM planning consultation response workflows hide the other
   team's response, assignment and response-file tiles again. The team nodes are
@@ -31,6 +32,12 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(notifications): planning and excavation notifications read controlled-list values
   again, so the excavation decision, classification and stage-of-application labels come
   back in their messages instead of being blank (#855)
+
+- fix(dashboards): convert designation dashboard to v8 node ids and controlled lists (#852)
+- fix(shim): resolve `where()` tile filters in SQL rather than loading every resource in the graph (#852)
+- fix(shim): collapse nodegroup-level nodes on attribute access, so a single-node nodegroup returns its node (#852)
+- perf(shim): load dashboard resources in one query per model instead of one per row (#852)
+- fix(dashboards): correct designation card paths for v8 and drop `node_check` (#852)
 
 ### Notes
 
