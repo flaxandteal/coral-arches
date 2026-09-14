@@ -23,6 +23,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(functions): update retired v8 node ids in functions (#854)
+
 - fix(dashboards): convert designation dashboard to v8 node ids and controlled lists (#852)
 - fix(shim): resolve `where()` tile filters in SQL rather than loading every resource in the graph (#852)
 - fix(shim): collapse nodegroup-level nodes on attribute access, so a single-node nodegroup returns its node (#852)
