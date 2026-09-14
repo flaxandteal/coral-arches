@@ -33,6 +33,22 @@ def has_list_item(value, list_item_id):
     return str(list_item_id) in selected_list_item_ids(value)
 
 
+def single_list_item_id(value):
+    """The one controlled-list item id in a single-select reference tile value."""
+    return next(iter(selected_list_item_ids(value)), None)
+
+
+def reference_value(list_item_id):
+    """Tile value for a single controlled-list selection.
+
+    Delegates to the datatype so the stored shape stays whatever arches_controlled_lists
+    says it is. Unlike the readers above this needs the database, so the import is local.
+    """
+    from arches_controlled_lists.datatypes.datatypes import ReferenceDataType
+
+    return ReferenceDataType().transform_value_for_tile(str(list_item_id))
+
+
 def reference_label(value, language='en'):
     """Comma-joined display labels for a reference tile value.
 

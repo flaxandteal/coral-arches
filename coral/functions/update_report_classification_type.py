@@ -3,6 +3,7 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models.system_settings import settings
 from arches.app.models import models
 from arches.app.models.tile import Tile
+from coral.utils.reference_values import reference_value, selected_list_item_ids
 from arches.app.models.resource import Resource
 from django.contrib.gis.geos import GEOSGeometry
 from django.db import connection, transaction
@@ -42,26 +43,35 @@ class UpdateReportClassificationType(BaseFunction):
             return
 
 
+        # Two separate controlled lists, Report Classification Type on the report tile and
+        # Classification Type on the application details tile, with an item per name in
+        # each. The maps translate between them.
         classification_map = {
             "application_details": {
-                "not_received": "d33327e8-2b9d-4bab-a07e-f0ded18ded3e",
-                "received": "2ae813e1-bff3-449d-9af1-3e2f6fbc3fce",
-                "unclassified": "a3f95287-4817-4f04-a615-13012eae3169",
-                "summary": "cb90cecc-8854-426f-9bcd-404da1b54ce7",
-                "interim": "0e07f77f-761a-4d05-898c-4332a1b24e38",
-                "preliminary": "98ec8bd3-6f7c-44ea-a157-8d72c78b0bea",
-                "final": "4c9d7ed0-b92b-4173-b0a6-fc70254519a0"
+                "not_received": "36218b55-7847-59eb-8033-5f2fa3d77da8",
+                "received": "e0a253cd-e4c0-5f73-814a-377550b6bb33",
+                "unclassified": "0d8b5c8e-c421-5fe7-8370-27e341e50b51",
+                "summary": "b9af714f-5f44-5a2e-9cc5-83149bbb716e",
+                "interim": "1e14b469-f4ef-51d6-a236-5b7a2f812417",
+                "preliminary": "7eefa066-7eb3-51a5-bd64-2cc3a0fb3359",
+                "final": "85b08591-c202-5ef2-9017-b56cc32dfefd"
             },
             "report_classification": {
-                "c911706e-9015-4a4b-9e99-dd97ee04975d": "not_received",
-                "5ba75505-e195-4625-bfb4-4e9a8615b61b": "received",
-                "103b86ec-2324-4752-82a4-e3bd6df44be5": "unclassified",
-                "31423973-518d-480f-8ad1-0bfb7812d16a": "summary",
-                "3e73773f-8adf-44dd-a4da-3310bf5d238a": "interim",
-                "8ab4d066-3989-49ad-903b-72703e2ccdac": "preliminary",
-                "b82a7d0d-b446-4aff-b3ac-b6d5121fb5d0": "final"
+                "0626c896-1cb1-52d6-ab2b-66b35d739962": "not_received",
+                "9e4fce40-c2cd-5873-bf78-ee7219e0e93f": "received",
+                "5597a6df-c707-5f98-953c-95eb37dbb3c3": "unclassified",
+                "a47ccbbc-a58a-5c07-8506-75416abb699a": "summary",
+                "15c4ee77-699c-5e92-ab30-2f5fc2b6ad8d": "interim",
+                "1dbdc3aa-60f7-5c28-a5ff-35d586f5d6dd": "preliminary",
+                "f8fd33af-9bc7-5834-9a3c-0014f6749d9e": "final"
             }
         }
+
+        def classification_name(source_tile):
+            """Which of the seven classifications a report tile carries, or None."""
+            selected = selected_list_item_ids(source_tile.data.get(report_classification_type_node))
+            names = classification_map["report_classification"]
+            return next((names[item] for item in selected if item in names), None)
 
         application_details_report_classification_node = self.config["application_details_report_classification_node"]
         report_classification_type_node = self.config["report_classification_type_node"]
@@ -90,14 +100,13 @@ class UpdateReportClassificationType(BaseFunction):
         reportTiles.sort(key=tileReportClassNode, reverse=True)
 
         if not len(reportTiles) > 0:
-            new_value = str(classification_map["application_details"]["not_received"])
+            name = "not_received"
         else:
             mostRecent = reportTiles[0]
-            new_value = str(classification_map["application_details"][classification_map["report_classification"][mostRecent.data[report_classification_type_node]]])
-            if str(mostRecent.tileid) == str(tile.tileid):
-                new_value = str(classification_map["application_details"][classification_map["report_classification"][tile.data[report_classification_type_node]]])
-            else:
-                new_value = str(classification_map["application_details"][classification_map["report_classification"][mostRecent.data[report_classification_type_node]]])
+            source = tile if str(mostRecent.tileid) == str(tile.tileid) else mostRecent
+            name = classification_name(source) or "not_received"
+
+        new_value = reference_value(classification_map["application_details"][name])
         
         applicationDetailsTile[0].update_node_value(
             application_details_report_classification_node, 
