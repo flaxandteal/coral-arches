@@ -36,6 +36,10 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   composite score, consultation hierarchy, response assignee, report classification,
   licence number and extension, and enforcement mark-as-read all read the selected list
   item id now rather than testing a tile value against a retired option id
+- fix(functions): the SMR and Historic Parks and Gardens number functions read their
+  map sheet and county labels out of the reference tile value rather than looking up a
+  concept valueid, which raised "is not a valid UUID" on save and lost the generated
+  number
 
 - fix(dashboards): convert designation dashboard to v8 node ids and controlled lists (#852)
 - fix(shim): resolve `where()` tile filters in SQL rather than loading every resource in the graph (#852)
