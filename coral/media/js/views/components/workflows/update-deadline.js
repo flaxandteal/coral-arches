@@ -8,10 +8,10 @@ import componentTemplate from 'templates/views/components/cards/default.htm';
 
 function viewModel(params) {
 
-const AGRICULTURE_DATE_NODEGROUP_ID = "5d6eecde-e217-11ef-803e-0242ac120003"
-const RESPONSE_DATE_NODE = '798d9d74-e218-11ef-803e-0242ac120003';
-const DUE_DATE_NODE = '5b6a2ede-e218-11ef-803e-0242ac120003';
-const DEADLINE_NODE = '9bcf2ec2-018a-4ccc-a895-f45ffc22239e';
+const AGRICULTURE_DATE_NODEGROUP_ID = "c57c0e55-9d47-5161-ad50-5c27eadb5d3a"
+const RESPONSE_DATE_NODE = '0da2486a-aaca-5b02-beb7-f81a2ebab9aa';
+const DUE_DATE_NODE = '4dd92777-2d90-515a-bbf5-540796a299ff';
+const DEADLINE_NODE = 'eae8dfeb-f907-50e2-9a59-7c6a2c847504';
 
 CardComponentViewModel.apply(this, [params]);
 

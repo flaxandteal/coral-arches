@@ -51,6 +51,9 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(shim): collapse nodegroup-level nodes on attribute access, so a single-node nodegroup returns its node (#852)
 - perf(shim): load dashboard resources in one query per model instead of one per row (#852)
 - fix(dashboards): correct designation card paths for v8 and drop `node_check` (#852)
+- fix(workflows-js): update retired v8 node ids in workflow JS (#856)
+
+- fix(plugins): update retired v8 node ids in workflow plugin definitions (#857)
 
 ### Notes
 
