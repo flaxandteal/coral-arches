@@ -87,6 +87,12 @@ function viewModel(params) {
       data: {
         'c61ab166-9513-11ea-a44c-f875a44e0e11': null,
         'c61ab167-9513-11ea-9d50-f875a44e0e11': null,
+        // UNRESOLVED: these four are pre-v8 concept VALUE ids and the nodes they target
+        // (Name Use Metatype, Name Type, Name Metatype, Name Currency Metatype) are all
+        // `reference` now, so the tile is written with values the datatype cannot resolve.
+        // They survive as stale widget config.defaultValue entries in the graphs too, so
+        // there is no label to map them from — the replacement list items have to be
+        // chosen by the data owner before this can be converted.
         'c61ab168-9513-11ea-9980-f875a44e0e11': '04a4c4d5-5a5e-4018-93aa-65abaa53fb53',
         'c61ab169-9513-11ea-b7c1-f875a44e0e11': '8a96a261-cd79-48e2-9f12-74924c152b00',
         'c61ab16a-9513-11ea-9afb-f875a44e0e11': 'a0e096e2-f5ae-4579-950d-3040714713b4',

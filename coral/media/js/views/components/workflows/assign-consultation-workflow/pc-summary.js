@@ -48,13 +48,13 @@ function viewModel(params) {
     },
     hierarchy: {
       label: 'Hierarchy',
-      nodegroupId: '0dd6ccb8-cffe-11ee-8a4e-0242ac180006',
-      renderNodeIds: [{ nodeId: '0dd6ccb8-cffe-11ee-8a4e-0242ac180006', label: 'Type' }]
+      nodegroupId: '3e16208d-9560-5998-8ba1-203cd599a5d8',
+      renderNodeIds: [{ nodeId: '3e16208d-9560-5998-8ba1-203cd599a5d8', label: 'Type' }]
     },
     classificationType: {
       label: 'Classification Type',
-      nodegroupId: '86caf026-c76c-11ee-bf7c-0242ac180006',
-      renderNodeIds: [{ nodeId: '86caf026-c76c-11ee-bf7c-0242ac180006', label: 'Type' }]
+      nodegroupId: 'b8145921-c586-5f67-9439-ed4d65b93091',
+      renderNodeIds: [{ nodeId: 'b8145921-c586-5f67-9439-ed4d65b93091', label: 'Type' }]
     },
     developmentType: {
       label: 'Development Type',
@@ -87,15 +87,15 @@ function viewModel(params) {
         { nodeId: '9e55221a-64dc-53df-808d-78239337f189', label: 'Building Name' },
         { nodeId: '99c2f475-8b28-548b-908d-e3d8be9ee299', label: 'Street' },
         { nodeId: 'c662b678-849d-53ba-89be-3f961fcb7a19', label: 'Town or City' },
-        { nodeId: '083fafe2-ca61-11ee-afca-0242ac180009', label: 'County' },
+        { nodeId: 'a0d16bd7-3705-56d7-8d05-d13a777861ad', label: 'County' },
         { nodeId: '70d69cb7-26a9-5234-ac38-4b968846247e', label: 'Postcode' },
-        { nodeId: '083fafe2-345c-11ef-a5b7-0242ac120003', label: 'Townland' }
+        { nodeId: 'e552e839-c4d4-51a3-b747-2ac83f335f60', label: 'Townland' }
       ]
     },
     council: {
       label: 'Council',
-      nodegroupId: '69500360-d7c5-11ee-a011-0242ac120006',
-      renderNodeIds: [{ nodeId: '69500360-d7c5-11ee-a011-0242ac120006', label: 'Selection' }]
+      nodegroupId: '4ddb3a60-3d1c-5873-8168-ed0ba1c92644',
+      renderNodeIds: [{ nodeId: '4ddb3a60-3d1c-5873-8168-ed0ba1c92644', label: 'Selection' }]
     },
     irishGridRef: {
       label: 'Irish Grid Reference',
@@ -106,8 +106,8 @@ function viewModel(params) {
       label: 'Localities/Administrative Areas',
       nodegroupId: '1448f713-2d3d-5a71-8029-351537e5cadf',
       renderNodeIds: [
-        { nodeId: '083f0db2-ca61-11ee-afca-0242ac180006', label: 'Area Type' },
-        { nodeId: '083ea3ae-ca61-11ee-afca-0242ac180006', label: 'Area Name' }
+        { nodeId: '9ac6381b-f090-59ee-a444-0664fb5de8c0', label: 'Area Type' },
+        { nodeId: '5ac602cd-7c66-5079-b62b-cd73a0dd7e7a', label: 'Area Name' }
       ]
     },
     locationDescription: {
@@ -119,7 +119,7 @@ function viewModel(params) {
       label: 'Assignment',
       nodegroupId: '9898db6b-1a2f-5163-9df6-bf9cb92bf559',
       renderNodeIds: [
-        { nodeId: '6b8f5866-2f0d-11ef-b37c-0242ac140006', label: 'Team' },
+        { nodeId: '9f71504d-6c1e-53b7-8d33-f03f8e6ccdca', label: 'Team' },
         // { nodeId: '7b4b1596-5592-544b-9651-ecf800202f98', label: 'Re-Assigned To' },
         { nodeId: '16b43c47-0513-5c96-b817-030d200d113b', label: 'Assigned To' }
       ]
