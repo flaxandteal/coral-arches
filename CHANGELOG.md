@@ -39,6 +39,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - perf(shim): load dashboard resources in one query per model instead of one per row (#852)
 - fix(dashboards): correct designation card paths for v8 and drop `node_check` (#852)
 
+- fix(workflows-js): update retired v8 node ids in workflow JS (#856)
+
 ### Notes
 
 - Consultation `Action Type` arrives from arches-her already bound to the "Mitigation

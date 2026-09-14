@@ -19,16 +19,16 @@ function viewModel(params) {
   this.MONUMENT_NAMES_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11';
   this.MONUMENT_NAMES_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11';
 
-  this.CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006';
-  this.CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006';
+  this.CM_REFERENCE_NODEGROUP = 'c9c4e6dc-aa34-5254-a7b5-4f79bd8b73c1';
+  this.CM_REFERENCE_NODE = '9c4a43d9-a689-5ba2-bed5-4fbbd6ad47e6';
 
   this.ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba';
-  this.TOWNLAND_NODEGROUP = '919bcb94-345c-11ef-a5b7-0242ac120003';
+  this.TOWNLAND_NODEGROUP = 'ffaf4062-be4a-52e6-ace8-7e29014f96bc';
   this.TOWNLAND_NODE = 'd033683a-345c-11ef-a5b7-0242ac120003';
   this.COUNTY_NODE = "87d3ff32-f44f-11eb-aa82-a87eeabdefba";
 
-  this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
-  this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
+  this.BFILE_NODEGROUP = "34e9c49c-5523-598a-98a2-32224336d197";
+  this.BFILE_NODE = "0d0b653a-03e2-5a35-9ed4-9219b0681dd0";
 
   this.CONSTRUCTION_NODEGROUP = "77e8f287-efdc-11eb-a790-a87eeabdefba";
   this.HA_TYPE_NODE = "77e90834-efdc-11eb-b2b9-a87eeabdefba";
@@ -40,9 +40,9 @@ function viewModel(params) {
     '1edc61a9-b64b-51ae-9077-536908761903': 'Historic Parks and Gardens Number'
   }
 
-  const MONUMENT_COUNT_NODE = "dc809034-04ba-11f0-8d60-9e7c335817fb";
-  const SCHEDULED_MONUMENT_COUNT_NODE = "49d44590-04bb-11f0-8d60-9e7c335817fb";
-  const HA_NODE = "2b4cfdac-04ba-11f0-9182-9e7c335817fb";
+  const MONUMENT_COUNT_NODE = "a7d5d94e-1094-568a-ab49-bdd9362a1485";
+  const SCHEDULED_MONUMENT_COUNT_NODE = "4cbfed23-7989-500c-9a0f-c63307d15beb";
+  const HA_NODE = "0f74af35-a8d7-5a12-953a-1773d3981fec";
 
   this.labels = params.labels || [];
 
