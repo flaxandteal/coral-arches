@@ -29,7 +29,7 @@ import template from 'templates/views/components/workflows/get-monument-details.
     this.TOWNLAND_NODE = 'd033683a-345c-11ef-a5b7-0242ac120003';
 
     this.NATIONAL_GRIDREF_NODEGROUP = '87d39b2b-f44f-11eb-af5e-a87eeabdefba';
-    this.IRISH_GRIDREF_NODE = '2fdedbd0-1459-11ef-8cdd-0242ac120006';
+    this.IRISH_GRIDREF_NODE = '1dd58086-a4ef-5ffa-8b05-a54a0be14f21';
 
     this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
     this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
