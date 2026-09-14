@@ -90,14 +90,19 @@ describe('Going through the Add IHR Workflow', function () {
         cy.get('[aria-label="Postcode"]').first().click().type('Testing Labs');
         cy.wait(2000);
 
+        // Townland/Area Type/Area Name are reference-select widgets rendered
+        // as multi-value select2 (select2-selection--multiple), which never
+        // gets the comma-suffixed aria-label pickRelationshipFirst looks
+        // for - scope by alias class instead (see 12_add_building). County
+        // is single-select and works fine with pickRelationshipFirst.
         cy.pickRelationshipFirst('County');
         cy.wait(2000);
-        cy.pickRelationshipFirst('Townland');
+        cy.pickCardOption('townland');
         cy.wait(2000);
 
-        cy.pickRelationshipFirst('Area Type');
+        cy.pickCardOption('area_type');
         cy.wait(2000);
-        cy.pickRelationshipFirst('Area Name');
+        cy.pickCardOption('area_name');
         cy.wait(2000);
 
         cy.get('.council').contains('Select an option').click();
@@ -125,11 +130,12 @@ describe('Going through the Add IHR Workflow', function () {
         // Finish tab - configures a "Garden Sign Off" default-card for
         // nodegroup 3897b87a-1902-11ef-aa9f-0242ac150006, which - like
         // aa629840 above - does not exist in node_groups on this DB. Only
-        // the second card (Heritage Asset References) actually renders.
+        // the second card (Heritage Asset References) actually renders, and
+        // of its four fields only "IHR Number" isn't in that card's own
+        // hiddenNodes list (HB Number/Historic Parks and Gardens/SMR Number
+        // are all explicitly hidden there).
         cy.wait(2000);
         cy.get('[aria-label="IHR Number"]').click().type('IHR-TEST-01');
-        cy.wait(2000);
-        cy.get('[aria-label="SMR Number"]').click().type('SMR-TEST-01');
 
         cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
     });

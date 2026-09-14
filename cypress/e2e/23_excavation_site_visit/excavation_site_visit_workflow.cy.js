@@ -48,9 +48,11 @@ describe('Going through the Excavation Site Visit Workflow', function () {
         cy.pickRelationshipFirst('Licence Number');
         cy.wait(2000);
 
-        // "Person or Organization" -> "HED Inspector" label override.
+        // "Person or Organization" -> "HED Inspector" label override. This
+        // one is a resource-instance-list (multi), unlike "Licence Number"
+        // above (resource-instance, single) - scope by alias class.
         cy.contains('HED Inspector').scrollIntoView();
-        cy.pickRelationshipFirst('HED Inspector');
+        cy.pickCardOption('actor');
         cy.wait(2000);
 
         cy.setBooleanTrue('licence_holder_present');
@@ -66,10 +68,13 @@ describe('Going through the Excavation Site Visit Workflow', function () {
         cy.get('.btn-success').contains('Add').click();
         cy.wait(2500);
 
-        cy.get('[aria-label="Potential Date of Remains Value"]').click().type('Test potential date');
+        // Widget labels drop "Value"/change casing vs the node's own name:
+        // "Potential Date of Remains" (not "...Value") and "Stored at"
+        // (lowercase "at", not "Stored At").
+        cy.get('[aria-label="Potential Date of Remains"]').click().type('Test potential date');
 
         cy.setBooleanTrue('finds');
-        cy.get('[aria-label="Stored At"]').click().type('Test storage location');
+        cy.get('[aria-label="Stored at"]').click().type('Test storage location');
         cy.setBooleanTrue('archive');
         cy.setBooleanTrue('standards_met');
         cy.setBooleanTrue('survey_methods_discussed_');

@@ -24,8 +24,9 @@ describe('Going through the Curatorial Inspection Workflow', function () {
         // get-selected-monument-details (reused from the FMW Inspection
         // workflow) relabels the "Monument or Area" picker to "SMR Number"
         // and shows a read-only summary panel for the selected monument.
+        // Resource-instance-list (multi), scope by alias class.
         cy.contains('SMR Number').scrollIntoView();
-        cy.pickRelationshipFirst('SMR Number');
+        cy.pickCardOption('related_monuments_and_areas');
         cy.wait(2000);
 
         // Two cards here (nodegroupids 0ecfd47a.../a2cda8b4...) reference
@@ -46,17 +47,20 @@ describe('Going through the Curatorial Inspection Workflow', function () {
         // target node ids that don't exist in this nodegroup either, so
         // every field in this large Contacts card renders visible under its
         // real default label; only a representative few are exercised here.
-        cy.contains('Owner').scrollIntoView();
-        cy.pickRelationshipFirst('Owner');
+        // All resource-instance-list (multi) - scope by alias class, not
+        // pickRelationshipFirst. Owner/Occupier's actual labels are
+        // "Owner(s)"/"Occupier(s)", not the bare node names.
+        cy.contains('Owner(s)').scrollIntoView();
+        cy.pickCardOption('owner');
         cy.wait(2000);
-        cy.contains('Occupier').scrollIntoView();
-        cy.pickRelationshipFirst('Occupier');
+        cy.contains('Occupier(s)').scrollIntoView();
+        cy.pickCardOption('occupier');
         cy.wait(2000);
         cy.contains('Architect').scrollIntoView();
-        cy.pickRelationshipFirst('Architect');
+        cy.pickCardOption('architect');
         cy.wait(2000);
         cy.contains('Historian').scrollIntoView();
-        cy.pickRelationshipFirst('Historian');
+        cy.pickCardOption('historian');
         cy.wait(2000);
 
         cy.workflowNext();
@@ -65,9 +69,8 @@ describe('Going through the Curatorial Inspection Workflow', function () {
         // here also target nonexistent node ids, so nothing is actually
         // enforced as required.
         cy.contains('Curatorial Description').scrollIntoView();
-        cy.get('input[aria-label="Curatorial Description Type"]').click();
+        cy.pickCardOption('curatorial_description_type');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
         cy.get('[aria-label="Curatorial Description"]').click().type('Test curatorial comment');
         cy.get('.btn-success').contains('Add').click();
         cy.wait(2500);

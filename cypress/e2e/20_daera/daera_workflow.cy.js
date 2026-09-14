@@ -31,8 +31,9 @@ describe('Going through the DAERA Workflow', function () {
         // the "Consultation Type" card (nodegroupid 34aca644...) both
         // target nodegroups that don't exist either, so neither renders.
 
+        // Resource-instance-list (multi), scope by alias class.
         cy.contains('Applicant').scrollIntoView();
-        cy.pickRelationshipFirst('Applicant');
+        cy.pickCardOption('applicant_n1');
         cy.wait(2000);
 
         // "Comments" card - node c36808b0 ("Advice text") exists and its
@@ -52,9 +53,8 @@ describe('Going through the DAERA Workflow', function () {
         cy.get('[aria-label="CM Reference"]').click().type('CM-TEST-01');
 
         cy.contains('Consultation status').scrollIntoView();
-        cy.get('input[aria-label="Consultation status"]').click();
+        cy.pickCardOption('consultation_status');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
 
         cy.workflowNext();
 

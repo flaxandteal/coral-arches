@@ -41,33 +41,34 @@ describe('Going through the Assign Consultation Workflow', function () {
         // "Application Type" reference dropdown plus an extra "Hierarchy"
         // domain-select widget for tracking hierarchy changes - only the
         // former is exercised here.
+        // Single-select reference-select-widget fields - scope by alias
+        // class rather than input[aria-label] (see 12_add_building).
         cy.contains('Application Type').scrollIntoView();
-        cy.get('input[aria-label="Application Type"]').click();
+        cy.pickCardOption('application_type');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
 
         cy.contains('Classification').scrollIntoView();
-        cy.get('input[aria-label="Classification"]').click();
+        cy.pickCardOption('classification_type');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
 
         cy.contains('Development Type').scrollIntoView();
-        cy.get('input[aria-label="Development Type"]').click();
+        cy.pickCardOption('development_type');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
 
+        // Related Heritage Asset(s) is a resource-instance-list (multi).
         cy.contains('Related Heritage Asset(s)').scrollIntoView();
-        cy.pickRelationshipFirst('Related Heritage Asset(s)');
+        cy.pickCardOption('related_heritage_assets');
         cy.wait(2000);
 
         // Contacts - a large card with many relationship pickers visible
         // (only Owner, Planning Body, Casework Officer and a handful of
-        // others are hidden here); exercising a representative few.
+        // others are hidden here); exercising a representative few. Both
+        // are resource-instance-list (multi).
         cy.contains('Agent').scrollIntoView();
-        cy.pickRelationshipFirst('Agent');
+        cy.pickCardOption('agent');
         cy.wait(2000);
         cy.contains('Applicant').scrollIntoView();
-        cy.pickRelationshipFirst('Applicant');
+        cy.pickCardOption('applicant');
         cy.wait(2000);
 
         cy.contains('Application Reason').scrollIntoView();
@@ -90,18 +91,22 @@ describe('Going through the Assign Consultation Workflow', function () {
         cy.get('[aria-label="Postcode"]').first().click().type('Testing Labs');
         cy.wait(2000);
 
-        cy.pickRelationshipFirst('County');
+        // Scope by alias class rather than pickRelationshipFirst - this is
+        // a different graph (Consultation) from Add Garden/Building, so
+        // single-vs-multi can't be assumed to match; county_value/townland
+        // etc. work regardless either way.
+        cy.pickCardOption('county_value');
         cy.wait(2000);
-        cy.pickRelationshipFirst('Townland');
+        cy.pickCardOption('townland');
         cy.wait(2000);
 
         cy.get('.council').contains('Select an option').click();
         cy.wait(2000);
         cy.get('.select2-results__option').first().click();
 
-        cy.pickRelationshipFirst('Area Type');
+        cy.pickCardOption('area_type');
         cy.wait(2000);
-        cy.pickRelationshipFirst('Area Name');
+        cy.pickCardOption('area_name');
         cy.wait(2000);
 
         cy.contains('Location Description').scrollIntoView();
@@ -119,17 +124,17 @@ describe('Going through the Assign Consultation Workflow', function () {
         // component still falls back to rendering the card's normal
         // widgets, which is what's exercised below.
         cy.contains('Action Type').scrollIntoView();
-        cy.get('input[aria-label="Action Type"]').click();
+        cy.pickCardOption('action_type');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
 
+        // "Status" node's own alias is "action_status", not "status".
         cy.contains('Status').scrollIntoView();
-        cy.get('input[aria-label="Status"]').click();
+        cy.pickCardOption('action_status');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
 
+        // Resource-instance-list (multi).
         cy.contains('Assigned to').scrollIntoView();
-        cy.pickRelationshipFirst('Assigned to');
+        cy.pickCardOption('assigned_to_n1');
         cy.wait(2000);
 
         cy.get('.card_component.date_entered input.form-control').first().click();

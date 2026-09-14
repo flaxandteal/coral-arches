@@ -20,22 +20,24 @@ describe('Going through the HB Planning Consultation Response Workflow', functio
         cy.get('.form-control').should('be.disabled');
         cy.workflowNext();
 
-        // Assign tab - Assignment card
+        // Assign tab - Assignment card. "Assigned To" is a
+        // resource-instance-list (multi), scope by alias class.
         cy.contains('Assigned To').scrollIntoView();
-        cy.pickRelationshipFirst('Assigned To');
+        cy.pickCardOption('assigned_to');
         cy.wait(2000);
         cy.contains('Assignment Team').scrollIntoView();
-        cy.get('input[aria-label="Assignment Team"]').click();
+        cy.pickCardOption('assignment_team');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
 
         // Action card - Action Type and Action text are hidden here, so
-        // only Status, Assigned to (lowercase "t" - a different node to the
-        // Assignment card's "Assigned To" above) and the date fields render.
+        // only Status, Assigned to (lowercase "t" - a different, also multi,
+        // node to the Assignment card's "Assigned To" above) and the date
+        // fields render.
         cy.contains('Status').scrollIntoView();
-        cy.get('input[aria-label="Status"]').click();
+        cy.pickCardOption('action_status');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
+        cy.pickCardOption('assigned_to_n1');
+        cy.wait(2000);
 
         cy.get('.card_component.date_entered input.form-control').first().click();
         cy.get('.card_component.date_entered .input-group-addon').click();
@@ -55,13 +57,11 @@ describe('Going through the HB Planning Consultation Response Workflow', functio
         cy.get('[aria-label="Response Summary"]').click().type('Test response summary');
         cy.wait(2000);
         cy.contains('Response Team').scrollIntoView();
-        cy.get('input[aria-label="Response Team"]').click();
+        cy.pickCardOption('response_team');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
         cy.contains('Response Type').scrollIntoView();
-        cy.get('input[aria-label="Response Type"]').click();
+        cy.pickCardOption('response_type');
         cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
 
         cy.workflowNext();
 
