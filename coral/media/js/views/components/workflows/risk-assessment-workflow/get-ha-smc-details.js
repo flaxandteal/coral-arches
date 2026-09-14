@@ -21,7 +21,7 @@ function viewModel(params) {
     this.MONUMENT_NAMES_NODE = "676d47ff-9c1c-11ea-b07f-f875a44e0e11";
 
     this.ADDRESSES_NODEGROUP = "87d39b25-f44f-11eb-95e5-a87eeabdefba";
-    this.TOWNLAND_NODEGROUP = "919bcb94-345c-11ef-a5b7-0242ac120003";
+    this.TOWNLAND_NODEGROUP = "ffaf4062-be4a-52e6-ace8-7e29014f96bc";
     this.TOWNLAND_NODE = "d033683a-345c-11ef-a5b7-0242ac120003";
 
     this.COUNCIL = "447973ce-d7e2-11ee-a4a1-0242ac120006";

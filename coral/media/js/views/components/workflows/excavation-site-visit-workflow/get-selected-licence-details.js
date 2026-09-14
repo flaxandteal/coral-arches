@@ -9,7 +9,7 @@ import template from 'templates/views/components/workflows/excavation-site-visit
 
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
-  this.SELECTED_LICENCE_NODEGROUP_AND_NODE = '879fc326-02f6-11ef-927a-0242ac150006';
+  this.SELECTED_LICENCE_NODEGROUP_AND_NODE = 'ef26a827-f384-5e21-b92c-0414220a1c76';
 
   this.ASSOCIATED_ACITITY_NODEGROUP_AND_NODE = 'ea059ab7-83d7-11ea-a3c4-f875a44e0e11';
   this.LICENCE_ASSOCIATED_ACTIVITY = 'a9f53f00-48b6-11ee-85af-0242ac140007';

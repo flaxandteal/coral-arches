@@ -247,6 +247,8 @@ ELASTICSEARCH_HOSTS = [{"scheme": "http", "host": os.environ.get("ESHOST", "loca
 # a prefix to append to all elasticsearch indexes, note: must be lower case
 ELASTICSEARCH_PREFIX = 'coral'
 
+INDEX_BATCH_SIZE = 2000 
+
 REFERENCES_INDEX_NAME = "references"
 ELASTICSEARCH_CUSTOM_INDEXES = [
     {
