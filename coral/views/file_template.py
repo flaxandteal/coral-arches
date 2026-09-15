@@ -46,6 +46,8 @@ from arches.app.views.tile import TileData
 import querysets_shim
 import querysets_shim.arches_django.datatypes.user  # referenced by name in processDatatypes
 from querysets_shim.wkrm import get_well_known_resource_model_by_graph_id
+from querysets_shim.wrapper import _SemanticNode
+from coral.utils.reference_values import reference_label
 from zoneinfo import ZoneInfo
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
@@ -661,6 +663,11 @@ class GenericTemplateProvider:
         for item in mapping.items():
             alias, value = item
 
+            if isinstance(value, _SemanticNode):
+                # A reference node arrives as objects carrying their own labels; an empty
+                # nodegroup arrives as one of these too and has nothing to show.
+                mapping[alias] = reference_label(list(value))
+                continue
             if isinstance(value, querysets_shim.view_models.node_list.NodeListViewModel):
                 for node in value:
                     if isinstance(node, querysets_shim.view_models.semantic.SemanticViewModel):

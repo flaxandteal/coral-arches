@@ -97,6 +97,23 @@ def test_a_leaf_is_not_mistaken_for_a_repeat():
     assert mapping.get('planning_reference') == 'LA01/2026/0123/F', mapping
 
 
+def test_reference_nodes_become_their_label():
+    from querysets_shim.wrapper import _SemanticNode
+
+    class FakeLabel:
+        value, language_id, valuetype_id, list_item_id = 'Antrim', 'en', 'prefLabel', 'x'
+
+    class FakeReference:
+        uri, list_id, labels = 'https://example/x', 'y', [FakeLabel()]
+
+    provider = a_provider({})
+    assert provider.processDatatypes({'county_value': _SemanticNode([FakeReference()])}) == {
+        'county_value': 'Antrim'
+    }
+    # An empty nodegroup arrives as one of these too, and has nothing to show.
+    assert provider.processDatatypes({'images': _SemanticNode([])}) == {'images': None}
+
+
 def test_the_generator_builds_a_mapping():
     config = {
         'user': User.objects.filter(is_superuser=True).first(),
