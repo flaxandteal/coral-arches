@@ -6,6 +6,7 @@ import uuid from 'uuid';
 import arches from 'arches';
 import uploadDocumentStepTemplate from 'templates/views/components/workflows/related-document-upload.htm';
 import select2Query from 'bindings/select2-query';
+import { resolvePrefilledNodes } from 'utils/reference-values';
 
 function viewModel(params) {
   var self = this;
@@ -191,12 +192,7 @@ function viewModel(params) {
      * This can be found in datatypes.py on line 2080.
      */
 
-    prefilledKeys = {};
-    if (params.prefilledNodes) {
-      params.prefilledNodes.forEach(([nodeId, value]) => {
-        prefilledKeys[nodeId] = value;
-      });
-    }
+    const prefilledKeys = await resolvePrefilledNodes(params.prefilledNodes);
 
     const fileTileTemplate = {
       tileid: '',
