@@ -486,6 +486,10 @@ class QueryBuilder:
         c._limit = self._limit
         return c
 
+    def ids(self) -> List[str]:
+        """Matching resource ids, without hydrating any of them."""
+        return self._resource_ids()
+
     def count(self) -> int:
         return len(self._resource_ids())
 

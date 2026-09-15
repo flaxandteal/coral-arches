@@ -1,20 +1,17 @@
 from arches.app.models import models
+from arches.app.models.models import TileModel
 from arches.app.models.tile import Tile
-from collections import defaultdict
-from querysets_shim.adapter import admin 
+from django.db.models import Count, F, Q
+from querysets_shim.adapter import admin
 from datetime import datetime
 import html
-from querysets_shim.arches_django.query_builder.query_builder import QueryBuilder
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
 from coral.utils.user_role import UserRole
 import copy
 from typing import List, Dict, TypedDict
-import pdb
 
 # MEMBERS_NODEGROUP = 'bb2f7e1c-7029-11ee-885f-0242ac140008'
-# ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
-# HIERARCHY_NODE_GROUP = '0dd6ccb8-cffe-11ee-8a4e-0242ac180006'
 
 PLANNING_GROUP = '74afc49c-3c68-4f6c-839a-9bc5af76596b'
 HM_GROUP = '29a43158-5f50-495f-869c-f651adf3ea42'
@@ -22,18 +19,55 @@ HB_GROUP = 'f240895c-edae-4b18-9c3b-875b0bf5b235'
 HM_MANAGER = '905c40e1-430b-4ced-94b8-0cbdab04bc33'
 HB_MANAGER = '9a88b67b-cb12-4137-a100-01a977335298'
 
-# TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5'
-# TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f'
-# TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f'
+# Action is cardinality-n: a consultation accumulates action tiles and the
+# dashboard means the current one. `tiles` carries no timestamp, so recency is
+# Date Entered, then sortorder.
+ACTION_NODEGROUP = 'a5e15f5c-51a3-11eb-b240-f875a44e0e11'
+ACTION_DATE_ENTERED = '305f5f29-0b5f-53a2-bcef-4aca4ba677c1'
+ACTION_STATUS = 'b07b2cf2-bccf-5823-a93a-dab9e132c9b6'
+ACTION_TYPE = 'e2585f8a-51a3-11eb-a7be-f875a44e0e11'
+ACTION_ASSIGNED_TO = '528bd120-1525-543b-b046-06fd4e00b432'
+ACTION_TARGET_DATE = '345e7fda-7f62-5e55-8fed-85e68b13dade'
 
-COUNCIL_NODE = '69500360-d7c5-11ee-a011-0242ac120006'
-# STATUS_CLOSED = '56ac81c4-85a9-443f-b25e-a209aabed88e'
-# STATUS_OPEN = 'a81eb2e8-81aa-4588-b5ca-cab2118ca8bf'
-# STATUS_HB_DONE = '71765587-0286-47de-96b4-4391aa6b99ef'
-# STATUS_HM_DONE = '4608b315-0135-49a0-9686-9bc3c36990d8'
-# STATUS_EXTENSION_REQUESTED = '28112b3f-ef44-40b4-a215-931c0c88bc5e'
-STATUTORY = 'd06d5de0-2881-4d71-89b1-522ebad3088d'
-# NON_STATUTORY = 'be6eef20-8bd4-4c64-abb2-418e9024ac14'
+ASSIGN_HM = 'Assign To HM'
+ASSIGN_HB = 'Assign To HB'
+ASSIGN_BOTH = 'Assign To Both HM & HB'
+
+# Council and Hierarchy Type are single-value nodes whose node id and nodegroup
+# id coincide.
+COUNCIL_NODE = '4ddb3a60-3d1c-5873-8168-ed0ba1c92644'
+HIERARCHY_NODEGROUP = '3e16208d-9560-5998-8ba1-203cd599a5d8'
+HIERARCHY_TYPE = HIERARCHY_NODEGROUP
+
+def latest_actions():
+    """One row per consultation — its most recent Action tile, values extracted.
+
+    A reference node annotates as `[{labels: [{value: ...}]}]`, so the label the
+    dashboard filters on sits behind that path rather than at the top level.
+    """
+    return (
+        TileModel.objects.filter(nodegroup_id=ACTION_NODEGROUP)
+        .annotate(
+            entered=F(f'data__{ACTION_DATE_ENTERED}'),
+            action_status=F(f'data__{ACTION_STATUS}__0__labels__0__value'),
+            action_type=F(f'data__{ACTION_TYPE}__0__labels__0__value'),
+            target_date=F(f'data__{ACTION_TARGET_DATE}'),
+            assigned_to=F(f'data__{ACTION_ASSIGNED_TO}'),
+        )
+        .order_by('resourceinstance_id', F('entered').desc(nulls_last=True), '-sortorder')
+        .distinct('resourceinstance_id')
+    )
+
+
+def not_in(field, values):
+    """Exclude these values while keeping rows that have none.
+
+    `exclude(field__in=[...])` drops NULLs with them — SQL `NOT IN` is unknown
+    against NULL — which would hide every consultation whose current action has
+    no status yet.
+    """
+    return Q(**{f'{field}__isnull': True}) | ~Q(**{f'{field}__in': values})
+
 
 class SingleFilterDictInterface(TypedDict):
     id: str
@@ -46,224 +80,111 @@ class PlanningTaskStrategy(TaskStrategy):
 
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='asc', filter='all'):
         from querysets_shim.models import Consultation
-        from querysets_shim.models import Group
-        with admin():      
+        with admin():
             self._user_role = UserRole(groupId)
 
-            resources = [] 
-
-            domain_values = self.get_filter_council_options()
+            council_values = self.get_filter_council_options()
             members_filter = self.get_filter_members_options()
             groups_filter = self.get_filter_group_options()
-            applied_queries = {}
 
-            consultationsDefaultWhereConditions = { 'resourceid__startswith': 'CON/' }
-            
-            def apply_default_conditions(queryBuilder: "QueryBuilder") -> "QueryBuilder":
+            is_member_filter = any(m['id'] == filter for m in members_filter)
+            is_council_filter = any(c['id'] == filter for c in council_values)
+            is_group_filter = any(g['id'] == filter for g in groups_filter)
+
+            def role_conditions():
+                """(action types this role sees, statuses it hides, own-work-only).
+
+                A manager sees the whole team's queue, a user only their own.
+                Planning admin sees everything, so carries no Action condition.
                 """
-                Method applies the default where conditions depending on the user's role, can only see certain fields
+                role = self._user_role
+                if role.planning_group['is_role']:
+                    return None, None, False
+                if role.hm_manager['is_role']:
+                    return [ASSIGN_HM, ASSIGN_BOTH], ['Closed', 'HM done'], False
+                if role.hm_user['is_role']:
+                    return [ASSIGN_HM, ASSIGN_BOTH], ['Closed', 'HM done'], True
+                if role.hb_manager['is_role']:
+                    return [ASSIGN_HB, ASSIGN_BOTH], ['Closed', 'HB done'], False
+                if role.hb_user['is_role']:
+                    return [ASSIGN_HB, ASSIGN_BOTH], ['Closed', 'HB done'], True
+                return None, None, False
 
-                Args:
-                    queryBuilder (QueryBuilder): This is the class of the query builder which is chainable in the arches orm
+            action_types, hidden_statuses, own_only = role_conditions()
+            filters_on_action = bool(action_types) or own_only or is_member_filter or is_group_filter
 
-                Returns:
-                    QueryBuilder: This is the class of the query builder which is chainable in the arches orm
-                """
-                # * The Planning Admin
-                if (self._user_role.planning_group['is_role']):
-                    return queryBuilder;
-            
-                # * The HM manager
-                elif (self._user_role.hm_manager['is_role']):
-                    # * Action Type
-                    queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HM done")
-                    # * Assigned to - The is null is not working correctly
-                    # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
-                    # * Response
-                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
-
-                # * The HM user
-                elif (self._user_role.hm_user['is_role']):
-                    # * Action Type
-                    queryBuilder = queryBuilder.where(action_type="Assign To HM").or_where(action_type="Assign To Both HM & HB")
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HM done")
-                    # * Assigned to
-                    queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
-                    # * Response
-                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
-
-                # * The HB manager
-                elif (self._user_role.hb_manager['is_role']):
-                    # * Action Type
-                    queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HB done")
-                    # * Assigned to - The is null is not working correctly
-                    # queryBuilder = queryBuilder.where(assigned_to_n1__isnull=True).or_where(assigned_to_n1__contains=str(userResourceId)).or_where(assigned_to_n1=None).or_where(assigned_to_n1='null')
-                    # * Response
-                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
-            
-                # * The HB user
-                elif (self._user_role.hb_user['is_role']):
-                    # * Action Type
-                    queryBuilder = queryBuilder.where(action_type="Assign To HB").or_where(action_type="Assign To Both HM & HB")
-                    # * Action Status
-                    queryBuilder = queryBuilder.where(action_status__not_equal="Closed").or_where(action_status__not_equal="HB done")
-                    # * Assigned to
-                    queryBuilder = queryBuilder.where(assigned_to_n1__contains=str(userResourceId))
-                    # * Response
-                    # queryBuilder = queryBuilder.where(response_team__not_equal="HB")
-                
-                return queryBuilder
-                        
-            def apply_filters(queryBuilder: "QueryBuilder") -> "QueryBuilder":
-                """
-                Method handles the filtering for the drop down GUI within the frontend, this basically applies on the where condition for the queryBuilder
-
-                Args:
-                    queryBuilder (QueryBuilder): This is the class of the query builder which is chainable in the arches orm
-
-                Returns:
-                    QueryBuilder: This is the class of the query builder which is chainable in the arches orm
-                """
-                if (filter == 'all'):
-                    return queryBuilder
-
-                # ? Already talked with Stu but to increase speed use the filter.type here instead of using filter.value
-                is_member_filter = any(member['id'] == filter for member in members_filter)
-                is_domain_filter = any(value['id'] == filter for value in domain_values)
-                is_group_filter = any(group['id'] == filter for group in groups_filter )
-
-                if is_domain_filter:
-                    queryBuilder = queryBuilder.where(council=filter)
-                elif is_member_filter:
-                    queryBuilder = queryBuilder.where(assigned_to_n1__contains=filter)
+            def current_actions():
+                """Each consultation's current Action tile, narrowed to this role."""
+                qs = latest_actions()
+                if action_types:
+                    qs = qs.filter(action_type__in=action_types)
+                if hidden_statuses:
+                    qs = qs.filter(not_in('action_status', hidden_statuses))
+                if own_only and userResourceId:
+                    qs = qs.filter(assigned_to__icontains=str(userResourceId))
+                if is_member_filter:
+                    qs = qs.filter(assigned_to__icontains=filter)
                 elif is_group_filter:
-                    queryBuilder = queryBuilder.where(action_type=filter).or_where(action_type='Assign To Both HM & HB')
-                    
-                return queryBuilder 
+                    qs = qs.filter(action_type__in=[filter, ASSIGN_BOTH])
+                return qs
 
-            def apply_order_by(queryBuilder: "QueryBuilder") -> "QueryBuilder":
-                """
-                Method handles applying the ordering by deadline date value which is another drop down in the GUI. It uses the modifier order_by to achieve
-                this
+            def consultation_ids():
+                """Ids matching the filters that live on the Consultation itself."""
+                conditions = {'resourceid__startswith': 'CON/'}
+                if is_council_filter:
+                    conditions['council'] = filter
+                return Consultation.where(**conditions).ids()
 
-                Args:
-                    queryBuilder (QueryBuilder): This is the class of the query builder which is chainable in the arches orm
+            # Ids only on both sides: nothing is hydrated until the page is chosen.
+            actions = {str(row.resourceinstance_id): row for row in current_actions()}
+            allowed = consultation_ids()
+            # A consultation with no Action tile still belongs on an unfiltered
+            # dashboard, so only intersect when a condition actually needs one.
+            ids = [rid for rid in allowed if rid in actions] if filters_on_action else list(allowed)
 
-                Returns:
-                    QueryBuilder: This is the class of the query builder which is chainable in the arches orm
-                """
-                direction = '-'
-                if (sort_order == 'asc'): direction = ''
+            def deadline(rid):
+                row = actions.get(rid)
+                return getattr(row, 'target_date', None) if row else None
 
-                return queryBuilder.order_by(f'{direction}{sort_by}')
+            # Undated work sorts last whichever direction is asked for, rather
+            # than crowding the top of a descending sort.
+            ids.sort(key=lambda rid: deadline(rid) or '', reverse=(sort_order == 'desc'))
+            ids.sort(key=lambda rid: deadline(rid) is None)
 
-            def build_query(where_conditions=None, with_sorting=False):
-                """
-                Creates a new query builder with all conditions applied from scratch
+            total_resources = len(ids)
+            start_index = (page - 1) * page_size
+            page_ids = ids[start_index:start_index + page_size]
 
-                Args:
-                    where_conditions (None | Dict[str, any], optional): This is the where conditions, incase we want to count based on a certain
-                        field value. Defaults to None.
-                    with_sorting (bool, optional): This is the sorting condition, if we want to sort the query. Defaults to False.
-                """
-                fresh_query = Consultation.where(**consultationsDefaultWhereConditions)
-                
-                fresh_query = apply_default_conditions(fresh_query)
-                fresh_query = apply_filters(fresh_query)
-                
-                if where_conditions:
-                    fresh_query = fresh_query.where(**where_conditions)
-                    
-                if with_sorting:
-                    fresh_query = apply_order_by(fresh_query)
-                    
-                return fresh_query
-            
-            def get_paginated_resources(queryBuilder: "QueryBuilder") -> any: # WKRM
-                """
-                Method gets the final results from the filters & modifiters applied from the method above, however this method uses a selctor to only
-                get a range of records
-
-                Args:
-                    queryBuilder (QueryBuilder): This is the class of the query builder which is chainable in the arches orm
-
-                Returns:
-                    any: The WKRM
-                """
-
-                start_index = (page -1) * page_size
-
-                return queryBuilder.offset(start_index, page_size)
-            
-            def get_count_groups(resources, count_groups: dict):
-                counters = {}
-
-                for key, func in count_groups.items():
-                    counts = defaultdict(int)
-
-                    for resource in resources:
-                        value = Utilities().node_check(lambda: func(resource), None)
-                        if value is None:
-                            value = 'None'
-                        counts[value] += 1
-
-                    counters[key] = dict(sorted(counts.items()))
-                
-                return counters
-            
             def get_counters() -> Dict[str, Dict[str, int | None]]:
+                """Status and hierarchy tallies, counted in the database.
+
+                Previously this hydrated every matching Consultation and tallied
+                `resource.action[0]` in Python — the first Action tile, not the
+                current one, so anything with an earlier empty action counted as
+                None.
                 """
-                Method returns the count for the hierarchy types and the action status, it takes full advantage of get_count method to get the count
-                of each topic in action status and hierarchy types.
+                def tally(qs, field):
+                    rows = qs.values(field).annotate(n=Count('tileid'))
+                    counts = {(r[field] or 'None'): r['n'] for r in rows}
+                    return dict(sorted(counts.items()))
 
-                Returns:
-                    Dict[str, Dict[str, int | None]]: The counters which is used within the frontend for display
-                """
-
-                resources = build_query().get()
-
-                count_nodes = {
-                    'status': lambda resource: resource.action[0].action_status,
-                    'heirarchy_type': lambda resource: resource.hierarchy_type
+                tileids = [actions[rid].tileid for rid in ids if rid in actions]
+                status_tiles = TileModel.objects.filter(tileid__in=tileids).annotate(
+                    status=F(f'data__{ACTION_STATUS}__0__labels__0__value'))
+                hierarchy_tiles = TileModel.objects.filter(
+                    nodegroup_id=HIERARCHY_NODEGROUP, resourceinstance_id__in=ids).annotate(
+                    hierarchy=F(f'data__{HIERARCHY_TYPE}__0__labels__0__value'))
+                return {
+                    'status': tally(status_tiles, 'status'),
+                    'heirarchy_type': tally(hierarchy_tiles, 'hierarchy'),
                 }
 
-                counters = get_count_groups(resources, count_nodes)
-
-                return counters
-
-            def get_count(whereConditions: None | Dict[str, any] =None) -> int:
-                """
-                Method that gets the total count of a node or resource
-                
-                Args:
-                    whereConditions (None | Dict[str, any], optional): This is the where conditions, incase we want to count based on a certain
-                        field value. Defaults to None.
-
-                Returns:
-                    int: Returns the count
-                """
-                queryBuilder = build_query(where_conditions=whereConditions)
-
-                return queryBuilder.count()
-                
-            
-            base_query = build_query(with_sorting=True)
-            resources = get_paginated_resources(base_query)
             counters = get_counters()
-            total_resources = get_count()
-            tasks = []
+            tasks = [self.build_data(resource, groupId)
+                     for resource in Consultation.find_many(page_ids)]
 
-            for resource in resources:
-                task = self.build_data(resource, groupId)
-                tasks.append(task)
-                
             return tasks, total_resources, counters
-        
+
     def get_sort_options(self):
         return [
             {'id': 'target_date_n1', 'name': 'Deadline'}, 
@@ -280,17 +201,23 @@ class PlanningTaskStrategy(TaskStrategy):
             List[SingleFilterDictInterface]: A list of filters dicts
         """
         from arches.app.models import models
+        from arches_controlled_lists.models import ListItemValue
         with admin():
-            # Create entries for council filter options
-            council_node = models.Node.objects.filter(
-                nodeid = COUNCIL_NODE,
-                datatype = 'domain-value'
-            ).first()
+            # Council is a `reference` node since the v8 controlled-list migration,
+            # so its options come from the list it is bound to rather than from
+            # config["options"], which only domain-value nodes carry.
+            council_node = models.Node.objects.filter(nodeid=COUNCIL_NODE).first()
+            list_id = (council_node.config or {}).get('controlledList') if council_node else None
+            if not list_id:
+                return []
 
-            domain_options = council_node.config.get("options")
-            domain_values = [{'id': option.get("text").get("en"), 'name': option.get("text").get("en"), 'type': 'council'} for option in domain_options]
+            labels = ListItemValue.objects.filter(
+                list_item__list_id=list_id, valuetype_id='prefLabel'
+            ).order_by('list_item__sortorder').values_list('value', flat=True)
 
-            return domain_values
+            # The label is the filter id: it is what the tile stores and what
+            # get_tasks matches on.
+            return [{'id': label, 'name': label, 'type': 'council'} for label in labels]
     
     def get_filter_members_options(self) -> List[SingleFilterDictInterface]:
         """
@@ -347,14 +274,6 @@ class PlanningTaskStrategy(TaskStrategy):
         with admin():
             if (len(groups) == 0): return [];
 
-            def get_groups():
-                foundGroupRecords = Group.where(resourceinstance__resourceinstanceid=groups[0])
-
-                for _, group in enumerate(groups[1:], start=1):
-                    foundGroupRecords = foundGroupRecords.or_where(resourceinstance__resourceinstanceid=group)
-
-                return foundGroupRecords.get()
-
             def transform_group_members(foundGroupRecords):
                 members_filter = {}
 
@@ -369,8 +288,8 @@ class PlanningTaskStrategy(TaskStrategy):
                             }
                 return list(members_filter.values())
 
-            foundGroupRecords = get_groups()
-            return transform_group_members(foundGroupRecords)
+            # One query by id, rather than an OR chain across resource ids.
+            return transform_group_members(Group.find_many(groups))
     
     def build_data(self, consultation, groupId):
         utilities = Utilities()
@@ -433,10 +352,12 @@ class PlanningTaskStrategy(TaskStrategy):
                 if team in responded:
                     responded[team] = True
 
+        # Street, Town or City and Postcode are siblings of the address rather
+        # than branches under it, so the value alias is reached directly.
         address_parts = [
-            address.street.street_value, 
-            address.town_or_city.town_or_city_value, 
-            address.postcode.postcode_value
+            utilities.node_check(lambda: address.street_value),
+            utilities.node_check(lambda: address.town_or_city_value),
+            utilities.node_check(lambda: address.postcode_value),
         ]
         address = [part for part in address_parts if part is not None and part != 'None']
         
