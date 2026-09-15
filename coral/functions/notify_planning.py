@@ -222,7 +222,7 @@ class NotifyPlanning(BaseFunction):
 
             recipient = person_user(selected_user)
             if recipient is None:
-                return
+                continue
             
             if str(selected_user.id) in notified_users_list:
                 continue  # Skip already notified users
