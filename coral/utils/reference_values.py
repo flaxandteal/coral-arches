@@ -20,12 +20,26 @@ def selected_list_item_ids(value):
 
     item_ids = set()
     for entry in value:
-        if not isinstance(entry, dict):
+        # Read straight off a tile the entries are dicts, but through the querysets
+        # shim the datatype hands back arches_controlled_lists Reference objects.
+        labels = _labels(entry)
+        if not labels:
             continue
-        labels = entry.get('labels') or []
-        if labels:
-            item_ids.add(str(labels[0].get('list_item_id')))
+        item_id = _label_field(labels[0], 'list_item_id')
+        if item_id:
+            item_ids.add(str(item_id))
     return item_ids
+
+
+def _labels(entry):
+    """The label rows of one reference entry, whichever shape it arrived in."""
+    if isinstance(entry, dict):
+        return entry.get('labels') or []
+    return getattr(entry, 'labels', None) or []
+
+
+def _label_field(label, name):
+    return label.get(name) if isinstance(label, dict) else getattr(label, name, None)
 
 
 def has_list_item(value, list_item_id):
@@ -59,13 +73,14 @@ def reference_label(value, language='en'):
 
     labels = []
     for entry in value:
-        if not isinstance(entry, dict):
+        entry_labels = _labels(entry)
+        if not entry_labels:
             continue
-        entry_labels = entry.get('labels') or []
         preferred = next(
-            (label for label in entry_labels if label.get('language_id') == language),
-            entry_labels[0] if entry_labels else None,
+            (label for label in entry_labels if _label_field(label, 'language_id') == language),
+            entry_labels[0],
         )
-        if preferred and preferred.get('value'):
-            labels.append(preferred['value'])
+        text = _label_field(preferred, 'value')
+        if text:
+            labels.append(text)
     return ', '.join(labels) if labels else None

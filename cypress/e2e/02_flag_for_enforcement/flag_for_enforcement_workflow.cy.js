@@ -37,35 +37,24 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         // blank made the summary step below render "Flagged Date: No data
         // provided for this input" and the assertion never found
         // "Flagged Date Value:".
-        cy.get('input[aria-label^="Flagged Date"]').filter(':visible').first()
-            .type(`${todayString()}{enter}`, { force: true });
-        cy.get('input[aria-label^="Flagged Date"]').filter(':visible').first()
+        cy.get('input[aria-label="Flagged Date"]').first().scrollIntoView();
+        cy.get('input[aria-label="Flagged Date"]').first()
+            .type(`${todayString()}{enter}`, { force: true })
             .should('have.value', todayString());
 
-        // Capture the actor's display name so the summary step assertion
-        // below can verify it round-tripped, since pickRelationshipFirst
-        // picks whichever option happens to be first.
-        cy.openRelationship('Flagged by');
-        cy.get('.select2-results__option')
-            .not('.loading-results')
-            .not('.select2-results__option--load-more')
-            .first()
-            .invoke('text')
-            .as('flaggedByName');
-        cy.get('.select2-results__option')
-            .not('.loading-results')
-            .not('.select2-results__option--load-more')
-            .first()
-            .click();
+        cy.pickRelationshipByName('Flagged by', 'Test Person');
 
-        // Capture the matched option's display text, same as flaggedByName
-        // above, rather than hardcoding the fixture's current label.
         cy.get('[aria-label="Select resources, Add new Relationship"]').click();
         cy.wait(1000);
         cy.select2Search('HA/02');
         cy.wait(1500);
-        cy.get('.select2-results__option').contains('HA/02').invoke('text').as('associatedResourceName');
-        cy.get('.select2-results__option').contains('HA/02').click();
+        // One chain, so the option that is captured is the option that is clicked:
+        // a second `cy.get('.select2-results__option')` can land mid-re-render and
+        // hand `contains` an empty subject, which Cypress 13+ treats as an error.
+        cy.contains('.select2-results__option', 'HA/02').then(($option) => {
+            cy.wrap($option.text().trim()).as('associatedResourceName');
+            cy.wrap($option).click();
+        });
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
@@ -79,9 +68,7 @@ describe('Going through the Flag For Enforcement Workflow', function () {
         cy.get('@associatedResourceName').then((name) => {
             cy.contains('Associated Resources:').siblings().should('have.text', name.trim());
         });
-        cy.get('@flaggedByName').then((name) => {
-            cy.contains('Actor:').siblings().should('have.text', name.trim());
-        });
+        cy.contains('Actor:').siblings().should('have.text', 'Test Person');
         cy.wait(900);
         cy.contains('Save and Complete Workflow').click();
     });
@@ -170,27 +157,14 @@ describe('Going through the Flag For Enforcement Workflow', function () {
 
         // Enforcement Details Tab
         cy.get('[aria-label="Case Reference"]', { timeout: 20000 }).should('be.visible');
-        cy.openRelationship('Flagged by');
-        cy.get('.select2-results__option')
-            .not('.loading-results')
-            .not('.select2-results__option--load-more')
-            .first()
-            .invoke('text')
-            .as('flaggedByName');
-        cy.get('.select2-results__option')
-            .not('.loading-results')
-            .not('.select2-results__option--load-more')
-            .first()
-            .click();
+        cy.pickRelationshipByName('Flagged by', 'Test Person');
         cy.wait(500);
         cy.contains('Save and Continue').click();
 
         // Enforcement Summary tab
         cy.contains('ResourceID:').siblings().should('not.have.text');
         cy.contains('ResourceID:').siblings().should('not.have.text', '');
-        cy.get('@flaggedByName').then((name) => {
-            cy.contains('Actor:').siblings().should('have.text', name.trim());
-        });
+        cy.contains('Actor:').siblings().should('have.text', 'Test Person');
         cy.contains('Save and Complete Workflow').click();
     });
 

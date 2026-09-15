@@ -72,6 +72,31 @@ def test_label_prefers_the_requested_language():
     assert selected_list_item_ids(multilingual) == {HM_ITEM}
 
 
+class FakeLabel:
+    def __init__(self, value, list_item_id, language_id='en'):
+        self.value = value
+        self.list_item_id = list_item_id
+        self.language_id = language_id
+        self.valuetype_id = 'prefLabel'
+
+
+class FakeReference:
+    """What the querysets shim hands back: an object, not a dict."""
+
+    def __init__(self, item_id, value):
+        self.uri = 'https://coral-her.flaxandteal.co.uk/' + item_id
+        self.labels = [FakeLabel(value, item_id)]
+
+
+def test_reference_objects_read_the_same_as_dicts():
+    # The letter generator reads values through the shim, where entries are objects.
+    objects = [FakeReference(HM_ITEM, 'HM')]
+    assert selected_list_item_ids(objects) == {HM_ITEM}
+    assert has_list_item(objects, HM_ITEM)
+    assert reference_label(objects) == 'HM'
+    assert reference_label([FakeReference(HM_ITEM, 'HM'), FakeReference(HB_ITEM, 'HB')]) == 'HM, HB'
+
+
 def test_a_legacy_scalar_value_never_matches():
     # Tiles written before the datatype migration still hold the bare option id. Iterating
     # that string would yield characters, so the readers must reject it outright rather

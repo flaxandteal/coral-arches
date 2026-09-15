@@ -5,6 +5,7 @@ from arches.app.models.tile import Tile
 from querysets_shim.adapter import admin
 from django.utils import timezone
 from coral.utils.reference_values import selected_list_item_ids
+from coral.utils.person_user import person_user
 
 ACTION_NODEGROUP = "a5e15f5c-51a3-11eb-b240-f875a44e0e11"
 ACTION_STATUS = "b07b2cf2-bccf-5823-a93a-dab9e132c9b6"
@@ -70,6 +71,7 @@ class NotifyPlanning(BaseFunction):
         ).first()
 
         admin_notification = models.Notification.objects.filter(
+            context__resource_instance_id=resource_instance_id,
             context__group='admin'
         ).first()
 
@@ -202,7 +204,9 @@ class NotifyPlanning(BaseFunction):
             notification.save()
 
             for person in persons:
-                user = person.user_account
+                user = person_user(person)
+                if user is None:
+                    continue
 
                 user_x_notification = models.UserXNotification(
                     notif=notification, recipient=user
@@ -217,8 +221,9 @@ class NotifyPlanning(BaseFunction):
         for user in assigned_users_list:
             selected_user = Person.find(user['user']['resourceId'])
 
-            if not selected_user.user_account:
-                return
+            recipient = person_user(selected_user)
+            if recipient is None:
+                continue
             
             if str(selected_user.id) in notified_users_list:
                 continue  # Skip already notified users
@@ -229,7 +234,7 @@ class NotifyPlanning(BaseFunction):
             notification.save()
             
             user_x_notification = models.UserXNotification(
-                notif=notification, recipient=selected_user.user_account
+                notif=notification, recipient=recipient
             )
             user_x_notification.save()
 

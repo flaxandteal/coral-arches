@@ -25,6 +25,7 @@ from coral.views.hb_number import HbNumberView
 from coral.views.user_to_model import UserToModel
 from coral.views.afc_number import AfcNumberView
 from coral.views.ail_number import AilNumberView
+from coral.views.reference_value import ReferenceValueView
 
 
 uuid_regex = settings.UUID_REGEX
@@ -105,6 +106,11 @@ urlpatterns = [
     # DAERA consultation number
     #
     re_path(r"^generate-ail-number", AilNumberView.as_view(), name="generate_ail_number"),
+
+    #
+    # Controlled list item -> reference tile value
+    #
+    re_path(r"^reference-value/(?P<list_item_id>%s)$" % uuid_regex, ReferenceValueView.as_view(), name="reference_value"),
 
     #
     # User to Model

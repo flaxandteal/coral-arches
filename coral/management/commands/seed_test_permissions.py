@@ -8,9 +8,16 @@ non-superuser accounts. Cypress can therefore only log in as `admin`, which is a
 superuser and bypasses every permission check, so nothing permission-related is
 actually observable.
 
-This command imports the full Group export vendored at
-`cypress/seed/permissions/` and gives every group a login, then rebuilds the
+This command imports the full Group export shipped in the package at
+`coral/pkg/business_data/` and gives every group a login, then rebuilds the
 Casbin policy table so the permissions take effect.
+
+Use the v8 export, not the 2025-06-30 one still kept under `cypress/seed/
+permissions/`. That one predates the reference-datatype conversion, so its
+values on the Group graph's two `reference` nodes are bare option-id strings.
+The importer's `except (KeyError, TypeError)` then swallows a
+"string indices must be integers" on the very first resource and reports
+"No import errors" having saved none of them.
 
 TEST ENVIRONMENTS ONLY - never run this against a real deployment. It creates
 accounts with a shared, published password and a shared, published TOTP secret.
@@ -35,7 +42,7 @@ from arches.app.models.tile import Tile
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_SOURCE = (
-    PROJECT_ROOT / "cypress" / "seed" / "permissions" / "Group_Permission_2025-06-30.json"
+    PROJECT_ROOT / "coral" / "pkg" / "business_data" / "Group_Permission_v8_2026-08-05.json"
 )
 DEFAULT_FIXTURE = PROJECT_ROOT / "cypress" / "fixtures" / "permission_users.json"
 

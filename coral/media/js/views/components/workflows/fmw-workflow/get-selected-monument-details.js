@@ -130,7 +130,7 @@ import template from 'templates/views/components/workflows/fmw-workflow/get-sele
                   this.viewModel.alert(
                     new AlertViewModel(
                       'ep-alert-red',
-                      arches.requestFailed.title,
+                      arches.translations.requestFailed.title,
                       response.responseText
                     )
                   );
@@ -154,7 +154,7 @@ import template from 'templates/views/components/workflows/fmw-workflow/get-sele
               if (response.statusText !== 'abort') {
                 const alert = new AlertViewModel(
                   'ep-alert-red',
-                  arches.requestFailed.title,
+                  arches.translations.requestFailed.title,
                   response.responseText
                 )
                 this.viewModel.alert( alert );
@@ -180,7 +180,7 @@ import template from 'templates/views/components/workflows/fmw-workflow/get-sele
                 if (response.statusText !== 'abort') {
                   const alert = new AlertViewModel(
                     'ep-alert-red',
-                    arches.requestFailed.title,
+                    arches.translations.requestFailed.title,
                     response.responseText
                   )
                   this.viewModel.alert( alert );
