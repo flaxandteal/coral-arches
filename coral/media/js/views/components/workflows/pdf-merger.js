@@ -28,6 +28,7 @@ function viewModel(params) {
     this.HBTEAM = "8b7091c9-dcd2-578c-9775-814240a4ea01";
 
     this.ACTION_TYPE_NODE = "e2585f8a-51a3-11eb-a7be-f875a44e0e11";
+    this.DATE_ENTERED_NODE = "305f5f29-0b5f-53a2-bcef-4aca4ba677c1";
 
 
     this.TYPE_ASSIGN_HM = '72ce5d6a-f938-5eae-b650-608ca8b3b934';
@@ -85,9 +86,14 @@ function viewModel(params) {
     };
 
     this.fetchAssignedValue = async() => {
-        const tile = await this.fetchTileData(params.resourceid, this.ACTION_TYPE_NODE);
-        const responseTypeId = tile[0].data[this.ACTION_TYPE_NODE];
-        return responseTypeId;
+        const tiles = await this.fetchTileData(params.resourceid, this.ACTION_TYPE_NODE) || [];
+        const assigned = tiles.filter(
+            (tile) => selectedListItemIds(tile.data[this.ACTION_TYPE_NODE]).length > 0
+        );
+        // Dates are ISO, so lexical order is chronological; an undated action sorts first.
+        assigned.sort((a, b) => String(a.data[this.DATE_ENTERED_NODE] ?? '')
+            .localeCompare(String(b.data[this.DATE_ENTERED_NODE] ?? '')));
+        return assigned[assigned.length - 1]?.data[this.ACTION_TYPE_NODE];
     };
 
     this.fetchResponseSummary = async() => {
