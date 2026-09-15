@@ -20,11 +20,18 @@ def selected_list_item_ids(value):
 
     item_ids = set()
     for entry in value:
-        if not isinstance(entry, dict):
+        # Read straight off a tile the entries are dicts, but through the querysets
+        # shim the datatype hands back arches_controlled_lists Reference objects.
+        labels = entry.get('labels') if isinstance(entry, dict) else getattr(entry, 'labels', None)
+        if not labels:
             continue
-        labels = entry.get('labels') or []
-        if labels:
-            item_ids.add(str(labels[0].get('list_item_id')))
+        first = labels[0]
+        item_id = (
+            first.get('list_item_id') if isinstance(first, dict)
+            else getattr(first, 'list_item_id', None)
+        )
+        if item_id:
+            item_ids.add(str(item_id))
     return item_ids
 
 

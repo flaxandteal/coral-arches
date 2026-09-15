@@ -44,21 +44,26 @@ from querysets_shim.models import Person, Organization, Set, LogicalSet, Group, 
 from querysets_shim.view_models import ResourceInstanceViewModel
 from querysets_shim.arches_django.datatypes.django_group import MissingDjangoGroupViewModel
 from querysets_shim.adapter import context_free
+from coral.utils.reference_values import selected_list_item_ids
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
 from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
+# Keyed on the "Permission Type" list (cfe3d404) that the Group graph's Action node
+# binds since the CLM move. These item ids are derived from the label text, so a
+# renamed option changes its id -- keep them in step with the built list.
+# Writing / Deleting / Reading / Executing.
 REMAPPINGS = {
-    "809598ac-6dc5-498e-a7af-52b1381942a4": ["change_resourceinstance"],
-    "33a0218b-b1cc-42d8-9a79-31a6b2147893": ["delete_resourceinstance"],
-    "70415d03-b11b-48a6-b989-933d788ffc88": ["view_resourceinstance"],
-    "45d54859-bf3c-48f2-a387-55a0050ff572": ["execute_resourceinstance"],
+    "da0f6dd4-d0df-5760-a2c6-3160bdd7b325": ["change_resourceinstance"],
+    "d968485b-dd26-5536-8f76-5a332855c1ac": ["delete_resourceinstance"],
+    "5b3636d4-7386-5ff2-9589-226957e6aba5": ["view_resourceinstance"],
+    "f9be22a4-212d-58d3-bfb7-86dafd7fb200": ["execute_resourceinstance"],
 }
 GRAPH_REMAPPINGS = {
-    "809598ac-6dc5-498e-a7af-52b1381942a4": "models.write_nodegroup",
-    "33a0218b-b1cc-42d8-9a79-31a6b2147893": "models.write_nodegroup",
-    "70415d03-b11b-48a6-b989-933d788ffc88": "models.read_nodegroup",
-    "45d54859-bf3c-48f2-a387-55a0050ff572": "models.write_nodegroup",
+    "da0f6dd4-d0df-5760-a2c6-3160bdd7b325": "models.write_nodegroup",
+    "d968485b-dd26-5536-8f76-5a332855c1ac": "models.write_nodegroup",
+    "5b3636d4-7386-5ff2-9589-226957e6aba5": "models.read_nodegroup",
+    "f9be22a4-212d-58d3-bfb7-86dafd7fb200": "models.write_nodegroup",
 }
 REV_GRAPH_REMAPPINGS = {v: k for k, v in GRAPH_REMAPPINGS.items()}
 RESOURCE_TO_GRAPH_REMAPPINGS = {v[0]: GRAPH_REMAPPINGS[k] for k, v in REMAPPINGS.items()}
@@ -104,6 +109,20 @@ class CasbinPermissionFramework(ArchesPermissionBase):
         if hasattr(account, "pk"):
             return account
         return User.objects.filter(pk=account).first()
+
+    @staticmethod
+    def _django_group(value):
+        """The auth Group behind a `django-group` node value, or None to skip it.
+
+        Same shape as `user_account` above: the datatype is left unwrapped, so
+        tiledata hands back the bare auth_group pk. MissingDjangoGroupViewModel
+        subclasses Group, so it has to be rejected before the isinstance check.
+        """
+        if not value or isinstance(value, MissingDjangoGroupViewModel):
+            return None
+        if isinstance(value, DjangoGroup):
+            return value if value.pk is not None else None
+        return DjangoGroup.objects.filter(pk=value).first()
 
     @staticmethod
     def _subj_to_str(subj):
@@ -277,7 +296,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
                 if not permission.action:
                     logging.warn("Permission action is missing: %s: %s on %s", group_key, str(permission.action), str(permission.object))
                     continue
-                for act in permission.action:
+                for act in selected_list_item_ids(permission.action):
                     if not permission.object:
                         logging.warn("Permission object is missing: %s %s", group_key, str(permission.object))
                         continue
@@ -285,13 +304,15 @@ class CasbinPermissionFramework(ArchesPermissionBase):
                         obj_key = self._obj_to_str(obj)
                         if obj_key.startswith("g2"):
                             sets.append(obj_key)
-                        self._enforcer.add_policy(group_key, obj_key, str(act.conceptid))
+                        self._enforcer.add_policy(group_key, obj_key, act)
             if len(group.django_group) == 0:
                 self._ri_to_django_groups(group)
             for gp in group.django_group:
-                if not gp or gp.pk is None or isinstance(gp, MissingDjangoGroupViewModel):
-                    logging.warn("Missing Django Group in a group: %s for %s", group_key, str(gp.pk) if gp else str(gp))
+                resolved = self._django_group(gp)
+                if resolved is None:
+                    logging.warn("Missing Django Group in a group: %s for %s", group_key, str(gp))
                     continue
+                gp = resolved
                 # Assigned from the User side, one at a time, rather than with
                 # gp.user_set.set(users). Arches' m2m_changed receiver for
                 # User.groups (arches/app/signals.py) does not check `reverse`,
