@@ -45,6 +45,7 @@ from querysets_shim.view_models import ResourceInstanceViewModel
 from querysets_shim.arches_django.datatypes.django_group import MissingDjangoGroupViewModel
 from querysets_shim.adapter import context_free
 from coral.utils.reference_values import selected_list_item_ids
+from coral.utils.person_user import person_user
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
 from django.core.cache import cache
 
@@ -95,28 +96,12 @@ class CasbinPermissionFramework(ArchesPermissionBase):
         return Permission.objects.filter(content_type=ctype)
 
     @staticmethod
-    def _person_user(person):
-        """The User behind a Person, or None if there is none to act on.
-
-        `user_account` is a `user` datatype node, which alizarin_django leaves
-        unwrapped, so tiledata hands back the bare auth_user pk rather than a
-        User. An account pointing at a deleted row resolves to None as well, so
-        callers skip the member instead of writing `u:None` into the policy table.
-        """
-        account = person.user_account
-        if not account:
-            return None
-        if hasattr(account, "pk"):
-            return account
-        return User.objects.filter(pk=account).first()
-
-    @staticmethod
     def _django_group(value):
         """The auth Group behind a `django-group` node value, or None to skip it.
 
-        Same shape as `user_account` above: the datatype is left unwrapped, so
-        tiledata hands back the bare auth_group pk. MissingDjangoGroupViewModel
-        subclasses Group, so it has to be rejected before the isinstance check.
+        Same shape as `person_user`: the datatype is left unwrapped, so tiledata
+        hands back the bare auth_group pk. MissingDjangoGroupViewModel subclasses
+        Group, so it has to be rejected before the isinstance check.
         """
         if not value or isinstance(value, MissingDjangoGroupViewModel):
             return None
@@ -129,7 +114,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
         if isinstance(subj, DjangoGroup):
             subj = f"dg:{subj.pk}"
         if isinstance(subj, Person):
-            user = CasbinPermissionFramework._person_user(subj)
+            user = person_user(subj)
             if user is None:
                 raise NoSubjectError(subj)
             subj = f"u:{user.pk}"
@@ -256,7 +241,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
                     ancestors.append(group_key)
                     users += _fill_group(member, ancestors)
                 else:
-                    user = self._person_user(member)
+                    user = person_user(member)
                     if user is None:
                         logger.warn("A membership rule was not added as no User was attached %s", member.id)
                         continue
