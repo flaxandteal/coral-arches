@@ -189,7 +189,7 @@ function viewModel(params) {
             },
             error: (response, status, error) => {
                 if (response.statusText !== 'abort') {
-                    this.viewModel.alert(
+                    this.form.alert(
                         new AlertViewModel(
                             'ep-alert-red',
                             arches.requestFailed.title,
@@ -319,7 +319,7 @@ function viewModel(params) {
                     error: (response, status, error) => {
                         console.log(response);
                         if (response.statusText !== 'abort') {
-                            this.viewModel.alert(
+                            this.form.alert(
                                 new AlertViewModel(
                                     'ep-alert-red',
                                     arches.requestFailed.title,
