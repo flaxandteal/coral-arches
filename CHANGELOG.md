@@ -57,35 +57,35 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 - fix(plugins): the HB and HM planning consultation response launchers list consultations
   assigned to "Both HM & HB" again. The Action Type filter still held retired v7 concept ids,
-  and passed them as a bare uuid where the reference datatype wants a list of item URIs (#867)
+  and passed them as a bare uuid where the reference datatype wants a list of item URIs (#864)
 - fix(workflows): workflow prefills that target a controlled-list node resolve through a new
   `/reference-value` endpoint before the tile is saved, so the assign and upload-response steps
-  no longer fail with a bare "Unknown error" (#867)
+  no longer fail with a bare "Unknown error" (#864)
 - fix(notifications): a Person's `user_account` resolves to a User before a notification is
-  written, so planning and enforcement notifications no longer 500 on tile save (#867)
+  written, so planning and enforcement notifications no longer 500 on tile save (#864)
 - fix(notifications): an assignee without a user account is skipped rather than stopping every
-  assignee after them from being notified (#867)
+  assignee after them from being notified (#864)
 - fix(notifications): the planning admin notification is scoped to its own consultation instead
-  of reusing the first admin notification in the table (#867)
+  of reusing the first admin notification in the table (#864)
 - fix(workflows): response file uploads are named and linked to their consultation again. The
   Digital Object name tile carried four retired concept ids on reference nodes, so it failed and
-  the relationship was never written (#867)
+  the relationship was never written (#864)
 - fix(workflows): file errors surface as an alert instead of a TypeError — the handler reached
   for `this.viewModel` (never set) and `arches.requestFailed` (now under
-  `arches.translations`) (#867)
+  `arches.translations`) (#864)
 - fix(letters): the planning response letter fills its placeholders again. A shim resource can
   be walked like a mapping, repeating nodegroups flatten into it, and reference values render as
-  their labels rather than `Reference(uri=...)` (#867)
+  their labels rather than `Reference(uri=...)` (#864)
 - fix(permissions): casbin reads a group's permission actions out of the reference tile value
-  (#867)
+  (#864)
 - test: the HB and HM response workflow specs open a consultation instead of clicking a "Start
-  New" button those workflows have never had (#867)
+  New" button those workflows have never had (#864)
 
 ### Notes
 
 - The planning response letter template asks for `<proposal_description_type>`, a classifier
   that is always empty, where it wants `<proposal_text>`. `coral/docx` is gitignored, so the
-  corrected template has to be applied wherever the letter templates are mastered (#867)
+  corrected template has to be applied wherever the letter templates are mastered (#864)
 
 - The TM65 function fix only reaches a running instance through the graph package:
   the configs live in `functions_x_graphs`, not in code. coral-graphs `functions.json`
