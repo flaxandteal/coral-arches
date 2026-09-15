@@ -3,6 +3,7 @@ import random
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
 from querysets_shim.models import Person, Group
+from coral.utils.person_user import person_user
 
 SYSTEM_REF_NODEGROUP = "ba39c036-b551-11ee-94ee-0242ac120006"
 SYSTEM_REF_RESOURCE_ID_NODE = "ba3a083e-b551-11ee-94ee-0242ac120006"
@@ -108,7 +109,9 @@ class NotifyEnforcement(BaseFunction):
         persons = [Person.find(member.id) for member in (enforcement_group.members or []) if isinstance(member, Person)]
 
         for person in persons:
-            user = person.user_account
+            user = person_user(person)
+            if user is None:
+                continue
             notification.context['username'] = user.username
             notification.context['email'] = user.email
 

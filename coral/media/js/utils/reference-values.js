@@ -40,3 +40,37 @@ export const lookupByListItem = (value, lookup, fallback = undefined) => {
   const found = selectedListItemIds(value).find((id) => id in lookup);
   return found === undefined ? fallback : lookup[found];
 };
+
+const referenceValueRequests = {};
+
+/**
+ * Tile value for a controlled-list selection, resolved from its item id.
+ *
+ * A reference value carries the item's uri and label rows, so it cannot be built from the
+ * id alone; the server resolves it through the datatype. Null when the id names no item.
+ */
+export const referenceValue = (listItemId) => {
+  if (!(listItemId in referenceValueRequests)) {
+    referenceValueRequests[listItemId] = fetch(`/reference-value/${listItemId}`)
+      .then((response) => (response.ok ? response.json() : null))
+      .catch(() => null);
+  }
+  return referenceValueRequests[listItemId];
+};
+
+/**
+ * Tile data for a workflow step's `prefilledNodes`, keyed by node id.
+ *
+ * Prefills are written as bare ids. That is still the value a non-reference node wants, but
+ * a reference node needs the resolved value, so ids that name a list item are expanded.
+ */
+export const resolvePrefilledNodes = async (prefilledNodes) => {
+  const resolved = {};
+  await Promise.all(
+    (prefilledNodes || []).map(async ([nodeId, value]) => {
+      const reference = typeof value === 'string' ? await referenceValue(value) : null;
+      resolved[nodeId] = reference ?? value;
+    })
+  );
+  return resolved;
+};

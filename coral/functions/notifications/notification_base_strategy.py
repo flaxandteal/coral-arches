@@ -2,6 +2,7 @@ from arches.app.models import models
 from arches.app.models.resource import Resource
 from querysets_shim.adapter import admin
 from coral.utils.reference_values import reference_label
+from coral.utils.person_user import person_user
 import logging
 
 class NotificationStrategy():
@@ -81,7 +82,9 @@ class NotificationStrategy():
                         self.notify_user(person)
         
     def notify_user(self, person):
-        user = person.user_account
+        user = person_user(person)
+        if user is None:
+            return
 
         if 'email' in self.notification.context:
             self.update_email_details(user)

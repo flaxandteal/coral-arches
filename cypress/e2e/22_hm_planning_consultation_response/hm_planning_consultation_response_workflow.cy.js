@@ -10,8 +10,22 @@ describe('Going through the HM Planning Consultation Response Workflow', functio
         cy.contains('HM Planning Consultation Response').click();
         cy.wait(2000);
 
-        // Initial step 1st page
-        cy.get('.btn-success').contains('Start New').click();
+        // There is no "Start New" here. coral/plugins/open-workflow.json sets
+        // disableStartNew on this workflow, and the template only renders that button
+        // under `if: !workflow().disableStartNew` - a response can only be OPENED, on a
+        // consultation the Planning Consultation workflow (18) already assigned.
+        cy.get('[aria-label="Select Licence, Please select from below"]').click();
+        cy.wait(3000);
+        cy.select2Search('PLAN-TEST-01');
+        cy.wait(2000);
+        cy.get('.select2-results__option')
+            .not('.loading-results')
+            .not('.select2-results__option--load-more')
+            .not('.select2-results__message')
+            .contains('PLAN-TEST-01')
+            .click();
+        cy.wait(2000);
+        cy.get('.btn-primary').contains('Open Selected').click();
 
         // Initial step - no label override, renders under the widget's own
         // default label "Consultation ID".
@@ -20,27 +34,21 @@ describe('Going through the HM Planning Consultation Response Workflow', functio
         cy.get('.form-control').should('be.disabled');
         cy.workflowNext();
 
-        // Assign tab - Assignment card. "Assigned To" is a
-        // resource-instance-list (multi), scope by alias class.
-        cy.contains('Assigned To').scrollIntoView();
-        cy.pickCardOption('assigned_to');
-        cy.wait(2000);
-        cy.contains('Assignment Team').scrollIntoView();
-        cy.pickCardOption('assignment_team');
-        cy.wait(2000);
+        // Assign tab. Nothing on this card is pickable in a response workflow:
+        // Assignment Team is hidden (widget.visible(false), so still in the DOM), and Assigned To is
+        // disabled in nodeOptions because the Update Response Assignee function sets it
+        // from the consultation side. Clicking either opens no dropdown.
+        cy.get('.widget-wrapper.assigned_to').should('exist');
+        cy.get('.widget-wrapper.assignment_team').should('not.be.visible');
+        cy.wait(1000);
 
-        // Action card - Action Type and Action text are hidden here, so
-        // only Status, Assigned to (lowercase "t" - a different, also multi,
-        // node to the Assignment card's "Assigned To" above) and the date
-        // fields render.
-        cy.contains('Status').scrollIntoView();
-        cy.pickCardOption('action_status');
-        cy.wait(2000);
-        cy.pickCardOption('assigned_to_n1');
-        cy.wait(2000);
-
-        cy.get('.card_component.date_entered input.form-control').first().click();
-        cy.get('.card_component.date_entered .input-group-addon').click();
+        // Action card - this workflow hides six of its nodes (Action Type, Action text,
+        // Action Status, Date Entered, Date Uploaded and "Assigned to"), all of which
+        // belong to the Planning Consultation workflow that assigns the work, not to the
+        // team responding to it. Target Date is what is left to see.
+        cy.get('.widget-wrapper.action_status').should('not.be.visible');
+        cy.get('.widget-wrapper.assigned_to_n1').should('not.be.visible');
+        cy.wait(1000);
 
         cy.workflowNext();
 
@@ -53,12 +61,12 @@ describe('Going through the HM Planning Consultation Response Workflow', functio
         cy.workflowNext();
 
         // Summary tab - Response Action card
-        cy.contains('Response Summary').scrollIntoView();
-        cy.get('[aria-label="Response Summary"]').click().type('Test response summary');
+        // Response Summary is a rich-text widget: CKEditor replaces the textarea, so
+        // there is no [aria-label] input to type into.
+        cy.typeRichText('response_summary_value', 'Test response summary');
         cy.wait(2000);
-        cy.contains('Response Team').scrollIntoView();
-        cy.pickCardOption('response_team');
-        cy.wait(2000);
+        // Response Team is hidden here too, and prefilled with the responding team.
+        cy.get('.widget-wrapper.response_team').should('not.be.visible');
         cy.contains('Response Type').scrollIntoView();
         cy.pickCardOption('response_type');
         cy.wait(2000);

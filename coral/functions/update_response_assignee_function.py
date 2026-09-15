@@ -91,7 +91,9 @@ class UpdateAssignedTo(BaseFunction):
             return user_team
                     
     def update_matching_node(self, tile, nodegroup, existing_node, update_node, team=None):
-        assigned_users = tile.data[existing_node]
+        assigned_users = tile.data.get(existing_node)
+        if not assigned_users:
+            return
         team_users = {}
         for user in assigned_users:
             user_team = self.is_user_in_team(user['resourceId'], team)
