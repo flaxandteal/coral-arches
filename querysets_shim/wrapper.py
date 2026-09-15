@@ -252,6 +252,33 @@ def _holds_own_alias(value: Any, alias: str) -> bool:
     return isinstance(value, dict) and alias in value
 
 
+# arches-querysets annotates every node as JSONB, so the comparable value sits
+# behind a path rather than at the top level. Comparing a bare Python value
+# against the whole document neither matches nor raises, which is why a filter
+# on one of these silently returned nothing.
+_VALUE_PATH = {
+    "string": ("en", "value"),           # {"en": {"value": "CON/2026/x", ...}}
+    "reference": ("0", "labels", "0", "value"),  # [{"labels": [{"value": "HM"}, ...]}]
+}
+
+# Lookups that address the annotation itself rather than the value inside it.
+_STRUCTURAL_LOOKUPS = frozenset({"isnull", "contains", "contained_by", "has_key"})
+
+
+def resolve_value_lookup(lookup: str, datatype: str) -> str:
+    """Rewrite `alias__suffix` onto the JSON path that actually holds the value.
+
+    Cardinality-n aliases are not handled here: their annotation is a list of
+    per-tile values, so there is no fixed index to reach through. Callers that
+    need one pick the tile themselves and filter on that.
+    """
+    alias, _, suffix = lookup.partition("__")
+    path = _VALUE_PATH.get(datatype)
+    if path is None or suffix in _STRUCTURAL_LOOKUPS:
+        return lookup
+    return "__".join((alias, *path, suffix)) if suffix else "__".join((alias, *path))
+
+
 def _with_ancestor_nodegroups(nodes: List[Any], graph_nodes: Any) -> List[Any]:
     """Add one node from each ancestor nodegroup that itself has a parent.
 
@@ -474,6 +501,10 @@ class QueryBuilder:
         c._limit = self._limit
         return c
 
+    def ids(self) -> List[str]:
+        """Matching resource ids, without hydrating any of them."""
+        return self._resource_ids()
+
     def count(self) -> int:
         return len(self._resource_ids())
 
@@ -493,10 +524,16 @@ class QueryBuilder:
 
         qs = ResourceInstance.objects.filter(graph_id=self._model_cls._graphid)
 
+        # `resourceid` is a real node on most graphs and its tile is the value
+        # callers mean. ResourceInstance.name holds the *descriptor*, which the
+        # name functions rewrite, so it and the node disagree for any resource
+        # whose display name is built from something else. Only fall back to the
+        # descriptor where the graph has no such node.
+        aliases = self._model_cls._datatypes_by_alias()
         django_filters: Dict[str, Any] = {}
         tile_filters: Dict[str, Any] = {}
         for key, val in self._filters.items():
-            if key.startswith("resourceid"):
+            if key.startswith("resourceid") and "resourceid" not in aliases:
                 django_filters[key.replace("resourceid", "name")] = val
             else:
                 tile_filters[key] = val
@@ -566,9 +603,14 @@ class QueryBuilder:
                     f"Filter on a cardinality-1 alias, or test presence with "
                     f"{alias}__isnull."
                 )
+        datatypes = self._model_cls._datatypes_by_alias()
+        resolved = {
+            resolve_value_lookup(lookup, datatypes.get(lookup.split("__")[0], "")): value
+            for lookup, value in tile_filters.items()
+        }
         qs = ResourceTileTree.get_tiles(slug, nodes=nodes)
         return [
-            str(pk) for pk in qs.filter(**tile_filters).values_list("pk", flat=True)
+            str(pk) for pk in qs.filter(**resolved).values_list("pk", flat=True)
         ]
 
 
