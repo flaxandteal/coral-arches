@@ -44,7 +44,10 @@ from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
 import querysets_shim
+import querysets_shim.arches_django.datatypes.user  # referenced by name in processDatatypes
 from querysets_shim.wkrm import get_well_known_resource_model_by_graph_id
+from querysets_shim.wrapper import _SemanticNode
+from coral.utils.reference_values import reference_label
 from zoneinfo import ZoneInfo
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
@@ -557,11 +560,23 @@ class GenericTemplateProvider:
                         newloop += item[1].items()
                         found_semantic = True
                     except:
-                        segment = {item[0] : item[1]}
-                        mapping = mapping | self.processDatatypes(segment)
+                        repeated = self.repeated_items(item[1])
+                        if repeated:
+                            newloop += repeated
+                            found_semantic = True
+                        else:
+                            segment = {item[0] : item[1]}
+                            mapping = self.merge_mappings(mapping, self.processDatatypes(segment))
                     node_list = newloop
                     children_present = found_semantic
         return mapping
+
+    def repeated_items(self, value) -> list:
+        """(alias, value) pairs from each child of a repeating nodegroup, or [] if it is not one."""
+        try:
+            return [pair for child in value for pair in child.items()]
+        except:
+            return []
     
     def merge_mappings(self, original: dict, new: dict):
         merged = original.copy() if original is not None else {}
@@ -648,6 +663,11 @@ class GenericTemplateProvider:
         for item in mapping.items():
             alias, value = item
 
+            if isinstance(value, _SemanticNode):
+                # A reference node arrives as objects carrying their own labels; an empty
+                # nodegroup arrives as one of these too and has nothing to show.
+                mapping[alias] = reference_label(list(value))
+                continue
             if isinstance(value, querysets_shim.view_models.node_list.NodeListViewModel):
                 for node in value:
                     if isinstance(node, querysets_shim.view_models.semantic.SemanticViewModel):

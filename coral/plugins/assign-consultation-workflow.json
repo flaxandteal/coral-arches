@@ -222,8 +222,8 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "083fa088-ca61-11ee-afca-0242ac180006",
-                    "083ef3fe-ca61-11ee-afca-0242ac180006",
+                    "8dffc021-a3c3-525c-b639-874668db236f",
+                    "8d9f1ca2-a09f-5fe2-9cda-ffe0e0bacf68",
                     "c4944d9d-ed0d-5e8d-84fc-40526a84de68",
                     "9edc291a-fe72-52e2-a249-08ab550206df",
                     "19dc35cb-50c9-5242-b27c-a7dbe725088c",
@@ -255,18 +255,18 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "083f0650-ca61-11ee-afca-0242ac180006"
+                    "a06f565f-4b5c-5996-a2b6-4fc4c6bfab1d"
                   ],
                   "nodegroupid": "1448f713-2d3d-5a71-8029-351537e5cadf",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",
                   "semanticName": "Localities/Administrative Areas",
                   "nodeOptions": {
-                    "083f0db2-ca61-11ee-afca-0242ac180006": {
+                    "9ac6381b-f090-59ee-a444-0664fb5de8c0": {
                       "node": {
                         "isrequired": true
                       }
                     },
-                    "083ea3ae-ca61-11ee-afca-0242ac180006": {
+                    "5ac602cd-7c66-5079-b62b-cd73a0dd7e7a": {
                       "node": {
                         "isrequired": true
                       }
@@ -282,7 +282,7 @@
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "083f146a-ca61-11ee-afca-0242ac180006"
+                    "af4fb1fc-82e1-5562-94b6-5a22c0a12624"
                   ],
                   "nodegroupid": "8c2f532a-1a1b-5fd0-a9f7-fb66a934832e",
                   "parenttileid": "['initial-step-step']['system-reference'][0]['resourceid']['locationData']",

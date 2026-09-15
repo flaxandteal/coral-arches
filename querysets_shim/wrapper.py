@@ -24,6 +24,7 @@ from typing import (
     Iterator,
     List,
     Optional,
+    Tuple,
     Type,
 )
 
@@ -344,6 +345,20 @@ class _SemanticNode:
         if isinstance(self._data, (list, dict, str)):
             return len(self._data)
         return 0 if self._data is None else 1
+
+    def keys(self) -> List[str]:
+        """Child aliases, when this node wraps an object.
+
+        Mapping-shaped walkers descend by trying `.items()` and treating the failure as a
+        leaf, so this must raise rather than return empty for a list or scalar node.
+        """
+        if isinstance(self._data, dict):
+            return list(self._data)
+        raise AttributeError("keys")
+
+    def items(self) -> List[Tuple[str, Any]]:
+        """Child aliases with their values, read the same way attribute access reads them."""
+        return [(alias, self._lookup(alias)) for alias in self.keys()]
 
     def __getitem__(self, key: Any) -> Any:
         if isinstance(self._data, list):
@@ -982,6 +997,21 @@ class ResourceModel:
             r.delete()
         except Resource.DoesNotExist:
             return
+
+    def keys(self) -> List[str]:
+        """Top-level node aliases.
+
+        Callers written against the pre-shim resource walked it like a mapping.
+        `__getattr__` cannot serve that: an unknown attribute resolves to None here, so
+        `resource.items()` failed as `None()` rather than saying what was missing.
+        """
+        self._hydrate()
+        sem = object.__getattribute__(self, "_sem_root")
+        return list(sem) if sem is not None else []
+
+    def items(self) -> List[Tuple[str, Any]]:
+        """Each top-level alias with its value, read through `__getattr__`."""
+        return [(alias, getattr(self, alias)) for alias in self.keys()]
 
     def __getattr__(self, name: str) -> Any:
         if name.startswith("_"):
