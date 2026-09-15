@@ -58,6 +58,45 @@ def test_nested_groups_are_flattened():
         assert leaf in mapping, leaf
 
 
+class FakeChild:
+    """A mapping-shaped child, the shape a repeating nodegroup's members arrive in."""
+
+    def __init__(self, **values):
+        self._values = values
+
+    def items(self):
+        return list(self._values.items())
+
+
+def a_provider(config):
+    provider = object.__new__(GenericTemplateProvider)
+    provider.config = config
+    return provider
+
+
+def test_a_repeating_group_is_descended():
+    provider = a_provider({})
+    mapping = provider.extract([('proposal', [FakeChild(proposal_description_type='Extension')])])
+    assert mapping.get('proposal_description_type') == 'Extension', mapping
+
+
+def test_repeated_values_collect_rather_than_overwrite():
+    # What config['many_tiles'] is for: HM and HB both answer, and the letter shows both.
+    provider = a_provider({'many_tiles': ['response_summary_value']})
+    mapping = provider.extract([(
+        'response',
+        [FakeChild(response_summary_value='HM says yes'),
+         FakeChild(response_summary_value='HB says no')],
+    )])
+    assert mapping.get('response_summary_value') == ['HM says yes', 'HB says no'], mapping
+
+
+def test_a_leaf_is_not_mistaken_for_a_repeat():
+    provider = a_provider({})
+    mapping = provider.extract([('planning_reference', 'LA01/2026/0123/F')])
+    assert mapping.get('planning_reference') == 'LA01/2026/0123/F', mapping
+
+
 def test_the_generator_builds_a_mapping():
     config = {
         'user': User.objects.filter(is_superuser=True).first(),

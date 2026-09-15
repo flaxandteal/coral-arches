@@ -558,11 +558,23 @@ class GenericTemplateProvider:
                         newloop += item[1].items()
                         found_semantic = True
                     except:
-                        segment = {item[0] : item[1]}
-                        mapping = mapping | self.processDatatypes(segment)
+                        repeated = self.repeated_items(item[1])
+                        if repeated:
+                            newloop += repeated
+                            found_semantic = True
+                        else:
+                            segment = {item[0] : item[1]}
+                            mapping = self.merge_mappings(mapping, self.processDatatypes(segment))
                     node_list = newloop
                     children_present = found_semantic
         return mapping
+
+    def repeated_items(self, value) -> list:
+        """(alias, value) pairs from each child of a repeating nodegroup, or [] if it is not one."""
+        try:
+            return [pair for child in value for pair in child.items()]
+        except:
+            return []
     
     def merge_mappings(self, original: dict, new: dict):
         merged = original.copy() if original is not None else {}
