@@ -505,6 +505,25 @@ class QueryBuilder:
         """Matching resource ids, without hydrating any of them."""
         return self._resource_ids()
 
+    def id_queryset(self) -> Any:
+        """Matching ids as a lazy queryset, so a caller can use it as a Subquery.
+
+        Lets a caller filter, sort and page in the database rather than pulling
+        every id into Python first. Only node-alias filters resolve this way;
+        anything needing the ResourceInstance-side filters has to materialise,
+        so use `ids()` there.
+        """
+        django_filters = {k: v for k, v in self._filters.items()
+                          if k.startswith("resourceid")
+                          and "resourceid" not in self._model_cls._datatypes_by_alias()}
+        if django_filters or self._order_by:
+            raise FieldError(
+                f"{self._model_cls.__name__}.id_queryset(): "
+                f"{', '.join(sorted(django_filters) or self._order_by)} does not "
+                "resolve to a tile filter; use ids()."
+            )
+        return self._tile_filtered_queryset(self._filters)
+
     def count(self) -> int:
         return len(self._resource_ids())
 
@@ -563,7 +582,11 @@ class QueryBuilder:
         return ids
 
     def _tile_filtered_ids(self, tile_filters: Dict[str, Any]) -> List[str]:
-        """Resolve node-alias filters to resource ids in SQL.
+        """Resolve node-alias filters to resource ids in SQL."""
+        return [str(pk) for pk in self._tile_filtered_queryset(tile_filters)]
+
+    def _tile_filtered_queryset(self, tile_filters: Dict[str, Any]) -> Any:
+        """Resource ids matching these node-alias filters, as a lazy queryset.
 
         No per-resource fallback: hydrating a whole graph to compare one
         attribute takes hours, so an unsupported filter fails loudly instead.
@@ -609,9 +632,7 @@ class QueryBuilder:
             for lookup, value in tile_filters.items()
         }
         qs = ResourceTileTree.get_tiles(slug, nodes=nodes)
-        return [
-            str(pk) for pk in qs.filter(**resolved).values_list("pk", flat=True)
-        ]
+        return qs.filter(**resolved).values_list("pk", flat=True)
 
 
 class _WrapperMeta:

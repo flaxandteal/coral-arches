@@ -1,8 +1,9 @@
 from arches.app.models import models
 from arches.app.models.models import TileModel
 from arches.app.models.tile import Tile
-from django.db.models import Count, F, Q
+from django.db.models import Count, F, Q, Subquery
 from querysets_shim.adapter import admin
+from querysets_shim.wrapper import _with_ancestor_nodegroups
 from datetime import datetime
 import html
 from coral.views.dashboards.base_strategy import TaskStrategy
@@ -59,6 +60,23 @@ def latest_actions():
     )
 
 
+def reference_label(node):
+    """The label of a reference node, or None.
+
+    A reference node reads back as Reference objects carrying their own labels,
+    which the dashboard serialises to JSON — so the value has to be flattened to
+    text here rather than handed on as the node.
+    """
+    from arches_controlled_lists.models import ListItem
+
+    labels = [
+        ListItem.find_best_label_from_set(reference.labels, 'en')
+        for reference in node or []
+    ]
+    labels = [label for label in labels if label]
+    return ', '.join(labels) if labels else None
+
+
 def not_in(field, values):
     """Exclude these values while keeping rows that have none.
 
@@ -77,6 +95,25 @@ class SingleFilterDictInterface(TypedDict):
 class PlanningTaskStrategy(TaskStrategy):
 
     _user_role: UserRole = None;
+
+    # Hydrating a whole Consultation builds all 584 of its aliases; build_data
+    # reads these. Same approach as designation_strategy.DISPLAY_ALIASES.
+    DISPLAY_ALIASES = [
+        'action', 'action_status', 'action_type', 'assigned_to_n1',
+        'action_dates', 'target_date_n1',
+        'hierarchy_type', 'classification_type',
+        'location_data', 'addresses', 'council',
+        'street_value', 'town_or_city_value', 'postcode_value',
+        'related_heritage_assets',
+    ]
+
+    def display_nodes(self, model_cls):
+        """Node objects for the aliases this dashboard displays, if resolvable."""
+        by_alias = model_cls._._node_objects_by_alias()
+        nodes = [by_alias[alias] for alias in self.DISPLAY_ALIASES if alias in by_alias]
+        # arches-querysets resolves ancestry through the nodes it is handed, so a
+        # narrowed list KeyErrors on anything nested more than one level deep.
+        return _with_ancestor_nodegroups(nodes, by_alias.values()) or None
 
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='asc', filter='all'):
         from querysets_shim.models import Consultation
@@ -111,10 +148,13 @@ class PlanningTaskStrategy(TaskStrategy):
                 return None, None, False
 
             action_types, hidden_statuses, own_only = role_conditions()
-            filters_on_action = bool(action_types) or own_only or is_member_filter or is_group_filter
 
             def current_actions():
-                """Each consultation's current Action tile, narrowed to this role."""
+                """Each consultation's current Action tile, narrowed to this role.
+
+                A consultation with no Action tile has no task, so it does not
+                appear — the dashboard lists work, not consultations.
+                """
                 qs = latest_actions()
                 if action_types:
                     qs = qs.filter(action_type__in=action_types)
@@ -133,27 +173,28 @@ class PlanningTaskStrategy(TaskStrategy):
                 conditions = {'resourceid__startswith': 'CON/'}
                 if is_council_filter:
                     conditions['council'] = filter
-                return Consultation.where(**conditions).ids()
+                return Consultation.where(**conditions).id_queryset()
 
-            # Ids only on both sides: nothing is hydrated until the page is chosen.
-            actions = {str(row.resourceinstance_id): row for row in current_actions()}
-            allowed = consultation_ids()
-            # A consultation with no Action tile still belongs on an unfiltered
-            # dashboard, so only intersect when a condition actually needs one.
-            ids = [rid for rid in allowed if rid in actions] if filters_on_action else list(allowed)
+            # Everything below stays a queryset, so Postgres does the filtering,
+            # sorting and paging and hands back one page. Materialising the ids
+            # here instead would pull every consultation into Python on a
+            # 300k-resource set to show eight of them.
+            matching = TileModel.objects.filter(
+                tileid__in=Subquery(current_actions().values('tileid')),
+                resourceinstance_id__in=Subquery(consultation_ids()),
+            )
 
-            def deadline(rid):
-                row = actions.get(rid)
-                return getattr(row, 'target_date', None) if row else None
+            target = F(f'data__{ACTION_TARGET_DATE}')
+            # Undated work sorts last either way, rather than crowding the top
+            # of a descending sort.
+            order = target.desc(nulls_last=True) if sort_order == 'desc' else target.asc(nulls_last=True)
 
-            # Undated work sorts last whichever direction is asked for, rather
-            # than crowding the top of a descending sort.
-            ids.sort(key=lambda rid: deadline(rid) or '', reverse=(sort_order == 'desc'))
-            ids.sort(key=lambda rid: deadline(rid) is None)
-
-            total_resources = len(ids)
+            total_resources = matching.count()
             start_index = (page - 1) * page_size
-            page_ids = ids[start_index:start_index + page_size]
+            page_ids = list(
+                matching.order_by(order)
+                .values_list('resourceinstance_id', flat=True)[start_index:start_index + page_size]
+            )
 
             def get_counters() -> Dict[str, Dict[str, int | None]]:
                 """Status and hierarchy tallies, counted in the database.
@@ -175,12 +216,12 @@ class PlanningTaskStrategy(TaskStrategy):
                         counts['None'] = counts.get('None', 0) + untiled
                     return dict(sorted(counts.items()))
 
-                tileids = [actions[rid].tileid for rid in ids if rid in actions]
-                status_tiles = TileModel.objects.filter(tileid__in=tileids).annotate(
+                status_tiles = matching.annotate(
                     status=F(f'data__{ACTION_STATUS}__0__labels__0__value'))
                 hierarchy_tiles = TileModel.objects.filter(
-                    nodegroup_id=HIERARCHY_NODEGROUP, resourceinstance_id__in=ids).annotate(
-                    hierarchy=F(f'data__{HIERARCHY_TYPE}__0__labels__0__value'))
+                    nodegroup_id=HIERARCHY_NODEGROUP,
+                    resourceinstance_id__in=Subquery(matching.values('resourceinstance_id')),
+                ).annotate(hierarchy=F(f'data__{HIERARCHY_TYPE}__0__labels__0__value'))
                 return {
                     'status': tally(status_tiles, 'status'),
                     'heirarchy_type': tally(hierarchy_tiles, 'hierarchy'),
@@ -188,7 +229,8 @@ class PlanningTaskStrategy(TaskStrategy):
 
             counters = get_counters()
             tasks = [self.build_data(resource, groupId)
-                     for resource in Consultation.find_many(page_ids)]
+                     for resource in Consultation.find_many(
+                         page_ids, nodes=self.display_nodes(Consultation))]
 
             return tasks, total_resources, counters
 
@@ -301,15 +343,15 @@ class PlanningTaskStrategy(TaskStrategy):
     def build_data(self, consultation, groupId):
         utilities = Utilities()
 
-        action_status = utilities.node_check(lambda: consultation.action[0].action_status)
-        action_type = utilities.node_check(lambda: consultation.action[0].action_type)
+        action_status = reference_label(utilities.node_check(lambda: consultation.action[0].action_status))
+        action_type = reference_label(utilities.node_check(lambda: consultation.action[0].action_type))
         assigned_to = utilities.node_check(lambda: consultation.action[0].assigned_to_n1)
         deadline = utilities.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
-        hierarchy_type = utilities.node_check(lambda: consultation.hierarchy_type)
+        hierarchy_type = reference_label(utilities.node_check(lambda: consultation.hierarchy_type))
         address = utilities.node_check(lambda: consultation.location_data.addresses)
-        council = utilities.node_check(lambda: consultation.location_data.council)
+        council = reference_label(utilities.node_check(lambda: consultation.location_data.council))
         # responses = utilities.node_check(lambda: consultation.response_action)
-        classification = utilities.node_check(lambda: consultation.classification_type)
+        classification = reference_label(utilities.node_check(lambda: consultation.classification_type))
         related_ha = utilities.node_check(lambda: consultation.related_heritage_assets)
 
         # the orm stopped returning multiple tiles for responses, this is a fall back
@@ -318,24 +360,17 @@ class PlanningTaskStrategy(TaskStrategy):
             nodegroup_id='af7677ba-cfe2-11ee-8a4e-0242ac180006'
         ).values_list('data__cd77b29c-2ef6-11ef-b1c4-0242ac140006', flat=True)
         
+        # A Heritage Asset with no reference numbers has no tile for the
+        # nodegroup at all, so this reads None rather than an empty branch.
         ha_refs = []
-        for ha in related_ha:
-            ihr = ha.heritage_asset_references.ihr_number
-            hb = ha.heritage_asset_references.hb_number
-            smr = ha.heritage_asset_references.smr_number
-            gardens = ha.heritage_asset_references.historic_parks_and_gardens
-
-            def valid(val):
-                return val is not None and val.strip() != ''
-
-            if valid(ihr):
-                ha_refs.append(ihr)
-            if valid(hb):
-                ha_refs.append(hb)
-            if valid(smr):
-                ha_refs.append(smr)
-            if valid(gardens):
-                ha_refs.append(gardens)
+        for ha in related_ha or []:
+            references = getattr(ha, 'heritage_asset_references', None)
+            if references is None:
+                continue
+            for alias in ('ihr_number', 'hb_number', 'smr_number', 'historic_parks_and_gardens'):
+                value = getattr(references, alias, None)
+                if value is not None and str(value).strip():
+                    ha_refs.append(value)
 
         assigned_to_names = None
         if assigned_to:
