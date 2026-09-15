@@ -71,11 +71,14 @@ describe('Going through the Assign Consultation Workflow', function () {
         cy.pickCardOption('applicant');
         cy.wait(2000);
 
+        // Both are rich-text widgets, whose textarea CKEditor hides and which
+        // arches' rich-text.htm never gives an aria-label. Scope by wrapper
+        // class so each picks its own editor, not the other one on this tab.
         cy.contains('Application Reason').scrollIntoView();
-        cy.get('[aria-label="Application Reason"]').click().type('Test application reason');
+        cy.typeRichText('consultation_description', 'Test application reason');
 
         cy.contains('Proposal Description').scrollIntoView();
-        cy.get('[aria-label="Proposal Description"]').click().type('Test proposal description');
+        cy.typeRichText('proposal_text', 'Test proposal description');
 
         cy.workflowNext();
 
@@ -110,7 +113,7 @@ describe('Going through the Assign Consultation Workflow', function () {
         cy.wait(2000);
 
         cy.contains('Location Description').scrollIntoView();
-        cy.get('[aria-label="Location Description"]').click().type('Test location description');
+        cy.typeRichText('location_description', 'Test location description');
 
         cy.workflowNext();
 
@@ -141,7 +144,7 @@ describe('Going through the Assign Consultation Workflow', function () {
         cy.get('.card_component.date_entered .input-group-addon').click();
 
         cy.contains('Internal Notes for Admin Team').scrollIntoView();
-        cy.get('[aria-label="Internal Notes for Admin Team"]').click().type('Internal note');
+        cy.typeRichText('action_text', 'Internal note');
 
         cy.workflowNext();
 
