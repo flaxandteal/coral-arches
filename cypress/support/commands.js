@@ -75,15 +75,24 @@ Cypress.Commands.add("loginAs", (groupName) => {
 // default-card-util and file-template cards (e.g. Records NI, HMC Reference,
 // Letters) never apply. .widget-wrapper comes from the widget's own template
 // and is present no matter which card component renders it.
-Cypress.Commands.add("pickCardOption", (cardClass, index = 0) => {
+Cypress.Commands.add("pickCardOption", (cardClass, indexOrText = 0) => {
     cy.get(`.widget-wrapper.${cardClass}`).scrollIntoView();
     cy.get(`.widget-wrapper.${cardClass}`).find('.select2-selection').first().click();
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
-    cy.get('.select2-results__option')
+    const options = () => cy.get('.select2-results__option')
         .not('.loading-results')
         .not('.select2-results__option--load-more')
-        .eq(index)
-        .click();
+        .not('.select2-results__message');
+    // Pass text when the first option will not do -- an assignee, say, has to be
+    // someone the Update Response Assignee function accepts. Resource pickers page
+    // their results, so search first: the wanted row is usually not rendered yet,
+    // and "Searching..."/"No results" are themselves .select2-results__option li's.
+    if (typeof indexOrText === 'string') {
+        cy.select2Search(indexOrText);
+        options().contains(indexOrText).click();
+    } else {
+        options().eq(indexOrText).click();
+    }
 });
 
 Cypress.Commands.add("pickOptionByLabelPrefix", (labelPrefix, indexOrText = 0) => {
