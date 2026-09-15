@@ -154,10 +154,10 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
-                  "nodegroupid": "c9c4e6dc-aa34-5254-a7b5-4f79bd8b73c1",
+                  "nodegroupid": "8b5b4bac-fc66-58ff-95ab-0ed0df464568",
                   "semanticName": "CM References",
                   "nodeOptions": {
-                    "c9c4e6dc-aa34-5254-a7b5-4f79bd8b73c1": {
+                    "8b5b4bac-fc66-58ff-95ab-0ed0df464568": {
                       "disabled": true
                     }
                   }
@@ -195,8 +195,8 @@
                   "graphid": "076f9381-7b00-11e9-8d6b-80000b44d1d9",
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "dc8887bd-7f36-5ee8-a6c7-ec68b39ceebc",
-                    "eff5ab33-3b30-5372-9afe-504162666bf0"
+                    "802fcd65-42f7-517b-9647-16fb0e2e2506",
+                    "81e17dca-83a5-5d0d-bd90-2cafec54eec3"
                   ],
                   "nodegroupid": "d62dd807-4739-59d7-91d1-e13038eb6eec",
                   "semanticName": "Contacts"
@@ -398,7 +398,7 @@
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
                   "semanticName": "Issue Proposal",
                   "hiddenNodes": [
-                    "30d5defa-d64a-11ee-8b04-0242ac180006"
+                    "065db377-0761-5a16-83da-a77131484adf"
                   ],
                   "nodeOptions": {
                     "0ec84b1e-57b5-5054-9a9d-6ca0f3601b2d": {
@@ -503,7 +503,18 @@
                   "resourceid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "0a978b79-4039-560c-a10d-9cfe941ca4dd",
                   "parenttileid": "['initial-step-step']['d96cc87e-6de5-4b33-90db-ea324af7a66d'][0]['resourceid']['issueReport']",
-                  "semanticName": "Signed Off"
+                  "semanticName": "Signed Off",
+                  "nodeOptions": {
+                    "aba78a87-86ef-59a7-b21d-7e713d0b0ed4": {
+                      "component": "user-to-model-select",
+                      "allowInstanceCreation": false,
+                      "signOffGroups": [
+                        "b23161e0-070c-466f-a4de-6330fa8dc5a3",
+                        "c78e1dca-7e14-4d17-8a88-60aa4e1640b5",
+                        "cfa32a35-3c50-4245-83d0-71c04d8abf49"
+                      ]
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",

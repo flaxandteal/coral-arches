@@ -12,12 +12,12 @@ details = {
     "type": "node",
     "description": "Add a set amount of time to a date node when another date node is updated",
     "defaultconfig": {
-        "triggeringDateNode": "04494bbe-c769-11ee-82c4-0242ac180006",
-        "updateDateNode": "06adec44-69b7-11ee-908a-0242ac120002",
+        "triggeringDateNode": "932dee8f-ebc8-57ea-bac3-18920b43f4a6",
+        "updateDateNode": "345e7fda-7f62-5e55-8fed-85e68b13dade",
         "updateDateNodeGroup": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
         "amount": 21,
         "unit": 'days',
-        "triggering_nodegroups": ["04492152-c769-11ee-82c4-0242ac180006"]},
+        "triggering_nodegroups": ["4b195f82-50eb-5030-9f82-acdd3f7ba6c9"]},
     "classname": "AddTimeToDate",
     "component": "",
 }

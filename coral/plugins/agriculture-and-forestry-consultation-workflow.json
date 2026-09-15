@@ -30,6 +30,12 @@
                   ],
                   "nodegroupid": "b37552ba-9527-11ea-96b5-f875a44e0e11",
                   "semanticName": "System Reference Numbers",
+                  "requiredParentTiles": [
+                    {
+                      "lookupName": "locationData",
+                      "parentNodegroupId": "de90c7cf-6764-5f5b-bfb3-73369cfd9021"
+                    }
+                  ],
                   "autoDisabled": true,
                   "nodeOptions": {
                     "b37552be-9527-11ea-9213-f875a44e0e11": {
@@ -85,6 +91,9 @@
                 "parameters": {
                   "resourceid": "['start-step']['f5a89db6-2626-4d23-915d-0ce86d2e37ee'][0]['resourceid']['resourceInstanceId']",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
+                  "hiddenNodes": [
+                    "7be8fad4-977b-58b8-92b3-f670cd4afdf6"
+                  ],
                   "nodegroupid": "75cfed54-ee04-5d21-a94d-1ed4eba91205",
                   "semanticName": "Applicants"
                 },

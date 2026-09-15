@@ -23,10 +23,51 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(functions): update retired v8 node ids in functions (#854)
+- fix(views): update retired v8 node ids in views (#855)
+- fix(functions): the TM65 point functions on Heritage Asset write to the live Irish
+  Grid Reference node again, so saving a geometry no longer 500s on the Add Monument
+  location step. The v8 regeneration re-issued the node id but left both function
+  configs, the risk-assessment view and the issue-report workflow on the retired one
+  (#855)
+- fix(workflows): the HB and HM planning consultation response workflows hide the other
+  team's response, assignment and response-file tiles again. The team nodes are
+  controlled-list references in v8, so the filter reads the selected list item id instead
+  of comparing against the retired domain-value option id (#855)
+- fix(notifications): planning and excavation notifications read controlled-list values
+  again, so the excavation decision, classification and stage-of-application labels come
+  back in their messages instead of being blank (#855)
+- fix(functions): convert the remaining domain-value comparisons to controlled lists —
+  composite score, consultation hierarchy, response assignee, report classification,
+  licence number and extension, and enforcement mark-as-read all read the selected list
+  item id now rather than testing a tile value against a retired option id
+- fix(functions): the SMR and Historic Parks and Gardens number functions read their
+  map sheet and county labels out of the reference tile value rather than looking up a
+  concept valueid, which raised "is not a valid UUID" on save and lost the generated
+  number
+
 - fix(dashboards): convert designation dashboard to v8 node ids and controlled lists (#852)
 - fix(shim): resolve `where()` tile filters in SQL rather than loading every resource in the graph (#852)
 - fix(shim): collapse nodegroup-level nodes on attribute access, so a single-node nodegroup returns its node (#852)
 - perf(shim): load dashboard resources in one query per model instead of one per row (#852)
 - fix(dashboards): correct designation card paths for v8 and drop `node_check` (#852)
+- fix(workflows-js): update retired v8 node ids in workflow JS (#856)
+
+- fix(plugins): update retired v8 node ids in workflow plugin definitions (#857)
 
 ### Notes
+
+- The TM65 function fix only reaches a running instance through the graph package:
+  the configs live in `functions_x_graphs`, not in code. coral-graphs `functions.json`
+  carries the same correction (branch not yet pushed), so an existing database needs
+  either a package reload or a one-off update of the two Heritage Asset rows for
+  `561abd7c-…` and `e83afc88-…`.
+
+- Consultation `Action Type` arrives from arches-her already bound to the "Mitigation
+  Type" controlled list, so coral's own Assign To HM / HB / Both and Reject options were
+  never carried into v8 — nothing failed, because the list it points at does exist, it is
+  just the wrong one. coral-graphs branch `fix/consultation-action-type-list` declares a
+  "Consultation Action Type" list and repoints the node. The `ASSIGN_*` constants in
+  `coral/functions/notify_planning.py` already hold the ids that list will carry, so the
+  assign-to-team notifications stay dormant until the rebuilt graphs are loaded, and need
+  no further code change when they are.

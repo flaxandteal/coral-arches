@@ -1,7 +1,7 @@
 from arches.app.functions.base import BaseFunction
 from arches.app.models.tile import Tile
-from arches.app.models import models
 from coral.utils.garden_number import GardenNumber
+from coral.utils.reference_values import reference_label
 
 HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
 GARDEN_NUMBER_NODE_ID = "1edc61a9-b64b-51ae-9077-536908761903"
@@ -60,9 +60,7 @@ class GardenNumberFunction(BaseFunction):
             nodegroup_id=ADDRESS_NODEGROUP_ID,
         ).first()
 
-        county_name = models.Value.objects.filter(
-            valueid=county_tile.data.get(COUNTY_NODE_ID)
-        ).first()
+        county_name = reference_label(county_tile.data.get(COUNTY_NODE_ID))
 
         if not county_name and not id_number:
             # Clear HPG Number
@@ -72,7 +70,7 @@ class GardenNumberFunction(BaseFunction):
         if not county_name and id_number:
             raise ValueError('No selected County selected but a generated ID was provided.')
         
-        gn = GardenNumber(county_name=county_name.value)
+        gn = GardenNumber(county_name=county_name)
 
         if gn.validate_id(id_number, resource_instance_id):
             print("Garden Number is valid: ", id_number)
