@@ -319,6 +319,20 @@ class _SemanticNode:
             return len(self._data)
         return 0 if self._data is None else 1
 
+    def keys(self) -> List[str]:
+        """Child aliases, when this node wraps an object.
+
+        Mapping-shaped walkers descend by trying `.items()` and treating the failure as a
+        leaf, so this must raise rather than return empty for a list or scalar node.
+        """
+        if isinstance(self._data, dict):
+            return list(self._data)
+        raise AttributeError("keys")
+
+    def items(self) -> List[Tuple[str, Any]]:
+        """Child aliases with their values, read the same way attribute access reads them."""
+        return [(alias, self._lookup(alias)) for alias in self.keys()]
+
     def __getitem__(self, key: Any) -> Any:
         if isinstance(self._data, list):
             return _wrap_value(self._data[key], f"{self._path}[{key}]")

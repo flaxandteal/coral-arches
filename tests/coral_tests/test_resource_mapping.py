@@ -46,6 +46,18 @@ def test_an_unknown_attribute_is_still_none():
     assert a_wkri().no_such_node_alias_here is None
 
 
+def test_nested_groups_are_flattened():
+    # The letter's placeholders are leaf aliases inside semantic groups (address parts and
+    # the like), so a mapping of top-level aliases alone leaves them as literal text.
+    config = {
+        'user': User.objects.filter(is_superuser=True).first(),
+        'special': {'today': 'today'},
+    }
+    mapping = GenericTemplateProvider(a_consultation()).get_mapping(config)
+    for leaf in ('street_value', 'town_or_city_value', 'postcode_value', 'planning_reference'):
+        assert leaf in mapping, leaf
+
+
 def test_the_generator_builds_a_mapping():
     config = {
         'user': User.objects.filter(is_superuser=True).first(),
