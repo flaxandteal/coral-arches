@@ -6,7 +6,7 @@ import uuid from 'uuid';
 import arches from 'arches';
 import CardComponentViewModel from 'viewmodels/card-component';
 import AlertViewModel from 'viewmodels/alert';
-import { hasListItem } from 'utils/reference-values';
+import { hasListItem, selectedListItemIds } from 'utils/reference-values';
 import template from 'templates/views/components/workflows/pdf-merger.htm';
 import { renderAsync as docxRenderAsync, defaultOptions as docxDefaultOptions } from 'docx-preview';
 import { showSaveFilePicker } from 'native-file-system-adapter';
@@ -33,7 +33,7 @@ function viewModel(params) {
     this.TYPE_ASSIGN_HM = '72ce5d6a-f938-5eae-b650-608ca8b3b934';
     this.TYPE_ASSIGN_HB = '8ddddee6-a5d6-5532-9896-3696d0b45754';
     this.TYPE_ASSIGN_BOTH = '979eab2e-f1c8-532a-9de8-56604acbff2c';
-    this.TYPE_REJECT = '4820872f-b74d-4767-984d-2874a076c4b4';
+    this.TYPE_REJECT = '1f3f60a4-f619-54d6-ac33-124c918945cb';
 
     this.DIGITAL_OBJECT_NAME_NODEGROUP = 'c61ab163-9513-11ea-9bb6-f875a44e0e11';
     this.DIGITAL_OBJECT_NAME_NODE = 'c61ab16c-9513-11ea-89a4-f875a44e0e11';
@@ -50,18 +50,26 @@ function viewModel(params) {
     this.letterOptions = ko.observable(params.letterOptions);
     this.loading = ko.observable(false);
 
+    this.isAssigned = ko.computed(() => selectedListItemIds(this.assignedTo()).length > 0);
+    this.isRejected = ko.computed(() => hasListItem(this.assignedTo(), this.TYPE_REJECT));
+    this.showHM = ko.computed(() =>
+        hasListItem(this.assignedTo(), this.TYPE_ASSIGN_HM) ||
+        hasListItem(this.assignedTo(), this.TYPE_ASSIGN_BOTH));
+    this.showHB = ko.computed(() =>
+        hasListItem(this.assignedTo(), this.TYPE_ASSIGN_HB) ||
+        hasListItem(this.assignedTo(), this.TYPE_ASSIGN_BOTH));
+
     this.disableGenerate = ko.computed(() => {
         if (this.loading()){
             return true;
         }
-        const assigned = this.assignedTo();
-        if (hasListItem(assigned, this.TYPE_ASSIGN_BOTH)) {
+        if (this.showHM() && this.showHB()) {
             return !this.HMSummary() || !this.HBSummary();
         }
-        if (hasListItem(assigned, this.TYPE_ASSIGN_HB)) {
+        if (this.showHB()) {
             return !this.HBSummary();
         }
-        if (hasListItem(assigned, this.TYPE_ASSIGN_HM)) {
+        if (this.showHM()) {
             return !this.HMSummary();
         }
         return true;
