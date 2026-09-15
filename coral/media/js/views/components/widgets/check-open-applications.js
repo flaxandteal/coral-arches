@@ -14,7 +14,7 @@ const viewModel = function (params) {
   this.LICENCEES_NODE_ID = '6d294784-5891-11ee-a624-0242ac120004';
   this.APPLICATION_DETAILS_NODEGROUP = '4f0f655c-48cf-11ee-8e4e-0242ac140007';
   this.REPORT_CLASSIFICATION_TYPE_NODE_ID = 'ff3de496-7117-11ef-83a1-0242ac120006';
-  this.REPORT_CLASSIFICATION_NOT_RECEIVED_ID = 'd33327e8-2b9d-4bab-a07e-f0ded18ded3e';
+  this.REPORT_CLASSIFICATION_NOT_RECEIVED_ID = '36218b55-7847-59eb-8033-5f2fa3d77da8';
 
   params.multiple = true;
   params.datatype = 'resource-instance';
@@ -252,7 +252,7 @@ const viewModel = function (params) {
             '27740e7c-7118-11ef-af33-0242ac120006': { op: 'eq', val: '' },
             'ff3de496-7117-11ef-83a1-0242ac120006': {
               op: 'eq',
-              val: 'd33327e8-2b9d-4bab-a07e-f0ded18ded3e'
+              val: '36218b55-7847-59eb-8033-5f2fa3d77da8'
             },
             'aec103a2-48cf-11ee-8e4e-0242ac140007': { op: '~', lang: 'en', val: '' },
             'a79fedae-bad5-11ee-900d-0242ac180006': { op: 'eq', val: '' },

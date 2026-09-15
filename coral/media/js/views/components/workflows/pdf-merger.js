@@ -6,6 +6,7 @@ import uuid from 'uuid';
 import arches from 'arches';
 import CardComponentViewModel from 'viewmodels/card-component';
 import AlertViewModel from 'viewmodels/alert';
+import { hasListItem, selectedListItemIds } from 'utils/reference-values';
 import template from 'templates/views/components/workflows/pdf-merger.htm';
 import { renderAsync as docxRenderAsync, defaultOptions as docxDefaultOptions } from 'docx-preview';
 import { showSaveFilePicker } from 'native-file-system-adapter';
@@ -16,21 +17,24 @@ function viewModel(params) {
     /**
  * Matches structure of the Correspondence branch
  */
-    this.RESPONSE_FILES_NODE = "5d401df8-5989-11ef-9d18-0242ac120006";
-    this.RESPONSE_FILE_TEAM_NODE = "983d73b0-5989-11ef-af2d-0242ac120006";
+    this.RESPONSE_FILES_NODE = "7098e813-eebe-5903-a31f-951fd0c67a2c";
+    // Renamed "Response Files Team" -> "Response Team Files" in the v8 graph.
+    this.RESPONSE_FILE_TEAM_NODE = "b2b19bbb-7f8a-5291-9e44-fe968a305e51";
 
-    this.RESPONSE_SUMMARY_NODE = "dd179870-cfe7-11ee-8a4e-0242ac180006";
-    this.RESPONSE_SUMMARY_TEAM_NODE = "cd77b29c-2ef6-11ef-b1c4-0242ac140006";
+    this.RESPONSE_SUMMARY_NODE = "1103a85f-645c-5b9d-bf17-b9299fac0ded";
+    this.RESPONSE_SUMMARY_TEAM_NODE = "cf6c76ac-3f89-5d22-a74b-2cdf80608b6e";
 
-    this.HMTEAM = "2628d62f-c206-4c06-b26a-3511e38ea243";
-    this.HBTEAM = "70fddadb-8172-4029-b8fd-87f9101a3a2d";
+    this.HMTEAM = "03ea2b65-1def-5fc4-ae4e-70b5869d9696";
+    this.HBTEAM = "8b7091c9-dcd2-578c-9775-814240a4ea01";
 
     this.ACTION_TYPE_NODE = "e2585f8a-51a3-11eb-a7be-f875a44e0e11";
+    this.DATE_ENTERED_NODE = "305f5f29-0b5f-53a2-bcef-4aca4ba677c1";
 
-    this.TYPE_ASSIGN_HM = '94817212-3888-4b5c-90ad-a35ebd2445d5';
-    this.TYPE_ASSIGN_HB = '12041c21-6f30-4772-b3dc-9a9a745a7a3f';
-    this.TYPE_ASSIGN_BOTH = '7d2b266f-f76d-4d25-87f5-b67ff1e1350f';
-    this.TYPE_REJECT = '4820872f-b74d-4767-984d-2874a076c4b4';
+
+    this.TYPE_ASSIGN_HM = '72ce5d6a-f938-5eae-b650-608ca8b3b934';
+    this.TYPE_ASSIGN_HB = '8ddddee6-a5d6-5532-9896-3696d0b45754';
+    this.TYPE_ASSIGN_BOTH = '979eab2e-f1c8-532a-9de8-56604acbff2c';
+    this.TYPE_REJECT = '1f3f60a4-f619-54d6-ac33-124c918945cb';
 
     this.DIGITAL_OBJECT_NAME_NODEGROUP = 'c61ab163-9513-11ea-9bb6-f875a44e0e11';
     this.DIGITAL_OBJECT_NAME_NODE = 'c61ab16c-9513-11ea-89a4-f875a44e0e11';
@@ -47,18 +51,26 @@ function viewModel(params) {
     this.letterOptions = ko.observable(params.letterOptions);
     this.loading = ko.observable(false);
 
+    this.isAssigned = ko.computed(() => selectedListItemIds(this.assignedTo()).length > 0);
+    this.isRejected = ko.computed(() => hasListItem(this.assignedTo(), this.TYPE_REJECT));
+    this.showHM = ko.computed(() =>
+        hasListItem(this.assignedTo(), this.TYPE_ASSIGN_HM) ||
+        hasListItem(this.assignedTo(), this.TYPE_ASSIGN_BOTH));
+    this.showHB = ko.computed(() =>
+        hasListItem(this.assignedTo(), this.TYPE_ASSIGN_HB) ||
+        hasListItem(this.assignedTo(), this.TYPE_ASSIGN_BOTH));
+
     this.disableGenerate = ko.computed(() => {
         if (this.loading()){
             return true;
         }
-        const assigned = this.assignedTo();
-        if (assigned === this.TYPE_ASSIGN_BOTH) {
+        if (this.showHM() && this.showHB()) {
             return !this.HMSummary() || !this.HBSummary();
         }
-        if (assigned === this.TYPE_ASSIGN_HB) {
+        if (this.showHB()) {
             return !this.HBSummary();
         }
-        if (assigned === this.TYPE_ASSIGN_HM) {
+        if (this.showHM()) {
             return !this.HMSummary();
         }
         return true;
@@ -74,9 +86,14 @@ function viewModel(params) {
     };
 
     this.fetchAssignedValue = async() => {
-        const tile = await this.fetchTileData(params.resourceid, this.ACTION_TYPE_NODE);
-        const responseTypeId = tile[0].data[this.ACTION_TYPE_NODE];
-        return responseTypeId;
+        const tiles = await this.fetchTileData(params.resourceid, this.ACTION_TYPE_NODE) || [];
+        const assigned = tiles.filter(
+            (tile) => selectedListItemIds(tile.data[this.ACTION_TYPE_NODE]).length > 0
+        );
+        // Dates are ISO, so lexical order is chronological; an undated action sorts first.
+        assigned.sort((a, b) => String(a.data[this.DATE_ENTERED_NODE] ?? '')
+            .localeCompare(String(b.data[this.DATE_ENTERED_NODE] ?? '')));
+        return assigned[assigned.length - 1]?.data[this.ACTION_TYPE_NODE];
     };
 
     this.fetchResponseSummary = async() => {
@@ -84,10 +101,10 @@ function viewModel(params) {
         for(const tile of tiles){
             const summary = tile.data[this.RESPONSE_SUMMARY_NODE].en.value;
             const team = tile.data[this.RESPONSE_SUMMARY_TEAM_NODE];
-            if(team === this.HMTEAM && summary?.trim() !== ""){
+            if(hasListItem(team, this.HMTEAM) && summary?.trim() !== ""){
                 this.HMSummary(true);
             }
-            if(team === this.HBTEAM && summary?.trim() !== ""){
+            if(hasListItem(team, this.HBTEAM) && summary?.trim() !== ""){
                 this.HBSummary(true);
             }
         }
@@ -172,10 +189,10 @@ function viewModel(params) {
             },
             error: (response, status, error) => {
                 if (response.statusText !== 'abort') {
-                    this.viewModel.alert(
+                    this.form.alert(
                         new AlertViewModel(
                             'ep-alert-red',
-                            arches.requestFailed.title,
+                            arches.translations.requestFailed.title,
                             response.responseText
                         )
                     );
@@ -192,10 +209,8 @@ function viewModel(params) {
             data: {
                 'c61ab166-9513-11ea-a44c-f875a44e0e11': null,
                 'c61ab167-9513-11ea-9d50-f875a44e0e11': null,
-                'c61ab168-9513-11ea-9980-f875a44e0e11': '04a4c4d5-5a5e-4018-93aa-65abaa53fb53',
-                'c61ab169-9513-11ea-b7c1-f875a44e0e11': '8a96a261-cd79-48e2-9f12-74924c152b00',
-                'c61ab16a-9513-11ea-9afb-f875a44e0e11': 'a0e096e2-f5ae-4579-950d-3040714713b4',
-                'c61ab16b-9513-11ea-ab9d-f875a44e0e11': '5a88136a-bf3a-4b48-a830-a7f42000dd24',
+                // The four typed-name nodes are `reference` now and their pre-v8 defaults are not
+                // list items, so writing them fails the whole tile. Only the name is read back.
                 [this.DIGITAL_OBJECT_NAME_NODE]: {
                     en: {
                         direction: 'ltr',
@@ -304,10 +319,10 @@ function viewModel(params) {
                     error: (response, status, error) => {
                         console.log(response);
                         if (response.statusText !== 'abort') {
-                            this.viewModel.alert(
+                            this.form.alert(
                                 new AlertViewModel(
                                     'ep-alert-red',
-                                    arches.requestFailed.title,
+                                    arches.translations.requestFailed.title,
                                     response.responseText
                                 )
                             );

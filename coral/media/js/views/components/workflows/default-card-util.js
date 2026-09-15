@@ -5,6 +5,7 @@ import uuid from 'uuid';
 import arches from 'arches';
 import CardComponentViewModel from 'viewmodels/card-component';
 import AlertViewModel from 'viewmodels/alert';
+import { resolvePrefilledNodes } from 'utils/reference-values';
 import template from 'templates/views/components/workflows/default-card-util.htm';
 
 function viewModel(params) {
@@ -16,13 +17,16 @@ function viewModel(params) {
   this.title = ko.observable(params?.title || '')
 
   if (this.form.componentData.parameters.prefilledNodes) {
-    this.form.componentData.parameters.prefilledNodes?.forEach((prefill) => {
-      Object.keys(this.form.tile().data).forEach((node) => {
-        if (node == prefill[0]) {
-          this.form.tile().data[node](prefill[1]);
-        }
-      });
-    });
+    resolvePrefilledNodes(this.form.componentData.parameters.prefilledNodes).then(
+      (prefilled) => {
+        Object.entries(prefilled).forEach(([nodeId, value]) => {
+          const node = this.form.tile().data[nodeId];
+          if (node) {
+            node(value);
+          }
+        });
+      }
+    );
   }
 
   this.form

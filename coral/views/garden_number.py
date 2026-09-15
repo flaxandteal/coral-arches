@@ -3,7 +3,7 @@ import json
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from coral.utils.garden_number import GardenNumber
-from arches.app.models import models
+from coral.utils.reference_values import reference_label
 
 
 HERITAGE_ASSET_REFERENCES_NODEGROUP_ID = "ebd91984-e3fd-5dcd-b8e0-42d63cda77fc"
@@ -30,10 +30,7 @@ class GardenNumberView(View):
             ).first()
 
             if county_tile and references_tile:
-                county_name_tile = models.Value.objects.filter(
-                    valueid= county_tile.data.get(COUNTY_NODE_ID)
-                ).first()
-                county_name = county_name_tile.value
+                county_name = reference_label(county_tile.data.get(COUNTY_NODE_ID))
                 county_abbreviation = GardenNumber(county_name).abbreviate_county(county_name)
                 garden_number = references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
                 abbreviation = None
@@ -62,11 +59,7 @@ class GardenNumberView(View):
         self.county_name = ""
 
         if county_tile:
-            county_name_tile = models.Value.objects.filter(
-                valueid= county_tile.data.get(COUNTY_NODE_ID)
-            ).first()
-
-            self.county_name = county_name_tile.value
+            self.county_name = reference_label(county_tile.data.get(COUNTY_NODE_ID))
 
         else:
             raise ValueError("No county was found")

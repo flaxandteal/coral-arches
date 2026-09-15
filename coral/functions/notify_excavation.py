@@ -137,7 +137,7 @@ class NotifyExcavation(BaseFunction):
 class CurEDecisionStrategy(NotificationStrategy):
     def send_notification(self):
         decision_id = self.tile.data[GRADE_E_DECISION]
-        decision_string = self.get_domain_value_string(decision_id, GRADE_E_DECISION)
+        decision_string = self.get_reference_label(decision_id)
 
         if decision_string:
             self.notification.message = f"The Cur Grade E Decision has been set to '{decision_string}' for {self.name}. This requires further attention"
@@ -147,7 +147,7 @@ class CurEDecisionStrategy(NotificationStrategy):
 class CurDDecisionStrategy(NotificationStrategy):
     def send_notification(self):
         decision_id = self.tile.data[GRADE_D_DECISION]
-        decision_string = self.get_domain_value_string(decision_id, GRADE_D_DECISION)
+        decision_string = self.get_reference_label(decision_id)
 
         if decision_string:
             self.notification.message = f"The Cur Grade D Decision has been set to '{decision_string}' for {self.name}. This requires further attention"
@@ -173,7 +173,7 @@ class ReportStrategy(NotificationStrategy):
                 is_cur_d = any(member.id == self.user.id for member in cur_d_group.members)
 
             classification_type = self.tile.data[CLASSIFICATION_TYPE]
-            classification_string = self.get_domain_value_string(classification_type, CLASSIFICATION_TYPE)
+            classification_string = self.get_reference_label(classification_type)
 
             # checks edit log for new or changed report tiles
             report_tile = EditLog.objects.filter(
@@ -212,7 +212,7 @@ class ApplicationDetailsStrategy(NotificationStrategy):
         soa_id = self.tile.data[STAGE_OF_APPLICATION]
 
         if soa_id:
-            soa_string = self.get_domain_value_string(soa_id, STAGE_OF_APPLICATION)
+            soa_string = self.get_reference_label(soa_id)
             self.notification.message = f"The Stage of Application for {self.name} has been updated to {soa_string}"
             self.notification.save()
             super().send_notification()
@@ -227,11 +227,11 @@ class TransferOfLicenceStrategy(NotificationStrategy):
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
             self.notification.message = f"A Transfer of Licence has been created for {self.name}"
         elif grade_d_decision:
-            decision_string = self.get_domain_value_string(grade_d_decision, TRANSFER_GRADE_D_DECISION)
+            decision_string = self.get_reference_label(grade_d_decision)
             self.notification.message = f"The Cur Grade D Decision for the Transfer of Licence {self.name} has been updated to {decision_string}"
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_E_GROUP]
         elif grade_e_decision and not grade_d_decision:
-            decision_string = self.get_domain_value_string(grade_e_decision, TRANSFER_GRADE_E_DECISION)
+            decision_string = self.get_reference_label(grade_e_decision)
             self.notification.message = f"The Cur Grade E Decision for the Transfer of Licence  {self.name} has been updated to {decision_string}"
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP]
         self.notification.save()
@@ -248,11 +248,11 @@ class ExtensionOfLicenceStrategy(NotificationStrategy):
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP, CUR_E_GROUP]
             self.notification.message = f"An Extension of Licence {self.name} has been created"
         elif grade_d_decision:
-            decision_string = self.get_domain_value_string(grade_d_decision, EXTENSION_GRADE_D_DECISION)
+            decision_string = self.get_reference_label(grade_d_decision)
             self.notification.message = f"The Cur Grade D Decision for the extension of licence {self.name} has been updated to {decision_string}"
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_E_GROUP]
         elif grade_e_decision and not grade_d_decision:
-            decision_string = self.get_domain_value_string(grade_e_decision, EXTENSION_GRADE_E_DECISION)
+            decision_string = self.get_reference_label(grade_e_decision)
             self.notification.message = f"The Cur Grade E Decision for the extension of licence {self.name} has been updated to {decision_string}"
             self.config['groups_to_notify'] = [ADMIN_GROUP, CUR_D_GROUP]
         self.notification.save()
