@@ -190,10 +190,10 @@ Cypress.Commands.add("openRelationship", (ariaLabel) => {
     openOnce(0);
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
 
-    cy.get('.select2-results__option')
-        .not('.loading-results')
-        .not('.select2-results__option--load-more')
-        .should('have.length.greaterThan', 0);
+    cy.get(
+        '.select2-results__option:not(.loading-results)' +
+        ':not(.select2-results__option--load-more)'
+    ).should('have.length.greaterThan', 0);
 });
 
 // Pick the first real option from an open relationship dropdown.
@@ -208,13 +208,12 @@ Cypress.Commands.add("pickRelationshipFirst", (ariaLabel) => {
 
 Cypress.Commands.add("pickRelationshipByName", (ariaLabel, name, maxScrolls = 15) => {
     cy.openRelationship(ariaLabel);
-    const exact = new RegExp('^\\s*' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*$');
     const tryScroll = (n) => {
         cy.get('.select2-results__options').then(($ul) => {
-            const found = $ul.find('.select2-results__option').toArray()
-                .some((li) => li.textContent.trim() === name);
-            if (found) {
-                cy.get('.select2-results__option').contains(exact).first().click();
+            const match = $ul.find('.select2-results__option').toArray()
+                .find((li) => li.textContent.trim() === name);
+            if (match) {
+                cy.wrap(match).click();
                 return;
             }
             if (n <= 0) throw new Error(`relationship option not found after scrolling: ${name}`);
