@@ -24,6 +24,7 @@ from typing import (
     Iterator,
     List,
     Optional,
+    Tuple,
     Type,
 )
 
@@ -940,6 +941,21 @@ class ResourceModel:
             r.delete()
         except Resource.DoesNotExist:
             return
+
+    def keys(self) -> List[str]:
+        """Top-level node aliases.
+
+        Callers written against the pre-shim resource walked it like a mapping.
+        `__getattr__` cannot serve that: an unknown attribute resolves to None here, so
+        `resource.items()` failed as `None()` rather than saying what was missing.
+        """
+        self._hydrate()
+        sem = object.__getattribute__(self, "_sem_root")
+        return list(sem) if sem is not None else []
+
+    def items(self) -> List[Tuple[str, Any]]:
+        """Each top-level alias with its value, read through `__getattr__`."""
+        return [(alias, getattr(self, alias)) for alias in self.keys()]
 
     def __getattr__(self, name: str) -> Any:
         if name.startswith("_"):
