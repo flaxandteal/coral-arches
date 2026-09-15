@@ -166,6 +166,13 @@ class PlanningTaskStrategy(TaskStrategy):
                 def tally(qs, field):
                     rows = qs.values(field).annotate(n=Count('tileid'))
                     counts = {(r[field] or 'None'): r['n'] for r in rows}
+                    # A consultation with no tile at all has no row to group, so
+                    # it would otherwise be missing from the tally rather than
+                    # counted as unset, and the counters would not sum to the
+                    # total the dashboard reports beside them.
+                    untiled = total_resources - sum(counts.values())
+                    if untiled > 0:
+                        counts['None'] = counts.get('None', 0) + untiled
                     return dict(sorted(counts.items()))
 
                 tileids = [actions[rid].tileid for rid in ids if rid in actions]
