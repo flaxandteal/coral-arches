@@ -109,7 +109,7 @@ function viewModel(params) {
               this.viewModel.alert(
                 new AlertViewModel(
                   'ep-alert-red',
-                  arches.requestFailed.title,
+                  arches.translations.requestFailed.title,
                   response.responseText
                 )
               );

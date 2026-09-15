@@ -138,7 +138,7 @@ const viewModel = Backbone.View.extend({
                 });
             }).fail(function(response, status, error) {
                 if(response.statusText !== 'abort'){
-                    self.alert(new AlertViewModel('ep-alert-red', arches.requestFailed.title, response.responseText));
+                    self.alert(new AlertViewModel('ep-alert-red', arches.translations.requestFailed.title, response.responseText));
                 }
             });
         };

@@ -192,7 +192,7 @@ function viewModel(params) {
                     this.form.alert(
                         new AlertViewModel(
                             'ep-alert-red',
-                            arches.requestFailed.title,
+                            arches.translations.requestFailed.title,
                             response.responseText
                         )
                     );
@@ -322,7 +322,7 @@ function viewModel(params) {
                             this.form.alert(
                                 new AlertViewModel(
                                     'ep-alert-red',
-                                    arches.requestFailed.title,
+                                    arches.translations.requestFailed.title,
                                     response.responseText
                                 )
                             );
