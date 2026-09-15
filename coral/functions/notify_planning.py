@@ -71,6 +71,7 @@ class NotifyPlanning(BaseFunction):
         ).first()
 
         admin_notification = models.Notification.objects.filter(
+            context__resource_instance_id=resource_instance_id,
             context__group='admin'
         ).first()
 
