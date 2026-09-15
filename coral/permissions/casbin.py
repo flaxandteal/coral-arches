@@ -90,13 +90,30 @@ class CasbinPermissionFramework(ArchesPermissionBase):
         return Permission.objects.filter(content_type=ctype)
 
     @staticmethod
+    def _person_user(person):
+        """The User behind a Person, or None if there is none to act on.
+
+        `user_account` is a `user` datatype node, which alizarin_django leaves
+        unwrapped, so tiledata hands back the bare auth_user pk rather than a
+        User. An account pointing at a deleted row resolves to None as well, so
+        callers skip the member instead of writing `u:None` into the policy table.
+        """
+        account = person.user_account
+        if not account:
+            return None
+        if hasattr(account, "pk"):
+            return account
+        return User.objects.filter(pk=account).first()
+
+    @staticmethod
     def _subj_to_str(subj):
         if isinstance(subj, DjangoGroup):
             subj = f"dg:{subj.pk}"
         if isinstance(subj, Person):
-            if not subj.user_account:
+            user = CasbinPermissionFramework._person_user(subj)
+            if user is None:
                 raise NoSubjectError(subj)
-            subj = f"u:{subj.user_account.pk}"
+            subj = f"u:{user.pk}"
         if isinstance(subj, User):
             subj = f"u:{subj.pk}"
         elif isinstance(subj, Organization):
@@ -219,12 +236,13 @@ class CasbinPermissionFramework(ArchesPermissionBase):
                     ancestors = list(ancestors)
                     ancestors.append(group_key)
                     users += _fill_group(member, ancestors)
-                elif member.user_account:
-                    member_key = self._subj_to_str(member)
-                    self._enforcer.add_role_for_user(member_key, group_key)
-                    users.append(member.user_account)
                 else:
-                    logger.warn("A membership rule was not added as no User was attached %s", member.id)
+                    user = self._person_user(member)
+                    if user is None:
+                        logger.warn("A membership rule was not added as no User was attached %s", member.id)
+                        continue
+                    self._enforcer.add_role_for_user(self._subj_to_str(user), group_key)
+                    users.append(user)
             # This is a workaround for now, to avoid losing nodegroup restriction entirely.
             # The (RI) Group names will be matched to Django groups, and those used to build the nodegroup
             # permissions.
