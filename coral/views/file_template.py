@@ -44,7 +44,6 @@ from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
 import querysets_shim
-import querysets_shim.arches_django.datatypes.user  # referenced by name in processDatatypes
 from querysets_shim.wkrm import get_well_known_resource_model_by_graph_id
 from querysets_shim.wrapper import _SemanticNode
 from coral.utils.reference_values import reference_label
@@ -660,6 +659,8 @@ class GenericTemplateProvider:
 
             @return mapping: A processed Mapping with values stringified
         """
+        from querysets_shim.arches_django.datatypes.user import UserViewModel
+
         for item in mapping.items():
             alias, value = item
 
@@ -675,7 +676,7 @@ class GenericTemplateProvider:
                 # TODO handle node lists that are not semantic e.g bibligraphic source is a resource-instance but has children. Currently we ignore the children 
                 mapping[alias] = None
                 continue
-            if isinstance(value, (querysets_shim.view_models.concepts.EmptyConceptValueViewModel, querysets_shim.arches_django.datatypes.user.UserViewModel)):
+            if isinstance(value, (querysets_shim.view_models.concepts.EmptyConceptValueViewModel, UserViewModel)):
                 mapping[alias] = None
                 continue
             if isinstance(value, (querysets_shim.view_models.resources.RelatedResourceInstanceListViewModel)):             
