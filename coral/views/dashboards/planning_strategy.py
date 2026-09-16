@@ -343,16 +343,19 @@ class PlanningTaskStrategy(TaskStrategy):
     def build_data(self, consultation, groupId):
         utilities = Utilities()
 
-        action_status = reference_label(utilities.node_check(lambda: consultation.action[0].action_status))
-        action_type = reference_label(utilities.node_check(lambda: consultation.action[0].action_type))
-        assigned_to = utilities.node_check(lambda: consultation.action[0].assigned_to_n1)
-        deadline = utilities.node_check(lambda: consultation.action[0].action_dates.target_date_n1)
-        hierarchy_type = reference_label(utilities.node_check(lambda: consultation.hierarchy_type))
-        address = utilities.node_check(lambda: consultation.location_data.addresses)
-        council = reference_label(utilities.node_check(lambda: consultation.location_data.council))
-        # responses = utilities.node_check(lambda: consultation.response_action)
-        classification = reference_label(utilities.node_check(lambda: consultation.classification_type))
-        related_ha = utilities.node_check(lambda: consultation.related_heritage_assets)
+        action = next(iter(consultation.action or []), None)
+        dates = action.action_dates if action else None
+        location = consultation.location_data
+        address = location.addresses if location else None
+
+        action_status = reference_label(action.action_status if action else None)
+        action_type = reference_label(action.action_type if action else None)
+        assigned_to = action.assigned_to_n1 if action else None
+        deadline = dates.target_date_n1 if dates else None
+        hierarchy_type = reference_label(consultation.hierarchy_type)
+        council = reference_label(location.council if location else None)
+        classification = reference_label(consultation.classification_type)
+        related_ha = consultation.related_heritage_assets
 
         # the orm stopped returning multiple tiles for responses, this is a fall back
         responses = Tile.objects.filter(
@@ -397,9 +400,9 @@ class PlanningTaskStrategy(TaskStrategy):
         # Street, Town or City and Postcode are siblings of the address rather
         # than branches under it, so the value alias is reached directly.
         address_parts = [
-            utilities.node_check(lambda: address.street_value),
-            utilities.node_check(lambda: address.town_or_city_value),
-            utilities.node_check(lambda: address.postcode_value),
+            address.street_value if address else None,
+            address.town_or_city_value if address else None,
+            address.postcode_value if address else None,
         ]
         address = [part for part in address_parts if part is not None and part != 'None']
         
