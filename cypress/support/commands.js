@@ -271,20 +271,21 @@ Cypress.Commands.add("type_ckeditor", (element, content) => {
 });
   
 Cypress.Commands.add("typeRichText", (cardClass, content) => {
+    const readyInstance = (win) => Object.keys(win.CKEDITOR?.instances ?? {}).find((n) => {
+        const inst = win.CKEDITOR.instances[n];
+        const el = inst?.container?.$;
+        return inst.status === 'ready' && el && el.closest(`.widget-wrapper.${cardClass}`);
+    });
+
     cy.get(`.widget-wrapper.${cardClass}`).should('exist');
     cy.window().should((win) => {
         expect(win.CKEDITOR, 'CKEDITOR global to exist').to.exist;
         expect(
-            Object.keys(win.CKEDITOR.instances).length,
-            'at least one CKEDITOR instance'
-        ).to.be.greaterThan(0);
+            readyInstance(win),
+            `a ready CKEDITOR instance inside .widget-wrapper.${cardClass}`
+        ).to.exist;
     }).then((win) => {
-        const name = Object.keys(win.CKEDITOR.instances).find((n) => {
-            const el = win.CKEDITOR.instances[n]?.container?.$;
-            return el && el.closest(`.widget-wrapper.${cardClass}`);
-        });
-        expect(name, `CKEDITOR instance inside .widget-wrapper.${cardClass}`).to.exist;
-        const inst = win.CKEDITOR.instances[name];
+        const inst = win.CKEDITOR.instances[readyInstance(win)];
         inst.setData(content);
         inst.updateElement();
         inst.fire('change');
