@@ -37,6 +37,9 @@ ASSIGN_BOTH = 'Assign To Both HM & HB'
 
 # Council and Hierarchy Type are single-value nodes whose node id and nodegroup
 # id coincide.
+RESPONSE_ACTION_NODEGROUP = 'd6d47325-6fe7-5850-a3e3-389b11b00ea8'
+RESPONSE_TEAM_NODE = 'cf6c76ac-3f89-5d22-a74b-2cdf80608b6e'
+
 COUNCIL_NODE = '4ddb3a60-3d1c-5873-8168-ed0ba1c92644'
 HIERARCHY_NODEGROUP = '3e16208d-9560-5998-8ba1-203cd599a5d8'
 HIERARCHY_TYPE = HIERARCHY_NODEGROUP
@@ -343,8 +346,8 @@ class PlanningTaskStrategy(TaskStrategy):
         # the orm stopped returning multiple tiles for responses, this is a fall back
         responses = Tile.objects.filter(
             resourceinstance_id=consultation.id,
-            nodegroup_id='af7677ba-cfe2-11ee-8a4e-0242ac180006'
-        ).values_list('data__cd77b29c-2ef6-11ef-b1c4-0242ac140006', flat=True)
+            nodegroup_id=RESPONSE_ACTION_NODEGROUP,
+        ).values_list(f'data__{RESPONSE_TEAM_NODE}', flat=True)
         
         # A Heritage Asset with no reference numbers has no tile for the
         # nodegroup at all, so this reads None rather than an empty branch.
@@ -370,15 +373,13 @@ class PlanningTaskStrategy(TaskStrategy):
         }
 
         # Look up for either team
-        teams = {
-            '2628d62f-c206-4c06-b26a-3511e38ea243': 'HM',
-            '70fddadb-8172-4029-b8fd-87f9101a3a2d': 'HB'
-        }
-        if responses:
-            for response in responses:
-                team = teams.get(response, None)
-                if team in responded:
-                    responded[team] = True
+        # Response Team is a controlled list whose labels are "HM" and "HB", so
+        # the label is the key — no id map to fall out of date the way the
+        # domain-value option ids this replaces did.
+        for response in responses:
+            team = reference_label(response)
+            if team in responded:
+                responded[team] = True
 
         # Street, Town or City and Postcode are siblings of the address rather
         # than branches under it, so the value alias is reached directly.
