@@ -67,10 +67,10 @@ function viewModel(params) {
         error: (response, status, error) => {
           console.log(response);
           if (response.statusText !== 'abort') {
-            this.viewModel.alert(
+            this.form.alert(
               new AlertViewModel(
                 'ep-alert-red',
-                arches.requestFailed.title,
+                arches.translations.requestFailed.title,
                 response.responseText
               )
             );
@@ -87,10 +87,8 @@ function viewModel(params) {
       data: {
         'c61ab166-9513-11ea-a44c-f875a44e0e11': null,
         'c61ab167-9513-11ea-9d50-f875a44e0e11': null,
-        'c61ab168-9513-11ea-9980-f875a44e0e11': '04a4c4d5-5a5e-4018-93aa-65abaa53fb53',
-        'c61ab169-9513-11ea-b7c1-f875a44e0e11': '8a96a261-cd79-48e2-9f12-74924c152b00',
-        'c61ab16a-9513-11ea-9afb-f875a44e0e11': 'a0e096e2-f5ae-4579-950d-3040714713b4',
-        'c61ab16b-9513-11ea-ab9d-f875a44e0e11': '5a88136a-bf3a-4b48-a830-a7f42000dd24',
+        // The four typed-name nodes are `reference` now and their pre-v8 defaults are not
+        // list items, so writing them fails the whole tile. Only the name is read back.
         [this.DIGITAL_OBJECT_NAME_NODE]: {
           en: {
             direction: 'ltr',
@@ -202,10 +200,10 @@ function viewModel(params) {
           error: (response, status, error) => {
             console.log(response);
             if (response.statusText !== 'abort') {
-              this.viewModel.alert(
+              this.form.alert(
                 new AlertViewModel(
                   'ep-alert-red',
-                  arches.requestFailed.title,
+                  arches.translations.requestFailed.title,
                   response.responseText
                 )
               );

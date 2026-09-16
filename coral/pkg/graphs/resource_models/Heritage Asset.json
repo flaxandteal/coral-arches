@@ -20905,7 +20905,7 @@
                     "config": {
                         "geojson_node": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba",
                         "geojson_nodegroup": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
-                        "tm65_node": "2fdedbd0-1459-11ef-8cdd-0242ac120006",
+                        "tm65_node": "1dd58086-a4ef-5ffa-8b05-a54a0be14f21",
                         "tm65_nodegroup": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
                         "triggering_nodegroups": [
                             "87d39b2b-f44f-11eb-af5e-a87eeabdefba"
@@ -20919,7 +20919,7 @@
                     "config": {
                         "geojson_input_node": "87d3d7dc-f44f-11eb-bee9-a87eeabdefba",
                         "geojson_input_nodegroup": "87d3872b-f44f-11eb-bd0c-a87eeabdefba",
-                        "tm65_output_node": "2fdedbd0-1459-11ef-8cdd-0242ac120006",
+                        "tm65_output_node": "1dd58086-a4ef-5ffa-8b05-a54a0be14f21",
                         "tm65_output_nodegroup": "87d39b2b-f44f-11eb-af5e-a87eeabdefba",
                         "triggering_nodegroups": [
                             "87d3872b-f44f-11eb-bd0c-a87eeabdefba"
@@ -36763,7 +36763,38 @@
                 },
                 {
                     "alias": "action_type",
-                    "config": {},
+                    "config": {
+                        "options": [
+                            {
+                                "id": "9e918cec-c0e9-5006-89f3-1932c8d03425",
+                                "selected": false,
+                                "text": {
+                                    "en": "Resolve with Owner"
+                                }
+                            },
+                            {
+                                "id": "6c9cee5a-6bdb-5f3f-b056-ebfc036ab8e7",
+                                "selected": false,
+                                "text": {
+                                    "en": "Resolve with Occupier"
+                                }
+                            },
+                            {
+                                "id": "19e2d5d0-c2bb-50cb-9f90-2cf0a304ae51",
+                                "selected": false,
+                                "text": {
+                                    "en": "Refer to Enforcement"
+                                }
+                            },
+                            {
+                                "id": "dbd69f0e-f101-5bf7-917a-0a31b0b25ae9",
+                                "selected": false,
+                                "text": {
+                                    "en": "Contact PSNI"
+                                }
+                            }
+                        ]
+                    },
                     "datatype": "domain-value-list",
                     "description": null,
                     "exportable": false,

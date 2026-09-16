@@ -76,11 +76,14 @@ function viewModel(params) {
       } else {
         const failed = responses.find((response) => !response.ok);
         if (failed) {
+          // failed is a fetch Response, not a jQuery xhr - it has no
+          // responseJSON, the body has to be read (and parsed) explicitly.
+          const failedBody = await failed.json().catch(() => ({}));
           params.pageVm.alert(
             new AlertViewModel(
               'ep-alert-red',
-              failed.responseJSON.title,
-              failed.responseJSON.message,
+              failedBody.title || 'Error',
+              failedBody.message || 'Something went wrong saving this step.',
               null,
               function () {}
             )
@@ -94,8 +97,8 @@ function viewModel(params) {
       });
       params.pageVm.alert(new AlertViewModel(
         'ep-alert-red',
-        err.responseJSON.title,
-        err.responseJSON.message,
+        err.responseJSON?.title || 'Error',
+        err.responseJSON?.message || 'Something went wrong saving this step.',
         null,
         function () {
           return;
@@ -105,20 +108,39 @@ function viewModel(params) {
   };
 
   self.saveParentTile = async ({ parentNodegroupId, lookupName }) => {
+    let tileAlreadyExists = Boolean(self.parentTiles()[lookupName]);
+
+    if (!tileAlreadyExists) {
+      // The client only knows about parent tiles created earlier in this
+      // same workflow session. If this resource already has a tile for
+      // this nodegroup from a previous session, reuse it instead of
+      // blindly creating a second one and tripping the cardinality-1
+      // nodegroup trigger.
+      const cardData = await $.getJSON(arches.urls.api_card + self.resourceId());
+      const existingTile = (cardData.tiles || []).find(
+        (tile) => tile.nodegroup_id === parentNodegroupId
+      );
+      if (existingTile) {
+        self.parentTiles()[lookupName] = existingTile.tileid;
+        tileAlreadyExists = true;
+      } else {
+        self.parentTiles()[lookupName] = uuid.generate();
+      }
+    }
+
     const parentTileTemplate = {
       data: {},
       nodegroup_id: parentNodegroupId,
       parenttile_id: null,
       resourceinstance_id: self.resourceId(),
-      tileid: null,
+      // A non-null tileid tells the server this is an update to an
+      // existing tile; sending one for a tile that has never been created
+      // fails server-side (DoesNotExist), so it must stay null on genuine
+      // first creation and let the server mint the id.
+      tileid: tileAlreadyExists ? self.parentTiles()[lookupName] : null,
       sortorder: 0
     };
 
-    if (!self.parentTiles()[lookupName]) {
-      self.parentTiles()[lookupName] = uuid.generate();
-    } else {
-      parentTileTemplate.tileid = self.parentTiles()[lookupName];
-    }
     const parentTile = await window.fetch(arches.urls.api_tiles(self.parentTiles()[lookupName]), {
       method: 'POST',
       credentials: 'include',
