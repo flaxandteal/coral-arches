@@ -408,7 +408,7 @@ CONTENT_SECURITY_POLICY = {
         "img-src": [SELF, "blob:", "data:", "mo.ev.openindustry.in"],
         "font-src": [SELF, "blob:", "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
         "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
-        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
+        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com", "tiles.openfreemap.org"],
         "worker-src": [SELF, "blob:"],
     },
 }
@@ -416,6 +416,18 @@ CONTENT_SECURITY_POLICY = {
 X_FRAME_OPTIONS = 'DENY'
 
 MAPBOX_API_KEY = os.environ.get("MAPBOX_API_KEY", MAPBOX_API_KEY)
+
+BASEMAPS = [
+    {
+        "name": "bright",
+        "title": "Light",
+        "url": os.environ.get(
+            "BASEMAP_STYLE_URL",
+            "https://tiles.openfreemap.org/styles/bright",
+        ),
+        "addtomap": True,
+    }
+]
 
 USE_LOCAL_STORAGE = os.environ.get("USE_LOCAL_STORAGE", "False").lower() == "true"
 
@@ -606,6 +618,18 @@ CACHES = {
         'LOCATION': 'dashboard_version_cache',
     }
 }
+
+# -- arches_search patches ----------------------------
+
+CORAL_PRUNE_EMPTY_REPORT_SECTIONS = True
+
+CORAL_INDEX_DESCRIPTORS = True
+
+CORAL_DESCRIPTOR_RELEVANCE_SORT = os.environ.get("CORAL_DESCRIPTOR_RELEVANCE_SORT", "True").lower() != "false"
+
+CORAL_FAST_RESOURCE_TYPE_COUNTS = os.environ.get("CORAL_FAST_RESOURCE_TYPE_COUNTS", "True").lower() != "false"
+
+# -- arches_search patches end -------------------------
 
 # Hide nodes and cards in a report that have no data
 HIDE_EMPTY_NODES_IN_REPORT = True

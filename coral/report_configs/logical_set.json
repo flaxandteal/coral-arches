@@ -1,0 +1,42 @@
+{
+  "graph_slug": "logical_set",
+  "graph_name": "Logical Set",
+  "configs": {
+    "search": {
+      "name": "Logical Set",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Logical Set",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Member Definition",
+            "nodegroup_alias": "member_definition",
+            "node_aliases": [
+              "member_definition"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Title",
+            "nodegroup_alias": "title",
+            "node_aliases": [
+              "title_text"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

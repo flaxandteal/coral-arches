@@ -1,0 +1,220 @@
+{
+  "graph_slug": "application_area",
+  "graph_name": "Application Area",
+  "configs": {
+    "search": {
+      "name": "Application Area",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Application Area",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Application Area Names",
+            "nodegroup_alias": "application_area_names",
+            "node_aliases": [
+              "application_area_name"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Heritage Assets, Areas and Artefacts",
+            "nodegroup_alias": "associated_monuments_and_areas",
+            "node_aliases": [
+              "associated_monuments_and_areas"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Descriptions",
+            "nodegroup_alias": "descriptions",
+            "node_aliases": [
+              "description",
+              "description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "References",
+            "nodegroup_alias": "references",
+            "node_aliases": [
+              "reference_number",
+              "reference_number_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Mapped Location",
+            "nodegroup_alias": "geometry",
+            "node_aliases": [
+              "feature_shape",
+              "geospatial_coordinates"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Location Descriptions",
+            "nodegroup_alias": "location_descriptions",
+            "node_aliases": [
+              "location_description",
+              "location_description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Localities/Administrative Areas",
+            "nodegroup_alias": "localities_administrative_areas",
+            "node_aliases": [
+              "area_currency_type",
+              "area_name",
+              "area_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Addresses",
+            "nodegroup_alias": "addresses",
+            "node_aliases": [
+              "address_currency",
+              "address_status",
+              "building_name_value",
+              "building_number_sub_street_value",
+              "building_number_value",
+              "county_value",
+              "full_address",
+              "locality_value",
+              "postcode_value",
+              "street_value",
+              "sub_street_value",
+              "town_or_city_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Activities",
+            "nodegroup_alias": "associated_activities",
+            "node_aliases": [
+              "associated_activities"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Designation and Protection Assignment",
+            "nodegroup_alias": "designation_and_protection_assignment",
+            "node_aliases": [
+              "designation_name",
+              "designation_name_use_type",
+              "designation_or_protection_type",
+              "digital_file_s__n1",
+              "grade",
+              "reference_url",
+              "risk_status"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Application Areas",
+            "nodegroup_alias": "associated_application_area",
+            "node_aliases": [
+              "associated_application_area"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Consultations",
+            "nodegroup_alias": "associated_consultations",
+            "node_aliases": [
+              "associated_consultations"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Digital Files",
+            "nodegroup_alias": "digital_file_s_",
+            "node_aliases": [
+              "digital_file_s_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Monuments and Areas",
+            "nodegroup_alias": "associated_monuments_areas_and_artefacts",
+            "node_aliases": [
+              "associated_monuments_areas_and_artefacts"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

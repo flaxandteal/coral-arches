@@ -1,0 +1,258 @@
+{
+  "graph_slug": "artefact",
+  "graph_name": "Artefact",
+  "configs": {
+    "search": {
+      "name": "Artefact",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Artefact",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Artefact Names",
+            "nodegroup_alias": "artefact_names",
+            "node_aliases": [
+              "artefact_name",
+              "artefact_name_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Descriptions",
+            "nodegroup_alias": "descriptions",
+            "node_aliases": [
+              "description",
+              "description_language",
+              "description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Artefact Production",
+            "nodegroup_alias": "production",
+            "node_aliases": [
+              "artefact_type",
+              "cultural_period",
+              "from_date",
+              "material",
+              "phase_certainty",
+              "phase_description",
+              "phase_description_type",
+              "phase_evidence_type",
+              "producer",
+              "production_method",
+              "production_technique",
+              "production_time_span_date_qualifier",
+              "to_date"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Artefact Dimensions",
+            "nodegroup_alias": "measurement_event",
+            "node_aliases": [
+              "dimension_measurement_unit",
+              "dimension_type",
+              "dimension_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Inscriptions",
+            "nodegroup_alias": "inscription",
+            "node_aliases": [
+              "inscription_content",
+              "inscription_language",
+              "inscription_note_text",
+              "translation_language",
+              "translation_text"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Discovery",
+            "nodegroup_alias": "discovery",
+            "node_aliases": [
+              "discovery_method",
+              "discovery_note",
+              "recovery_technique"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Bibliographic Source Citation",
+            "nodegroup_alias": "bibliographic_source_citation",
+            "node_aliases": [
+              "bibliographic_source_citation",
+              "comment",
+              "figs_",
+              "page_s_",
+              "plate_s_",
+              "source_number_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Artefact Condition Assessment ",
+            "nodegroup_alias": "condition_assessment",
+            "node_aliases": [
+              "condition_type",
+              "date_of_assessment_end",
+              "date_of_assessment_start",
+              "digital_file_s__n1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Repository Storage Location",
+            "nodegroup_alias": "repository_storage_location",
+            "node_aliases": [
+              "repository_owner",
+              "storage_area_name",
+              "storage_building_name"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Scientific Date Assignment",
+            "nodegroup_alias": "scientific_date_assignment",
+            "node_aliases": [
+              "associated_construction_phase",
+              "dating_method",
+              "laboratory_reference",
+              "note",
+              "scientific_date_end_date",
+              "scientific_date_qualifier",
+              "scientific_date_start_date",
+              "standard_deviation_note",
+              "standard_deviation_value",
+              "when_determined_date_qualifier",
+              "when_determined_end_date",
+              "when_determined_start_date"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Copyright",
+            "nodegroup_alias": "copyright",
+            "node_aliases": [
+              "copyright_holder",
+              "copyright_note_text",
+              "copyright_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Images",
+            "nodegroup_alias": "images",
+            "node_aliases": [
+              "caption_note",
+              "copyright_holder_n1",
+              "copyright_note_text_n1",
+              "copyright_type_n1",
+              "images"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Activities",
+            "nodegroup_alias": "associated_activities",
+            "node_aliases": [
+              "associated_activities"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Digital Files",
+            "nodegroup_alias": "digital_file_s_",
+            "node_aliases": [
+              "digital_file_s_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Monuments, Areas and Artefacts",
+            "nodegroup_alias": "associated_monuments_areas_and_artefacts",
+            "node_aliases": [
+              "association_type",
+              "monument_area_or_artefact"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

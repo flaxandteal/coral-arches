@@ -1,0 +1,62 @@
+{
+  "graph_slug": "registry",
+  "graph_name": "Registry",
+  "configs": {
+    "search": {
+      "name": "Registry",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Registry",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Names",
+            "nodegroup_alias": "names",
+            "node_aliases": [
+              "name",
+              "name_currency",
+              "name_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Descriptions",
+            "nodegroup_alias": "descriptions",
+            "node_aliases": [
+              "description",
+              "description_language",
+              "description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Actors",
+            "nodegroup_alias": "associated_actors",
+            "node_aliases": [
+              "actor",
+              "associated_actor_date_qualifier",
+              "associated_actor_display_date",
+              "associated_actor_end_date",
+              "associated_actor_start_date",
+              "association_type",
+              "role_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
