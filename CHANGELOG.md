@@ -80,12 +80,23 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   (#864)
 - test: the HB and HM response workflow specs open a consultation instead of clicking a "Start
   New" button those workflows have never had (#864)
+- fix(functions): a generated SMR, HB or Historic Parks and Gardens number is copied onto the
+  Heritage Asset References tile again. All three functions held retired ids for the nodegroup
+  they trigger on and the node they read the generated number from, so the number was written
+  but never carried across, and anything reading the reference numbers — the planning dashboard
+  included — saw nothing (#870)
 
 ### Notes
 
 - The planning response letter template asks for `<proposal_description_type>`, a classifier
   that is always empty, where it wants `<proposal_text>`. `coral/docx` is gitignored, so the
   corrected template has to be applied wherever the letter templates are mastered (#864)
+
+- The SMR, HB and Historic Parks and Gardens number functions need the same package
+  reload as the TM65 fix below: their `triggering_nodegroups` live in `functions_x_graphs`,
+  not in code, and a running database still points all three at retired nodegroups, so none
+  of them fires until the graphs are reloaded. coral-graphs `functions.json` already carries
+  the corrected triggers — `a7742f3d-…` (SMR), `dc49f08f-…` (HB) and `5937558a-…` (gardens).
 
 - The TM65 function fix only reaches a running instance through the graph package:
   the configs live in `functions_x_graphs`, not in code. coral-graphs `functions.json`
