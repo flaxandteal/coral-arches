@@ -23,6 +23,13 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- perf(workflows): share one in-flight request across a step's components for `/cards`, `/graphs` and `get_user_names` (#866)
+- perf(workflows): batch a step's `workflow_history` patches into one post per tick (#866)
+- perf(workflows): build one `GraphModel` per resource rather than one per component (#866)
+- perf(workflows): build only the card branch a component displays, not every top card on the resource (#866)
+- perf(tiles): defer tile-save re-indexing to a celery task, collapsing a step's saves into one re-index (#866)
+- fix(workflows): refetch a component's card data after it saves, so values written by functions are displayed (#866)
+
 - fix(functions): update retired v8 node ids in functions (#854)
 - fix(views): update retired v8 node ids in views (#855)
 - fix(functions): the TM65 point functions on Heritage Asset write to the live Irish
@@ -103,6 +110,12 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Notes
 
+- Tile saves no longer re-index to Elasticsearch inline; a celery task does it
+  after the transaction commits, and waits `INDEX_DEBOUNCE_SECONDS` (5) so that a
+  step's parallel tile saves collapse into a single re-index. Search is therefore
+  eventually consistent after a save rather than immediate, by roughly that long.
+  Because this adds a task, web and worker must be restarted together on deploy —
+  a running worker cannot resolve a task it did not import at startup. (#866)
 - The planning response letter template asks for `<proposal_description_type>`, a classifier
   that is always empty, where it wants `<proposal_text>`. `coral/docx` is gitignored, so the
   corrected template has to be applied wherever the letter templates are mastered (#864)
