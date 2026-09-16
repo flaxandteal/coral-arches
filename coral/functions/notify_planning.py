@@ -4,29 +4,31 @@ from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from querysets_shim.adapter import admin
 from django.utils import timezone
+from coral.utils.reference_values import selected_list_item_ids
+from coral.utils.person_user import person_user
 
 ACTION_NODEGROUP = "a5e15f5c-51a3-11eb-b240-f875a44e0e11"
-ACTION_STATUS = "19eef70c-69b8-11ee-8431-0242ac120002"
+ACTION_STATUS = "b07b2cf2-bccf-5823-a93a-dab9e132c9b6"
 ACTION_TYPE = "e2585f8a-51a3-11eb-a7be-f875a44e0e11"
 ASSIGNED_TO = "528bd120-1525-543b-b046-06fd4e00b432"
 
-EXTENSION_REQUESTED = '28112b3f-ef44-40b4-a215-931c0c88bc5e'
+EXTENSION_REQUESTED = '79c76cce-8753-53bb-a932-9dfc08452350'
 
 ASSIGNMENT_NODEGROUP = "9898db6b-1a2f-5163-9df6-bf9cb92bf559"
 REASSIGNED_TO = "7b4b1596-5592-544b-9651-ecf800202f98"
 
 RESPONSE_NODEGROUP = "d6d47325-6fe7-5850-a3e3-389b11b00ea8"
-RESPONSE_TEAM = "cd77b29c-2ef6-11ef-b1c4-0242ac140006"
-RESPONSE_HM = "2628d62f-c206-4c06-b26a-3511e38ea243"
-RESPONSE_HB = "70fddadb-8172-4029-b8fd-87f9101a3a2d"
+RESPONSE_TEAM = "cf6c76ac-3f89-5d22-a74b-2cdf80608b6e"
+RESPONSE_HM = "03ea2b65-1def-5fc4-ae4e-70b5869d9696"
+RESPONSE_HB = "8b7091c9-dcd2-578c-9775-814240a4ea01"
 
-ASSIGN_HM = "94817212-3888-4b5c-90ad-a35ebd2445d5"
-ASSIGN_HB = "12041c21-6f30-4772-b3dc-9a9a745a7a3f"
-ASSIGN_BOTH = "7d2b266f-f76d-4d25-87f5-b67ff1e1350f"
+ASSIGN_HM = "72ce5d6a-f938-5eae-b650-608ca8b3b934"
+ASSIGN_HB = "8ddddee6-a5d6-5532-9896-3696d0b45754"
+ASSIGN_BOTH = "979eab2e-f1c8-532a-9de8-56604acbff2c"
 
-STATUS_OPEN = "a81eb2e8-81aa-4588-b5ca-cab2118ca8bf"
-HB_DONE = "71765587-0286-47de-96b4-4391aa6b99ef"
-HM_DONE = "4608b315-0135-49a0-9686-9bc3c36990d8"
+STATUS_OPEN = "d28ce1a4-6a46-54ac-a03c-1e528c1bdd76"
+HB_DONE = "8d4677a2-dc59-58ea-b969-bad7b55673c7"
+HM_DONE = "0ccb1234-0b83-5ce4-9d59-ff8cd08b2a7d"
 
 DESC_NODEGROUP = "82f8a163-951a-11ea-b58e-f875a44e0e11"
 DESC_NODE = "82f8a166-951a-11ea-bdad-f875a44e0e11"
@@ -69,6 +71,7 @@ class NotifyPlanning(BaseFunction):
         ).first()
 
         admin_notification = models.Notification.objects.filter(
+            context__resource_instance_id=resource_instance_id,
             context__group='admin'
         ).first()
 
@@ -130,11 +133,11 @@ class NotifyPlanning(BaseFunction):
         data = tile.data
 
         if nodegroup_id == RESPONSE_NODEGROUP:
-            response_group_uuid = tile.data[RESPONSE_TEAM]
+            response_team = selected_list_item_ids(tile.data.get(RESPONSE_TEAM))
             response_group = ""
-            if response_group_uuid == RESPONSE_HM:
+            if RESPONSE_HM in response_team:
                 response_group = "HM"
-            elif response_group_uuid == RESPONSE_HB:
+            elif RESPONSE_HB in response_team:
                 response_group = "HB"
             notification.message = f"{name} response has been completed by {response_group}"
             response_slug = 'assign-consultation-workflow'
@@ -143,27 +146,33 @@ class NotifyPlanning(BaseFunction):
         
         is_assigned_to_a_user = data.get(ASSIGNED_TO, None) != None
 
-        action_type_conditions = [STATUS_OPEN, EXTENSION_REQUESTED]
+        action_type_conditions = {STATUS_OPEN, EXTENSION_REQUESTED}
+
+        # Action Status and Action Type are controlled-list references, so each holds a
+        # list of entries: test the selected list item ids rather than comparing scalars.
+        action_status = selected_list_item_ids(data.get(ACTION_STATUS))
+        action_type = selected_list_item_ids(data.get(ACTION_TYPE))
+        status_qualifies = bool(action_status & action_type_conditions)
 
         # Need to create a new notification per group to keep the slugs unique for each user
         if ACTION_STATUS in data and ACTION_TYPE in data:
-            if data[ACTION_TYPE] is None and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+            if not action_type and status_qualifies and not is_assigned_to_a_user:
                 if existing_notification and PLANNING_ADMIN == existing_notification.context["last_notified"]:
                     return
                 self.notify_group(PLANNING_ADMIN, PLANNING_ADMIN, notification, 'assign-consultation-workflow')
 
-            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_HM and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+            if ASSIGN_HM in action_type and status_qualifies and not is_assigned_to_a_user:
                 if existing_notification and HM_MANAGERS == existing_notification.context["last_notified"]:
                     return
                 self.notify_group(HM_MANAGERS, HM_MANAGERS, notification, 'hm-planning-consultation-response-workflow')              
 
-            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_HB and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+            if ASSIGN_HB in action_type and status_qualifies and not is_assigned_to_a_user:
                 if existing_notification and HB_MANAGERS == existing_notification.context["last_notified"]:
                     return
                 
                 self.notify_group(HB_MANAGERS, HB_MANAGERS, notification, 'hb-planning-consultation-response-workflow')
            
-            if data[ACTION_TYPE] and data[ACTION_TYPE] == ASSIGN_BOTH and data[ACTION_STATUS] in action_type_conditions and not is_assigned_to_a_user:
+            if ASSIGN_BOTH in action_type and status_qualifies and not is_assigned_to_a_user:
                 if existing_notification and 'all' == existing_notification.context["last_notified"]:
                     return
                 
@@ -171,7 +180,7 @@ class NotifyPlanning(BaseFunction):
                 self.notify_group(HM_MANAGERS, 'all', both_notification, 'hm-planning-consultation-response-workflow')
                 self.notify_group(PLANNING_ADMIN, 'all', admin_notification, 'assign-consultation-workflow')
 
-            if data[ACTION_STATUS] in action_type_conditions and is_assigned_to_a_user:
+            if status_qualifies and is_assigned_to_a_user:
                 with admin():
                     assigned_users_list = []
                     
@@ -195,7 +204,9 @@ class NotifyPlanning(BaseFunction):
             notification.save()
 
             for person in persons:
-                user = person.user_account
+                user = person_user(person)
+                if user is None:
+                    continue
 
                 user_x_notification = models.UserXNotification(
                     notif=notification, recipient=user
@@ -210,8 +221,9 @@ class NotifyPlanning(BaseFunction):
         for user in assigned_users_list:
             selected_user = Person.find(user['user']['resourceId'])
 
-            if not selected_user.user_account:
-                return
+            recipient = person_user(selected_user)
+            if recipient is None:
+                continue
             
             if str(selected_user.id) in notified_users_list:
                 continue  # Skip already notified users
@@ -222,7 +234,7 @@ class NotifyPlanning(BaseFunction):
             notification.save()
             
             user_x_notification = models.UserXNotification(
-                notif=notification, recipient=selected_user.user_account
+                notif=notification, recipient=recipient
             )
             user_x_notification.save()
 

@@ -32,7 +32,12 @@ class UpdateArchiveDisplayName(BaseFunction):
 
         name_data = source_name if source_name else resource_id_name
 
-        if resource_id_name['en']['value'].startswith('extrados'):
+        # This function triggers on both SYSTEM_REF_NODEGROUP and
+        # ARCHIVE_SOURCE_NAME_NODEGROUP, so RESOURCE_ID_NODE is absent (None)
+        # whenever the source-name tile is the one being saved.
+        resource_id_value = (resource_id_name or {}).get('en', {}).get('value') or ''
+
+        if resource_id_value.startswith('extrados'):
             def generateID (prefix="ARC", length=6):
                 base62chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
                 current_date = date.today()

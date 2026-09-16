@@ -246,7 +246,7 @@ export default ko.components.register('licensing-workflow', {
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    nodegroupid: '5f81a8d4-d7de-11ee-b2c1-0242ac120006',
+                    nodegroupid: '86752f29-d77d-53a3-94aa-c19c13711376',
                     parenttileid:
                       "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     semanticName: 'Council'
@@ -287,7 +287,7 @@ export default ko.components.register('licensing-workflow', {
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    nodegroupid: '33b4430a-16be-11ef-8633-0242ac180006',
+                    nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
                     parenttileid:
                       "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     semanticName: 'Irish Grid Reference'
