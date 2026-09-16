@@ -9,6 +9,8 @@ from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from arches_controlled_lists.models import ListItem
 
+from coral.utils.test_seed_guard import require_test_environment
+
 HERITAGE_ASSET_GRAPH = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
 
 # "Designation and Protection Assignment" nodegroup and the "Recommended
@@ -36,6 +38,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        require_test_environment("seed_test_scheduled_monument")
         resource_id = options["resource_id"]
 
         if resource_id:

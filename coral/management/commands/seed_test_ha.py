@@ -8,6 +8,8 @@ from arches.app.models.models import ResourceInstance
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 
+from coral.utils.test_seed_guard import require_test_environment
+
 HERITAGE_ASSET_GRAPH = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
 
 # "Heritage Asset References" nodegroup and the reference nodes it holds.
@@ -44,6 +46,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        require_test_environment("seed_test_ha")
         smr_number = options["smr_number"]
         resource_id = options["resource_id"]
 

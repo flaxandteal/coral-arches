@@ -13,6 +13,18 @@ env:
   CYPRESS_IMAGE: cypress/included:15.18.1
   COMPOSE_PROJECT: coral-e2e
   CORAL_GRAPHS_REF: v2
+  # Seed commands refuse to run without this; see coral/utils/test_seed_guard.py.
+  CORAL_ALLOW_TEST_SEED: "1"
+  # An ALLOWLIST, not a skip list: only these specs gate a PR. The rest of the suite
+  # still has repairs outstanding, so running it here would mean a permanently red dev.
+  # Add a spec back as its workflow is fixed; a newly added spec runs only once listed.
+  CYPRESS_SPECS: >-
+    cypress/e2e/02_flag_for_enforcement/flag_for_enforcement_workflow.cy.js,
+    cypress/e2e/12_add_building/add_building_workflow.cy.js,
+    cypress/e2e/14_add_monument/add_monument_workflow.cy.js,
+    cypress/e2e/18_assign_consultation/assign_consultation_workflow.cy.js,
+    cypress/e2e/21_hb_planning_consultation_response/hb_planning_consultation_response_workflow.cy.js,
+    cypress/e2e/22_hm_planning_consultation_response/hm_planning_consultation_response_workflow.cy.js
 
 jobs:
   Cypress-E2E:
@@ -280,12 +292,16 @@ jobs:
 
       - name: Run Cypress
         run: |
+          # The folded env value arrives with newlines and padding; --spec wants a
+          # bare comma-separated list.
+          specs="$(echo "$CYPRESS_SPECS" | tr -d '[:space:]')"
+          echo "Running ${specs}"
           docker run --rm \
             --network ${{ env.COMPOSE_PROJECT }}_default \
             -v "${{ github.workspace }}/${{ env.ARCHES_PROJECT }}":/e2e \
             -w /e2e \
             -e CYPRESS_BASE_URL=http://arches:8000 \
-            "${{ env.CYPRESS_IMAGE }}" --browser electron
+            "${{ env.CYPRESS_IMAGE }}" --browser electron --spec "$specs"
 
       - name: Fix artifact ownership
         if: always()

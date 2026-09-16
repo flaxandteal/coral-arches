@@ -40,6 +40,8 @@ from arches.app.models.models import Node, ResourceInstance
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 
+from coral.utils.test_seed_guard import require_test_environment
+
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_SOURCE = (
     PROJECT_ROOT / "coral" / "pkg" / "business_data" / "Group_Permission_v8_2026-08-05.json"
@@ -124,6 +126,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        require_test_environment("seed_test_permissions")
         source = Path(options["source"])
         if not source.is_file():
             raise CommandError(f"No such business-data export: {source}")

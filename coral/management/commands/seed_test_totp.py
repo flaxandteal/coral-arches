@@ -2,6 +2,8 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 from django_otp.plugins.otp_totp.models import TOTPDevice
 
+from coral.utils.test_seed_guard import require_test_environment
+
 TEST_KEY = "3132333435363738393031323334353637383930"
 
 
@@ -20,6 +22,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        require_test_environment("seed_test_totp")
         username = options["username"]
         try:
             user = User.objects.get(username=username)
