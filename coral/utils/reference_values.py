@@ -13,13 +13,8 @@ def selected_list_item_ids(value):
     ReferenceDataType.validate_list_item_consistency guarantees every label within one
     entry carries the same list_item_id, so the first label is enough.
     """
-    # A tile written before the datatype migration still holds the bare option id, and
-    # iterating that string would yield characters rather than entries.
-    if not value or not isinstance(value, list):
-        return set()
-
     item_ids = set()
-    for entry in value:
+    for entry in _entries(value):
         # Read straight off a tile the entries are dicts, but through the querysets
         # shim the datatype hands back arches_controlled_lists Reference objects.
         labels = _labels(entry)
@@ -29,6 +24,23 @@ def selected_list_item_ids(value):
         if item_id:
             item_ids.add(str(item_id))
     return item_ids
+
+
+def _entries(value):
+    """The reference entries in a tile value, whichever container they arrive in.
+
+    Read straight off a tile this is a list; through the querysets shim it is a
+    node wrapping one. A tile written before the datatype migration still holds
+    the bare option id, and iterating that string would yield characters rather
+    than entries — so reject what must not be iterated rather than insisting on
+    a list.
+    """
+    if not value or isinstance(value, (str, bytes, dict)):
+        return []
+    try:
+        return list(value)
+    except TypeError:
+        return []
 
 
 def _labels(entry):
@@ -68,11 +80,8 @@ def reference_label(value, language='en'):
 
     The labels travel inside the tile, so this needs no node lookup or database query.
     """
-    if not value or not isinstance(value, list):
-        return None
-
     labels = []
-    for entry in value:
+    for entry in _entries(value):
         entry_labels = _labels(entry)
         if not entry_labels:
             continue

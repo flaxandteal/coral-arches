@@ -80,6 +80,12 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   (#864)
 - test: the HB and HM response workflow specs open a consultation instead of clicking a "Start
   New" button those workflows have never had (#864)
+- fix(shim): a `where()` on a node alias compares against the value inside the annotation rather
+  than the whole JSON document, so filtering a `string` or `reference` node matches instead of
+  silently returning nothing, and `resourceid` filters the node rather than the descriptor (#869)
+- fix(dashboards): the planning dashboard renders again — it filters, sorts and pages in the
+  database instead of hydrating every consultation, counts each consultation's current Action
+  tile rather than its first, and reads council options from the controlled list (#869)
 - fix(functions): a generated SMR, HB or Historic Parks and Gardens number is copied onto the
   Heritage Asset References tile again. All three functions held retired ids for the nodegroup
   they trigger on and the node they read the generated number from, so the number was written
