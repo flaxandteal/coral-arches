@@ -8,6 +8,7 @@ from datetime import datetime
 import html
 from coral.views.dashboards.base_strategy import TaskStrategy
 from coral.views.dashboards.dashboard_utils import Utilities
+from coral.utils.reference_values import reference_label
 from coral.utils.user_role import UserRole
 import copy
 from typing import List, Dict, TypedDict
@@ -58,23 +59,6 @@ def latest_actions():
         .order_by('resourceinstance_id', F('entered').desc(nulls_last=True), '-sortorder')
         .distinct('resourceinstance_id')
     )
-
-
-def reference_label(node):
-    """The label of a reference node, or None.
-
-    A reference node reads back as Reference objects carrying their own labels,
-    which the dashboard serialises to JSON — so the value has to be flattened to
-    text here rather than handed on as the node.
-    """
-    from arches_controlled_lists.models import ListItem
-
-    labels = [
-        ListItem.find_best_label_from_set(reference.labels, 'en')
-        for reference in node or []
-    ]
-    labels = [label for label in labels if label]
-    return ', '.join(labels) if labels else None
 
 
 def not_in(field, values):
