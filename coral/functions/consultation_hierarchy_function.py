@@ -2,16 +2,25 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from arches.app.models import models
+from coral.utils.reference_values import reference_value, selected_list_item_ids
 
-HIERARCHY_TYPE_NODEGROUP = "0dd6ccb8-cffe-11ee-8a4e-0242ac180006"
+HIERARCHY_TYPE_NODEGROUP = "3e16208d-9560-5998-8ba1-203cd599a5d8"
 HIERARCHY_TYPE_NODE = HIERARCHY_TYPE_NODEGROUP
 
-HIERARCHY_STATUATORY = "d06d5de0-2881-4d71-89b1-522ebad3088d"
-HIERARCHY_NON_STATUATORY = "be6eef20-8bd4-4c64-abb2-418e9024ac14"
+HIERARCHY_STATUATORY = "609367b4-8a68-5f5c-8713-409d33629213"
+HIERARCHY_NON_STATUATORY = "34315588-70f4-5643-a4fb-c5ee13a8aa37"
 
 APPLICATION_TYPE_NODEGROUP = "54de6acc-8895-11ea-9067-f875a44e0e11"
 APPLICATION_TYPE_NODE = APPLICATION_TYPE_NODEGROUP
 
+# UNRESOLVED, same defect as Consultation Action Type. Application Type keeps its id but
+# is now bound to arches-her's 44-item Application Type list, which has no "F - Full" /
+# "O - Outline" / "RM - Reserved Matter". The nearest equivalents are Full Planning
+# Application (486bfab0-b238-426e-8548-8d92ed796f4a), Outline Planning Consent
+# (494840a9-983d-4645-9cef-f8816b86c5dd) and Reserved Details
+# (95756cfd-4424-4b68-921e-5b0190097164), but that is a mapping decision for the data
+# owner, not a rename. Until it is settled every consultation is treated as
+# non-statutory, which is what the old ids already do.
 STATUTORY_VALUES = [
     "7b87dd7a-7573-4417-9691-0875a783e8c2", # F - Full
     "32d2e13f-31fb-4031-9bbb-cd159c76a28e", # O - Outline
@@ -37,16 +46,14 @@ class ConsultationHierarchyFunction(BaseFunction):
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
-        application_type = (tile.data.get(APPLICATION_TYPE_NODE))
-        hierarchy_value = ''
+        application_type = selected_list_item_ids(tile.data.get(APPLICATION_TYPE_NODE))
 
-        if application_type:
-            if application_type in STATUTORY_VALUES:
-                hierarchy_value = HIERARCHY_STATUATORY
-            else:
-                hierarchy_value = HIERARCHY_NON_STATUATORY
-        else:
+        if not application_type:
             hierarchy_value = None
+        elif application_type & set(STATUTORY_VALUES):
+            hierarchy_value = reference_value(HIERARCHY_STATUATORY)
+        else:
+            hierarchy_value = reference_value(HIERARCHY_NON_STATUATORY)
 
         hierarchy_tile = None
         try:

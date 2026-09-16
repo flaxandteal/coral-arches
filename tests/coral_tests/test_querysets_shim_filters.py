@@ -154,7 +154,7 @@ def _stub_resource_model(rows, calls):
             return 'stub_slug'
 
         @classmethod
-        def _hydrate(cls, rid, rtt):
+        def _build_from_rtt(cls, rid, rtt):
             return f'instance:{rid}'
 
     def fake_get_tiles(slug, **kwargs):
