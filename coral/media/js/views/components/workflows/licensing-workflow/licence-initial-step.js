@@ -145,19 +145,19 @@ function viewModel(params) {
             direction: 'ltr'
           }
         },
-        'e7d69609-9939-11ea-a06d-f875a44e0e11': '1992741b-cc36-4613-b04e-943fa8c9d6fa',
-        'e7d6960c-9939-11ea-99e0-f875a44e0e11': '7346be23-bff6-42dc-91d0-7c5182aa0031',
+        'e7d69609-9939-11ea-a06d-f875a44e0e11': null,
+        'e7d6960c-9939-11ea-99e0-f875a44e0e11': null,
         'e7d69604-9939-11ea-baef-f875a44e0e11': {
           en: {
             direction: 'ltr',
             value: ''
           }
         },
-        'e7d6960a-9939-11ea-b292-f875a44e0e11': '1992741b-cc36-4613-b04e-943fa8c9d6fa',
-        'e7d6960d-9939-11ea-875c-f875a44e0e11': '7346be23-bff6-42dc-91d0-7c5182aa0031',
+        'e7d6960a-9939-11ea-b292-f875a44e0e11': null,
+        'e7d6960d-9939-11ea-875c-f875a44e0e11': null,
         'e7d69602-9939-11ea-b514-f875a44e0e11': 0,
-        'e7d69608-9939-11ea-8292-f875a44e0e11': '1992741b-cc36-4613-b04e-943fa8c9d6fa',
-        'e7d6960b-9939-11ea-aed9-f875a44e0e11': '7346be23-bff6-42dc-91d0-7c5182aa0031'
+        'e7d69608-9939-11ea-8292-f875a44e0e11': null,
+        'e7d6960b-9939-11ea-aed9-f875a44e0e11': null
       },
       nodegroup_id: 'e7d695ff-9939-11ea-8fff-f875a44e0e11',
       parenttile_id: null,
@@ -306,17 +306,17 @@ function viewModel(params) {
       tileid: '',
       data	: {
         '27740e7c-7118-11ef-af33-0242ac120006':	null,
-        '777596ba-48cf-11ee-8e4e-0242ac140007':	"daa4cddc-8636-4842-b836-eb2e10aabe18",
+        '777596ba-48cf-11ee-8e4e-0242ac140007':	null,
         '8f87fdae-2d50-11ef-bbfd-0242ac120006':	null,
-        '916b5e7e-48cf-11ee-8e4e-0242ac140007':	"6fbe3775-e51d-4f90-af53-5695dd204c9a",
+        '916b5e7e-48cf-11ee-8e4e-0242ac140007':	null,
         'a08ed94c-2d50-11ef-bbfd-0242ac120006':	null,
-        'a79fedae-bad5-11ee-900d-0242ac180006':	"2e2703e4-4f19-47ca-842d-a45c8502a547",
+        'a79fedae-bad5-11ee-900d-0242ac180006':	null,
         'aec103a2-48cf-11ee-8e4e-0242ac140007':	null,
-        'b407df02-bad5-11ee-900d-0242ac180006':	"c9bc15cc-46fe-4d34-a530-a228854845c8",
+        'b407df02-bad5-11ee-900d-0242ac180006':	null,
         'ba8aab44-2d4d-11ef-bbfd-0242ac120006':	null,
         'c2f40174-5dd5-11ee-ae2c-0242ac120008':	null,
         'fd9b98a8-2d4d-11ef-bbfd-0242ac120006':	null,
-        'ff3de496-7117-11ef-83a1-0242ac120006':	"d33327e8-2b9d-4bab-a07e-f0ded18ded3e"
+        'ff3de496-7117-11ef-83a1-0242ac120006':	null
       },
       nodegroup_id: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
       parenttile_id: null,
@@ -350,11 +350,11 @@ function viewModel(params) {
     const tileTemplate = {
       tileid: '',
       data: {
-        'b84fb006-bad2-11ee-b3f2-0242ac180006': '6fbe3775-e51d-4f90-af53-5695dd204c9a',
+        'b84fb006-bad2-11ee-b3f2-0242ac180006': null,
         'b84fb182-bad2-11ee-b3f2-0242ac180006': null,
         'b84fb2fe-bad2-11ee-b3f2-0242ac180006': null,
-        'b84fb466-bad2-11ee-b3f2-0242ac180006': 'daa4cddc-8636-4842-b836-eb2e10aabe18',
-        'b84fb5e2-bad2-11ee-b3f2-0242ac180006': '19afd557-cc21-44b4-b1df-f32568181b2c'
+        'b84fb466-bad2-11ee-b3f2-0242ac180006': null,
+        'b84fb5e2-bad2-11ee-b3f2-0242ac180006': null
       },
       nodegroup_id: 'b84fa9c6-bad2-11ee-b3f2-0242ac180006',
       parenttile_id: null,

@@ -6,6 +6,7 @@ from arches.app.search.components.base import SearchFilterFactory
 from arches.app.search.elasticsearch_dsl_builder import Bool, Match, Query, Ids, Nested, Terms, MaxAgg, Aggregation
 from arches.app.search.search_engine_factory import SearchEngineFactory
 from arches.app.search.mappings import RESOURCES_INDEX
+from django.core.exceptions import ObjectDoesNotExist
 from arches.app.models.models import Plugin
 from arches.app.models.resource import Resource
 from querysets_shim.models import Set, LogicalSet, ArchesPlugin
@@ -49,6 +50,13 @@ def _build_search_from_parameters(parameters):
                 search_results_object,
                 permitted_nodegroups=permitted_nodegroups,
                 include_provisional=None,
+                # Without this every filter falls back to its own default —
+                # "[]" for resource-type-filter — so the logical set's member
+                # definition was never actually applied, and the empty list left
+                # arches' resource_type_filter reading its loop variable after a
+                # loop that never ran (UnboundLocalError). Matches how arches'
+                # own StandardSearchView invokes the filters.
+                querystring=querystring,
             )
 
     return search_results_object["query"]
@@ -127,7 +135,16 @@ class SetApplicator:
         plugins.update({str(plugin.slug): plugin for plugin in plugins.values()})
         arches_plugins = ArchesPlugin.all()
         for ap in arches_plugins:
-            if ap.plugin_identifier and ap.id != _consistent_hash(ap.plugin_identifier):
+            # Compared as strings: _consistent_hash returns a uuid.UUID while
+            # ap.id is a str, so the bare `!=` was always true and every plugin
+            # was deleted and recreated on every run. Deleting a plugin also
+            # strips it from the "Arches Plugins" tile of every Group that
+            # referenced it, so the churn silently wiped workflow permissions —
+            # which stayed invisible only while plugin_identifier itself read
+            # back as None and short-circuited this check.
+            if ap.plugin_identifier and str(ap.id) != str(
+                _consistent_hash(ap.plugin_identifier)
+            ):
                 print("Found a plugin with an incorrect identifier - removing", ap.plugin_identifier, ap.id)
                 ap.delete()
         arches_plugins = ArchesPlugin.all()
@@ -169,25 +186,40 @@ class SetApplicator:
                 def _logical_set_query():
                     inner_dsl = _build_search_from_parameters(parameters)
                     return inner_dsl.dsl["query"]
-                if self.print_statistics:
-                    dsl = Query(se=_se)
-                    dsl.add_query(_logical_set_query())
-                    count = dsl.count(index=RESOURCES_INDEX)
-                    print("Logical Set:", logical_set.id)
-                    print("Definition:", logical_set.member_definition)
-                    print("Count:", count)
-                results = self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query, resourceinstanceid=resourceinstanceid)
-                if self.wait:
-                    self.wait_for_completion(_se, results)
-                if self.print_statistics:
-                    dsl = Query(se=_se)
-                    bool_query = Bool()
-                    bool_query.must(Nested(path="sets", query=Terms(field="sets.id", terms=[f"l:{logical_set.id}"])))
-                    if resourceinstanceid:
-                        bool_query.must(Ids(ids=[str(resourceinstanceid)]))
-                    dsl.add_query(bool_query)
-                    count = dsl.count(index=RESOURCES_INDEX)
-                    print("Applies to by search:", count)
+                try:
+                    if self.print_statistics:
+                        dsl = Query(se=_se)
+                        dsl.add_query(_logical_set_query())
+                        count = dsl.count(index=RESOURCES_INDEX)
+                        print("Logical Set:", logical_set.id)
+                        print("Definition:", logical_set.member_definition)
+                        print("Count:", count)
+                    results = self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query, resourceinstanceid=resourceinstanceid)
+                    if self.wait:
+                        self.wait_for_completion(_se, results)
+                    if self.print_statistics:
+                        dsl = Query(se=_se)
+                        bool_query = Bool()
+                        bool_query.must(Nested(path="sets", query=Terms(field="sets.id", terms=[f"l:{logical_set.id}"])))
+                        if resourceinstanceid:
+                            bool_query.must(Ids(ids=[str(resourceinstanceid)]))
+                        dsl.add_query(bool_query)
+                        count = dsl.count(index=RESOURCES_INDEX)
+                        print("Applies to by search:", count)
+                except ObjectDoesNotExist as exc:
+                    # The set's member_definition references data that
+                    # doesn't exist in this environment - a node from a
+                    # resource model the current package build doesn't
+                    # ship, a controlled-list item that isn't loaded here,
+                    # or a stale export from a different graph publication.
+                    # Skip it rather than aborting the whole recalculation
+                    # for every other set.
+                    print(
+                        "Skipping Logical Set", logical_set.id,
+                        f"- its member_definition references data that does not exist here ({exc}):",
+                        logical_set.member_definition,
+                    )
+                    continue
 
         sets = Set.all()
         for regular_set in sets:

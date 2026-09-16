@@ -21,23 +21,24 @@ import template from 'templates/views/components/workflows/get-monument-details.
     this.MONUMENT_NAMES_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11';
     this.MONUMENT_NAMES_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11';
 
-    this.CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006';
-    this.CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006';
+    this.CM_REFERENCE_NODEGROUP = 'c9c4e6dc-aa34-5254-a7b5-4f79bd8b73c1';
+    this.CM_REFERENCE_NODE = '9c4a43d9-a689-5ba2-bed5-4fbbd6ad47e6';
 
     this.ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba'
-    this.TOWNLAND_NODEGROUP = '919bcb94-345c-11ef-a5b7-0242ac120003';
+    this.TOWNLAND_NODEGROUP = 'ffaf4062-be4a-52e6-ace8-7e29014f96bc';
     this.TOWNLAND_NODE = 'd033683a-345c-11ef-a5b7-0242ac120003';
 
     this.NATIONAL_GRIDREF_NODEGROUP = '87d39b2b-f44f-11eb-af5e-a87eeabdefba';
-    this.IRISH_GRIDREF_NODE = '2fdedbd0-1459-11ef-8cdd-0242ac120006';
+    this.IRISH_GRIDREF_NODE = '1dd58086-a4ef-5ffa-8b05-a54a0be14f21';
 
-    this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
-    this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
+    this.BFILE_NODEGROUP = "34e9c49c-5523-598a-98a2-32224336d197";
+    this.BFILE_NODE = "0d0b653a-03e2-5a35-9ed4-9219b0681dd0";
 
     this.COUNCIL = "447973ce-d7e2-11ee-a4a1-0242ac120006";
 
-    this.RECOMMENDED_DESIGNATION_NODE = "74ef37e0-37b5-11ef-9263-0242ac150006"
-    this.SCHEDULED_MONUMENT_CONCEPT = "40462188-3aa9-cdaf-8b1d-3ed8dfa57df9"
+    this.RECOMMENDED_DESIGNATION_NODEGROUP = '6af2a0cb-efc5-11eb-8436-a87eeabdefba';
+    this.RECOMMENDED_DESIGNATION_NODE = '5aa9d22a-29c6-5de0-8119-84ee1e93081f';
+    this.SCHEDULED_MONUMENT_URI = 'https://coral-her.flaxandteal.co.uk/1e898077-9144-9ef0-b6e1-08f4e4881972';
 
     // Switched out for Heritage Asset Type node under constrcution phases nodegroup
     // Monument Type seems to be a duplicate node 
@@ -138,10 +139,11 @@ import template from 'templates/views/components/workflows/get-monument-details.
           });
       });
 
-      if (tile.nodegroup === this.RECOMMENDED_DESIGNATION_NODE) {
-          const tileData = await this.fetchTileData(resourceId, RECOMMENDED_DESIGNATION_NODE);
+      if (tile.nodegroup === this.RECOMMENDED_DESIGNATION_NODEGROUP) {
+          const tileData = await this.fetchTileData(resourceId, this.RECOMMENDED_DESIGNATION_NODE);
           for(const tile of tileData){
-              if(tile.data[RECOMMENDED_DESIGNATION_NODE].includes(this.SCHEDULED_MONUMENT_CONCEPT)){
+              const designations = tile.data[this.RECOMMENDED_DESIGNATION_NODE] || [];
+              if(designations.some((item) => item.uri === this.SCHEDULED_MONUMENT_URI)){
                   scheduled("Yes");
               }
           }
@@ -180,7 +182,7 @@ import template from 'templates/views/components/workflows/get-monument-details.
                   this.viewModel.alert(
                     new AlertViewModel(
                       'ep-alert-red',
-                      arches.requestFailed.title,
+                      arches.translations.requestFailed.title,
                       response.responseText
                     )
                   );
@@ -204,7 +206,7 @@ import template from 'templates/views/components/workflows/get-monument-details.
               if (response.statusText !== 'abort') {
                 const alert = new AlertViewModel(
                   'ep-alert-red',
-                  arches.requestFailed.title,
+                  arches.translations.requestFailed.title,
                   response.responseText
                 )
                 this.viewModel.alert( alert );
@@ -230,7 +232,7 @@ import template from 'templates/views/components/workflows/get-monument-details.
                 if (response.statusText !== 'abort') {
                   const alert = new AlertViewModel(
                     'ep-alert-red',
-                    arches.requestFailed.title,
+                    arches.translations.requestFailed.title,
                     response.responseText
                   )
                   this.viewModel.alert( alert );
