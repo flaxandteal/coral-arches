@@ -108,7 +108,8 @@ class Utilities():
     def _parse_date(self, date_str):
         if isinstance(date_str, datetime):
             return date_str
-        date_formats = ['%d-%m-%Y', '%Y-%m-%d %H:%M:%S.%f', '%Y-%m-%dT%H:%M:%S.%f%z']
+        date_formats = ['%Y-%m-%d', '%d-%m-%Y', '%Y-%m-%d %H:%M:%S.%f',
+                        '%Y-%m-%dT%H:%M:%S.%f%z']
         if not date_str:
             return datetime.min
         for date_format in date_formats:

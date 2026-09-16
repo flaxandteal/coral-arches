@@ -98,11 +98,11 @@ class PlanningTaskStrategy(TaskStrategy):
 
     # Hydrating a whole Consultation builds all 584 of its aliases; build_data
     # reads these. Same approach as designation_strategy.DISPLAY_ALIASES.
+    # Value aliases only — the alias map skips semantic nodes, so naming a
+    # grouping node here does nothing. display_nodes() adds the ancestors.
     DISPLAY_ALIASES = [
-        'action', 'action_status', 'action_type', 'assigned_to_n1',
-        'action_dates', 'target_date_n1',
-        'hierarchy_type', 'classification_type',
-        'location_data', 'addresses', 'council',
+        'action_status', 'action_type', 'assigned_to_n1', 'target_date_n1',
+        'hierarchy_type', 'classification_type', 'council',
         'street_value', 'town_or_city_value', 'postcode_value',
         'related_heritage_assets',
     ]
@@ -344,14 +344,13 @@ class PlanningTaskStrategy(TaskStrategy):
         utilities = Utilities()
 
         action = next(iter(consultation.action or []), None)
-        dates = action.action_dates if action else None
         location = consultation.location_data
         address = location.addresses if location else None
 
         action_status = reference_label(action.action_status if action else None)
         action_type = reference_label(action.action_type if action else None)
         assigned_to = action.assigned_to_n1 if action else None
-        deadline = dates.target_date_n1 if dates else None
+        deadline = action.target_date_n1 if action else None
         hierarchy_type = reference_label(consultation.hierarchy_type)
         council = reference_label(location.council if location else None)
         classification = reference_label(consultation.classification_type)
@@ -410,7 +409,7 @@ class PlanningTaskStrategy(TaskStrategy):
 
         deadline_message = None
         if deadline:
-            deadline_date = datetime.strptime(str(deadline), "%Y-%m-%dT%H:%M:%S.%f%z")
+            deadline_date = utilities._parse_date(str(deadline))
             deadline_message = utilities.create_deadline_message(deadline_date)
             deadline = deadline_date.strftime("%d-%m-%Y")
 
