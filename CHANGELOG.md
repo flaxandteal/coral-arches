@@ -91,6 +91,15 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   they trigger on and the node they read the generated number from, so the number was written
   but never carried across, and anything reading the reference numbers — the planning dashboard
   included — saw nothing (#870)
+- fix(shim): `manage.py migrate` runs again. `coral/views/file_template.py` imported
+  `UserViewModel` at module scope, and because that module is reachable from the URLconf that
+  migrate's system checks load, the proxy model registered itself against an app that ships no
+  migrations — aborting every migrate, on a fresh database or an existing one, with
+  `InvalidBasesError`. The import is now local to the function that uses it (#868)
+- chore(seed): the `seed_test_*` management commands refuse to run unless
+  `CORAL_ALLOW_TEST_SEED=1` is set. They create logins with a shared published password, attach a
+  published TOTP key to `admin`, and `seed_test_permissions` deletes and rewrites every Group's
+  tiles before rebuilding the casbin policy table (#868)
 
 ### Notes
 
