@@ -27,7 +27,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - perf(workflows): batch a step's `workflow_history` patches into one post per tick (#866)
 - perf(workflows): build one `GraphModel` per resource rather than one per component (#866)
 - perf(workflows): build only the card branch a component displays, not every top card on the resource (#866)
-- perf(tiles): defer tile-save re-indexing to a celery task (#866)
+- perf(tiles): defer tile-save re-indexing to a celery task, collapsing a step's saves into one re-index (#866)
+- fix(workflows): refetch a component's card data after it saves, so values written by functions are displayed (#866)
 
 - fix(functions): update retired v8 node ids in functions (#854)
 
@@ -40,7 +41,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ### Notes
 
 - Tile saves no longer re-index to Elasticsearch inline; a celery task does it
-  after the transaction commits. Search is therefore eventually consistent after
-  a save rather than immediate. Because this adds a task, web and worker must be
-  restarted together on deploy — a running worker cannot resolve a task it did
-  not import at startup. (#866)
+  after the transaction commits, and waits `INDEX_DEBOUNCE_SECONDS` (5) so that a
+  step's parallel tile saves collapse into a single re-index. Search is therefore
+  eventually consistent after a save rather than immediate, by roughly that long.
+  Because this adds a task, web and worker must be restarted together on deploy —
+  a running worker cannot resolve a task it did not import at startup. (#866)

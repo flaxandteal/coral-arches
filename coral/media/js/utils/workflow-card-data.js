@@ -54,10 +54,11 @@ export function getGraphModel(id, data) {
  * Each caller gets its own copy because the caller mutates it building view
  * models.
  *
- * A component re-initializes on every step save even with nothing to save. Its
- * card structure cannot have changed, and its tiles cannot have either if it is
- * not dirty, so the first response is kept on the component and reused rather
- * than refetching ~1.1MB while the tile saves need the same single app process.
+ * A component re-initializes on every step save, including when it had nothing
+ * to save. Nothing it displays can have changed in that case, so the response is
+ * kept on the component and reused rather than refetching ~1.1MB while the other
+ * components' tile saves need the same single app process. A component that does
+ * save drops its copy first — see invalidateCardData.
  *
  * @param {object} component - the workflow component, used as the cache owner
  * @param {string} id - resource or graph id
@@ -73,6 +74,21 @@ export function cardDataFor(component, id) {
         component._pristineCardData = structuredClone(data);
         return structuredClone(data);
     });
+}
+
+/**
+ * Drop a component's kept card data, so its next initialize refetches.
+ *
+ * A save is not just the tiles the component sent: arches functions run on the
+ * way through and write their own values — licence numbers, HB numbers, display
+ * names — and the response the component kept predates all of it. Since the
+ * component re-initializes immediately after saving, reusing that copy would
+ * mean nothing the server computed is ever displayed.
+ *
+ * @param {object} component - the workflow component
+ */
+export function invalidateCardData(component) {
+    delete component._pristineCardData;
 }
 
 /**

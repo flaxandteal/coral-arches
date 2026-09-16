@@ -7,7 +7,7 @@ import CardViewModel from 'viewmodels/card';
 import AlertViewModel from 'viewmodels/alert';
 import uuid from 'uuid';
 import queueWorkflowHistory from 'utils/workflow-history-queue';
-import { cardDataFor, getGraphModel, selectTopCards, makeProvisionalTileViewModel } from 'utils/workflow-card-data';
+import { cardDataFor, invalidateCardData, getGraphModel, selectTopCards, makeProvisionalTileViewModel } from 'utils/workflow-card-data';
 import workflowComponentAbstractTemplate from 'templates/views/components/workflows/workflow-component-abstract.htm';
 
 function NonTileBasedComponent() {
@@ -889,6 +889,7 @@ function WorkflowComponentAbstract(params) {
 
         // only saves updated tiles
         if (ko.unwrap(self.dirty) || ko.unwrap(self.hasDirtyTiles) || ko.unwrap(self.hasUnsavedData)) {
+            invalidateCardData(self);
             if (self.componentData.tilesManaged === "many"){
                 self.saveMultiTiles();
             } else {
