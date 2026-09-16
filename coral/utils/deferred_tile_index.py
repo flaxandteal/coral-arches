@@ -19,6 +19,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# A step saves its components in parallel, so one resource's tiles arrive as
+# several separate requests. Waiting this long before indexing lets the whole
+# burst land, so the one task that wins the lock in coral.tasks sees all of it
+# and its siblings have nothing left to do.
+INDEX_DEBOUNCE_SECONDS = 5
+
 
 def patch_tile_index():
     from django.db import transaction
@@ -42,7 +48,9 @@ def patch_tile_index():
         # Deferred to on_commit because the worker re-reads the resource from
         # the database — it must not start before this transaction lands.
         transaction.on_commit(
-            lambda: index_resource_instance.delay(resource_id)
+            lambda: index_resource_instance.apply_async(
+                [resource_id], countdown=INDEX_DEBOUNCE_SECONDS
+            )
         )
 
     deferred_index._coral_defers_indexing = True
