@@ -180,9 +180,11 @@ var WorkflowStep = function(config) {
                 .catch(function(error) {
                     reject(error);
                 })
-                .finally(
-                    self.saving(false)
-                );
+                /* Called, not invoked: passing self.saving(false) cleared the
+                   flag in the same tick and the step body never masked. */
+                .finally(function() {
+                    self.saving(false);
+                });
         });
     };
 
