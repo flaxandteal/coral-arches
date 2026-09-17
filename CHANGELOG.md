@@ -43,31 +43,12 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   accordion rendered all 209 of Heritage Asset's reference facets and hid them with CSS,
   firing 1053 controlled list requests across 25 distinct lists (#NNN)
 - fix(search): selecting a filter checkbox no longer collapses every accordion panel (#NNN)
-
-### Notes
-
-- Nothing seeds the search configs automatically. After deploying #849 run
-  `search_config load-filters` and `search_config load-cards`, or filters and cards will
-  not appear. `--prune-empty` needs representative data to be meaningful
-- Result type chip counts no longer include resources reached only by relationship, so
-  they get smaller, but they now agree with the total which they never did before. Set
-  `CORAL_FAST_RESOURCE_TYPE_COUNTS = False` to restore the old behaviour
-- Run `manage.py index_descriptors` after a full arches_search reindex to rebuild the
-  descriptor terms
-- The arches_search filter panel is patched by shadowing its component from `coral/src`.
-  See `coral/src/README.md` for what is overridden and when each one can be deleted —
-  both are staged as upstream PRs
-- Each arches_search patch is behind a settings flag: `CORAL_PRUNE_EMPTY_REPORT_SECTIONS`,
-  `CORAL_INDEX_DESCRIPTORS`, `CORAL_DESCRIPTOR_RELEVANCE_SORT`,
-  `CORAL_FAST_RESOURCE_TYPE_COUNTS`. Set one to `False` to fall back to stock behaviour
-  without a deploy
 - perf(workflows): share one in-flight request across a step's components for `/cards`, `/graphs` and `get_user_names` (#866)
 - perf(workflows): batch a step's `workflow_history` patches into one post per tick (#866)
 - perf(workflows): build one `GraphModel` per resource rather than one per component (#866)
 - perf(workflows): build only the card branch a component displays, not every top card on the resource (#866)
 - perf(tiles): defer tile-save re-indexing to a celery task, collapsing a step's saves into one re-index (#866)
 - fix(workflows): refetch a component's card data after it saves, so values written by functions are displayed (#866)
-
 - fix(functions): update retired v8 node ids in functions (#854)
 - fix(views): update retired v8 node ids in views (#855)
 - fix(functions): the TM65 point functions on Heritage Asset write to the live Irish
@@ -90,16 +71,13 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   map sheet and county labels out of the reference tile value rather than looking up a
   concept valueid, which raised "is not a valid UUID" on save and lost the generated
   number
-
 - fix(dashboards): convert designation dashboard to v8 node ids and controlled lists (#852)
 - fix(shim): resolve `where()` tile filters in SQL rather than loading every resource in the graph (#852)
 - fix(shim): collapse nodegroup-level nodes on attribute access, so a single-node nodegroup returns its node (#852)
 - perf(shim): load dashboard resources in one query per model instead of one per row (#852)
 - fix(dashboards): correct designation card paths for v8 and drop `node_check` (#852)
 - fix(workflows-js): update retired v8 node ids in workflow JS (#856)
-
 - fix(plugins): update retired v8 node ids in workflow plugin definitions (#857)
-
 - fix(plugins): the HB and HM planning consultation response launchers list consultations
   assigned to "Both HM & HB" again. The Action Type filter still held retired v7 concept ids,
   and passed them as a bare uuid where the reference datatype wants a list of item URIs (#864)
@@ -145,6 +123,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   `CORAL_ALLOW_TEST_SEED=1` is set. They create logins with a shared published password, attach a
   published TOTP key to `admin`, and `seed_test_permissions` deletes and rewrites every Group's
   tiles before rebuilding the casbin policy table (#868)
+- fix(file-template): remove the check against file storage to build the path as the path is always the same.
 
 ### Notes
 
@@ -178,3 +157,19 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   `coral/functions/notify_planning.py` already hold the ids that list will carry, so the
   assign-to-team notifications stay dormant until the rebuilt graphs are loaded, and need
   no further code change when they are.
+
+- Nothing seeds the search configs automatically. After deploying #849 run
+  `search_config load-filters` and `search_config load-cards`, or filters and cards will
+  not appear. `--prune-empty` needs representative data to be meaningful
+- Result type chip counts no longer include resources reached only by relationship, so
+  they get smaller, but they now agree with the total which they never did before. Set
+  `CORAL_FAST_RESOURCE_TYPE_COUNTS = False` to restore the old behaviour
+- Run `manage.py index_descriptors` after a full arches_search reindex to rebuild the
+  descriptor terms
+- The arches_search filter panel is patched by shadowing its component from `coral/src`.
+  See `coral/src/README.md` for what is overridden and when each one can be deleted —
+  both are staged as upstream PRs
+- Each arches_search patch is behind a settings flag: `CORAL_PRUNE_EMPTY_REPORT_SECTIONS`,
+  `CORAL_INDEX_DESCRIPTORS`, `CORAL_DESCRIPTOR_RELEVANCE_SORT`,
+  `CORAL_FAST_RESOURCE_TYPE_COUNTS`. Set one to `False` to fall back to stock behaviour
+  without a deploy
