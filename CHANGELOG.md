@@ -135,6 +135,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   tiles before rebuilding the casbin policy table (#868)
 - fix(file-template): remove the check against file storage to build the path as the path is always the same.
 - fix(workflows): The consultation map could not diplay the GIS data correctly from the imported files. This allows the geometry data to be read correctly
+- fix(workflows): add a save_descriptors call before the task to reindex the workflow step saves to ensure the correct descriptor is calculated
 
 ### Notes
 

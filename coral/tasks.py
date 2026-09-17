@@ -381,12 +381,12 @@ def reset_database(lock_code_enc):
 
 @shared_task(autoretry_for=(Exception,), retry_backoff=True, max_retries=3)
 def index_resource_instance(resource_id):
-    """Re-index a whole resource off the request path.
+    """Recompute a whole resource's descriptors and re-index it, off the request path.
 
     Dispatched by the Tile.index patch in coral.utils.deferred_tile_index, once
-    per tile save, so a step saving four tiles queues four of these. Indexing
-    rewrites the whole document from current database state, so only one of them
-    has any work to do — the rest take the advisory lock's no and return.
+    per tile save, so a step saving four tiles queues four of these. Both halves
+    rebuild from current database state, so only one of them has any work to do —
+    the rest take the advisory lock's no and return.
 
     The lock is what makes that safe rather than merely cheaper: two of these
     running at once would each read the resource and then overwrite the other's
@@ -406,8 +406,12 @@ def index_resource_instance(resource_id):
                 return
 
         try:
-            Resource.objects.get(pk=resource_id).index()
+            resource = Resource.objects.get(pk=resource_id)
         except Resource.DoesNotExist:
             # Deleted between the tile save and this task running; the delete
             # path removes its documents, so there is nothing to index.
-            pass
+            return
+
+        # Runs after the burst, so parallel tile saves cannot race the name back.
+        resource.save_descriptors()
+        resource.index()
