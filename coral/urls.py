@@ -26,6 +26,7 @@ from coral.views.user_to_model import UserToModel
 from coral.views.afc_number import AfcNumberView
 from coral.views.ail_number import AilNumberView
 from coral.views.reference_value import ReferenceValueView
+from coral.views.controlled_list import FilteredList
 
 
 uuid_regex = settings.UUID_REGEX
@@ -38,6 +39,8 @@ urlpatterns = [
     path('account/two_factor/backup-codes/', BackupCodesView.as_view(), name='two_factor_backup_codes'),
     path('', include(tf_urls)),
     path('', include('arches.urls')),
+    # Ahead of the include so it wins resolution; same path, so reverse() is unaffected.
+    path('api/controlled_list_filtered/<uuid:list_id>', FilteredList.as_view()),
     path('', include('arches_controlled_lists.urls')),
     path('', include('arches_vue_components.urls')),
     path('', include('arches_modular_reports.urls')),
