@@ -97,16 +97,8 @@ class FileTemplateView(View):
 
         fs = default_storage
         template_dict = self.get_template_path(template_id)
-        template_path = None
-        filesystem_class = default_storage.__class__.__name__
-        if filesystem_class == 'S3Boto3Storage':
-            template_path = os.path.join(
-                "docx", template_dict["filename"]
-            )
-        elif filesystem_class == 'FileSystemStorage':
-            template_path = os.path.join(
-                settings.APP_ROOT, "docx", template_dict["filename"]
-            )
+        # storage-relative: MEDIA_ROOT is APP_ROOT, so this resolves the same on S3 and local disk
+        template_path = os.path.join("docx", template_dict["filename"])
         try:
             self.doc = Document(fs.open(template_path))
         except:
@@ -118,14 +110,7 @@ class FileTemplateView(View):
              files = data.get('files')
              for file in files:
                 filename = file["name"].replace(" ", "_")
-                if filesystem_class == 'S3Boto3Storage':
-                    file_path = os.path.join(
-                        "uploadedfiles", filename
-                    )
-                elif filesystem_class == 'FileSystemStorage':
-                    file_path = os.path.join(
-                        settings.APP_ROOT, "uploadedfiles", filename
-                    )
+                file_path = os.path.join("uploadedfiles", filename)
                 try:
                     file = fs.open(file_path)
                     text = pdf_extract.extract_text(file.read())
