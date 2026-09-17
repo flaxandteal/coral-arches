@@ -124,6 +124,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   published TOTP key to `admin`, and `seed_test_permissions` deletes and rewrites every Group's
   tiles before rebuilding the casbin policy table (#868)
 - fix(file-template): remove the check against file storage to build the path as the path is always the same.
+- fix(workflows): add a save_descriptors call before the task to reindex the workflow step saves to ensure the correct descriptor is calculated
 
 ### Notes
 
