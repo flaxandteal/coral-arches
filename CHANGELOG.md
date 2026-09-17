@@ -51,11 +51,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): refetch a component's card data after it saves, so values written by functions are displayed (#866)
 - fix(functions): update retired v8 node ids in functions (#854)
 - fix(views): update retired v8 node ids in views (#855)
-- fix(functions): the TM65 point functions on Heritage Asset write to the live Irish
-  Grid Reference node again, so saving a geometry no longer 500s on the Add Monument
-  location step. The v8 regeneration re-issued the node id but left both function
-  configs, the risk-assessment view and the issue-report workflow on the retired one
-  (#855)
 - fix(workflows): the HB and HM planning consultation response workflows hide the other
   team's response, assignment and response-file tiles again. The team nodes are
   controlled-list references in v8, so the filter reads the selected list item id instead
@@ -63,21 +58,21 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(notifications): planning and excavation notifications read controlled-list values
   again, so the excavation decision, classification and stage-of-application labels come
   back in their messages instead of being blank (#855)
+- fix(workflows-js): update retired v8 node ids in workflow JS (#856)
+- fix(plugins): update retired v8 node ids in workflow plugin definitions (#857)
+- fix(functions): the TM65 point functions on Heritage Asset write to the live Irish
+  Grid Reference node again, so saving a geometry no longer 500s on the Add Monument
+  location step. The v8 regeneration re-issued the node id but left both function
+  configs, the risk-assessment view and the issue-report workflow on the retired one
+  (#860)
 - fix(functions): convert the remaining domain-value comparisons to controlled lists —
   composite score, consultation hierarchy, response assignee, report classification,
   licence number and extension, and enforcement mark-as-read all read the selected list
-  item id now rather than testing a tile value against a retired option id
+  item id now rather than testing a tile value against a retired option id (#860)
 - fix(functions): the SMR and Historic Parks and Gardens number functions read their
   map sheet and county labels out of the reference tile value rather than looking up a
   concept valueid, which raised "is not a valid UUID" on save and lost the generated
-  number
-- fix(dashboards): convert designation dashboard to v8 node ids and controlled lists (#852)
-- fix(shim): resolve `where()` tile filters in SQL rather than loading every resource in the graph (#852)
-- fix(shim): collapse nodegroup-level nodes on attribute access, so a single-node nodegroup returns its node (#852)
-- perf(shim): load dashboard resources in one query per model instead of one per row (#852)
-- fix(dashboards): correct designation card paths for v8 and drop `node_check` (#852)
-- fix(workflows-js): update retired v8 node ids in workflow JS (#856)
-- fix(plugins): update retired v8 node ids in workflow plugin definitions (#857)
+  number (#860)
 - fix(plugins): the HB and HM planning consultation response launchers list consultations
   assigned to "Both HM & HB" again. The Action Type filter still held retired v7 concept ids,
   and passed them as a bare uuid where the reference datatype wants a list of item URIs (#864)
@@ -103,6 +98,21 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   (#864)
 - test: the HB and HM response workflow specs open a consultation instead of clicking a "Start
   New" button those workflows have never had (#864)
+- perf(workflows): share one in-flight request across a step's components for `/cards`, `/graphs` and `get_user_names` (#866)
+- perf(workflows): batch a step's `workflow_history` patches into one post per tick (#866)
+- perf(workflows): build one `GraphModel` per resource rather than one per component (#866)
+- perf(workflows): build only the card branch a component displays, not every top card on the resource (#866)
+- perf(tiles): defer tile-save re-indexing to a celery task, collapsing a step's saves into one re-index (#866)
+- fix(workflows): refetch a component's card data after it saves, so values written by functions are displayed (#866)
+- fix(shim): `manage.py migrate` runs again. `coral/views/file_template.py` imported
+  `UserViewModel` at module scope, and because that module is reachable from the URLconf that
+  migrate's system checks load, the proxy model registered itself against an app that ships no
+  migrations — aborting every migrate, on a fresh database or an existing one, with
+  `InvalidBasesError`. The import is now local to the function that uses it (#868)
+- chore(seed): the `seed_test_*` management commands refuse to run unless
+  `CORAL_ALLOW_TEST_SEED=1` is set. They create logins with a shared published password, attach a
+  published TOTP key to `admin`, and `seed_test_permissions` deletes and rewrites every Group's
+  tiles before rebuilding the casbin policy table (#868)
 - fix(shim): a `where()` on a node alias compares against the value inside the annotation rather
   than the whole JSON document, so filtering a `string` or `reference` node matches instead of
   silently returning nothing, and `resourceid` filters the node rather than the descriptor (#869)
@@ -124,9 +134,30 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   published TOTP key to `admin`, and `seed_test_permissions` deletes and rewrites every Group's
   tiles before rebuilding the casbin policy table (#868)
 - fix(file-template): remove the check against file storage to build the path as the path is always the same.
+- fix(workflows): The consultation map could not diplay the GIS data correctly from the imported files. This allows the geometry data to be read correctly
 - fix(workflows): add a save_descriptors call before the task to reindex the workflow step saves to ensure the correct descriptor is calculated
 
 ### Notes
+
+- Nothing seeds the search configs automatically. After deploying #849 run
+  `search_config load-filters` and `search_config load-cards`, or filters and cards will
+  not appear. `--prune-empty` needs representative data to be meaningful
+
+- Result type chip counts no longer include resources reached only by relationship, so
+  they get smaller, but they now agree with the total which they never did before. Set
+  `CORAL_FAST_RESOURCE_TYPE_COUNTS = False` to restore the old behaviour
+
+- Run `manage.py index_descriptors` after a full arches_search reindex to rebuild the
+  descriptor terms
+
+- The arches_search filter panel is patched by shadowing its component from `coral/src`.
+  See `coral/src/README.md` for what is overridden and when each one can be deleted —
+  both are staged as upstream PRs
+
+- Each arches_search patch is behind a settings flag: `CORAL_PRUNE_EMPTY_REPORT_SECTIONS`,
+  `CORAL_INDEX_DESCRIPTORS`, `CORAL_DESCRIPTOR_RELEVANCE_SORT`,
+  `CORAL_FAST_RESOURCE_TYPE_COUNTS`. Set one to `False` to fall back to stock behaviour
+  without a deploy
 
 - Tile saves no longer re-index to Elasticsearch inline; a celery task does it
   after the transaction commits, and waits `INDEX_DEBOUNCE_SECONDS` (5) so that a
@@ -134,12 +165,13 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   eventually consistent after a save rather than immediate, by roughly that long.
   Because this adds a task, web and worker must be restarted together on deploy —
   a running worker cannot resolve a task it did not import at startup. (#866)
+
 - The planning response letter template asks for `<proposal_description_type>`, a classifier
   that is always empty, where it wants `<proposal_text>`. `coral/docx` is gitignored, so the
   corrected template has to be applied wherever the letter templates are mastered (#864)
 
 - The SMR, HB and Historic Parks and Gardens number functions need the same package
-  reload as the TM65 fix below: their `triggering_nodegroups` live in `functions_x_graphs`,
+  reload as the TM65 fix: their `triggering_nodegroups` live in `functions_x_graphs`,
   not in code, and a running database still points all three at retired nodegroups, so none
   of them fires until the graphs are reloaded. coral-graphs `functions.json` already carries
   the corrected triggers — `a7742f3d-…` (SMR), `dc49f08f-…` (HB) and `5937558a-…` (gardens).
