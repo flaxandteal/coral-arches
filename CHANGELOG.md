@@ -137,6 +137,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): The consultation map could not diplay the GIS data correctly from the imported files. This allows the geometry data to be read correctly
 - fix(workflows): add a save_descriptors call before the task to reindex the workflow step saves to ensure the correct descriptor is calculated
 - patch(controlled lists): set a limit on the controlled list size and optimise how we search and return the list
+= fix(dashboard): restructure the planning dashboard to improve performance
 
 ### Notes
 
