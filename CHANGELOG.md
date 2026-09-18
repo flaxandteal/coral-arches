@@ -139,6 +139,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - patch(controlled lists): set a limit on the controlled list size and optimise how we search and return the list
 - fix(dashboard): restructure the planning dashboard to improve performance
 - fix(bucket): s3 bucket was not allowing uploads, added additional headers and set the default storage directory in `settings.py`
+- fix(workflow): update the ids to allow the statutory node update correctly based on the application type
 
 ### Notes
 
