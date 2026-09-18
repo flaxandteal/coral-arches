@@ -1,13 +1,13 @@
 from arches.app.models import models
 from arches.app.models.models import TileModel
-from arches.app.models.tile import Tile
 from django.db.models import Count, F, Q, Subquery
 from querysets_shim.adapter import admin
-from querysets_shim.wrapper import _with_ancestor_nodegroups
 from datetime import datetime
 import html
 from coral.views.dashboards.base_strategy import TaskStrategy
+from querysets_shim.values import EMPTY, descriptor_names, values_by_resource, related_resource_ids
 from coral.views.dashboards.dashboard_utils import Utilities
+from coral.utils.group_members import person_members
 from coral.utils.reference_values import reference_label
 from coral.utils.user_role import UserRole
 import copy
@@ -35,11 +35,19 @@ ASSIGN_HM = 'Assign To HM'
 ASSIGN_HB = 'Assign To HB'
 ASSIGN_BOTH = 'Assign To Both HM & HB'
 
+HA_REF_ALIASES = ['ihr_number', 'hb_number', 'smr_number', 'historic_parks_and_gardens']
+
+# Read off the tiles rather than hydrated resources. action_* and assigned_to_n1
+# share the Action nodegroup, so they stay index-aligned with each other.
+CONSULTATION_ALIASES = [
+    'action_status', 'action_type', 'assigned_to_n1', 'target_date_n1',
+    'hierarchy_type', 'classification_type', 'council',
+    'street_value', 'town_or_city_value', 'postcode_value',
+    'related_heritage_assets', 'response_team',
+]
+
 # Council and Hierarchy Type are single-value nodes whose node id and nodegroup
 # id coincide.
-RESPONSE_ACTION_NODEGROUP = 'd6d47325-6fe7-5850-a3e3-389b11b00ea8'
-RESPONSE_TEAM_NODE = 'cf6c76ac-3f89-5d22-a74b-2cdf80608b6e'
-
 COUNCIL_NODE = '4ddb3a60-3d1c-5873-8168-ed0ba1c92644'
 HIERARCHY_NODEGROUP = '3e16208d-9560-5998-8ba1-203cd599a5d8'
 HIERARCHY_TYPE = HIERARCHY_NODEGROUP
@@ -83,27 +91,8 @@ class PlanningTaskStrategy(TaskStrategy):
 
     _user_role: UserRole = None;
 
-    # Hydrating a whole Consultation builds all 584 of its aliases; build_data
-    # reads these. Same approach as designation_strategy.DISPLAY_ALIASES.
-    # Value aliases only — the alias map skips semantic nodes, so naming a
-    # grouping node here does nothing. display_nodes() adds the ancestors.
-    DISPLAY_ALIASES = [
-        'action_status', 'action_type', 'assigned_to_n1', 'target_date_n1',
-        'hierarchy_type', 'classification_type', 'council',
-        'street_value', 'town_or_city_value', 'postcode_value',
-        'related_heritage_assets',
-    ]
-
-    def display_nodes(self, model_cls):
-        """Node objects for the aliases this dashboard displays, if resolvable."""
-        by_alias = model_cls._._node_objects_by_alias()
-        nodes = [by_alias[alias] for alias in self.DISPLAY_ALIASES if alias in by_alias]
-        # arches-querysets resolves ancestry through the nodes it is handed, so a
-        # narrowed list KeyErrors on anything nested more than one level deep.
-        return _with_ancestor_nodegroups(nodes, by_alias.values()) or None
-
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='target_date_n1', sort_order='asc', filter='all'):
-        from querysets_shim.models import Consultation
+        from querysets_shim.models import Consultation, Monument, Person
         with admin():
             self._user_role = UserRole(groupId)
 
@@ -215,9 +204,22 @@ class PlanningTaskStrategy(TaskStrategy):
                 }
 
             counters = get_counters()
-            tasks = [self.build_data(resource, groupId)
-                     for resource in Consultation.find_many(
-                         page_ids, nodes=self.display_nodes(Consultation))]
+
+            fields = values_by_resource(Consultation, page_ids, CONSULTATION_ALIASES)
+
+            ha_ids, person_ids = [], []
+            for values in fields.values():
+                ha_ids += related_resource_ids(values.get('related_heritage_assets'))
+                person_ids += related_resource_ids(values.get('assigned_to_n1'))
+
+            prefetched = {
+                'fields': fields,
+                'names': descriptor_names(page_ids),
+                'heritage_assets': values_by_resource(Monument, ha_ids, HA_REF_ALIASES),
+                'people': values_by_resource(Person, person_ids, ['full_name']),
+            }
+
+            tasks = [self.build_data(str(id), groupId, prefetched) for id in page_ids]
 
             return tasks, total_resources, counters
 
@@ -306,64 +308,40 @@ class PlanningTaskStrategy(TaskStrategy):
 
     
     def get_group_members(self, groups: List[str]):
-        from querysets_shim.models import Group
         with admin():
-            if (len(groups) == 0): return [];
-
-            def transform_group_members(foundGroupRecords):
-                members_filter = {}
-
-                for foundGroupRecord in foundGroupRecords:
-                    for member in foundGroupRecord.members:
-                        if type(member).__name__ == 'PersonRelatedResourceInstanceViewModel':
-                            members_key = str(member.id)
-                            members_filter[members_key] = {
-                                'id': str(member.id), 
-                                'name': member.name[0].full_name, 
-                                'type': 'person'
-                            }
-                return list(members_filter.values())
-
-            # One query by id, rather than an OR chain across resource ids.
-            return transform_group_members(Group.find_many(groups))
+            return [{'id': id, 'name': name, 'type': 'person'}
+                    for id, name in person_members(groups).items()]
     
-    def build_data(self, consultation, groupId):
+    def build_data(self, consultation_id, groupId, prefetched):
         utilities = Utilities()
 
-        action = next(iter(consultation.action or []), None)
-        location = consultation.location_data
-        address = location.addresses if location else None
+        # The action aliases are index-aligned, so these all read the same tile.
+        values = prefetched['fields'].get(consultation_id, EMPTY)
+        action_status = reference_label(values.get('action_status'))
+        action_type = reference_label(values.get('action_type'))
+        assigned_to = related_resource_ids(values.get('assigned_to_n1'))
+        deadline = values.get('target_date_n1')
+        hierarchy_type = reference_label(values.get('hierarchy_type'))
+        council = reference_label(values.get('council'))
+        classification = reference_label(values.get('classification_type'))
+        related_ha = related_resource_ids(values.get('related_heritage_assets'))
+        responses = values.all('response_team')
 
-        action_status = reference_label(action.action_status if action else None)
-        action_type = reference_label(action.action_type if action else None)
-        assigned_to = action.assigned_to_n1 if action else None
-        deadline = action.target_date_n1 if action else None
-        hierarchy_type = reference_label(consultation.hierarchy_type)
-        council = reference_label(location.council if location else None)
-        classification = reference_label(consultation.classification_type)
-        related_ha = consultation.related_heritage_assets
-
-        # the orm stopped returning multiple tiles for responses, this is a fall back
-        responses = Tile.objects.filter(
-            resourceinstance_id=consultation.id,
-            nodegroup_id=RESPONSE_ACTION_NODEGROUP,
-        ).values_list(f'data__{RESPONSE_TEAM_NODE}', flat=True)
-        
-        # A Heritage Asset with no reference numbers has no tile for the
-        # nodegroup at all, so this reads None rather than an empty branch.
         ha_refs = []
-        for ha in related_ha or []:
-            references = getattr(ha, 'heritage_asset_references', None)
-            if references is None:
-                continue
-            for alias in ('ihr_number', 'hb_number', 'smr_number', 'historic_parks_and_gardens'):
-                value = getattr(references, alias, None)
+        for ha in related_ha:
+            for alias in HA_REF_ALIASES:
+                value = prefetched['heritage_assets'].get(ha, EMPTY).get(alias)
                 if value is not None and str(value).strip():
                     ha_refs.append(value)
 
         assigned_to_names = None
         if assigned_to:
-            assigned_to_names = list(map(lambda person: person.name[0].full_name,  assigned_to))
+            # A Person with no name tile is skipped; reading name[0] on one raised.
+            assigned_to_names = []
+            for person in assigned_to:
+                name = prefetched['people'].get(person, EMPTY).get('full_name')
+                if name:
+                    assigned_to_names.append(name)
 
         # Initialise the team responses
         responded = {
@@ -381,13 +359,8 @@ class PlanningTaskStrategy(TaskStrategy):
             if team in responded:
                 responded[team] = True
 
-        # Street, Town or City and Postcode are siblings of the address rather
-        # than branches under it, so the value alias is reached directly.
-        address_parts = [
-            address.street_value if address else None,
-            address.town_or_city_value if address else None,
-            address.postcode_value if address else None,
-        ]
+        address_parts = [values.get('street_value'), values.get('town_or_city_value'),
+                         values.get('postcode_value')]
         address = [part for part in address_parts if part is not None and part != 'None']
         
         responseslug = utilities.get_response_slug(groupId) if groupId else None
@@ -399,9 +372,9 @@ class PlanningTaskStrategy(TaskStrategy):
             deadline = deadline_date.strftime("%d-%m-%Y")
 
         resource_data = {
-            'id': str(consultation.id),
+            'id': consultation_id,
             'state': 'Planning',
-            'displayname': consultation._.resource.descriptors['en']['name'],
+            'displayname': prefetched['names'].get(consultation_id),
             'status': action_status,
             'hierarchy_type': hierarchy_type,
             'assigned_to': assigned_to_names,

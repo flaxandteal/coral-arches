@@ -112,6 +112,10 @@ class Utilities():
                         '%Y-%m-%dT%H:%M:%S.%f%z']
         if not date_str:
             return datetime.min
+        try:
+            return datetime.fromisoformat(date_str).replace(tzinfo=None)
+        except ValueError:
+            pass
         for date_format in date_formats:
             try:
                 date = datetime.strptime(date_str, date_format)
