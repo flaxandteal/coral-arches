@@ -208,7 +208,7 @@ LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
 FILE_TYPE_CHECKING = None
 FILE_TYPES = ["bmp", "gif", "jpg", "jpeg", "pdf", "png", "psd", "rtf", "tif", "tiff", "xlsx", "csv", "zip"]
 FILENAME_GENERATOR = "arches.app.utils.storage_filename_generator.generate_filename"
-UPLOADED_FILES_DIR = os.environ.get("UPLOADED_FILES_DIR", "")
+UPLOADED_FILES_DIR = os.environ.get("UPLOADED_FILES_DIR", "uploadedfiles")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
@@ -450,7 +450,14 @@ AWS_SECRET_ACCESS_KEY=os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 AWS_ACCESS_KEY_ID=os.environ.get("AWS_ACCESS_KEY_ID", None)
 
 if AWS_STORAGE_BUCKET_NAME and AWS_S3_ENDPOINT_URL and AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID:
+    from botocore.config import Config as BotocoreConfig
+
     INSTALLED_APPS = (*INSTALLED_APPS, "storages",)
+    # botocore >=1.36 signs a CRC32 trailer that our MinIO rejects with XAmzContentSHA256Mismatch
+    AWS_S3_CLIENT_CONFIG = BotocoreConfig(
+        request_checksum_calculation="when_required",
+        response_checksum_validation="when_required",
+    )
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
