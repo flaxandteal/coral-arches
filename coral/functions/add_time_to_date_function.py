@@ -17,6 +17,7 @@ details = {
         "updateDateNodeGroup": "a5e15f5c-51a3-11eb-b240-f875a44e0e11",
         "amount": 21,
         "unit": 'days',
+        "createMissingTile": False,
         "triggering_nodegroups": ["4b195f82-50eb-5030-9f82-acdd3f7ba6c9"]},
     "classname": "AddTimeToDate",
     "component": "",
@@ -35,8 +36,11 @@ class AddTimeToDate(BaseFunction):
         unit = self.config["unit"]
         resourceinstance_id = tile.resourceinstance.resourceinstanceid
 
-        new_date = self.add_time_to_date(tile.data[triggeringDateNode], amount, unit)
+        triggering_date = tile.data.get(triggeringDateNode)
+        if not triggering_date:
+            return
         try:
+            new_date = self.add_time_to_date(triggering_date, amount, unit)
             self.updateTile(resourceinstance_id, updateDateNodeGroup, updateDateNode, new_date)
             logger.info(f"Updated tile with new date: {new_date}")
         except Exception as e:
@@ -49,24 +53,35 @@ class AddTimeToDate(BaseFunction):
             year = date.year + month // 12
             month = month % 12 + 1
             day = min(date.day, calendar.monthrange(year,month)[1])
-            return datetime.date(day, month, year)
+            return date.replace(year=year, month=month, day=day).strftime('%Y-%m-%d')
         elif unit == 'days':
             new_date = date + timedelta(days=amount)
             return new_date.strftime('%Y-%m-%d')
 
 
     def updateTile(self, resourceinstance_id, node_group_id, node_id, date):
-        reference_tile = Tile.objects.filter(
+        reference_tile = list(Tile.objects.filter(
             resourceinstance_id = resourceinstance_id,
             nodegroup_id = node_group_id
-        ).first()
+        ).order_by('sortorder', 'tileid'))
+        
+        if len(reference_tile) > 1:
+            logger.warning(
+                f"Resource {resourceinstance_id} has {len(reference_tile)} tiles for nodegroup {node_group_id}. Using the first one."
+            )
+            
+        reference_tile = reference_tile[0] if reference_tile else None
 
         if not reference_tile:
+            if not self.config.get("createMissingTile", False):
+                logger.warning(
+                    f"No tile found for resource {resourceinstance_id} and nodegroup {node_group_id}. Not creating a new tile."
+                )
+                return
             reference_tile = Tile.get_blank_tile_from_nodegroup_id(
                 resourceid = resourceinstance_id,
                 nodegroup_id = node_group_id
             )
-        
         
         reference_tile.data[node_id] = date
         reference_tile.save()

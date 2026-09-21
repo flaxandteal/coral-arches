@@ -152,16 +152,18 @@ class UpdateAssignedTo(BaseFunction):
                 for person in reassigned_users:
                     self.is_user_in_team(person['resourceId'], team)
 
-                try:
-                    filter_params = {
-                        'resourceinstance_id': str(tile.resourceinstance.resourceinstanceid),
-                        'nodegroup_id': ACTION,
-                    }
-                    action_tile = Tile.objects.filter(**filter_params).first()
-                except:
-                    raise Exception("Users could not be re-assigned as no users are currently assigned")
-
+                filter_params = {
+                    'resourceinstance_id': str(tile.resourceinstance.resourceinstanceid),
+                    'nodegroup_id': ACTION,
+                }
+                action_tile = Tile.objects.filter(**filter_params).order_by('sortorder', 'tileid').first()
+                
+                if not action_tile:
+                    logger.warning (f"No action tile found for resource {tile.resourceinstance.resourceinstanceid}. Not updating the action tile.")
+                    return 
+                
                 assigned_node = action_tile.data.get(ACTION_ASSIGNED_TO, None)
+                
                 if current_assigned and assigned_node:
                     for person in current_assigned:
                         assigned_node = [user for user in assigned_node if user['resourceId'] != person['resourceId']]

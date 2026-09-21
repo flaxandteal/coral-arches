@@ -140,6 +140,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(dashboard): restructure the planning dashboard to improve performance
 - fix(bucket): s3 bucket was not allowing uploads, added additional headers and set the default storage directory in `settings.py`
 - fix(workflow): update the ids to allow the statutory node update correctly based on the application type
+- fix(functions): stop add time to date from adding a blank tile to the action node of a consultation
+- fix(functions): reassigining a consultation no longer throws a 500 when there is no action tile. It returns None rather than raising.
 
 ### Notes
 
