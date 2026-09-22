@@ -41,8 +41,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   per graph — a term matching 27 resources took 74s (#850)
 - perf(search): the attribute filter panel no longer builds every facet on open — PrimeVue's
   accordion rendered all 209 of Heritage Asset's reference facets and hid them with CSS,
-  firing 1053 controlled list requests across 25 distinct lists (#NNN)
-- fix(search): selecting a filter checkbox no longer collapses every accordion panel (#NNN)
+  firing 1053 controlled list requests across 25 distinct lists (#849)
+- fix(search): selecting a filter checkbox no longer collapses every accordion panel (#849)
 - perf(workflows): share one in-flight request across a step's components for `/cards`, `/graphs` and `get_user_names` (#866)
 - perf(workflows): batch a step's `workflow_history` patches into one post per tick (#866)
 - perf(workflows): build one `GraphModel` per resource rather than one per component (#866)
@@ -98,12 +98,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   (#864)
 - test: the HB and HM response workflow specs open a consultation instead of clicking a "Start
   New" button those workflows have never had (#864)
-- perf(workflows): share one in-flight request across a step's components for `/cards`, `/graphs` and `get_user_names` (#866)
-- perf(workflows): batch a step's `workflow_history` patches into one post per tick (#866)
-- perf(workflows): build one `GraphModel` per resource rather than one per component (#866)
-- perf(workflows): build only the card branch a component displays, not every top card on the resource (#866)
-- perf(tiles): defer tile-save re-indexing to a celery task, collapsing a step's saves into one re-index (#866)
-- fix(workflows): refetch a component's card data after it saves, so values written by functions are displayed (#866)
 - fix(shim): `manage.py migrate` runs again. `coral/views/file_template.py` imported
   `UserViewModel` at module scope, and because that module is reachable from the URLconf that
   migrate's system checks load, the proxy model registered itself against an app that ships no
@@ -124,15 +118,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   they trigger on and the node they read the generated number from, so the number was written
   but never carried across, and anything reading the reference numbers — the planning dashboard
   included — saw nothing (#870)
-- fix(shim): `manage.py migrate` runs again. `coral/views/file_template.py` imported
-  `UserViewModel` at module scope, and because that module is reachable from the URLconf that
-  migrate's system checks load, the proxy model registered itself against an app that ships no
-  migrations — aborting every migrate, on a fresh database or an existing one, with
-  `InvalidBasesError`. The import is now local to the function that uses it (#868)
-- chore(seed): the `seed_test_*` management commands refuse to run unless
-  `CORAL_ALLOW_TEST_SEED=1` is set. They create logins with a shared published password, attach a
-  published TOTP key to `admin`, and `seed_test_permissions` deletes and rewrites every Group's
-  tiles before rebuilding the casbin policy table (#868)
 - fix(file-template): remove the check against file storage to build the path as the path is always the same.
 - fix(workflows): The consultation map could not diplay the GIS data correctly from the imported files. This allows the geometry data to be read correctly
 - fix(workflows): add a save_descriptors call before the task to reindex the workflow step saves to ensure the correct descriptor is calculated
@@ -196,19 +181,3 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   `coral/functions/notify_planning.py` already hold the ids that list will carry, so the
   assign-to-team notifications stay dormant until the rebuilt graphs are loaded, and need
   no further code change when they are.
-
-- Nothing seeds the search configs automatically. After deploying #849 run
-  `search_config load-filters` and `search_config load-cards`, or filters and cards will
-  not appear. `--prune-empty` needs representative data to be meaningful
-- Result type chip counts no longer include resources reached only by relationship, so
-  they get smaller, but they now agree with the total which they never did before. Set
-  `CORAL_FAST_RESOURCE_TYPE_COUNTS = False` to restore the old behaviour
-- Run `manage.py index_descriptors` after a full arches_search reindex to rebuild the
-  descriptor terms
-- The arches_search filter panel is patched by shadowing its component from `coral/src`.
-  See `coral/src/README.md` for what is overridden and when each one can be deleted —
-  both are staged as upstream PRs
-- Each arches_search patch is behind a settings flag: `CORAL_PRUNE_EMPTY_REPORT_SECTIONS`,
-  `CORAL_INDEX_DESCRIPTORS`, `CORAL_DESCRIPTOR_RELEVANCE_SORT`,
-  `CORAL_FAST_RESOURCE_TYPE_COUNTS`. Set one to `False` to fall back to stock behaviour
-  without a deploy
