@@ -3,12 +3,11 @@ import $ from 'jquery';
 import ko from 'knockout';
 import koMapping from 'knockout-mapping';
 import arches from 'arches';
-import GraphModel from 'models/graph';
 import CardViewModel from 'viewmodels/card';
-import ProvisionalTileViewModel from 'viewmodels/provisional-tile';
 import AlertViewModel from 'viewmodels/alert';
 import uuid from 'uuid';
-import Cookies from 'js-cookie';
+import queueWorkflowHistory from 'utils/workflow-history-queue';
+import { cardDataFor, invalidateCardData, getGraphModel, selectTopCards, makeProvisionalTileViewModel } from 'utils/workflow-card-data';
 import workflowComponentAbstractTemplate from 'templates/views/components/workflows/workflow-component-abstract.htm';
 
 function NonTileBasedComponent() {
@@ -109,7 +108,8 @@ function TileBasedComponent() {
             });
         }
 
-        $.getJSON(( arches.urls.api_card + this.getCardResourceIdOrGraphId() ), function(data) {
+        var cardDataId = this.getCardResourceIdOrGraphId();
+        cardDataFor(self, cardDataId).then(function(data) {
             var handlers = {
                 'after-update': [],
                 'tile-reset': []
@@ -123,29 +123,19 @@ function TileBasedComponent() {
             };
 
             self.reviewer = data.userisreviewer;
-            self.provisionalTileViewModel = new ProvisionalTileViewModel({
+            self.provisionalTileViewModel = makeProvisionalTileViewModel({
                 tile: self.tile,
                 reviewer: data.userisreviewer
             });
 
-            var graphModel = new GraphModel({
-                data: {
-                    nodes: data.nodes,
-                    nodegroups: data.nodegroups,
-                    edges: []
-                },
-                datatypes: data.datatypes
-            });
+            var graphModel = getGraphModel(cardDataId, data);
 
             self.graphModel = graphModel;
 
-            self.topCards = _.filter(data.cards, function(card) {
-                var nodegroup = _.find(data.nodegroups, function(group) {
-                    return group.nodegroupid === card.nodegroup_id;
-                });
-                return !nodegroup || !nodegroup.parentnodegroup_id;
-            }).map(function(card) {
-                self.componentData.parameters.nodegroupid = self.componentData.parameters.nodegroupid || card.nodegroup_id;
+            var selected = selectTopCards(data, ko.unwrap(self.componentData.parameters.nodegroupid));
+            self.componentData.parameters.nodegroupid = self.componentData.parameters.nodegroupid || selected.nodegroupid;
+
+            self.topCards = selected.cards.map(function(card) {
                 return new CardViewModel({
                     card: card,
                     graphModel: graphModel,
@@ -848,28 +838,11 @@ function WorkflowComponentAbstract(params) {
     };
 
     this.setToWorkflowHistory = async function(key, value) {
-        const workflowid = self.workflowId;
-        const workflowname = self.workflowName;
-
-        const workflowHistory = {
-            workflowid,
-            workflowname,
-            completed: false,
+        // Batched: the Django view patches in these keys, keeping existing ones.
+        await queueWorkflowHistory(self.workflowId, self.workflowName, {
             componentdata: {
-                // Django view will patch in this key, keeping existing keys
-                [self.id()]: {
-                    [key]: value,
-                },
+                [self.id()]: { [key]: value },
             },
-        };
-
-        await fetch(arches.urls.workflow_history + workflowid, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                "X-CSRFToken": Cookies.get('csrftoken')
-            },
-            body: JSON.stringify(workflowHistory),
         });
 
     };
@@ -916,6 +889,7 @@ function WorkflowComponentAbstract(params) {
 
         // only saves updated tiles
         if (ko.unwrap(self.dirty) || ko.unwrap(self.hasDirtyTiles) || ko.unwrap(self.hasUnsavedData)) {
+            invalidateCardData(self);
             if (self.componentData.tilesManaged === "many"){
                 self.saveMultiTiles();
             } else {

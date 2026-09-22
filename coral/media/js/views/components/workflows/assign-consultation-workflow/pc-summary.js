@@ -23,18 +23,18 @@ function viewModel(params) {
     label: 'Planning Consultation',
     planningRef: {
       label: 'Planning Reference',
-      nodegroupId: 'b4974044-c768-11ee-a945-0242ac180006',
-      renderNodeIds: [{ nodeId: 'b4974a58-c768-11ee-a945-0242ac180006', label: 'Reference' }]
+      nodegroupId: 'f7aa45ad-8811-5bcf-b9cf-ac24b4a593ec',
+      renderNodeIds: [{ nodeId: '8be0fb93-164a-5d51-904f-61a81b8f8b77', label: 'Reference' }]
     },
     cmRef: {
       label: 'CM Reference',
-      nodegroupId: '9d158534-c768-11ee-a945-0242ac180006',
-      renderNodeIds: [{ nodeId: '9d15ac44-c768-11ee-a945-0242ac180006', label: 'Reference' }]
+      nodegroupId: '82b4d25a-e6d1-5c54-b2a5-0ecfcd55f9c6',
+      renderNodeIds: [{ nodeId: '92775edc-b192-5b1d-bd64-f2ad5befb8fa', label: 'Reference' }]
     },
     difReceivedDate: {
       label: 'DfI Received Date',
-      nodegroupId: '04492152-c769-11ee-82c4-0242ac180006',
-      renderNodeIds: [{ nodeId: '04494bbe-c769-11ee-82c4-0242ac180006', label: 'Date' }]
+      nodegroupId: '4b195f82-50eb-5030-9f82-acdd3f7ba6c9',
+      renderNodeIds: [{ nodeId: '932dee8f-ebc8-57ea-bac3-18920b43f4a6', label: 'Date' }]
     },
     applicationType: {
       label: 'Application Type',
@@ -44,17 +44,17 @@ function viewModel(params) {
     targetDate: {
       label: 'Target Date',
       nodegroupId: 'a5e15f5c-51a3-11eb-b240-f875a44e0e11',
-      renderNodeIds: [{ nodeId: '06adec44-69b7-11ee-908a-0242ac120002', label: 'Date' }]
+      renderNodeIds: [{ nodeId: '345e7fda-7f62-5e55-8fed-85e68b13dade', label: 'Date' }]
     },
     hierarchy: {
       label: 'Hierarchy',
-      nodegroupId: '0dd6ccb8-cffe-11ee-8a4e-0242ac180006',
-      renderNodeIds: [{ nodeId: '0dd6ccb8-cffe-11ee-8a4e-0242ac180006', label: 'Type' }]
+      nodegroupId: '3e16208d-9560-5998-8ba1-203cd599a5d8',
+      renderNodeIds: [{ nodeId: '3e16208d-9560-5998-8ba1-203cd599a5d8', label: 'Type' }]
     },
     classificationType: {
       label: 'Classification Type',
-      nodegroupId: '86caf026-c76c-11ee-bf7c-0242ac180006',
-      renderNodeIds: [{ nodeId: '86caf026-c76c-11ee-bf7c-0242ac180006', label: 'Type' }]
+      nodegroupId: 'b8145921-c586-5f67-9439-ed4d65b93091',
+      renderNodeIds: [{ nodeId: 'b8145921-c586-5f67-9439-ed4d65b93091', label: 'Type' }]
     },
     developmentType: {
       label: 'Development Type',
@@ -82,46 +82,46 @@ function viewModel(params) {
     },
     addressDetails: {
       label: 'Address Details',
-      nodegroupId: '083e14f2-ca61-11ee-afca-0242ac180006',
+      nodegroupId: 'f4908c19-4196-5af0-964c-aa01f61acf4d',
       renderNodeIds: [
-        { nodeId: '083f97a0-ca61-11ee-afca-0242ac180006', label: 'Building Name' },
-        { nodeId: '083e8f4a-ca61-11ee-afca-0242ac180006', label: 'Street' },
-        { nodeId: '083f8ad0-ca61-11ee-afca-0242ac180006', label: 'Town or City' },
-        { nodeId: '083fafe2-ca61-11ee-afca-0242ac180009', label: 'County' },
-        { nodeId: '083f8f26-ca61-11ee-afca-0242ac180006', label: 'Postcode' },
-        { nodeId: '083fafe2-345c-11ef-a5b7-0242ac120003', label: 'Townland' }
+        { nodeId: '9e55221a-64dc-53df-808d-78239337f189', label: 'Building Name' },
+        { nodeId: '99c2f475-8b28-548b-908d-e3d8be9ee299', label: 'Street' },
+        { nodeId: 'c662b678-849d-53ba-89be-3f961fcb7a19', label: 'Town or City' },
+        { nodeId: 'a0d16bd7-3705-56d7-8d05-d13a777861ad', label: 'County' },
+        { nodeId: '70d69cb7-26a9-5234-ac38-4b968846247e', label: 'Postcode' },
+        { nodeId: 'e552e839-c4d4-51a3-b747-2ac83f335f60', label: 'Townland' }
       ]
     },
     council: {
       label: 'Council',
-      nodegroupId: '69500360-d7c5-11ee-a011-0242ac120006',
-      renderNodeIds: [{ nodeId: '69500360-d7c5-11ee-a011-0242ac120006', label: 'Selection' }]
+      nodegroupId: '4ddb3a60-3d1c-5873-8168-ed0ba1c92644',
+      renderNodeIds: [{ nodeId: '4ddb3a60-3d1c-5873-8168-ed0ba1c92644', label: 'Selection' }]
     },
     irishGridRef: {
       label: 'Irish Grid Reference',
-      nodegroupId: '083e226c-ca61-11ee-afca-0242ac180006',
-      renderNodeIds: [{ nodeId: 'ac3eb490-1682-11ef-b68e-0242ac120006', label: 'Reference (TM65)' }]
+      nodegroupId: 'ea3cf6bc-4cd8-5eb3-b9aa-dc81e3a0bc2a',
+      renderNodeIds: [{ nodeId: 'ed684560-b4f7-5e43-ade8-33ed3bb699c4', label: 'Reference (TM65)' }]
     },
     areaNames: {
       label: 'Localities/Administrative Areas',
-      nodegroupId: '083dc93e-ca61-11ee-afca-0242ac180006',
+      nodegroupId: '1448f713-2d3d-5a71-8029-351537e5cadf',
       renderNodeIds: [
-        { nodeId: '083f0db2-ca61-11ee-afca-0242ac180006', label: 'Area Type' },
-        { nodeId: '083ea3ae-ca61-11ee-afca-0242ac180006', label: 'Area Name' }
+        { nodeId: '9ac6381b-f090-59ee-a444-0664fb5de8c0', label: 'Area Type' },
+        { nodeId: '5ac602cd-7c66-5079-b62b-cd73a0dd7e7a', label: 'Area Name' }
       ]
     },
     locationDescription: {
       label: 'Location Description',
-      nodegroupId: '083e1bb4-ca61-11ee-afca-0242ac180006',
-      renderNodeIds: [{ nodeId: '083eae58-ca61-11ee-afca-0242ac180006', label: 'Description' }]
+      nodegroupId: '8c2f532a-1a1b-5fd0-a9f7-fb66a934832e',
+      renderNodeIds: [{ nodeId: '41dfc72c-2b8f-5462-b05d-76c588ac0b05', label: 'Description' }]
     },
     assignment: {
       label: 'Assignment',
-      nodegroupId: 'dc9bfb24-cfd9-11ee-8cc1-0242ac180006',
+      nodegroupId: '9898db6b-1a2f-5163-9df6-bf9cb92bf559',
       renderNodeIds: [
-        { nodeId: '6b8f5866-2f0d-11ef-b37c-0242ac140006', label: 'Team' },
-        // { nodeId: 'fbdd2304-cfda-11ee-8cc1-0242ac180006', label: 'Re-Assigned To' },
-        { nodeId: '50d15bec-cfda-11ee-8cc1-0242ac180006', label: 'Assigned To' }
+        { nodeId: '9f71504d-6c1e-53b7-8d33-f03f8e6ccdca', label: 'Team' },
+        // { nodeId: '7b4b1596-5592-544b-9651-ecf800202f98', label: 'Re-Assigned To' },
+        { nodeId: '16b43c47-0513-5c96-b817-030d200d113b', label: 'Assigned To' }
       ]
     }
   };

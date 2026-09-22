@@ -208,7 +208,7 @@ LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
 FILE_TYPE_CHECKING = None
 FILE_TYPES = ["bmp", "gif", "jpg", "jpeg", "pdf", "png", "psd", "rtf", "tif", "tiff", "xlsx", "csv", "zip"]
 FILENAME_GENERATOR = "arches.app.utils.storage_filename_generator.generate_filename"
-UPLOADED_FILES_DIR = os.environ.get("UPLOADED_FILES_DIR", "")
+UPLOADED_FILES_DIR = os.environ.get("UPLOADED_FILES_DIR", "uploadedfiles")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
@@ -246,6 +246,8 @@ ELASTICSEARCH_HOSTS = [{"scheme": "http", "host": os.environ.get("ESHOST", "loca
 
 # a prefix to append to all elasticsearch indexes, note: must be lower case
 ELASTICSEARCH_PREFIX = 'coral'
+
+INDEX_BATCH_SIZE = 2000 
 
 REFERENCES_INDEX_NAME = "references"
 ELASTICSEARCH_CUSTOM_INDEXES = [
@@ -406,7 +408,7 @@ CONTENT_SECURITY_POLICY = {
         "img-src": [SELF, "blob:", "data:", "mo.ev.openindustry.in"],
         "font-src": [SELF, "blob:", "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
         "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
-        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
+        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com", "tiles.openfreemap.org"],
         "worker-src": [SELF, "blob:"],
     },
 }
@@ -414,6 +416,18 @@ CONTENT_SECURITY_POLICY = {
 X_FRAME_OPTIONS = 'DENY'
 
 MAPBOX_API_KEY = os.environ.get("MAPBOX_API_KEY", MAPBOX_API_KEY)
+
+BASEMAPS = [
+    {
+        "name": "bright",
+        "title": "Light",
+        "url": os.environ.get(
+            "BASEMAP_STYLE_URL",
+            "https://tiles.openfreemap.org/styles/bright",
+        ),
+        "addtomap": True,
+    }
+]
 
 USE_LOCAL_STORAGE = os.environ.get("USE_LOCAL_STORAGE", "False").lower() == "true"
 
@@ -436,7 +450,14 @@ AWS_SECRET_ACCESS_KEY=os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 AWS_ACCESS_KEY_ID=os.environ.get("AWS_ACCESS_KEY_ID", None)
 
 if AWS_STORAGE_BUCKET_NAME and AWS_S3_ENDPOINT_URL and AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID:
+    from botocore.config import Config as BotocoreConfig
+
     INSTALLED_APPS = (*INSTALLED_APPS, "storages",)
+    # botocore >=1.36 signs a CRC32 trailer that our MinIO rejects with XAmzContentSHA256Mismatch
+    AWS_S3_CLIENT_CONFIG = BotocoreConfig(
+        request_checksum_calculation="when_required",
+        response_checksum_validation="when_required",
+    )
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
@@ -604,6 +625,18 @@ CACHES = {
         'LOCATION': 'dashboard_version_cache',
     }
 }
+
+# -- arches_search patches ----------------------------
+
+CORAL_PRUNE_EMPTY_REPORT_SECTIONS = True
+
+CORAL_INDEX_DESCRIPTORS = True
+
+CORAL_DESCRIPTOR_RELEVANCE_SORT = os.environ.get("CORAL_DESCRIPTOR_RELEVANCE_SORT", "True").lower() != "false"
+
+CORAL_FAST_RESOURCE_TYPE_COUNTS = os.environ.get("CORAL_FAST_RESOURCE_TYPE_COUNTS", "True").lower() != "false"
+
+# -- arches_search patches end -------------------------
 
 # Hide nodes and cards in a report that have no data
 HIDE_EMPTY_NODES_IN_REPORT = True

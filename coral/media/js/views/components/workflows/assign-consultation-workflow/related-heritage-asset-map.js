@@ -8,10 +8,10 @@ import componentTemplate from 'templates/views/components/workflows/assign-consu
 
 function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
-    this.RELATED_HERITAGE_NODE_ID = params.related_heritage_node_id ?? 'bc64746e-cf4a-11ef-997c-0242ac120007';
+    this.RELATED_HERITAGE_NODE_ID = params.related_heritage_node_id ?? 'fa23f9ec-2c03-5e94-9e00-d45a26a117b1';
     this.GEO_NODE_ID = params.geo_node_id ?? '87d3872b-f44f-11eb-bd0c-a87eeabdefba'; // Geometry node of the related heritage asset graph
     this.GEO_COORDS_NODE_ID = params.geo_coords_node_id ?? "87d3d7dc-f44f-11eb-bee9-a87eeabdefba"; // Co-ordinates node id for the related heritage asset graph
-    this.GEO_COORDS_INPUT_NODE = params.geo_coords_input_node ?? '083f3c7e-ca61-11ee-afca-0242ac180006'; // Node id for the graph that is displaying the map
+    this.GEO_COORDS_INPUT_NODE = params.geo_coords_input_node ?? '0c6cc29b-ad46-5833-a7d0-c231fcfb0cbd'; // Node id for the graph that is displaying the map
     this.tileId = this.tile.tileid;
     this.resourceId = this.tile.resourceinstance_id;
     this.shouldRender = ko.observable(false);
@@ -56,6 +56,10 @@ function viewModel(params) {
 
             if (this.assets[0] !== undefined) {
                 let featureData = this.assets[0].data[this.GEO_COORDS_NODE_ID]['features'];
+                // imported geometry carries no properties and no id, so the source asset is the only stable key
+                featureData.forEach(feature => {
+                    feature.properties = { ...feature.properties, fromHeritageAsset: resourceId };
+                });
                 return featureData;
             } else {
                 return;
@@ -82,19 +86,9 @@ function viewModel(params) {
             const tiles = await this.fetchTileData(this.resourceId, params.nodegroupid);
             const geom = await this.getGeometryData();
 
-            // mark the heritage assets to differentiate from points added in consultation
-            if (geom){
-                geom.features.forEach( feature => {
-                    feature.properties['fromHeritageAsset'] = true;
-                });
-            }
-
             // Check for existing data, if none get the HA geometries
             if (!tiles?.length) {  
-                if(!geom?.features?.length) {
-                    this.shouldRender(true);
-                    return;
-                }              
+                if(!geom?.features?.length) return;
                 geom.features.forEach( feature => {
                     feature.properties.nodeId = params.resourceid;
                 });
@@ -109,14 +103,14 @@ function viewModel(params) {
 
                 if(savedHAPoints.length > haPoints.length){
                     // Removes points if a HA is removed, all polygons are removed as they cannot be linked with a point
-                    const haIds = geom.features.map(f => f.id);
-                    const newHaPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && haIds.includes(feature.id));   
+                    const haIds = geom.features.map(f => f.properties.fromHeritageAsset);
+                    const newHaPoints = existingGeom.features.filter(feature => feature.geometry.type === 'Point' && haIds.includes(feature.properties.fromHeritageAsset));   
                     existingGeom.features = newHaPoints;
                     existingGeom.features.push(...consultationPoints);     
                 } else if (savedHAPoints.length === haPoints.length) {
                     // swtiches HA's if length of list is equal
-                    const savedIds = savedHAPoints.map(f => f.id).sort();
-                    const haIds = haPoints.map(f => f.id).sort();
+                    const savedIds = savedHAPoints.map(f => f.properties.fromHeritageAsset).sort();
+                    const haIds = haPoints.map(f => f.properties.fromHeritageAsset).sort();
 
                     // Check if the two arrays are equal in length and values
                     const arraysEqual = savedIds.length === haIds.length && savedIds.every((id, index) => id === haIds[index]);
@@ -127,8 +121,8 @@ function viewModel(params) {
                     }
                 } else {
                     // Update the tile with the HA geometries if extra added
-                    const existingIds = existingGeom.features.map(f => f.id);
-                    const newPoints = geom.features.filter(g => !existingIds.includes(g.id));
+                    const existingIds = existingGeom.features.map(f => f.properties.fromHeritageAsset);
+                    const newPoints = geom.features.filter(g => !existingIds.includes(g.properties.fromHeritageAsset));
                     if(newPoints.length){
                         newPoints.forEach(feature => {
                             feature.properties.nodeId = params.resourceId;
@@ -142,10 +136,7 @@ function viewModel(params) {
             else {
                 const tile = tiles[0];
 
-                if (!tile) {
-                    this.shouldRender(true);
-                    return;
-                }
+                if (!tile) return;
 
                 Object.keys(tile.data).forEach((nodeId) => {
                     this.setValue(tile.data[nodeId], nodeId);
@@ -154,9 +145,11 @@ function viewModel(params) {
                 // Reset dirty state
                 this.tile._tileData(koMapping.toJSON(this.tile.data));
             }
-            this.shouldRender(true);
         } catch (err) {
             console.error('failed fetching tile: ', err);
+        } finally {
+            // without this a failure above leaves the step blank rather than an empty map
+            this.shouldRender(true);
         }
     };
 

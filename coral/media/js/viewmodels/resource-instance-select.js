@@ -8,6 +8,7 @@ import resourceUtils from 'utils/resource';
 import selectWoo from 'select-woo';
 import resourceReportAbstract from 'views/components/resource-report-abstract';
 import 'views/components/related-instance-creator';
+import sharedRequest from 'utils/shared-request';
 
 var graphCache = {};
 
@@ -91,19 +92,25 @@ var ResourceInstanceSelectViewModel = function(params) {
         if (graphid in self.graphLookup){
             return Promise.resolve(self.graphLookup[graphid]);
         } else {
-            return window.fetch(`${arches.urls.graphs_api}${graphid}?cards=false&exclude=cards,domain_connections,edges,nodegroups,nodes,widgets`)
-                .then(function(response){
-                    if (!response.ok) {
-                        throw new Error(arches.translations.reNetworkReponseError);
-                    }
-                    return response.json();
-                })
-                .then(function(json){
-                    self.graphLookup[graphid] = json.graph;
-                    self.graphLookupKeys(Object.keys(self.graphLookup));
-                    self.graphIds.push(json.graph.graphid);
-                    return json.graph;
-                });
+            /* graphLookup is only written when the fetch resolves, so every
+               widget built in the same tick misses it and hits the network. */
+            return sharedRequest('graph:' + graphid, function(){
+                return window.fetch(`${arches.urls.graphs_api}${graphid}?cards=false&exclude=cards,domain_connections,edges,nodegroups,nodes,widgets`)
+                    .then(function(response){
+                        if (!response.ok) {
+                            throw new Error(arches.translations.reNetworkReponseError);
+                        }
+                        return response.json();
+                    })
+                    .then(function(json){
+                        self.graphLookup[graphid] = json.graph;
+                        return json.graph;
+                    });
+            }).then(function(graph){
+                self.graphLookupKeys(Object.keys(self.graphLookup));
+                self.graphIds.push(graph.graphid);
+                return graph;
+            });
         }
     };
 
@@ -407,7 +414,12 @@ var ResourceInstanceSelectViewModel = function(params) {
                 return self.url();
             },
             dataType: 'json',
-            quietMillis: 250,
+            // select-woo (a select2 v4 fork) reads `delay`, not the old
+            // select2 v3 `quietMillis` name; without a real `delay` here
+            // every keystroke fires its own request and aborts the last one,
+            // which can pile up requests faster than the server drains them
+            // under load and make the final, correct search take too long.
+            delay: 250,
             data: function(requestParams) {
                 let term = requestParams.term || '';
                 let page = requestParams.page || 1;

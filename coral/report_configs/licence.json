@@ -1,0 +1,256 @@
+{
+  "graph_slug": "licence",
+  "graph_name": "Licence",
+  "configs": {
+    "search": {
+      "name": "Licence",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Licence",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Contacts",
+            "nodegroup_alias": "contacts",
+            "node_aliases": [
+              "applicant",
+              "employing_body",
+              "licensee"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Communications",
+            "nodegroup_alias": "communications",
+            "node_aliases": [
+              "attendees",
+              "communication_description",
+              "communication_description_type",
+              "communication_type",
+              "date",
+              "digital_file_s_",
+              "follow_on_actions_n1",
+              "subject"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "CM References",
+            "nodegroup_alias": "cm_references",
+            "node_aliases": [
+              "cm_reference_number"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference_description",
+              "external_cross_reference_number",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Planning References",
+            "nodegroup_alias": "planning_references",
+            "node_aliases": [
+              "planning_reference"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Activities",
+            "nodegroup_alias": "associated_activities",
+            "node_aliases": [
+              "associated_activities"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Application Details",
+            "nodegroup_alias": "application_details",
+            "node_aliases": [
+              "application_details_note",
+              "application_stage_type",
+              "confirmation_of_funding_provided",
+              "excavation_reason_type",
+              "excavation_type",
+              "report_classification_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Correspondence",
+            "nodegroup_alias": "correspondence",
+            "node_aliases": [
+              "letter_n1",
+              "letter_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Cover Letter",
+            "nodegroup_alias": "cover_letter",
+            "node_aliases": [
+              "letter"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Dates",
+            "nodegroup_alias": "dates_n1",
+            "node_aliases": [
+              "acknowledged_date_n1",
+              "actual_end_date",
+              "actual_start_date",
+              "duration",
+              "proposed_start_date_n1",
+              "received_date_n1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Extension of Licence",
+            "nodegroup_alias": "extension_of_licence",
+            "node_aliases": [
+              "date_of_request_value",
+              "extension_of_licence_applied",
+              "grade_d_actor_n2",
+              "grade_d_decision_n2",
+              "grade_e_actor_n2",
+              "grade_e_decision_n2",
+              "issue_date_n1",
+              "valid_until_date_n1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "File(s)",
+            "nodegroup_alias": "file_s_",
+            "node_aliases": [
+              "file_s_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Files Checklist",
+            "nodegroup_alias": "files_checklist",
+            "node_aliases": [
+              "application_form",
+              "council_letter",
+              "developer_funding_form",
+              "pow"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Licence Names",
+            "nodegroup_alias": "licence_names",
+            "node_aliases": [
+              "name",
+              "name_currency",
+              "name_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Licence Number",
+            "nodegroup_alias": "licence_number",
+            "node_aliases": [
+              "licence_number_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Report",
+            "nodegroup_alias": "report",
+            "node_aliases": [
+              "archaeology_description",
+              "archaeology_found",
+              "classification_date_value",
+              "classification_type",
+              "classified_by_value",
+              "date_reported_value",
+              "document_reference_value",
+              "gis_dataset_checked_correct",
+              "gis_dataset_received",
+              "report_submitted"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Transfer of Licence",
+            "nodegroup_alias": "transfer_of_licence",
+            "node_aliases": [
+              "applicant_n1",
+              "date_requested_value",
+              "former_employing_body",
+              "former_licensee",
+              "grade_d_actor_n1",
+              "grade_d_decision_n1",
+              "grade_e_actor_n1",
+              "grade_e_decision_n1",
+              "issued_date_value",
+              "new_company",
+              "new_licensee"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

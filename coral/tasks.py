@@ -10,7 +10,7 @@ from coral.utils.remap_resources import RemapResources
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
-from django.db import transaction
+from django.db import connection, transaction
 from django.core.exceptions import ValidationError
 from coral.utils.casbin import SetApplicator
 from tempfile import NamedTemporaryFile
@@ -377,3 +377,41 @@ def reset_database(lock_code_enc):
             settings.CORAL_UPGRADE_WINDOW_FILE
         )
         return
+
+
+@shared_task(autoretry_for=(Exception,), retry_backoff=True, max_retries=3)
+def index_resource_instance(resource_id):
+    """Recompute a whole resource's descriptors and re-index it, off the request path.
+
+    Dispatched by the Tile.index patch in coral.utils.deferred_tile_index, once
+    per tile save, so a step saving four tiles queues four of these. Both halves
+    rebuild from current database state, so only one of them has any work to do —
+    the rest take the advisory lock's no and return.
+
+    The lock is what makes that safe rather than merely cheaper: two of these
+    running at once would each read the resource and then overwrite the other's
+    document, and the one that wrote last is not necessarily the one that read
+    last, which loses a tile from the index with nothing to signal it.
+    """
+
+    # Advisory locks take a bigint, so fold the resource id down to one.
+    lock_id = int.from_bytes(uuid.UUID(resource_id).bytes[:8], "big", signed=True)
+
+    # The xact form releases on commit or rollback, so a task that dies holding
+    # it cannot wedge the resource.
+    with transaction.atomic():
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT pg_try_advisory_xact_lock(%s)", [lock_id])
+            if not cursor.fetchone()[0]:
+                return
+
+        try:
+            resource = Resource.objects.get(pk=resource_id)
+        except Resource.DoesNotExist:
+            # Deleted between the tile save and this task running; the delete
+            # path removes its documents, so there is nothing to index.
+            return
+
+        # Runs after the burst, so parallel tile saves cannot race the name back.
+        resource.save_descriptors()
+        resource.index()

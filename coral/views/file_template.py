@@ -45,6 +45,8 @@ from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
 import querysets_shim
 from querysets_shim.wkrm import get_well_known_resource_model_by_graph_id
+from querysets_shim.wrapper import _SemanticNode
+from coral.utils.reference_values import reference_label
 from zoneinfo import ZoneInfo
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
@@ -95,16 +97,8 @@ class FileTemplateView(View):
 
         fs = default_storage
         template_dict = self.get_template_path(template_id)
-        template_path = None
-        filesystem_class = default_storage.__class__.__name__
-        if filesystem_class == 'S3Boto3Storage':
-            template_path = os.path.join(
-                "docx", template_dict["filename"]
-            )
-        elif filesystem_class == 'FileSystemStorage':
-            template_path = os.path.join(
-                settings.APP_ROOT, "docx", template_dict["filename"]
-            )
+        # storage-relative: MEDIA_ROOT is APP_ROOT, so this resolves the same on S3 and local disk
+        template_path = os.path.join("docx", template_dict["filename"])
         try:
             self.doc = Document(fs.open(template_path))
         except:
@@ -116,14 +110,7 @@ class FileTemplateView(View):
              files = data.get('files')
              for file in files:
                 filename = file["name"].replace(" ", "_")
-                if filesystem_class == 'S3Boto3Storage':
-                    file_path = os.path.join(
-                        "uploadedfiles", filename
-                    )
-                elif filesystem_class == 'FileSystemStorage':
-                    file_path = os.path.join(
-                        settings.APP_ROOT, "uploadedfiles", filename
-                    )
+                file_path = os.path.join("uploadedfiles", filename)
                 try:
                     file = fs.open(file_path)
                     text = pdf_extract.extract_text(file.read())
@@ -557,11 +544,23 @@ class GenericTemplateProvider:
                         newloop += item[1].items()
                         found_semantic = True
                     except:
-                        segment = {item[0] : item[1]}
-                        mapping = mapping | self.processDatatypes(segment)
+                        repeated = self.repeated_items(item[1])
+                        if repeated:
+                            newloop += repeated
+                            found_semantic = True
+                        else:
+                            segment = {item[0] : item[1]}
+                            mapping = self.merge_mappings(mapping, self.processDatatypes(segment))
                     node_list = newloop
                     children_present = found_semantic
         return mapping
+
+    def repeated_items(self, value) -> list:
+        """(alias, value) pairs from each child of a repeating nodegroup, or [] if it is not one."""
+        try:
+            return [pair for child in value for pair in child.items()]
+        except:
+            return []
     
     def merge_mappings(self, original: dict, new: dict):
         merged = original.copy() if original is not None else {}
@@ -645,9 +644,16 @@ class GenericTemplateProvider:
 
             @return mapping: A processed Mapping with values stringified
         """
+        from querysets_shim.arches_django.datatypes.user import UserViewModel
+
         for item in mapping.items():
             alias, value = item
 
+            if isinstance(value, _SemanticNode):
+                # A reference node arrives as objects carrying their own labels; an empty
+                # nodegroup arrives as one of these too and has nothing to show.
+                mapping[alias] = reference_label(list(value))
+                continue
             if isinstance(value, querysets_shim.view_models.node_list.NodeListViewModel):
                 for node in value:
                     if isinstance(node, querysets_shim.view_models.semantic.SemanticViewModel):
@@ -655,7 +661,7 @@ class GenericTemplateProvider:
                 # TODO handle node lists that are not semantic e.g bibligraphic source is a resource-instance but has children. Currently we ignore the children 
                 mapping[alias] = None
                 continue
-            if isinstance(value, (querysets_shim.view_models.concepts.EmptyConceptValueViewModel, querysets_shim.arches_django.datatypes.user.UserViewModel)):
+            if isinstance(value, (querysets_shim.view_models.concepts.EmptyConceptValueViewModel, UserViewModel)):
                 mapping[alias] = None
                 continue
             if isinstance(value, (querysets_shim.view_models.resources.RelatedResourceInstanceListViewModel)):             
@@ -736,8 +742,8 @@ class MonumentTemplateProvider:
     MONUMENT_SYSTEM_REF_RESOURCE_ID_NODEGROUP = '325a2f2f-efe4-11eb-9b0c-a87eeabdefba'
     MONUMENT_SYSTEM_REF_RESOURCE_ID_NODE = '325a430a-efe4-11eb-810b-a87eeabdefba'
 
-    MONUMENT_CONTACTS_NODEGROUP = 'aa629840-d23e-11ee-9ae7-0242ac180006'
-    MONUMENT_CONTACTS_APPLICANT_NODE = 'aa62a736-d23e-11ee-9ae7-0242ac180006'
+    MONUMENT_CONTACTS_NODEGROUP = 'd62dd807-4739-59d7-91d1-e13038eb6eec'
+    MONUMENT_CONTACTS_APPLICANT_NODE = '81e17dca-83a5-5d0d-bd90-2cafec54eec3'
 
     MONUMENT_LOCALITIES_ADMIN_AREA_NODEGROUP = '87d38725-f44f-11eb-8d4b-a87eeabdefba'
     MONUMENT_AREA_NAME_NODE = '87d3c3ea-f44f-11eb-b532-a87eeabdefba'
@@ -745,11 +751,11 @@ class MonumentTemplateProvider:
     MONUMENT_ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba'
     MONUMENT_COUNTY_NODE = '87d3ff32-f44f-11eb-aa82-a87eeabdefba'
 
-    MONUMENT_CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006'
-    MONUMENT_CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006'
+    MONUMENT_CM_REFERENCE_NODEGROUP = 'c9c4e6dc-aa34-5254-a7b5-4f79bd8b73c1'
+    MONUMENT_CM_REFERENCE_NODE = '9c4a43d9-a689-5ba2-bed5-4fbbd6ad47e6'
 
-    SMC_RECEIVED_DATE_NODEGROUP = 'eeec9986-d23c-11ee-9373-0242ac180006'
-    SMC_RECEIVED_DATE_NODE = 'eeec9e68-d23c-11ee-9373-0242ac180006'
+    SMC_RECEIVED_DATE_NODEGROUP = 'f95a80c0-5509-5293-8ef9-5471a84055f4'
+    SMC_RECEIVED_DATE_NODE = '126b8c3c-d980-5ebc-8719-a8a8376577f6'
 
     APPLICANT_TITLE_NODEGROUP = '4110f741-1a44-11e9-885e-000d3ab1e588'
     APPLICANT_TITLE_NODE = '6da2f03b-7e55-11ea-8fe5-f875a44e0e11'
@@ -1025,8 +1031,8 @@ class LicenceTemplateProvider:
     ACTIVITY_COUNCIL_NODEGROUP = '5f81a8d4-d7de-11ee-b2c1-0242ac120006'
     ACTIVITY_COUNCIL_NODE = '5f81a8d4-d7de-11ee-b2c1-0242ac120006'
 
-    ACTIVITY_GRID_REFERENCES_NODEGROUP = '33b4430a-16be-11ef-8633-0242ac180006'
-    ACTIVITY_IRISH_GRID_REFERENCE_NODE = '4bd349a4-16be-11ef-af79-0242ac180006'
+    ACTIVITY_GRID_REFERENCES_NODEGROUP = 'a5416b43-f121-11eb-b691-a87eeabdefba'
+    ACTIVITY_IRISH_GRID_REFERENCE_NODE = '94c1b326-6ba9-5702-a7e2-5bc5eec17cee'
 
     ACTIVITY_LOCATION_DESCRIPTION_NODEGROUP = 'a541b934-f121-11eb-9d20-a87eeabdefba:'
     ACTIVITY_LOCATION_DESCRIPTION_NODE = 'a5416b40-f121-11eb-9cb6-a87eeabdefba'

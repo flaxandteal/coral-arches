@@ -12,6 +12,7 @@ Public submodules:
     querysets_shim.view_models       — view-model classes (Concept, NodeList, ResourceInstance)
     querysets_shim.datatypes         — datatype-specific helpers (django_group)
     querysets_shim.query_builder     — chainable query builder
+    querysets_shim.values            — read values off tiles without hydrating
 """
 
 from __future__ import annotations

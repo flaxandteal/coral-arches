@@ -1,0 +1,52 @@
+{
+  "graph_slug": "set",
+  "graph_name": "Set",
+  "configs": {
+    "search": {
+      "name": "Set",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Set",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Members",
+            "nodegroup_alias": "members",
+            "node_aliases": [
+              "members"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Nested Sets",
+            "nodegroup_alias": "nested_sets",
+            "node_aliases": [
+              "nested_sets"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Title",
+            "nodegroup_alias": "title",
+            "node_aliases": [
+              "title_text"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
