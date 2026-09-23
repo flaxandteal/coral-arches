@@ -31,12 +31,11 @@ ISSUE_REFERENCE_METATYPE_NODE = "50f2077e-b08e-5475-b028-0e323dbef26d"
 class Command(BaseCommand):
     help = (
         "Give a Heritage Asset an Issue Report so the Issue Report workflow's "
-        "launcher can open one. The launcher's 'Start New' button is hidden "
-        "(disableStartNew is set on the openableWorkflows entry in "
-        "coral/plugins/open-issue-report-workflow.json), so 'Open Selected' - "
-        "and therefore an Issue Report that already exists on the asset - is the "
-        "only way in, and a freshly seeded database has none. The launcher reads "
-        "the asset list from Elasticsearch, so the resource is reindexed here. "
+        "launcher has one to open. 'Start New' now creates its own, so this is "
+        "no longer the only way in - it exists so a spec can exercise 'Open "
+        "Selected' against a known reference (ISSUE-TEST-001) rather than one it "
+        "just made. The launcher reads the asset list from Elasticsearch, so the "
+        "resource is reindexed here. "
         "TEST ENVIRONMENTS ONLY - never run this against a real deployment."
     )
 
