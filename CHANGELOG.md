@@ -34,6 +34,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - The TM65 function node fix applies through `migrate` on deploy; no manual step
   needed.
 - fix(migrations): HA Revision relevant-parties nodes repointed at the live relationship concept, fixing the 500 on save
+- fix(letters): Letters step resolves the selected letter type's reference value before lookup, and keys the two advance listing letters on the live list items
 
 ### Notes
-- The migration applies through `migrate` on deploy.
+- The migration applies through `migrate` on deploy; the advance listing letter
+  `.docx` files must already exist in `docx/` in storage.

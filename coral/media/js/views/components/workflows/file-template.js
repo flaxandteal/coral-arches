@@ -9,6 +9,7 @@ import AlertViewModel from 'viewmodels/alert';
 import template from 'templates/views/components/workflows/file-template.htm';
 import { renderAsync as docxRenderAsync, defaultOptions as docxDefaultOptions } from 'docx-preview';
 import { showSaveFilePicker } from 'native-file-system-adapter';
+import { singleListItemId } from 'utils/reference-values';
 
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
@@ -52,7 +53,7 @@ function viewModel(params) {
         url: arches.urls.root + 'filetemplate',
         data: JSON.stringify({
           resourceinstance_id: params.resourceid,
-          template_id: this.selectedLetterType(),
+          template_id: singleListItemId(this.selectedLetterType()),
           config: params.config
         }),
         context: this,

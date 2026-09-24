@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 import json
+import logging
 import os
 import re
 import uuid
@@ -51,6 +52,10 @@ from zoneinfo import ZoneInfo
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
 import os
+
+logger = logging.getLogger(__name__)
+
+
 class FileTemplateView(View):
     def __init__(self):
         self.doc = None
@@ -101,7 +106,8 @@ class FileTemplateView(View):
         template_path = os.path.join("docx", template_dict["filename"])
         try:
             self.doc = Document(fs.open(template_path))
-        except:
+        except Exception:
+            logger.exception("coral: could not open letter template %s", template_path)
             return HttpResponseNotFound("No Template Found")
         
         if extract_pdf:
@@ -251,11 +257,11 @@ class FileTemplateView(View):
                 "filename": "extension-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
             },
-            "bb6e23cf-0331-ea39-7164-a3af1607a958": {
+            "7f28d22e-6fc2-25f7-df26-ab2d45502f7f": {
                 "filename": "advance-listing-letter-to-owner-occupier.docx",
                 "provider": GenericTemplateProvider,
             },
-            "95456a6b-30e0-b727-91f9-ccc0acfcac87": {
+            "7da22e36-5009-636f-4d98-453fd6e4c14f": {
                 "filename": "advance-listing-letter-to-council.docx",
                 "provider": GenericTemplateProvider,
             },
