@@ -240,6 +240,14 @@ def test_siblings_of_a_collapsed_nodegroup_stay_reachable():
     assert node.show_hb_number is True, node.show_hb_number
 
 
+def test_resource_items_resolves_underscore_prefixed_alias():
+    """`_legacy_record` is a real node alias; `__getattr__`'s privacy guard must not block `items()`."""
+    model = ResourceModel(resource_id='r1')
+    model._tree['_legacy_record'] = 'legacy-value'
+    got = dict(model.items())
+    assert got['_legacy_record'] == 'legacy-value', got
+
+
 def test_missing_attribute_still_raises():
     node = _SemanticNode({'members': {'members': []}}, path='Group')
     try:
@@ -258,6 +266,7 @@ if __name__ == '__main__':
     test_single_node_nodegroup_collapses_to_its_node()
     test_nodegroup_without_matching_node_is_left_alone()
     test_siblings_of_a_collapsed_nodegroup_stay_reachable()
+    test_resource_items_resolves_underscore_prefixed_alias()
     test_missing_attribute_still_raises()
     test_filters_go_to_sql_and_never_hydrate()
     test_only_filtered_nodes_are_annotated()

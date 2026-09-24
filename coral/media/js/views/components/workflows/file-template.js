@@ -9,6 +9,7 @@ import AlertViewModel from 'viewmodels/alert';
 import template from 'templates/views/components/workflows/file-template.htm';
 import { renderAsync as docxRenderAsync, defaultOptions as docxDefaultOptions } from 'docx-preview';
 import { showSaveFilePicker } from 'native-file-system-adapter';
+import { singleListItemId } from 'utils/reference-values';
 
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
@@ -52,7 +53,7 @@ function viewModel(params) {
         url: arches.urls.root + 'filetemplate',
         data: JSON.stringify({
           resourceinstance_id: params.resourceid,
-          template_id: this.selectedLetterType(),
+          template_id: singleListItemId(this.selectedLetterType()),
           config: params.config
         }),
         context: this,
@@ -119,8 +120,8 @@ function viewModel(params) {
   this.saveRelationship = async (resourceId) => {
     const id = uuid.generate();
 
-    this.tile.data[this.LETTER_TYPE_NODE] = "08bb630d-a27b-45bc-a13f-567b428018c5";
-    this.tile.data[this.LETTER_METATYPE] = '956f9779-3524-448e-b2de-eabf2de95d51';
+    this.tile.data[this.LETTER_TYPE_NODE] = this.selectedLetterType();
+    this.tile.data[this.LETTER_METATYPE] = null;
     this.tile.data[this.LETTER_RESOURCE_NODE] = [
       {
         resourceId: resourceId,
@@ -133,8 +134,8 @@ function viewModel(params) {
     const fileTileTemplate = {
       tileid: '',
       data: {
-        [this.LETTER_TYPE_NODE]: "08bb630d-a27b-45bc-a13f-567b428018c5",
-        [this.LETTER_METATYPE]: '956f9779-3524-448e-b2de-eabf2de95d51',
+        [this.LETTER_TYPE_NODE]: this.selectedLetterType(),
+        [this.LETTER_METATYPE]: null,
         [this.LETTER_RESOURCE_NODE]: [
           {
             resourceId: resourceId,
