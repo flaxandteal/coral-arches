@@ -22,5 +22,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(migration): Heritage Asset TM65 functions repointed at the live Irish Grid Reference node
 
 ### Notes
+- The TM65 function node fix applies through `migrate` on deploy; no manual step
+  needed.
