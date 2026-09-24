@@ -40,6 +40,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(letters): the letter tile records the chosen letter type instead of a pre-v8 concept id, so generated letters are linked and shown
 - fix(shim): `ResourceModel.items()` resolves aliases through the same lookup `_SemanticNode` uses, so a real node alias starting with `_` (e.g. `_legacy_record`) no longer raises
 - feat(seed): HA/04 carries values for every field the designation workflow shows
+- fix(workflows): Heritage Asset Details summary reads live node/nodegroup ids, and HA/04's seed carries values for every field the summary and the wider designation workflow show
+- feat(seed): `seed_test_ha_revision` builds an open Monument Revision for HA/04 via the same task the designation launcher uses, skipping if one is already open
 
 ### Notes
 - Run `python manage.py coral reload` after deploy for the Heritage Asset Designation workflow's Start step change.
