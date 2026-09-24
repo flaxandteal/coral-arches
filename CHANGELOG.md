@@ -33,3 +33,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   `get_plugin()` reads the `plugins` DB table, not the JSON file.
 - The TM65 function node fix applies through `migrate` on deploy; no manual step
   needed.
+- fix(migrations): HA Revision relevant-parties nodes repointed at the live relationship concept, fixing the 500 on save
+
+### Notes
+- The migration applies through `migrate` on deploy.
