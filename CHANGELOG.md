@@ -33,6 +33,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   `get_plugin()` reads the `plugins` DB table, not the JSON file.
 - The TM65 function node fix applies through `migrate` on deploy; no manual step
   needed.
+- fix(workflows): HA Designation launcher's revision list shows only the selected HA's revisions, not every HA's
 - fix(migrations): HA Revision relevant-parties nodes repointed at the live relationship concept, fixing the 500 on save
 - fix(letters): Letters step resolves the selected letter type's reference value before lookup, and keys the two advance listing letters on the live list items
 - fix(workflows): HA Designation Start step shows the revision's SMR Number from HA References, not the empty Generated SMR field
