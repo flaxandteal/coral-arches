@@ -120,8 +120,8 @@ function viewModel(params) {
   this.saveRelationship = async (resourceId) => {
     const id = uuid.generate();
 
-    this.tile.data[this.LETTER_TYPE_NODE] = "08bb630d-a27b-45bc-a13f-567b428018c5";
-    this.tile.data[this.LETTER_METATYPE] = '956f9779-3524-448e-b2de-eabf2de95d51';
+    this.tile.data[this.LETTER_TYPE_NODE] = this.selectedLetterType();
+    this.tile.data[this.LETTER_METATYPE] = null;
     this.tile.data[this.LETTER_RESOURCE_NODE] = [
       {
         resourceId: resourceId,
@@ -134,8 +134,8 @@ function viewModel(params) {
     const fileTileTemplate = {
       tileid: '',
       data: {
-        [this.LETTER_TYPE_NODE]: "08bb630d-a27b-45bc-a13f-567b428018c5",
-        [this.LETTER_METATYPE]: '956f9779-3524-448e-b2de-eabf2de95d51',
+        [this.LETTER_TYPE_NODE]: this.selectedLetterType(),
+        [this.LETTER_METATYPE]: null,
         [this.LETTER_RESOURCE_NODE]: [
           {
             resourceId: resourceId,
