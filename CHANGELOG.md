@@ -35,10 +35,12 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
   needed.
 - fix(migrations): HA Revision relevant-parties nodes repointed at the live relationship concept, fixing the 500 on save
 - fix(letters): Letters step resolves the selected letter type's reference value before lookup, and keys the two advance listing letters on the live list items
+- fix(workflows): HA Designation Start step shows the revision's SMR Number from HA References, not the empty Generated SMR field
 - fix(letters): the letter tile records the chosen letter type instead of a pre-v8 concept id, so generated letters are linked and shown
 - fix(shim): `ResourceModel.items()` resolves aliases through the same lookup `_SemanticNode` uses, so a real node alias starting with `_` (e.g. `_legacy_record`) no longer raises
 - feat(seed): HA/04 carries values for every field the designation workflow shows
 
 ### Notes
+- Run `python manage.py coral reload` after deploy for the Heritage Asset Designation workflow's Start step change.
 - The migration applies through `migrate` on deploy; the advance listing letter
   `.docx` files must already exist in `docx/` in storage.

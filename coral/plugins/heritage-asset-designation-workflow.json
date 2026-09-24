@@ -47,15 +47,17 @@
                 "parameters": {
                   "graphid": "65b1be1a-dfa4-49cf-a736-a1a88c0bb289",
                   "hiddenNodes": [
-                    "bcf507be-3ea8-11ef-8377-0242ac140006"
+                    "2948f54a-3aaf-11ef-91fd-0242ac120003",
+                    "7968e094-3aaf-11ef-91fd-0242ac120003",
+                    "b6ec253e-3aaf-11ef-a2d0-0242ac120003",
+                    "e7ee4eaa-3aaf-11ef-a2d0-0242ac120003"
                   ],
-                  "nodegroupid": "bcf507be-3ea8-11ef-8377-0242ac140006",
-                  "labels": [
-                    [
-                      "Generated SMR",
-                      "SMR Number"
-                    ]
-                  ]
+                  "nodegroupid": "2948f54a-3aaf-11ef-91fd-0242ac120003",
+                  "nodeOptions": {
+                    "59a7f542-3aaf-11ef-a2d0-0242ac120003": {
+                      "disabled": true
+                    }
+                  }
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
