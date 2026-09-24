@@ -36,6 +36,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(migrations): HA Revision relevant-parties nodes repointed at the live relationship concept, fixing the 500 on save
 - fix(letters): Letters step resolves the selected letter type's reference value before lookup, and keys the two advance listing letters on the live list items
 - fix(shim): `ResourceModel.items()` resolves aliases through the same lookup `_SemanticNode` uses, so a real node alias starting with `_` (e.g. `_legacy_record`) no longer raises
+- feat(seed): HA/04 carries values for every field the designation workflow shows
 
 ### Notes
 - The migration applies through `migrate` on deploy; the advance listing letter
