@@ -36,6 +36,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - feat(seed): `seed_test_ha_revision` builds an open Monument Revision for HA/04 via the same task the designation launcher uses, skipping if one is already open
 - fix(workflows): the evaluation meeting's last step renders again, and a new meeting with no building no longer errors
 - feat(seed): seeded HA/04-06 carry an HB Number so the evaluation meeting building picker lists them
+- feat(ci): Trivy vulnerability scan and CycloneDX/SPDX SBOM generation added to the build-arches workflow
 
 ### Notes
 - After deploy, run `python manage.py coral reload` so the `disableStartNew: false`
