@@ -40,6 +40,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): Evaluation Meeting Location Details reads the Heritage Asset by alias, shows reference labels, and no longer flashes node chains while loading
 - fix(migrations): unused Area Type list items (Council, County, Town, Townland and others) removed, leaving Barony, District, Parish and Ward
 - fix(migrations): Area Name list cut to Barony, District, Parish and Ward, after repointing each value to the same-named entry under its Area Type's heading; items still in use are kept
+- fix(notifications): the HA designation remap notification names the revision and its Open revision button opens the designation workflow again
 
 ### Notes
 - Migration 8017 rewrites Area Name tile data in SQL, which bypasses Arches signals, so run a search reindex after deploy.

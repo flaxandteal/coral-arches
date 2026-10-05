@@ -17,7 +17,6 @@ function NotificationViewModel(params) {
   this.displaytime = moment(params.created).format('dddd, DD MMMM YYYY | hh:mm A');
   this.id = params.id;
   this.loadedResources = params.loaded_resources;
-  this.state = params._state;
   this.link = params.link;
   this.message = params.message;
   this.files = params.files;
@@ -36,12 +35,11 @@ function NotificationViewModel(params) {
     });
   };
 
-  this.openFlagged = (resourceId, responseSlug) => {
+  // link is shared with other notifications (e.g. email links), so match the designation workflow path.
+  this.openLink = params.link?.startsWith(arches.urls.plugin('heritage-asset-designation-workflow')) ? params.link : null;
+  this.openRevision = () => {
     localStorage.setItem('workflow-open-mode', JSON.stringify(true));
-    let url = arches.urls.plugin(
-      `${responseSlug}?resource-id=${resourceId}`
-    );
-    window.window.location = url;
+    window.location = self.openLink;
   };
 
   this.getExportFile = function () {
