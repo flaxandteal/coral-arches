@@ -1,117 +1,81 @@
-from datetime import datetime
 from dateutil import parser
 from coral.views.dashboards.base_strategy import TaskStrategy
-from querysets_shim.view_models import ConceptListValueViewModel, ConceptValueViewModel
 from coral.views.dashboards.sql_query.builder import build_query
 from coral.views.dashboards.sql_query.config.designation_config import DESIGNATION_SQL_QUERY_CONFIG
+from coral.utils.reference_values import reference_label
 from django.db import connection, DatabaseError
 from arches_controlled_lists.models import ListItem
 from querysets_shim.adapter import admin
-from typing import List
+from querysets_shim.values import EMPTY, descriptor_names, values_by_resource, related_resource_ids
 
 
 class DesignationTaskStrategy(TaskStrategy):
 
-    # Aliases build_data/build_meeting_data read. `nodes` caps how many alias
-    # expressions get built, which is where the seconds go; it does not restrict
-    # the tile data returned, so listing these is a speed hint, not a filter.
-    DISPLAY_ALIASES = {
-        'Monument': [
-            'resourceid', 'hmc_reference_number', 'historic_parks_and_gardens',
-            'ihr_number', 'hb_number', 'smr_number', 'monument_type',
-            'input_date_value', 'statutory_consultee_notification_date_value',
-        ],
-        'Consultation': [
-            'resourceid', 'display_name_value', 'log_date',
-            'follow_up_meeting_date_value', 'council', 'related_monuments_and_areas',
-        ],
-    }
-    DISPLAY_ALIASES['MonumentRevision'] = DISPLAY_ALIASES['Monument']
-
-    def display_nodes(self, model_cls, model_name):
-        """Node objects for the aliases this dashboard displays, if resolvable."""
-        by_alias = model_cls._._node_objects_by_alias()
-        nodes = [by_alias[a] for a in self.DISPLAY_ALIASES[model_name] if a in by_alias]
-        return nodes or None
-
+    HERITAGE_ASSET_ALIASES = [
+        'resourceid', 'hmc_reference_number', 'historic_parks_and_gardens',
+        'ihr_number', 'hb_number', 'smr_number', 'monument_type',
+        'input_date_value', 'statutory_consultee_notification_date_value',
+    ]
+    MEETING_ALIASES = [
+        'resourceid', 'display_name_value', 'log_date',
+        'follow_up_meeting_date_value', 'council', 'related_monuments_and_areas',
+    ]
 
     def get_tasks(self, groupId, userResourceId, page=1, page_size=8, sort_by='resourceid', sort_order='desc', filter='all'):
         from querysets_shim.models import Monument, MonumentRevision, Consultation
         with admin():
-
-            resources = []
-            tasks = []
-
             filter_options = self.get_filter_options(groupId)
             filter_option = next((option for option in filter_options if option['id'] == filter), None)
             filter_dict = {'id': filter_option['id'], 'type': filter_option['type']}
 
-            def run_sql_query(
-                    sort_by=sort_by,
-                    sort_order=sort_order,
-                    page=page,
-                    page_size=page_size,
-                    count=False
-                ):
-                offset = (page-1)*page_size
-                limit = page_size if isinstance(page_size, int) else 8
-
+            def run_sql_query(count=False):
                 if count:
                     query = build_query(sort_by, count=True, filter=filter_dict, config=DESIGNATION_SQL_QUERY_CONFIG)
                 else:
-                    reverse = True if sort_order == 'desc' else False
-                    query = build_query(sort_by, reverse=reverse, filter=filter_dict, limit=limit, offset=offset, config=DESIGNATION_SQL_QUERY_CONFIG)
+                    limit = page_size if isinstance(page_size, int) else 8
+                    query = build_query(sort_by, reverse=sort_order == 'desc', filter=filter_dict,
+                                        limit=limit, offset=(page - 1) * limit, config=DESIGNATION_SQL_QUERY_CONFIG)
                 try:
                     with connection.cursor() as cursor:
                         cursor.execute(query)
-                        results = cursor.fetchall()
-                    return results
+                        return cursor.fetchall()
                 except Exception as e:
                     raise DatabaseError(f"Error executing SQL query: {e}")
-            
-            def get_counts():
-                results = run_sql_query(count=True)
-                counts = dict(results)
-                total = sum(counts.values())
-                counts['total'] = total
-                return counts
-                
-            results = run_sql_query()
-            models = {
-                'Monument': Monument,
-                'MonumentRevision': MonumentRevision,
-                'Consultation': Consultation,
+
+            rows = [(str(raw_id), model) for raw_id, _, model in run_sql_query()]
+            page_ids = [id for id, _ in rows]
+
+            def ids_of(model):
+                return [id for id, row_model in rows if row_model == model]
+
+            fields = {
+                **values_by_resource(Monument, ids_of('Monument'), self.HERITAGE_ASSET_ALIASES),
+                **values_by_resource(MonumentRevision, ids_of('MonumentRevision'), self.HERITAGE_ASSET_ALIASES),
+                **values_by_resource(Consultation, ids_of('Consultation'), self.MEETING_ALIASES),
             }
 
-            ordered_ids = []
-            ids_by_model = {}
-            for raw_id, _, model in results:
-                resource_id = str(raw_id)
-                ordered_ids.append(resource_id)
-                if model in models:
-                    ids_by_model.setdefault(model, []).append(resource_id)
+            related_ha = []
+            for values in fields.values():
+                related_ha += related_resource_ids(values.get('related_monuments_and_areas'))
 
-            found = {}
-            for model, ids in ids_by_model.items():
-                cls = models[model]
-                for instance in cls.find_many(ids, nodes=self.display_nodes(cls, model)):
-                    found[str(instance.id)] = instance
+            prefetched = {
+                'fields': fields,
+                'names': descriptor_names(page_ids + related_ha),
+            }
 
-            resources = [found[id] for id in ordered_ids if id in found]
+            counts = dict(run_sql_query(count=True))
+            total_resources = sum(counts.values())
+            counters = self.get_counters(counts=counts)
 
-            resource_counts = get_counts()
-            total_resources = resource_counts.get('total', 0)
-            counters = self.get_counters(counts=resource_counts)
+            tasks = []
+            for id, model in rows:
+                if model == 'Consultation':
+                    tasks.append(self.build_meeting_data(id, prefetched))
+                elif model in ('Monument', 'MonumentRevision'):
+                    tasks.append(self.build_data(id, model, prefetched))
 
-            for resource in resources:
-                if isinstance(resource, Consultation):
-                    task = self.build_meeting_data(resource)
-                else:
-                    task = self.build_data(resource, groupId)
-                tasks.append(task)
-            
             return tasks, total_resources, counters
-    
+
     def get_sort_options(self):
         """Return the available sort options for designation tasks."""
         return [
@@ -164,161 +128,74 @@ class DesignationTaskStrategy(TaskStrategy):
             }
         }
     
-    def build_data(self, resource, groupId):
-        from querysets_shim.models import Monument, MonumentRevision
-
-        # A nodegroup with no tile reads as None, and a cardinality-n one as [].
-        # system_reference_numbers is always present: the query selects on it.
-        references = resource.heritage_asset_references
-        hmc_reference = resource.hmc_reference
-        sign_off = resource.sign_off
-        phases = resource.construction_phases
-        approvals = resource.approvals
+    def build_data(self, resource_id, model, prefetched):
+        values = prefetched['fields'].get(resource_id, EMPTY)
+        notification_dates = [d for d in values.all('statutory_consultee_notification_date_value') if d]
 
         resource_data = {
-            'id': str(resource.id),
-            'resourceid': resource.system_reference_numbers.resourceid,
+            'id': resource_id,
+            'resourceid': values.get('resourceid'),
             'state': 'HeritageAsset',
-            'displayname': resource._.resource.descriptors.get('en', {}).get('name'),
-            'hmcreferencenumber': hmc_reference.hmc_reference_number if hmc_reference else None,
-            'historicparksandgardens': references.historic_parks_and_gardens if references else None,
-            'ihrnumber': references.ihr_number if references else None,
-            'hbnumber': references.hb_number if references else None,
-            'smrnumber': references.smr_number if references else None,
-            'monumenttype': self.reference_labels(phases[0].monument_type) if phases else None,
-            'inputdatevalue': sign_off.input_date_value if sign_off else None,
+            'displayname': prefetched['names'].get(resource_id),
+            'hmcreferencenumber': values.get('hmc_reference_number'),
+            'historicparksandgardens': values.get('historic_parks_and_gardens'),
+            'ihrnumber': values.get('ihr_number'),
+            'hbnumber': values.get('hb_number'),
+            'smrnumber': values.get('smr_number'),
+            'monumenttype': self.reference_labels(values.get('monument_type')),
+            'inputdatevalue': values.get('input_date_value'),
             'statutoryconsulteenotificationdatevalue': (
-                approvals[0].statutory_consultee_notification_date_value if approvals else None
+                max(notification_dates, key=parser.parse) if notification_dates else None
             ),
         }
 
-        if isinstance(resource, Monument):
+        if model == 'Monument':
             resource_data['model'] = 'Heritage Asset'
             resource_data['slugs'] = [
-            {'name': 'Add Building', 'slug': 'add-building-workflow'},
-            {'name': 'Add Monument', 'slug': 'add-monument-workflow'},
-            {'name': 'Add IHR', 'slug': 'add-ihr-workflow'},
-            {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
-        ]
-        if isinstance(resource, MonumentRevision):
+                {'name': 'Add Building', 'slug': 'add-building-workflow'},
+                {'name': 'Add Monument', 'slug': 'add-monument-workflow'},
+                {'name': 'Add IHR', 'slug': 'add-ihr-workflow'},
+                {'name': 'Add Garden', 'slug': 'add-garden-workflow'},
+            ]
+        else:
             resource_data['model'] = 'Designation'
             resource_data['slugs'] = [
-            {'name': 'Heritage Asset Designation', 'slug': 'heritage-asset-designation-workflow'},
-        ]
-            
-        if resource_data.get('statutoryconsulteenotificationdatevalue') and isinstance(resource_data['statutoryconsulteenotificationdatevalue'], list):
-            dates = []
-            for date in resource_data['statutoryconsulteenotificationdatevalue']:
-                date_obj = parser.parse(date)
-                dates.append(date_obj)
-            resource_data['statutoryconsulteenotificationdatevalue'] = str(max(dates))
+                {'name': 'Heritage Asset Designation', 'slug': 'heritage-asset-designation-workflow'},
+            ]
 
-        # transform returned values
-        date_values = [
-            'statutoryconsulteenotificationdatevalue',
-            'inputdatevalue'
-        ]
-        for value in date_values:
+        for value in ['statutoryconsulteenotificationdatevalue', 'inputdatevalue']:
             if resource_data.get(value):
                 resource_data[value] = self.convert_date_str(resource_data[value])
 
-        return resource_data 
-    
-    def build_meeting_data(self, resource):
-        references = resource.system_reference_numbers
-        display_name = resource.display_name
-        dates = resource.consultation_dates
-        evaluation = resource.evaluation
-        location = resource.location_data
+        return resource_data
+
+    def build_meeting_data(self, resource_id, prefetched):
+        values = prefetched['fields'].get(resource_id, EMPTY)
+        related_ha = related_resource_ids(values.get('related_monuments_and_areas'))
 
         resource_data = {
-            'id': str(resource.id),
-            'resourceid': references.resourceid if references else None,
+            'id': resource_id,
+            'resourceid': values.get('resourceid'),
             'state': 'Meeting',
             'model': 'Evaluation Meeting',
-            'displaynamevalue': display_name.display_name_value if display_name else None,
-            'logdate': dates.log_date if dates else None,
-            'followupmeetingdatevalue': evaluation.follow_up_meeting_date_value if evaluation else None,
-            'council': self.reference_labels(location.council) if location else None,
+            'displaynamevalue': values.get('display_name_value'),
+            'logdate': values.get('log_date'),
+            'followupmeetingdatevalue': values.get('follow_up_meeting_date_value'),
+            'council': self.reference_labels(values.get('council')),
+            'relatedmonumentsandareas': [prefetched['names'].get(ha) for ha in related_ha],
             'slugs': [{'name': 'Evaluation Meeting', 'slug': 'evaluation-meeting-workflow'}]
         }
 
-        resource_data['relatedmonumentsandareas'] = [
-            ha._instance.descriptors.get('en', {}).get('name')
-            for ha in resource.related_monuments_and_areas
-        ]
-        
-        # transform returned values
-        date_values = [
-            'logdate',
-            'followupmeetingdatevalue'
-        ]
-        for value in date_values:
+        for value in ['logdate', 'followupmeetingdatevalue']:
             if resource_data.get(value):
                 resource_data[value] = self.convert_date_str(resource_data[value])
 
-        return resource_data  
+        return resource_data
 
-    def reference_labels(self, references):
-        """Labels of a v8 reference node — the card renders these as the Type."""
-        labels = [
-            ListItem.find_best_label_from_set(reference.labels, 'en')
-            for reference in references or []
-        ]
+    def reference_labels(self, value):
+        """One label per selection — the card does `foreach` over the Type."""
+        labels = [reference_label([entry]) for entry in value or []]
         return [label for label in labels if label]
-
-    def extract_value(self, item):
-        """Helper function to extract the value from different datatypes"""
-        if isinstance(item, ConceptListValueViewModel):
-            return [concept.value.value for concept in item]
-        if isinstance(item, ConceptValueViewModel):
-            return item.value.value 
-        else:
-            return item
-
-    def get_values(self, nodes: List, resource):
-        values = resource._._values
-        resource_values = {}
-        for node in nodes:
-            value = values.get(node, None)
-            if isinstance(value, list) and value:
-                key = str(node).replace('_', '')
-                if len(value) == 1:
-                    resource_values[key] = self.extract_value(value[0].value)
-                else:
-                    resource_values[key] = [self.extract_value(item.value) for item in value]                   
-
-        return resource_values   
-    
-    def sort_resources(self, resources, field_accessors, sort_by, sort_order):
-        # Helper: safely retrieve the sort value
-        def safe_sort_value(resource):
-            accessors = field_accessors.get(sort_by, {})
-            resource_type = type(resource)
-            accessor = accessors.get(resource_type)
-            if accessor:
-                try:
-                    return accessor(resource)
-                except Exception:
-                    return None
-            return None
-
-        # Partition resources into those with a valid sort value and those with None
-        valid_items = []
-        none_items = []
-        for r in resources:
-            val = safe_sort_value(r)
-            if val == 'None' or val == None:
-                none_items.append(r)
-            else:
-                valid_items.append((r, val))
-        # Sort the valid items according to sort_order
-        reverse = (sort_order == 'desc')
-        sorted_valid = sorted(valid_items, key=lambda x: x[1], reverse=reverse)
-        
-        # Extract the sorted resource objects and append the ones with None
-        sorted_resources = [item[0] for item in sorted_valid] + none_items
-        return sorted_resources
 
     def convert_date_str(self, date_str):
         # ? The issue here is that the parse expects a string not a DateViewModel, therefore we convert it to a string
