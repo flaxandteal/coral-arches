@@ -46,6 +46,10 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ### Notes
 - Migration 8017 rewrites Area Name tile data in SQL, which bypasses Arches signals, so run a search reindex after deploy.
 - Run `python manage.py coral reload` for the designation workflow letter config (`fetch: placeholders`).
+- fix(workflows): HA Designation Start step no longer shows the SMR Number card; the reference numbers live on the Heritage Asset Details step, as #2047 intended
+
+### Notes
+- Run `python manage.py coral reload` after deploy for the Heritage Asset Designation Start step change.
 - After deploy, run `python manage.py coral reload` so the `disableStartNew: false`
   change in `open-issue-report-workflow.json` / `open-workflow.json` and the Heritage
   Asset Designation Start step change take effect — `get_plugin()` reads the
