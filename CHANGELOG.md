@@ -38,8 +38,11 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - feat(seed): seeded HA/04-06 carry an HB Number so the evaluation meeting building picker lists them
 - fix(functions): add building saves with a blank HB Number, clearing any existing one, instead of asking for a Ward and District
 - fix(workflows): Evaluation Meeting Location Details reads the Heritage Asset by alias, shows reference labels, and no longer flashes node chains while loading
+- fix(migrations): unused Area Type list items (Council, County, Town, Townland and others) removed, leaving Barony, District, Parish and Ward
+- fix(migrations): Area Name list cut to Barony, District, Parish and Ward, after repointing each value to the same-named entry under its Area Type's heading; items still in use are kept
 
 ### Notes
+- Migration 8017 rewrites Area Name tile data in SQL, which bypasses Arches signals, so run a search reindex after deploy.
 - After deploy, run `python manage.py coral reload` so the `disableStartNew: false`
   change in `open-issue-report-workflow.json` / `open-workflow.json` and the Heritage
   Asset Designation Start step change take effect — `get_plugin()` reads the
