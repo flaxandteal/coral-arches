@@ -47,13 +47,39 @@ from arches.app.views.tile import TileData
 import querysets_shim
 from querysets_shim.wkrm import get_well_known_resource_model_by_graph_id
 from querysets_shim.wrapper import _SemanticNode
-from coral.utils.reference_values import reference_label
+from coral.utils.reference_values import display_value, reference_label
 from zoneinfo import ZoneInfo
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
 import os
 
 logger = logging.getLogger(__name__)
+
+
+def placeholders(doc) -> set:
+    """Every <name> placeholder in the body, tables, headers and footers of a docx."""
+    paragraphs = list(doc.paragraphs)
+    for table in doc.tables:
+        for row in table.rows:
+            paragraphs += [p for cell in row.cells for p in cell.paragraphs]
+    for section in doc.sections:
+        paragraphs += section.header.paragraphs + section.footer.paragraphs
+    return {name for p in paragraphs for name in re.findall(r'<([^<>]+)>', p.text)}
+
+
+def split_placeholders(names, expand, special):
+    """(own aliases, {expand alias: [related aliases]}, special names) for a placeholder set."""
+    own, related, specials = set(), {}, set()
+    for name in names:
+        head, _, tail = name.partition("__")
+        if tail and head in expand:
+            related.setdefault(head, set()).add(tail)
+        elif name in special:
+            specials.add(name)
+        else:
+            own.add(name)
+    return own, related, specials
+
 
 
 class FileTemplateView(View):
@@ -284,21 +310,8 @@ class FileTemplateView(View):
         return { "filename": template_id, "provider": GenericTemplateProvider}
 
     def edit_letter(self, resource, provider, config):
-        # include = []
-
-        # if len(self.doc.paragraphs) > 0:
-        #     for paragraph in self.doc.paragraphs:
-        #          if re.search('<.*>', paragraph.text):
-        #             include += re.findall('<([^<]*)>', paragraph.text)
-
-        # if len(self.doc.tables) > 0:
-        #     for table in self.doc.tables:
-        #         for row in table.rows:
-        #             for cell in row.cells:
-        #                  if re.search('<.*>', cell.text):
-        #                     include += re.findall('<([^<]*)>', cell.text)
-
-        # config["include"] = include
+        if config.get("fetch") == "placeholders":
+            config["placeholders"] = placeholders(self.doc)
         mapping_dict = provider(resource).get_mapping(config)
 
         if config.get("extract_pdf", False):
@@ -615,6 +628,8 @@ class GenericTemplateProvider:
                 @example special: {'todays_date': ['make_date', 'today']} # adds 'todays_date' as an alias and uses the make_date function to create today's date
         """
         self.config = config
+        if config.get("fetch") == "placeholders":
+            return self.mapping_from_placeholders(config)
 
         # wkrm
         wkrm = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
@@ -633,15 +648,65 @@ class GenericTemplateProvider:
         # if "exclude" in self.config:
         #      semantic_node_list = [item for item in semantic_node_list if not item[0] in self.config['exclude']]
 
-        mapping = self.extract(semantic_node_list)  
-        if "special" in self.config:
-            for special_case in self.config["special"].items():
-                if special_case[1] == 'today':
-                    mapping[special_case[0]] = datetime.today().strftime("%d/%m/%Y")
-                elif special_case[1] == 'user':
-                     mapping = self.get_user(mapping, special_case[0])
+        mapping = self.extract(semantic_node_list)
+        mapping = self.apply_specials(mapping)
 
         return self.processDatatypes(mapping)         
+
+    def apply_specials(self, mapping:Mapping) -> Mapping:
+        for alias, special in self.config.get("special", {}).items():
+            if special == 'today':
+                mapping[alias] = datetime.today().strftime("%d/%m/%Y")
+            elif special == 'user':
+                mapping = self.get_user(mapping, alias)
+        return mapping
+
+    def mapping_from_placeholders(self, config) -> Mapping:
+        """Builds the mapping from a few alias queries, for just the letter's placeholders."""
+        from querysets_shim.adapter import admin
+        from querysets_shim.values import EMPTY, descriptor_names, related_resource_ids, values_by_resource
+        from arches.app.models.models import ResourceInstance
+
+        own, related, _ = split_placeholders(
+            config.get("placeholders", ()), config.get("expand", ()), config.get("special", {}))
+        model = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
+        rid = str(self.resource_instance.resourceinstanceid)
+        mapping = {}
+        with admin():
+            values = values_by_resource(model, [rid], list(own) + list(related)).get(rid, EMPTY)
+            mapping.update(self.stringify_values(model, values, own))
+            for alias, fields in related.items():
+                # ponytail: first owner only; one letter per owner is out of scope
+                owner_ids = related_resource_ids(values.get(alias))
+                if not owner_ids:
+                    continue
+                owner_id = owner_ids[0]
+                mapping[alias] = descriptor_names([owner_id])[owner_id]
+                graph_id = ResourceInstance.objects.values_list("graph_id", flat=True).get(pk=owner_id)
+                owner_model = get_well_known_resource_model_by_graph_id(graph_id)
+                owner_values = values_by_resource(owner_model, [owner_id], list(fields)).get(owner_id, EMPTY)
+                for name, text in self.stringify_values(owner_model, owner_values, fields).items():
+                    mapping[f"{alias}__{name}"] = text
+        return self.apply_specials(mapping)
+
+    def stringify_values(self, model, values, aliases) -> Mapping:
+        nodes = model._._node_objects_by_alias()
+        strings = {}
+        for alias in aliases:
+            if alias not in nodes:
+                continue
+            datatype = nodes[alias].datatype
+            texts = []
+            for value in values.all(alias):
+                if datatype in ("date", "edtf") and value:
+                    text = datetime.fromisoformat(value).strftime("%d/%m/%Y")
+                else:
+                    text = display_value(value, datatype)
+                if text:
+                    texts.append(text)
+            if texts:
+                strings[alias] = ", ".join(texts)
+        return strings
 
     def processDatatypes(self, mapping:Mapping) -> Mapping:
         """Provides the logic for extracting a node lists's values for different datatypes.
