@@ -10,6 +10,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from coral.utils.reference_values import (
+    display_value,
     has_list_item,
     reference_label,
     selected_list_item_ids,
@@ -110,6 +111,14 @@ def test_a_legacy_scalar_value_never_matches():
 def test_malformed_entries_are_skipped_not_fatal():
     assert selected_list_item_ids([None, 'junk', entry(HM_ITEM, 'HM')]) == {HM_ITEM}
     assert selected_list_item_ids([{'uri': 'x', 'list_id': 'y'}]) == set()
+
+
+def test_display_value_renders_references_as_labels():
+    assert display_value(HM_TILE_VALUE, 'reference') == 'HM'
+    assert display_value('12 High St', 'string') == '12 High St'
+    assert display_value(None, 'string') is None
+    assert display_value('', 'string') is None
+    assert display_value([], 'reference') is None
 
 
 if __name__ == '__main__':
