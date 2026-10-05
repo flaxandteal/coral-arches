@@ -23,6 +23,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 - fix(letters): designation letters fill in the owner and the asset's own address, fetching only the placeholders' values instead of hydrating the revision
+- perf(dashboards): designation dashboard reads card values off tiles without hydrating resources; evaluation meeting pages no longer error (#891)
 - fix(workflow): Start New on the Issue Report launcher always opens a fresh report, and other reports' tiles no longer leak into an open workflow
 - fix(migration): Heritage Asset TM65 functions repointed at the live Irish Grid Reference node
 - fix(workflows): reference dropdowns honour `disabled` from a workflow's nodeOptions
