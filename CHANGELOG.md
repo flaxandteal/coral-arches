@@ -37,11 +37,14 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): the evaluation meeting's last step renders again, and a new meeting with no building no longer errors
 - feat(seed): seeded HA/04-06 carry an HB Number so the evaluation meeting building picker lists them
 - fix(functions): add building saves with a blank HB Number, clearing any existing one, instead of asking for a Ward and District
+- fix(workflows): Evaluation Meeting Location Details reads the Heritage Asset by alias, shows reference labels, and no longer flashes node chains while loading
 
 ### Notes
 - After deploy, run `python manage.py coral reload` so the `disableStartNew: false`
   change in `open-issue-report-workflow.json` / `open-workflow.json` and the Heritage
   Asset Designation Start step change take effect — `get_plugin()` reads the
   `plugins` DB table, not the JSON file.
+- Run `python manage.py coral reload` and rebuild webpack for the Evaluation Meeting
+  Location Details change (`evaluation-meeting-workflow.json` now lists node aliases).
 - The TM65 and HA Revision relationship fixes apply through `migrate` on deploy.
 - The advance listing letter `.docx` files must already exist in `docx/` in storage.
