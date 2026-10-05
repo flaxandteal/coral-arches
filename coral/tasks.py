@@ -11,6 +11,7 @@ from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
 from django.db import connection, transaction
+from django.urls import reverse
 from django.core.exceptions import ValidationError
 from coral.utils.casbin import SetApplicator
 from tempfile import NamedTemporaryFile
@@ -122,12 +123,15 @@ def remap_monument_to_revision(user_id, target_resource_id):
         soft_delete_tile.save(context={"escape_function": True})
 
             
+        revision_name = f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}"
+        workflow_path = reverse("plugins", kwargs={"slug": "heritage-asset-designation-workflow"})
         notification = models.Notification(
-            message="The Monument remap process has completed you can now begin making isolated changes to this resource.",
+            message=f"The Monument remap process has completed for {revision_name}. You can now begin making isolated changes to this resource.",
             context={
                 "resource_instance_id": result['destinationResourceId'],
-                "resource_id": f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}",
-                "response_slug": "heritage-asset-designation-workflow"
+                "resource_id": revision_name,
+                "response_slug": "heritage-asset-designation-workflow",
+                "link": f"{workflow_path}?resource-id={result['destinationResourceId']}",
             },
         )
         notification.save()
