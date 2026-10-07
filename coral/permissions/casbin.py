@@ -598,7 +598,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
 
         return map_layers_with_write_permission
 
-    def get_nodegroups_by_perm(self, user: User, perms: str | Iterable[str], any_perm: bool=True) -> list[str]:
+    def get_nodegroups_by_perm(self, user: User, perms: str | Iterable[str], any_perm: bool=True) -> list[uuid.UUID]:
         """
         returns a list of node groups that a user has the given permission on
 
@@ -609,7 +609,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
 
         """
         return list(set(
-            str(nodegroup.pk)
+            nodegroup.pk
             for group in user.groups.all()
             for nodegroup in get_nodegroups_by_perm_for_user_or_group(group, perms, any_perm=any_perm)
         ))
@@ -1073,7 +1073,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
                     if result["permitted"] == "unknown":
                         nodegroups = self.get_nodegroups_by_perm(user, "models.delete_nodegroup")
                         tiles = TileModel.objects.filter(resourceinstance_id=resourceid)
-                        protected_tiles = {str(tile.nodegroup_id) for tile in tiles} - {str(nodegroup.nodegroupid) for nodegroup in nodegroups}
+                        protected_tiles = {str(tile.nodegroup_id) for tile in tiles} - {str(nodegroup) for nodegroup in nodegroups}
                         if len(protected_tiles) > 0:
                             return False
                         return user.groups.filter(name__in=settings.RESOURCE_EDITOR_GROUPS).exists() or self.user_can_delete_model_nodegroups(
