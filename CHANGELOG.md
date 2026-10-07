@@ -43,9 +43,11 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(migrations): unused Area Type list items (Council, County, Town, Townland and others) removed, leaving Barony, District, Parish and Ward
 - fix(migrations): Area Name list cut to Barony, District, Parish and Ward, after repointing each value to the same-named entry under its Area Type's heading; items still in use are kept
 - fix(notifications): the HA designation remap notification names the revision and its Open revision button opens the designation workflow again
+- fix(migrations): duplicate Historic England period entries (Medieval, Early Medieval, Uncertain …) removed from existing databases, existing values repointed to the surviving entry
 
 ### Notes
 - Migration 8017 rewrites Area Name tile data in SQL, which bypasses Arches signals, so run a search reindex after deploy.
+- Migration 8018 rewrites period values in SQL, which bypasses Arches signals, so run a search reindex after deploy.
 - Run `python manage.py coral reload` for the designation workflow letter config (`fetch: placeholders`).
 - fix(workflows): HA Designation Start step no longer shows the SMR Number card; the reference numbers live on the Heritage Asset Details step, as #2047 intended
 
