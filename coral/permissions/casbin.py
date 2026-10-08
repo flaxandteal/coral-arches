@@ -33,7 +33,7 @@ from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query, Bool, Terms, Nested
 from arches.app.search.search import SearchEngine
 from arches.app.search.mappings import RESOURCES_INDEX
-from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup, assign_perm
+from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup, assign_perm, _get_permission_framework
 from arches.app.permissions.arches_permission_base import get_nodegroups_by_perm_for_user_or_group, ArchesPermissionBase
 try:
     from arches.app.models.resource import UnindexedError
@@ -72,6 +72,30 @@ RESOURCE_TO_GRAPH_REMAPPINGS = {v[0]: GRAPH_REMAPPINGS[k] for k, v in REMAPPINGS
 
 class NoSubjectError(RuntimeError):
     pass
+
+
+def _ignore_sets():
+    return getattr(settings, "CORAL_PERMISSIONS_IGNORE_SETS", False)
+
+
+class CoralCasbinBackend(CasbinBackend):
+    # Arches 8 views ask has_perm("view_plugin", plugin); dauthz ignores object checks, so answer plugins from Casbin.
+    def has_perm(self, user_obj, perm, obj=None):
+        if not isinstance(obj, Plugin) or perm.split(".")[-1] != "view_plugin":
+            return super().has_perm(user_obj, perm, obj=obj)
+        if not user_obj.is_active or user_obj.is_anonymous:
+            return False
+        if user_obj.is_superuser:
+            return True
+        # The sidebar asks once per plugin; build the user's set once per request.
+        if not hasattr(user_obj, "_coral_plugin_perm_cache"):
+            framework = _get_permission_framework()
+            user_obj._coral_plugin_perm_cache = {
+                plugin for _, plugin, act in framework._enforcer.get_implicit_permissions_for_user(framework._subj_to_str(user_obj))
+                if act == "view_plugin"
+            }
+        return f"pl:{obj.pk}" in user_obj._coral_plugin_perm_cache or f"pl:{obj.slug}" in user_obj._coral_plugin_perm_cache
+
 
 class CasbinPermissionFramework(ArchesPermissionBase):
     is_exclusive = False  # DRAFT v8 port: matches ArchesDefaultAllowPermissionFramework. Set True if Casbin policy is exclusive (default-deny).
@@ -454,7 +478,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
     @staticmethod
     @context_free
     def get_permission_backend():
-        return CasbinBackend()
+        return CoralCasbinBackend()
 
     @context_free
     def remove_perm(self, perm, user_or_group=None, obj=None):
@@ -630,6 +654,9 @@ class CasbinPermissionFramework(ArchesPermissionBase):
         logger.debug(f"Checking resource instance permissions: {user} {resourceid}")
 
         try:
+            if _ignore_sets():
+                # "unknown" sends callers to their group/nodegroup fallback, which reads graph_id.
+                return {"permitted": "unknown", "resource": Resource.objects.get(pk=resourceid)}
             resource = Resource(resourceinstanceid=resourceid)
             try:
                 index = resource.get_index()
@@ -779,6 +806,8 @@ class CasbinPermissionFramework(ArchesPermissionBase):
             return set()
         if isinstance(user, User) and user.is_superuser is True:
             return None
+        if _ignore_sets():
+            return None
 
         sets = set()
         subj = self._subj_to_str(user)
@@ -828,7 +857,10 @@ class CasbinPermissionFramework(ArchesPermissionBase):
 
         if user.is_superuser is True:
             return []
-        
+        # Before the cache: its key is shared across users.
+        if _ignore_sets():
+            return []
+
         if allresources is True and not search_engine:
             search_engine = se
 

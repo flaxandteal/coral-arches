@@ -516,10 +516,14 @@ ALLOWED_SIGNUP_GROUPS = [
 ]
 
 USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
+
+CORAL_PERMISSIONS_IGNORE_SETS = os.getenv("CORAL_PERMISSIONS_IGNORE_SETS", "true").lower() == "true"
+
 if USE_CASBIN:
     AUTHENTICATION_BACKENDS = (
         *AUTHENTICATION_BACKENDS,
-        "dauthz.backends.CasbinBackend",
+        # Delegates has_perm to the framework's backend (CoralCasbinBackend), which answers plugin checks.
+        "arches.app.utils.permission_backend.PermissionBackend",
     )
     PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
     INSTALLED_APPS = (

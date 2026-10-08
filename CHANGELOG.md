@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(permissions): group members see their group's workflows and dashboards again — Arches 8 checks `has_perm`, which never reached Casbin; set-based resource restriction is skipped (`CORAL_PERMISSIONS_IGNORE_SETS`, default on), so everyone sees every resource while plugins and edit rights still come from groups
 - fix(permissions): resource reports show their cards and tiles again — Casbin returned node group ids as strings where core compares UUIDs
 - fix(workflows): applying an HA Designation revision no longer fails creating the merge tracker (its description type and metatype are now reference values)
 - fix(letters): designation letters fill in the owner and the asset's own address, fetching only the placeholders' values instead of hydrating the revision
