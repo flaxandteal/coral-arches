@@ -34,8 +34,11 @@ export default ko.components.register('tm65point', {
       }
 
       // If changed externally this will update it
+      this.lastWritten = undefined;
       this.value.subscribe((value) => {
-        this.tm65Val(value);
+        if (value !== this.lastWritten) {
+          this.tm65Val(value);
+        }
       });
 
       this.finalGridNumber = function (numberIn) {
@@ -51,9 +54,9 @@ export default ko.components.register('tm65point', {
       this.alphanumericTransform = function (alphaTM65, TM65Keys) {
         // CS - takes an alphanumeric value and ensures it has a valid grid square and 10 numbers in the value string.
         try {
-          var gridSquareLetters = alphaTM65.substring(0, 2);
+          var gridSquareLetters = alphaTM65.substring(0, 1);
           gridSquareLetters = gridSquareLetters.toUpperCase();
-          var gridSquareNumbers = alphaTM65.substring(2);
+          var gridSquareNumbers = alphaTM65.substring(1);
           var gridSquareNumbersSplit = gridSquareNumbers.length / 2;
 
           if (TM65Keys.includes(gridSquareLetters)) {
@@ -85,7 +88,7 @@ export default ko.components.register('tm65point', {
         // CS - Takes an absolute grid reference, checks it only contains numbers, works out the 100km grid quare
         // value and then pads the numerical value to create an Alphanumeric Grid Reference.
         try {
-          var absoluteTM65 = absoluteTM65.replace(',', '');
+          var absoluteTM65 = absoluteTM65.replace(/,/g, '');
           var absoluteTM65AsNumber = Number(absoluteTM65);
           if (isNaN(absoluteTM65AsNumber)) {
             console.log(
@@ -174,6 +177,9 @@ export default ko.components.register('tm65point', {
         var latLongSplit = latLong.split(',');
         var longValue = Number(latLongSplit[0]);
         var latValue = Number(latLongSplit[1]);
+        if (longValue >= 50 && longValue <= 56) {
+          [longValue, latValue] = [latValue, longValue];
+        }
         var longLatCoord = [longValue, latValue];
         try {
           var reprojectOSGBCoords = proj4('EPSG:4326', 'EPSG:29901', longLatCoord);
@@ -256,7 +262,7 @@ export default ko.components.register('tm65point', {
         } else {
           if (pre) {
             if (this.coordFormat() === 'Alphanumeric TM65' && pre) {
-              pre = pre.replace(' ', '');
+              pre = pre.replace(/\s/g, '');
               var firstInValue = pre.substring(0, 1);
               if (gridLettersValueArray.includes(firstInValue)) {
                 if (pre.length === 11) {
@@ -268,10 +274,10 @@ export default ko.components.register('tm65point', {
                 pre = '';
               }
             } else if (this.coordFormat() === 'Absolute TM65' && pre) {
-              pre = pre.replace(' ', '');
+              pre = pre.replace(/\s/g, '');
               pre = this.absoluteTM65Transform(pre, gridSquare);
             } else if (this.coordFormat() === 'Long/Lat' && pre) {
-              pre = pre.replace(' ', '');
+              pre = pre.replace(/\s/g, '');
               pre = this.longLatTransform(pre, gridSquare);
             } else if (this.coordFormat() === undefined && pre) {
               this.errorMessage(
@@ -285,11 +291,13 @@ export default ko.components.register('tm65point', {
 
             // Final Validation
             if (this.validateInput(pre, gridLettersValueArray) === true) {
+              this.lastWritten = pre;
               this.value(pre);
               this.errorMessage('');
               this.messageVisible(false);
               return pre;
             } else {
+              this.lastWritten = '';
               this.value('');
               this.errorMessage(
                 'Input coordinate did not pass validation.  Please check it is in one of the approved formats and try again.'
