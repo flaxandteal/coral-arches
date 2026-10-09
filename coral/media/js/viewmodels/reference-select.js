@@ -2,6 +2,8 @@ import ReferenceSelectViewModel from 'arches_controlled_lists/arches_controlled_
 
 export default function (params) {
     ReferenceSelectViewModel.call(this, params);
+    // Upstream never passes disabled on, so a workflow's nodeOptions could not disable it.
+    this.select2Config.disabled = this.disabled;
 
     const ajax = this.select2Config.ajax;
     const data = ajax.data;

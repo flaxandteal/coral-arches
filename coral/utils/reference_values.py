@@ -93,3 +93,11 @@ def reference_label(value, language='en'):
         if text:
             labels.append(text)
     return ', '.join(labels) if labels else None
+
+
+def display_value(value, datatype):
+    """Display string for one shim value, or None when it is empty."""
+    if value is None:
+        return None
+    text = reference_label(value) if datatype == 'reference' else str(value)
+    return text or None

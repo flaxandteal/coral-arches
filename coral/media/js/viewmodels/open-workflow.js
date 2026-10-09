@@ -59,10 +59,22 @@ const openWorkflowViewModel = function (params) {
       : 'Please select from below';
   }, this);
 
-  this.openWorkflow = async() => {
+  // openable-workflow.js reads this key once, POSTs it as openConfig, then
+  // deletes it -- so a startNew flag written here cannot outlive this one
+  // navigation and reach a later Open Selected.
+  const OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
+
+  this.openWorkflow = async(startNew) => {
     if (!this.selectedResource()) return;
     this.loading(true);
     localStorage.setItem(this.WORKFLOW_OPEN_MODE_LABEL, JSON.stringify(true));
+    if (startNew) {
+      const existingConfig = JSON.parse(localStorage.getItem(OPEN_WORKFLOW_CONFIG) || '{}');
+      localStorage.setItem(
+        OPEN_WORKFLOW_CONFIG,
+        JSON.stringify({ ...existingConfig, startNew: true })
+      );
+    }
     if (this.alert()) {
       this.loading(false);
       const alertData = this.alert();

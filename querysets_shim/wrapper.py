@@ -42,7 +42,7 @@ def _permitted_nodegroup_ids(user: Optional[Any], graphid: str) -> Optional[List
         from arches.app.utils.permission_backend import get_nodegroups_by_perm
 
         nodegroups = get_nodegroups_by_perm(user, "models.read_nodegroup")
-        return [str(ng.nodegroupid) for ng in nodegroups]
+        return [str(ng) for ng in nodegroups]
     except Exception as exc:
         logger.warning(
             "querysets_shim: permission lookup failed (%s) — defaulting to deny",
@@ -1031,8 +1031,21 @@ class ResourceModel:
         return list(sem) if sem is not None else []
 
     def items(self) -> List[Tuple[str, Any]]:
-        """Each top-level alias with its value, read through `__getattr__`."""
-        return [(alias, getattr(self, alias)) for alias in self.keys()]
+        """Each top-level alias with its value, resolved via `_lookup` so a `_`-prefixed alias isn't rejected by `__getattr__`'s guard."""
+        self._hydrate()
+        sem = object.__getattribute__(self, "_sem_root")
+        if sem is None:
+            return []
+        result = []
+        for alias in self.keys():
+            try:
+                value = sem._lookup(alias)
+            except AttributeError:
+                value = None
+            if value is None and self._is_list_field(alias):
+                value = []
+            result.append((alias, value))
+        return result
 
     def __getattr__(self, name: str) -> Any:
         if name.startswith("_"):

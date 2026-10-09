@@ -33,7 +33,7 @@ from arches.app.models.resource import Resource
 from arches.app.search.elasticsearch_dsl_builder import Query, Bool, Terms, Nested
 from arches.app.search.search import SearchEngine
 from arches.app.search.mappings import RESOURCES_INDEX
-from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup, assign_perm
+from arches.app.utils.permission_backend import PermissionFramework, NotUserNorGroup as ArchesNotUserNorGroup, assign_perm, _get_permission_framework
 from arches.app.permissions.arches_permission_base import get_nodegroups_by_perm_for_user_or_group, ArchesPermissionBase
 try:
     from arches.app.models.resource import UnindexedError
@@ -44,6 +44,7 @@ from querysets_shim.models import Person, Organization, Set, LogicalSet, Group, 
 from querysets_shim.view_models import ResourceInstanceViewModel
 from querysets_shim.arches_django.datatypes.django_group import MissingDjangoGroupViewModel
 from querysets_shim.adapter import context_free
+from querysets_shim.values import EMPTY, values_by_resource, related_resource_ids
 from coral.utils.reference_values import selected_list_item_ids
 from coral.utils.person_user import person_user
 from arches.app.search.search_engine_factory import SearchEngineInstance as se
@@ -72,6 +73,43 @@ RESOURCE_TO_GRAPH_REMAPPINGS = {v[0]: GRAPH_REMAPPINGS[k] for k, v in REMAPPINGS
 
 class NoSubjectError(RuntimeError):
     pass
+
+
+def _ignore_sets():
+    return getattr(settings, "CORAL_PERMISSIONS_IGNORE_SETS", False)
+
+
+class CoralCasbinBackend(CasbinBackend):
+    # Arches 8 views ask has_perm("view_plugin", plugin); dauthz ignores object checks, so answer plugins from Casbin.
+    def has_perm(self, user_obj, perm, obj=None):
+        if not isinstance(obj, Plugin) or perm.split(".")[-1] != "view_plugin":
+            return super().has_perm(user_obj, perm, obj=obj)
+        if not user_obj.is_active or user_obj.is_anonymous:
+            return False
+        if user_obj.is_superuser:
+            return True
+        # The sidebar asks once per plugin; build the user's set once per request.
+        if not hasattr(user_obj, "_coral_plugin_perm_cache"):
+            framework = _get_permission_framework()
+            user_obj._coral_plugin_perm_cache = {
+                plugin for _, plugin, act in framework._enforcer.get_implicit_permissions_for_user(framework._subj_to_str(user_obj))
+                if act == "view_plugin"
+            }
+        return f"pl:{obj.pk}" in user_obj._coral_plugin_perm_cache or f"pl:{obj.slug}" in user_obj._coral_plugin_perm_cache
+
+
+GROUP_GRAPH_ID = "07883c9e-b25c-11e9-975a-a4d18cec433a"
+PERSON_GRAPH_ID = "22477f01-1a44-11e9-b0a9-000d3ab1e588"
+
+
+def _plugin_keys(identifier):
+    """The `pl:` object keys (pk and slug) for an ArchesPlugin's uuid-or-slug identifier."""
+    try:
+        plugin = Plugin.objects.get(pk=uuid.UUID(identifier))
+    except ValueError:
+        plugin = Plugin.objects.get(slug=identifier)
+    return [f"pl:{key}" for key in (plugin.pk, plugin.slug) if key]
+
 
 class CasbinPermissionFramework(ArchesPermissionBase):
     is_exclusive = False  # DRAFT v8 port: matches ArchesDefaultAllowPermissionFramework. Set True if Casbin policy is exclusive (default-deny).
@@ -267,12 +305,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
                             logger.warn("A non-plugin resource was listed as an Arches plugin in a group: %s", str(exc))
                         continue
                     print(arches_plugin, "Arches Plugins #2")
-                    try:
-                        identifier = uuid.UUID(arches_plugin.plugin_identifier)
-                        plugin = Plugin.objects.get(pk=identifier)
-                    except ValueError:
-                        plugin = Plugin.objects.get(slug=arches_plugin.plugin_identifier)
-                    for obj_key in (f"pl:{key}" for key in (plugin.pk, plugin.slug) if key):
+                    for obj_key in _plugin_keys(arches_plugin.plugin_identifier):
                         self._enforcer.add_policy(group_key, obj_key, "view_plugin")
                         print("Arches Plugins #3", group_key, obj_key)
             except Exception as exc:
@@ -416,6 +449,67 @@ class CasbinPermissionFramework(ArchesPermissionBase):
         return group
 
     @context_free
+    def sync_group(self, group_id):
+        """Bring one Group's member, child-group and view_plugin rows in line with its resource."""
+        enforcer = self._enforcer
+        group_key = f"g1:{group_id}"
+        values = values_by_resource(Group, [group_id], ["members", "arches_plugins"]).get(str(group_id), EMPTY)
+
+        member_ids = [id for tile in values.all("members") for id in related_resource_ids(tile)]
+        graphs = {str(pk): str(graph) for pk, graph in ResourceInstance.objects.filter(pk__in=member_ids).values_list("pk", "graph_id")}
+        person_ids = [id for id in member_ids if graphs.get(id) == PERSON_GRAPH_ID]
+        accounts = values_by_resource(Person, person_ids, ["user_account"])
+        wanted_users = {f"u:{accounts[id].get('user_account')}" for id in person_ids if id in accounts and accounts[id].get("user_account")}
+        wanted_children = {f"g1:{id}" for id in member_ids if graphs.get(id) == GROUP_GRAPH_ID}
+
+        wanted_plugins = set()
+        plugin_ids = [id for tile in values.all("arches_plugins") for id in related_resource_ids(tile)]
+        for identifiers in values_by_resource(ArchesPlugin, plugin_ids, ["plugin_identifier"]).values():
+            try:
+                wanted_plugins.update(_plugin_keys(identifiers.get("plugin_identifier")))
+            except Exception:
+                logger.warning("Group %s lists a plugin that could not be resolved", group_id, exc_info=True)
+
+        current_users = {sub for sub, _ in enforcer.get_filtered_named_grouping_policy("g", 1, group_key) if sub.startswith("u:")}
+        current_children = {obj for _, obj in enforcer.get_filtered_named_grouping_policy("g", 0, group_key) if obj.startswith("g1:")}
+        current_plugins = {row[1] for row in enforcer.get_filtered_named_policy("p", 0, group_key) if row[2] == "view_plugin"}
+
+        for user in wanted_users - current_users:
+            enforcer.add_role_for_user(user, group_key)
+        for user in current_users - wanted_users:
+            enforcer.delete_role_for_user(user, group_key)
+        for child in wanted_children - current_children:
+            enforcer.add_named_grouping_policy("g", group_key, child)
+        for child in current_children - wanted_children:
+            enforcer.remove_named_grouping_policy("g", group_key, child)
+        for obj_key in wanted_plugins - current_plugins:
+            enforcer.add_policy(group_key, obj_key, "view_plugin")
+        for obj_key in current_plugins - wanted_plugins:
+            enforcer.remove_policy(group_key, obj_key, "view_plugin")
+
+        self._sync_resource_editor(wanted_users ^ current_users)
+
+        if os.getenv("CASBIN_LISTEN", False):
+            transaction.on_commit(trigger.request_reload)
+
+    def _sync_resource_editor(self, user_keys):
+        """Users directly in any Group not listed as read-only can edit, so they join Resource Editor."""
+        resource_editor = DjangoGroup.objects.filter(name="Resource Editor").first()
+        if resource_editor is None:
+            logger.warning("No Resource Editor group; membership not synced")
+            return
+        read_only = {f"g1:{id}" for id in settings.CORAL_READ_ONLY_GROUPS}
+        for user_key in user_keys:
+            user = User.objects.filter(pk=user_key[2:]).first()
+            if user is None:
+                continue
+            direct_groups = {role for role in self._enforcer.get_roles_for_user(user_key) if role.startswith("g1:")}
+            if direct_groups - read_only:
+                user.groups.add(resource_editor)
+            else:
+                user.groups.remove(resource_editor)
+
+    @context_free
     def update_groups_for_user(self, user):
         groups = {self._subj_to_str(group) for group in user.groups.all()}
         user = self._subj_to_str(user)
@@ -454,7 +548,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
     @staticmethod
     @context_free
     def get_permission_backend():
-        return CasbinBackend()
+        return CoralCasbinBackend()
 
     @context_free
     def remove_perm(self, perm, user_or_group=None, obj=None):
@@ -598,7 +692,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
 
         return map_layers_with_write_permission
 
-    def get_nodegroups_by_perm(self, user: User, perms: str | Iterable[str], any_perm: bool=True) -> list[str]:
+    def get_nodegroups_by_perm(self, user: User, perms: str | Iterable[str], any_perm: bool=True) -> list[uuid.UUID]:
         """
         returns a list of node groups that a user has the given permission on
 
@@ -609,7 +703,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
 
         """
         return list(set(
-            str(nodegroup.pk)
+            nodegroup.pk
             for group in user.groups.all()
             for nodegroup in get_nodegroups_by_perm_for_user_or_group(group, perms, any_perm=any_perm)
         ))
@@ -630,6 +724,9 @@ class CasbinPermissionFramework(ArchesPermissionBase):
         logger.debug(f"Checking resource instance permissions: {user} {resourceid}")
 
         try:
+            if _ignore_sets():
+                # "unknown" sends callers to their group/nodegroup fallback, which reads graph_id.
+                return {"permitted": "unknown", "resource": Resource.objects.get(pk=resourceid)}
             resource = Resource(resourceinstanceid=resourceid)
             try:
                 index = resource.get_index()
@@ -779,6 +876,8 @@ class CasbinPermissionFramework(ArchesPermissionBase):
             return set()
         if isinstance(user, User) and user.is_superuser is True:
             return None
+        if _ignore_sets():
+            return None
 
         sets = set()
         subj = self._subj_to_str(user)
@@ -828,7 +927,10 @@ class CasbinPermissionFramework(ArchesPermissionBase):
 
         if user.is_superuser is True:
             return []
-        
+        # Before the cache: its key is shared across users.
+        if _ignore_sets():
+            return []
+
         if allresources is True and not search_engine:
             search_engine = se
 
@@ -1073,7 +1175,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
                     if result["permitted"] == "unknown":
                         nodegroups = self.get_nodegroups_by_perm(user, "models.delete_nodegroup")
                         tiles = TileModel.objects.filter(resourceinstance_id=resourceid)
-                        protected_tiles = {str(tile.nodegroup_id) for tile in tiles} - {str(nodegroup.nodegroupid) for nodegroup in nodegroups}
+                        protected_tiles = {str(tile.nodegroup_id) for tile in tiles} - {str(nodegroup) for nodegroup in nodegroups}
                         if len(protected_tiles) > 0:
                             return False
                         return user.groups.filter(name__in=settings.RESOURCE_EDITOR_GROUPS).exists() or self.user_can_delete_model_nodegroups(
@@ -1405,16 +1507,20 @@ class CasbinTrigger:
     @context_free
     def request_reload(self):
         timestamp = _time.time()
-        with self.connect() as channel:
-            channel.basic_publish(
-                exchange=settings.CASBIN_RELOAD_QUEUE,
-                routing_key=settings.CASBIN_RELOAD_QUEUE,
-                body=json.dumps({"processKey": str(_PROCESS_KEY)}),
-                properties=pika.BasicProperties(
-                    delivery_mode=pika.DeliveryMode.Transient,
-                    timestamp=int(timestamp),
-                    expiration="1000",
+        # Rules are already saved when this runs; a RabbitMQ outage must not fail the save or rebuild.
+        try:
+            with self.connect() as channel:
+                channel.basic_publish(
+                    exchange=settings.CASBIN_RELOAD_QUEUE,
+                    routing_key=settings.CASBIN_RELOAD_QUEUE,
+                    body=json.dumps({"processKey": str(_PROCESS_KEY)}),
+                    properties=pika.BasicProperties(
+                        delivery_mode=pika.DeliveryMode.Transient,
+                        timestamp=int(timestamp),
+                        expiration="1000",
+                    )
                 )
-            )
+        except Exception:
+            logger.exception("Casbin reload request failed")
 
 trigger = CasbinTrigger()
