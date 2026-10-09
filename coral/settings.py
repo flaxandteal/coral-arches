@@ -131,11 +131,10 @@ APP_VERSION = semantic_version.Version(
 TIME_ZONE = "Europe/London"
 USE_TZ = True
 
-# Group resource ids whose members stay read-only: Read Access, PUBLIC Group.
+# Group resources whose members stay read-only; every other group's members get Resource Editor.
 CORAL_READ_ONLY_GROUPS = [
-    id.strip()
-    for id in os.getenv("CORAL_READ_ONLY_GROUPS", "1b556c4a-e346-45ff-8cb8-45164f97c4e4,452ab9f2-ed4c-44dc-9ad3-ff9085734bc8").split(",")
-    if id.strip()
+    "1b556c4a-e346-45ff-8cb8-45164f97c4e4",  # Read Access
+    "452ab9f2-ed4c-44dc-9ad3-ff9085734bc8",  # PUBLIC Group
 ]
 
 GROUPINGS = {
