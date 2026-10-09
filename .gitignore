@@ -33,3 +33,6 @@ dist/
 
 # Written by CI on non-main builds, read by settings.py for the displayed version
 coral/BUILD
+
+# Cypress failed-request/browser-error logs
+cypress/logs/
