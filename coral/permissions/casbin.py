@@ -111,13 +111,6 @@ def _plugin_keys(identifier):
     return [f"pl:{key}" for key in (plugin.pk, plugin.slug) if key]
 
 
-def _request_reload_quietly():
-    try:
-        trigger.request_reload()
-    except Exception:
-        logger.exception("Casbin reload request failed")
-
-
 class CasbinPermissionFramework(ArchesPermissionBase):
     is_exclusive = False  # DRAFT v8 port: matches ArchesDefaultAllowPermissionFramework. Set True if Casbin policy is exclusive (default-deny).
 
@@ -497,7 +490,7 @@ class CasbinPermissionFramework(ArchesPermissionBase):
         self._sync_resource_editor(wanted_users ^ current_users)
 
         if os.getenv("CASBIN_LISTEN", False):
-            transaction.on_commit(_request_reload_quietly)
+            transaction.on_commit(trigger.request_reload)
 
     def _sync_resource_editor(self, user_keys):
         """Users directly in any Group not listed as read-only can edit, so they join Resource Editor."""
@@ -1514,16 +1507,20 @@ class CasbinTrigger:
     @context_free
     def request_reload(self):
         timestamp = _time.time()
-        with self.connect() as channel:
-            channel.basic_publish(
-                exchange=settings.CASBIN_RELOAD_QUEUE,
-                routing_key=settings.CASBIN_RELOAD_QUEUE,
-                body=json.dumps({"processKey": str(_PROCESS_KEY)}),
-                properties=pika.BasicProperties(
-                    delivery_mode=pika.DeliveryMode.Transient,
-                    timestamp=int(timestamp),
-                    expiration="1000",
+        # Rules are already saved when this runs; a RabbitMQ outage must not fail the save or rebuild.
+        try:
+            with self.connect() as channel:
+                channel.basic_publish(
+                    exchange=settings.CASBIN_RELOAD_QUEUE,
+                    routing_key=settings.CASBIN_RELOAD_QUEUE,
+                    body=json.dumps({"processKey": str(_PROCESS_KEY)}),
+                    properties=pika.BasicProperties(
+                        delivery_mode=pika.DeliveryMode.Transient,
+                        timestamp=int(timestamp),
+                        expiration="1000",
+                    )
                 )
-            )
+        except Exception:
+            logger.exception("Casbin reload request failed")
 
 trigger = CasbinTrigger()
