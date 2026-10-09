@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(workflows): FMW Inspection monument panel shows designation type, townland and B-file again, loaded in one `/orm/resources` request
 - fix(permissions): resource reports show their cards and tiles again — Casbin returned node group ids as strings where core compares UUIDs
 - fix(workflows): applying an HA Designation revision no longer fails creating the merge tracker (its description type and metatype are now reference values)
 - fix(letters): designation letters fill in the owner and the asset's own address, fetching only the placeholders' values instead of hydrating the revision
