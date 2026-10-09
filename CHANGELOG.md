@@ -22,6 +22,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(permissions): editing a Group's members or plugins takes effect immediately, and group members other than Read Access / PUBLIC can save edits
+- fix(permissions): group members see their group's workflows and dashboards again — Arches 8 checks `has_perm`, which never reached Casbin; set-based resource restriction is skipped (`CORAL_PERMISSIONS_IGNORE_SETS`, default on), so everyone sees every resource while plugins and edit rights still come from groups
 - fix(permissions): resource reports show their cards and tiles again — Casbin returned node group ids as strings where core compares UUIDs
 - fix(workflows): applying an HA Designation revision no longer fails creating the merge tracker (its description type and metatype are now reference values)
 - fix(letters): designation letters fill in the owner and the asset's own address, fetching only the placeholders' values instead of hydrating the revision
@@ -50,6 +52,9 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ### Notes
 - Migration 8017 rewrites Area Name tile data in SQL, which bypasses Arches signals, so run a search reindex after deploy.
 - Migration 8018 rewrites period values in SQL, which bypasses Arches signals, so run a search reindex after deploy.
+- Migration 8019 registers the Sync Group Permissions function and attaches it to the Group graph on existing databases. Fresh installs get the attachment from the Group graph package (flaxandteal/coral-graphs#14), so regenerate `coral/pkg` from coral-graphs. Restart the app and worker after deploy.
+- Group edits already made before this deploy are not in Casbin until one full `recalculate_table()` runs (e.g. `coral.tasks.recalculate_permissions_table`); after that, saving a Group keeps Casbin current.
+- `CORAL_PERMISSIONS_IGNORE_SETS` defaults to on: everyone can read every resource. `CORAL_READ_ONLY_GROUPS` in settings (default Read Access and PUBLIC Group) lists the Group resources whose members don't get Resource Editor.
 - Run `python manage.py coral reload` for the designation workflow letter config (`fetch: placeholders`).
 - fix(workflows): HA Designation Start step no longer shows the SMR Number card; the reference numbers live on the Heritage Asset Details step, as #2047 intended
 
