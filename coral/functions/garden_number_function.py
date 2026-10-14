@@ -60,7 +60,7 @@ class GardenNumberFunction(BaseFunction):
             nodegroup_id=ADDRESS_NODEGROUP_ID,
         ).first()
 
-        county_name = reference_label(county_tile.data.get(COUNTY_NODE_ID))
+        county_name = county_tile and reference_label(county_tile.data.get(COUNTY_NODE_ID))
 
         if not county_name and not id_number:
             # Clear HPG Number
