@@ -4,6 +4,7 @@ import koMapping from 'knockout-mapping';
 import uuid from 'uuid';
 import arches from 'arches';
 import CardComponentViewModel from 'viewmodels/card-component';
+import { referenceLabel } from 'utils/reference-values';
 import template from 'templates/views/components/workflows/generate-garden-number.htm';
 
 function viewModel(params) {
@@ -79,12 +80,12 @@ function viewModel(params) {
   };
 
   this.generateGardenNumber = async () => {
-    if (!this.selectedCounty) return;
+    if (!this.selectedCounty()) return;
 
     params.pageVm.loading(true);
     const data = {
       resourceInstanceId: this.tile.resourceinstance_id,
-      selectedCountyId: this.selectedCounty()
+      selectedCountyLabel: referenceLabel(this.selectedCounty())
     };
     const response = await $.ajax({
       type: 'POST',
@@ -116,17 +117,7 @@ function viewModel(params) {
   this.hasDifferentCounty = ko.observable(false);
   this.checkCounty = async (value) => {
     if (!value) return;
-    const response = await $.ajax({
-      type: 'GET',
-      url: arches.urls.concept_value + `?valueid=${value}`,
-      dataType: 'json',
-      context: this,
-      error: (response, status, error) => {
-        console.log(response, status, error);
-      }
-    });
-
-    this.selectedAbbriviation(this.ABBREIVIATIONS[response.value]);
+    this.selectedAbbriviation(this.ABBREIVIATIONS[referenceLabel(value)]);
     this.hasDifferentCounty(!this.getValue().startsWith(this.selectedAbbriviation()));
   };
 

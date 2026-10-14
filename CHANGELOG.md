@@ -23,4 +23,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(garden): garden reference number reads the county from the reference, not `/conceptvalue/`; the view returns 400 for a missing or unknown county (#902)
+
 ### Notes
