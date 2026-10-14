@@ -23,6 +23,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(workflows): Agri & Forestry / DAERA related HAs show townland, county and type, and the scheduled monument count follows the selection; the Within Deadline label clears its switch (#904)
 - fix(garden): garden reference number reads the county from the reference, not `/conceptvalue/`; the view returns 400 for a missing or unknown county (#902)
 
 ### Notes
