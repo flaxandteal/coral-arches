@@ -23,4 +23,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(heritage-asset): saving the references card is fast, and only notifies when a number is set or changed (#903)
+
 ### Notes
+
+- Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
