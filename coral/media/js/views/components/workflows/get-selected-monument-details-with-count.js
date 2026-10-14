@@ -4,7 +4,10 @@ import koMapping from 'knockout-mapping';
 import uuid from 'uuid';
 import arches from 'arches';
 import CardComponentViewModel from 'viewmodels/card-component';
-import AlertViewModel from 'viewmodels/alert';
+import { hasListItem, referenceLabel } from 'utils/reference-values';
+
+const NO_DATA = 'No data available';
+const NO_REF_LABEL = 'Heritage Reference Number';
 import template from 'templates/views/components/workflows/get-selected-monument-details-with-count.htm';
 
 function viewModel(params) {
@@ -24,7 +27,7 @@ function viewModel(params) {
 
   this.ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba';
   this.TOWNLAND_NODEGROUP = 'ffaf4062-be4a-52e6-ace8-7e29014f96bc';
-  this.TOWNLAND_NODE = 'd033683a-345c-11ef-a5b7-0242ac120003';
+  this.TOWNLAND_NODE = 'b7ffd24b-2db2-5d8c-8d18-17870c566fea';
   this.COUNTY_NODE = "87d3ff32-f44f-11eb-aa82-a87eeabdefba";
 
   this.BFILE_NODEGROUP = "34e9c49c-5523-598a-98a2-32224336d197";
@@ -73,12 +76,13 @@ function viewModel(params) {
       currentResources.forEach(id => {
         this.cards({
           ...this.cards(), [id]: {
-            haType: "",
-            monumentName: "",
-            cmNumber: "",
-            smrNumber: "",
-            countyValue: "",
-            townlandValue: ""
+            haType: [NO_DATA],
+            haNumberLabel: NO_REF_LABEL,
+            monumentName: NO_DATA,
+            cmNumber: NO_DATA,
+            smrNumber: NO_DATA,
+            countyValue: NO_DATA,
+            townlandValue: [NO_DATA]
           }
         })
         this.getMonumentDetails(id);
@@ -99,38 +103,23 @@ function viewModel(params) {
     return data.tiles;
   };
 
-  let previousValue;
-
-  // get the old value of the drop down
-  if (this.tile.data[HA_NODE] && ko.isObservable(this.tile.data[HA_NODE])) {
-    this.tile.data[HA_NODE].subscribe(async(oldValue) => {
-      previousValue = oldValue;
-    }, null, "beforeChange");
-  }
-
-  // get the new value and compare with the previous to find what has been added
   if (this.tile.data[HA_NODE] && ko.isObservable(this.tile.data[HA_NODE])) {
     this.tile.data[HA_NODE].subscribe(async(newValue) => {
-      let newEntry = [];
-      if (previousValue){
-        newEntry = newValue.filter(item => previousValue.indexOf(item) === -1);
-      } else {
-        newEntry = newValue;
-      }
-      const monumentCount = this.tile.data[HA_NODE]().length;
-      this.tile.data[MONUMENT_COUNT_NODE](monumentCount);
-      const scheduledMonumentCount = await this.returnScheduledMonumentCount(ko.unwrap(newEntry[0].resourceId));
-      this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE](this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE]() + scheduledMonumentCount);
-    }, "arrayChange");
+      this.tile.data[MONUMENT_COUNT_NODE](newValue.length);
+      const counts = await Promise.all(
+        newValue.map(item => this.returnScheduledMonumentCount(ko.unwrap(item.resourceId)))
+      );
+      this.tile.data[SCHEDULED_MONUMENT_COUNT_NODE](counts.reduce((a, b) => a + b, 0));
+    });
   };
 
-  // check the HA recommend for scheduled monument - only present if revision merged in
+  // the HA's recommended designation holds the Scheduled Monument list item
   this.returnScheduledMonumentCount = async(resourceId) => {
-    const RECOMMENDED_DESIGNATION_NODE = "74ef37e0-37b5-11ef-9263-0242ac150006"
-    const SCHEDULED_MONUMENT_CONCEPT = "40462188-3aa9-cdaf-8b1d-3ed8dfa57df9"
+    const RECOMMENDED_DESIGNATION_NODE = "5aa9d22a-29c6-5de0-8119-84ee1e93081f";
+    const SCHEDULED_MONUMENT_ITEM = "1e898077-9144-9ef0-b6e1-08f4e4881972";
     const tileData = await this.fetchTileData(resourceId, RECOMMENDED_DESIGNATION_NODE);
     for(const tile of tileData){
-      if(tile.data[RECOMMENDED_DESIGNATION_NODE].includes(SCHEDULED_MONUMENT_CONCEPT)){
+      if(hasListItem(tile.data?.[RECOMMENDED_DESIGNATION_NODE], SCHEDULED_MONUMENT_ITEM)){
         return 1;
       }
     }
@@ -139,14 +128,12 @@ function viewModel(params) {
 
   this.getMonumentDetails = async (resourceId) => {
     const tiles = await this.fetchTileData(resourceId);
-    const countyValue = ko.observable('None');
-    const monumentName = ko.observable('None');
-    const haRefNumber = ko.observable('None');
-    const haNumberLabel = ko.observable('Heritage Asset Ref Number');
-    const haType = ko.observableArray(['None']);
-    const townlandValue = ko.observableArray(['None']);
-
-    const additionalPromises = []
+    const countyValue = ko.observable(NO_DATA);
+    const monumentName = ko.observable(NO_DATA);
+    const haRefNumber = ko.observable(NO_DATA);
+    const haNumberLabel = ko.observable(NO_REF_LABEL);
+    const haType = ko.observableArray([NO_DATA]);
+    const townlandValue = ko.observableArray([NO_DATA]);
 
     for (const tile of tiles) {
       if (tile.nodegroup === this.HERRITAGE_ASSET_REFERENCES_NODEGROUP) {
@@ -163,77 +150,17 @@ function viewModel(params) {
       }
 
       if (tile.nodegroup === this.ADDRESSES_NODEGROUP) {
-        const townlandData = tile.data[this.TOWNLAND_NODE];
-        const countyData = tile.data[this.COUNTY_NODE];
-
-        const idsToFetch = []
-        if (townlandData){
-          townlandValue.removeAll();
-          townlandData.forEach(id => {
-            idsToFetch.push({ key: this.TOWNLAND_NODE, id })
-          })
-        }
-        if (countyData){
-          idsToFetch.push({ key: this.COUNTY_NODE, id: countyData})
-        }
-
-        idsToFetch.forEach(id => {
-          additionalPromises.push($.ajax({
-            type: 'GET',
-            url: arches.urls.concept_value + `?valueid=${id.id}`,
-            context: self,
-            success: function (responseJSON, status, response) {
-              if(id.key === this.TOWNLAND_NODE){
-                townlandValue.push(responseJSON.value);
-              }
-              else if(id.key === this.COUNTY_NODE){
-                countyValue(responseJSON.value);
-              }
-            },
-            error: function (response, status, error) {
-              if (response.statusText !== 'abort') {
-                const alert = new AlertViewModel(
-                  'ep-alert-red',
-                  arches.translations.requestFailed.title,
-                  response.responseText
-                )
-                this.viewModel.alert(alert);
-              }
-              return
-            }
-          }))
-        })
+        const townland = referenceLabel(tile.data[this.TOWNLAND_NODE]);
+        const county = referenceLabel(tile.data[this.COUNTY_NODE]);
+        if (townland) townlandValue([townland]);
+        if (county) countyValue(county);
       }
 
       if (tile.nodegroup === this.CONSTRUCTION_NODEGROUP) {
-        const typeId = tile.data[this.HA_TYPE_NODE];
-        if (!typeId) continue;
-        haType.removeAll()
-        typeId.forEach(id => {
-          additionalPromises.push($.ajax({
-            type: 'GET',
-            url: arches.urls.concept_value + `?valueid=${id}`,
-            context: self,
-            success: function (responseJSON, status, response) {
-              haType.push(responseJSON.value);
-            },
-            error: function (response, status, error) {
-              if (response.statusText !== 'abort') {
-                const alert = new AlertViewModel(
-                  'ep-alert-red',
-                  arches.translations.requestFailed.title,
-                  response.responseText
-                )
-                this.viewModel.alert( alert );
-              }
-              return
-            }
-          }))
-        })
+        const type = referenceLabel(tile.data[this.HA_TYPE_NODE]);
+        if (type) haType([type]);
       }
     }
-
-    await Promise.all(additionalPromises);
 
     this.cards({
       ...this.cards(), [resourceId]: {
