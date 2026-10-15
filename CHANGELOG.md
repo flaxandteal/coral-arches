@@ -23,4 +23,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- build(cypress): pass CORAL_ALLOW_TEST_SEED into the container so seeding runs; run E2E on release branch pushes and on demand, not on every PR; run the person and organisation fixture specs first (#905)
+
 ### Notes
