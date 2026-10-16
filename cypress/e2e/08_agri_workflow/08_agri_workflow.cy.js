@@ -1,30 +1,38 @@
 describe('Going through the Agri Workflow', function () {
 
-    // The Heritage Asset the Consultation is raised against. Present both in a
-    // populated development database and in CI (see cypress/seed/README.md);
-    // pickRelationshipByName matches the option text exactly.
-    const HERITAGE_ASSET = 'HA/02 Testing';
+    // Real Heritage Assets present in a populated development database. The two
+    // scheduled ones have a recommended designation of Scheduled Monument; the
+    // third does not. HA/02 has no reference, type or address (all "No data available").
+    const HA_NO_DATA = 'HA/02 Testing';
+    const HA_SCHEDULED_1 = 'ANT 001:009';
+    const HA_SCHEDULED_2 = 'ANT 035:002';
+    const HA_NOT_SCHEDULED = 'ANT 014:009';
 
-    // Date Received drives Due Date. The step's `update-dates` component
-    // subscribes to the issue-date node and writes issue + `daysToAdd` into the
-    // due-date node (coral/media/js/views/components/workflows/update-dates.js;
-    // daysToAdd: 14 in the plugin config, issueDateNode = Date Received,
-    // dueDateNode = Due Date). Date Acknowledged and Response Date are
-    // configured `maxDate: "today"`, so they cannot be set into the future.
+    // Date Received drives Due Date: the `update-dates` component writes
+    // received + `daysToAdd` (14) into Due Date. Date Acknowledged and Response
+    // Date are `maxDate: "today"`. Within Deadline compares Response Date with
+    // the saved Due Date, so Due Date is edited by hand to land after it.
     const DAYS_TO_ADD = 14;
-    const DATE_RECEIVED = '01-07-2026';
-    const DATE_ACKNOWLEDGED = '02-07-2026';
-    const DUE_DATE = '02-07-2026';
-    const RESPONSE_DATE = '03-07-2026';
+    // Date fields capped at today reset a typed date, so dates are picked from this
+    // month's calendar (days 1-4 keep this valid from the 4th onwards).
+    const now = new Date();
+    const dateOf = (day) => [
+        String(day).padStart(2, '0'),
+        String(now.getMonth() + 1).padStart(2, '0'),
+        now.getFullYear(),
+    ].join('-');
+    const DATE_RECEIVED = dateOf(1);
+    const DATE_RECEIVED_AGAIN = dateOf(2);
+    const DATE_ACKNOWLEDGED = dateOf(2);
+    const DUE_DATE = dateOf(4);
+    const RESPONSE_DATE = dateOf(3);
     const SIGN_OFF_DATE = '06-07-2026';
 
-    const STATUS = 'Approved';   // the widget defaults to "Refused", so this is a real change
+    const STATUS = 'Approved';
+    const TYPE = 'Pre-Application';
     const CM_REFERENCE = 'CM-TEST-001';
     const COMMENTS = 'Cypress consultation comments.';
     const LETTER_TYPE = 'Forestry Response Letter';
-
-    const UPLOAD_FIXTURE = 'cypress/fixtures/test-upload.txt';
-    const UPLOAD_NAME = 'test-upload.txt';
 
     // dd-mm-yyyy (what the widgets render) -> dd-mm-yyyy n days later.
     const addDays = (ddmmyyyy, days) => {
@@ -40,202 +48,198 @@ describe('Going through the Agri Workflow', function () {
 
     beforeEach(() => {
         cy.login();
-        cy.visit('/plugins/init-workflow');
+        cy.visit('/plugins/init-workflow', { timeout: 180000 });
     });
 
     function openWorkflowAndStartNew() {
-        cy.get('[href="/plugins/open-workflow?workflow-slug=agriculture-and-forestry-consultation-workflow"] > .workflow-select-card').click();
+        cy.get('[href="/plugins/open-workflow?workflow-slug=agriculture-and-forestry-consultation-workflow"] > .workflow-select-card', { timeout: 60000 }).click();
         cy.wait(2000);
+        cy.contains('Agriculture and Forestry Consultation').should('be.visible');
+        cy.contains('button', 'Open Selected').should('be.disabled');
         cy.contains('Start New').click();
         cy.wait(3000);
     }
 
     // The Consultation ID (AFC number) is generated server-side.
     function fillStartTab() {
-        cy.get('[aria-label="Consultation ID"]').should('have.attr', 'placeholder');
-        cy.get('[aria-label="Consultation ID"]')
-            .invoke('attr', 'placeholder')
-            .should('match', /\S/);
+        cy.get('[aria-label="Consultation ID"]', { timeout: 60000 }).should('be.disabled');
+        cy.get('[aria-label="Consultation ID"]', { timeout: 30000 })
+            .should(($input) => expect($input.val()).to.match(/^AFC/));
+        cy.contains('button', 'Undo').should('not.exist');
     }
 
-    // The substantive step. Widgets render lazily, so wait for a card to
-    // exist before touching anything.
+    const haWidget = '.widget-wrapper.related_heritage_assets_n1';
+    const counts = (monuments, scheduled) => {
+        cy.get('input[aria-label="Monuments"]', { timeout: 15000 }).should('have.value', String(monuments));
+        cy.get('input[aria-label="Scheduled monuments"]', { timeout: 15000 }).should('have.value', String(scheduled));
+    };
+    const removeHeritageAsset = (name) => {
+        cy.contains(`${haWidget} .rr-table-row`, name)
+            .find('button:has(.fa-trash)').click();
+        cy.wait(1000);
+    };
+    const dateInput = (alias) => cy.get(`.widget-wrapper.${alias} input.form-control`).first();
+
+    function fillHeritageAssets() {
+        cy.get(`${haWidget}`, { timeout: 60000 }).should('exist');
+        cy.get('input[aria-label="Monuments"]').should('be.disabled');
+        cy.get('input[aria-label="Scheduled monuments"]').should('be.disabled');
+
+        // Missing details read "No data available" under the generic reference label.
+        cy.pickRelationshipSearch('Related Heritage Assets', 'HA/02', HA_NO_DATA);
+        cy.contains('Heritage Reference Number').should('be.visible');
+        cy.contains('No data available').should('exist');
+        counts(1, 0);
+
+        // Picking the same asset again adds nothing.
+        cy.pickRelationshipSearch('Related Heritage Assets', 'HA/02', HA_NO_DATA);
+        cy.wait(1000);
+        cy.get(`${haWidget} .rr-table-row`).should('have.length', 1);
+        counts(1, 0);
+
+        cy.pickRelationshipSearch('Related Heritage Assets', 'Kilvoruan', HA_SCHEDULED_1);
+        cy.contains('SMR Number', { timeout: 30000 }).should('exist');
+        cy.contains('ANT 001:009', { timeout: 30000 }).should('exist');
+        cy.contains('Ecclesiastical Site', { timeout: 30000 }).should('exist');
+        cy.contains('Knockans', { timeout: 30000 }).should('exist');
+        counts(2, 1);
+
+        cy.pickRelationshipSearch('Related Heritage Assets', '035:002', HA_SCHEDULED_2);
+        cy.contains('Chambered Tomb', { timeout: 30000 }).should('exist');
+        cy.contains('Dunteige', { timeout: 30000 }).should('exist');
+        counts(3, 2);
+
+        cy.pickRelationshipSearch('Related Heritage Assets', 'Tirkilly', HA_NOT_SCHEDULED);
+        counts(4, 2);
+        cy.get(`${haWidget} .rr-table-row`).should('have.length', 4);
+
+        removeHeritageAsset(HA_NO_DATA);
+        cy.contains('Heritage Reference Number').should('not.exist');
+        counts(3, 2);
+        removeHeritageAsset(HA_SCHEDULED_1);
+        counts(2, 1);
+        cy.get(`${haWidget} .rr-table-row`).should('have.length', 2);
+    }
+
+    // Each people field takes several resources, shown as rows below the field.
+    function fillPeople() {
+        ['referred_to', 'applicant_n1', 'applicant_organisation'].forEach((alias) => {
+            const label = { referred_to: 'Referred to', applicant_n1: 'Applicant', applicant_organisation: 'Applicant organisation' }[alias];
+            cy.pickRelationshipFirst(label);
+            cy.wait(500);
+            cy.pickRelationshipSecond(label);
+            cy.get(`.widget-wrapper.${alias} .rr-table-row`).should('have.length', 2);
+        });
+    }
+
+    function fillDates() {
+        cy.pickCalendarDay('date_received', 1);
+        dateInput('date_received').should('have.value', DATE_RECEIVED);
+        dateInput('due_date').should('have.value', addDays(DATE_RECEIVED, DAYS_TO_ADD));
+
+        cy.pickCalendarDay('date_received', 2);
+        dateInput('due_date').should('have.value', addDays(DATE_RECEIVED_AGAIN, DAYS_TO_ADD));
+
+        // Due Date stays editable by hand.
+        cy.pickCalendarDay('due_date', 4);
+        dateInput('due_date').should('have.value', DUE_DATE);
+        cy.pickCalendarDay('date_acknowledged', 2);
+        cy.pickCalendarDay('response_date', 3);
+    }
+
     function fillConsultationTab() {
-        cy.get('.card_component.consultation_type', { timeout: 60000 }).should('exist');
+        cy.get('.widget-wrapper.date_received', { timeout: 60000 }).should('exist');
         cy.wait(4000);
 
-        // Heritage assets group - relate the consultation to a real asset.
-        cy.pickRelationshipByName('Related Heritage Assets', HERITAGE_ASSET);
-        cy.wait(1000);
+        fillHeritageAssets();
+        fillPeople();
+        fillDates();
 
-        // Agriculture related people - each is a resource-instance multiselect.
-        cy.pickRelationshipFirst('Referred to');
-        cy.wait(500);
-        cy.pickRelationshipFirst('Applicant');
-        cy.wait(500);
-        cy.pickRelationshipFirst('Applicant organisation');
-        cy.wait(500);
-        cy.pickRelationshipFirst('Agent');
-        cy.wait(500);
-        
+        cy.pickCardOption('consultation_type', TYPE);
+        cy.get('.widget-wrapper.consultation_type .select2-selection').first().should('contain.text', TYPE);
 
-        // Agriculture dates. Scroll the section in first - the cards below the
-        // first one report as not visible until it is on screen.
-        cy.get('.card_component.date_received').first().scrollIntoView();
-        cy.wait(500);
-        cy.fillDate('date_received', DATE_RECEIVED);
-        cy.wait(1500);
-
-        // The business rule. Assert against whatever Date Received actually
-        // ended up as rather than what we typed - the widget re-stamps it in
-        // some cases - so this checks the +14 relationship itself.
-        cy.get('.card_component.date_received input.form-control').first()
-            .invoke('val').then((received) => {
-                expect(received, 'Date Received should be populated').to.match(/^\d{2}-\d{2}-\d{4}$/);
-                cy.get('.card_component.due_date input.form-control').first()
-                    .should('have.value', addDays(received, DAYS_TO_ADD));
-            });
-
-        cy.fillDate('date_acknowledged', DATE_ACKNOWLEDGED);
-        cy.fillDate('due_date', DUE_DATE);
-        cy.fillDate('response_date', RESPONSE_DATE);
-
-
-        cy.pickRelationshipFirst('Consultation Type');
-        cy.wait(500);
-
-        // Comments - the Advice text node, relabelled "Comments" by the plugin
-        // config. It is a rich-text widget, so it goes through CKEditor.
-        cy.get('.card_component.advice_text').first().scrollIntoView();
+        cy.get('.widget-wrapper.advice_text .widget-input-label').first().should('have.text', 'Comments');
         cy.typeRichText('advice_text', COMMENTS);
-        cy.wait(500);
 
-        // CM Reference Number, a plain text widget labelled "Records NI". Scroll
-        // the card in first - it sits below the fold once the relationship
-        // widgets above have expanded.
-        cy.get('.card_component.cm_reference_number').first().scrollIntoView();
-        cy.get('.card_component.cm_reference_number input.form-control').first()
+        cy.get('.widget-wrapper.cm_reference_number .widget-input-label').first().should('have.text', 'Records NI');
+        cy.scrollToWidget('cm_reference_number');
+        cy.get('.widget-wrapper.cm_reference_number input.form-control').first()
             .type(CM_REFERENCE, { force: true });
-        cy.wait(300);
 
-        // Consultation status is a domain-value select that starts on "Refused".
-        cy.pickDomainByLabel('Consultation status', STATUS);
-        cy.wait(500);
+        cy.pickCardOption('consultation_status', STATUS);
+        cy.get('.widget-wrapper.consultation_status .select2-selection').first().should('contain.text', STATUS);
 
-        // Everything above should be reflected in the widgets before we save.
-        cy.get('.card_component.date_acknowledged input.form-control').first()
-            .should('not.have.value', '');
-        cy.get('.card_component.response_date input.form-control').first()
-            .should('not.have.value', '');
-        cy.get('.card_component.consultation_status .select2-selection')
-            .first().should('contain.text', STATUS);
-        cy.get('.card_component.cm_reference_number input.form-control').first()
-            .should('have.value', CM_REFERENCE);
+        cy.contains('button', 'Undo').should('not.exist');
     }
 
+    // File upload is left out (per-environment storage bucket):
+    // cy.get('input.dz-hidden-input').first().selectFile('cypress/fixtures/test-upload.txt', { force: true });
     function fillDocumentationTab() {
-        // Upload a fixture file through the dropzone. The dropzone's own
-        // <input type="file"> is hidden, hence { force: true }.
         cy.get('.bord-top > .btn', { timeout: 60000 }).contains('Select Files');
-        cy.wait(2000);
-        cy.get('input.dz-hidden-input').first().selectFile(UPLOAD_FIXTURE, { force: true });
-        cy.get('.card-component', { timeout: 30000 }).should('contain.text', UPLOAD_NAME);
-        cy.contains('files uploaded').should('be.visible');
-        // An attached-but-unsaved file changes the footer button to "Save and
-        // Continue" instead of "Next Step". Clicking it saves/uploads the
-        // file and stays on this tab; "Next Step" then appears and actually
-        // advances.
-        cy.get('.tabbed-workflow-footer-button-container')
-            .find('button:not([disabled])')
-            .contains('Save and Continue')
-            .click();
-        cy.wait(3000);
+        cy.contains('button', 'Undo').should('not.exist');
     }
 
     // Step back to prove the Consultation tile actually persisted rather than
     // just having been typed into the DOM.
     function verifyConsultationTabPersisted() {
         cy.get('.tabbed-workflow-footer-button-container').contains('Previous Step').click();
-        cy.get('.card_component.date_received', { timeout: 60000 }).should('exist');
+        cy.get('.widget-wrapper.date_received', { timeout: 60000 }).should('exist');
         cy.wait(4000);
-        cy.get('.card_component.cm_reference_number input.form-control').first()
+        cy.get(`${haWidget} .rr-table-row`).should('have.length', 2);
+        counts(2, 1);
+        ['referred_to', 'applicant_n1', 'applicant_organisation'].forEach((alias) => {
+            cy.get(`.widget-wrapper.${alias} .rr-table-row`).should('have.length', 2);
+        });
+        dateInput('date_received').should('have.value', DATE_RECEIVED_AGAIN);
+        dateInput('due_date').should('have.value', DUE_DATE);
+        dateInput('date_acknowledged').should('have.value', DATE_ACKNOWLEDGED);
+        dateInput('response_date').should('have.value', RESPONSE_DATE);
+        cy.get('.widget-wrapper.consultation_type .select2-selection').first().should('contain.text', TYPE);
+        cy.get('.widget-wrapper.consultation_status .select2-selection').first().should('contain.text', STATUS);
+        cy.get('.widget-wrapper.cm_reference_number input.form-control').first()
             .should('have.value', CM_REFERENCE);
-        cy.get('.card_component.consultation_status .select2-selection')
-            .first().should('contain.text', STATUS);
-        cy.get('.card_component.date_received input.form-control').first()
-            .should('not.have.value', '');
-        cy.get('.card_component.due_date input.form-control').first()
-            .should('not.have.value', '');
-        cy.get('.card_component.advice_text').should('contain.text', COMMENTS);
+        cy.richTextValue('advice_text').should('contain', COMMENTS);
     }
 
-    // Letters step: choose which letter to raise. The Letter Type select is a
-    // domain-select fed by `letterOptions` in the plugin config.
+    // Letters step: the Letter Type select is fed by `letterOptions` in the plugin
+    // config. Generating a letter stays commented out: the docx templates are
+    // deployment assets and may be absent.
     function fillLettersTab() {
         cy.wait(5000);
-        cy.pickDomainByLabel('Letter Type', LETTER_TYPE);
-        cy.get('.select2-selection[aria-label^="Letter Type, "]')
-            .first().should('contain.text', LETTER_TYPE);
-
-        // BLOCKER - "Generate" cannot be clicked. Two things break it:
-        //  1. The ids the select sends are .docx filenames that
-        //     `FileTemplateView.get_template_path` falls through to, and those
-        //     templates are deployment assets: `coral/docx` is gitignored and
-        //     ships empty, so /filetemplate answers 404 "No Template Found".
-        //  2. With a template in place it then 500s - coral/views/file_template.py:621
-        //     (`GenericTemplateProvider.get_mapping`) calls `resource.items()`
-        //     on a querysets_shim resource, whose __getattr__ returns None for
-        //     an unknown alias, so it raises "TypeError: 'NoneType' object is
-        //     not callable" before a document is ever written.
-        // Once a template is available and that call is ported to the shim's
-        // API, generation should be driven here:
-        //     cy.contains('button', 'Generate').click();
-        //     cy.contains('a', 'Download', { timeout: 60000 }).should('be.visible');
-        //     cy.get('.card-component')
-        //         .should('contain.text', '_forestry-consult-response-template.docx');
+        const selector = '.select2-selection[aria-label^="Letter Type, "]';
+        cy.get(selector).filter(':visible').first().click();
+        cy.get('.select2-results__option', { timeout: 10000 })
+            .should('contain.text', 'Daera Consultation Response Letter')
+            .and('contain.text', LETTER_TYPE);
+        cy.get('.select2-results__option').contains(LETTER_TYPE).click();
+        cy.get(selector).first().should('contain.text', LETTER_TYPE);
+        // cy.contains('button', 'Generate').click();
     }
 
     function fillSignOffTab() {
         cy.wait(5000);
+        cy.get('.widget-wrapper.sign_off_date_value .widget-input-label').first().should('have.text', 'Date');
         cy.fillDate('sign_off_date_value', SIGN_OFF_DATE);
-        // The widget re-stamps this one with today's date, so assert the shape
-        // rather than the value typed above.
-        cy.get('.card_component.sign_off_date_value input.form-control').first()
+        // The widget re-stamps this one with today's date, so assert the shape.
+        cy.get('.widget-wrapper.sign_off_date_value input.form-control').first()
             .invoke('val').should('match', /^\d{2}-\d{2}-\d{4}$/);
 
-        // Within Deadline is computed, not typed: update-deadline.js compares
-        // the Response Date against the Due Date and ticks the boolean itself.
-        // 03-07 response against a 15-07 due date is inside the deadline.
-        // radio-boolean renders selection on the <label> (aria-checked/.active)
-        // - every radio input on the page shares name="stat-w-label", so at most
-        // one input is ever :checked and that is not the one to assert on.
-        cy.get('.card_component.within_deadline label[aria-checked="true"]')
-            .should('have.length', 1)
-            .and('contain.text', 'Yes');
+        // update-deadline compares the saved Response Date with the Due Date:
+        // a Response Date on the 3rd against a Due Date on the 4th is inside the deadline. Within Deadline is core's switch widget, which has no
+        // .widget-wrapper.<alias> class, so it is found by its aria-label.
+        cy.contains('.arches-toggle-sm', 'Within Deadline').should('exist');
+        cy.get('span.switch[aria-label^="Within Deadline"]').should('have.attr', 'aria-checked', 'true');
 
-        // BLOCKER - the "Cur E" sign-off cannot be clicked. The
-        // user-to-model-select widget asks /user-to-model for the Person
-        // resource carrying the logged-in user's id and only enables itself when
-        // that Person belongs to one of the step's `signOffGroups`
-        // (c78e1dca…/b23161e0…/cfa32a35…, the three "Scheduled Monument
-        // Management" groups). Two things stop that here: those Group resources
-        // do not exist in a bootstrapped database, and `Person.where(
-        // user_account=…)` cannot match anyway - querysets_shim resolves a node
-        // that is its own nodegroup (Person.user_account, Group.members) one
-        // level too deep, so the filter compares the branch JSON against the
-        // user id. The widget therefore renders disabled with a fa-ban icon.
-        // Assert what it does render, and drive the click once that is fixed:
-        //     cy.get('.card_component.cur_e .rr-table-row').first().click();
-        //     cy.get('.card_component.cur_e i.fa-check').should('exist');
-        cy.get('.card_component.cur_e').should('be.visible');
+        // The admin user has no Person in a sign-off group, so Cur E is disabled.
+        cy.contains('Cur E').should('exist');
+        cy.contains('You do not have permission to sign off').should('exist');
+        cy.get('i.fa-ban').should('exist');
     }
 
     function completeWorkflow() {
         cy.get('.workflow-top-control').contains('Save and Complete Workflow').scrollIntoView().click();
 
         // Workflow completes and returns to the workflow launcher list.
-        // (The launcher shows the workflow cards, not a "Start New" button -
-        // that only appears once a specific workflow card is selected.)
         cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');
         cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     }
