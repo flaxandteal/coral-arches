@@ -14,8 +14,10 @@ This filters ``DataSection`` entries down to the cards that actually hold a
 tile for the resource being viewed. One extra query per request, against the
 already-indexed ``tiles.nodegroupid``.
 
-Only the drop-down is pruned. The card itself (slug ``search``) is left alone -
-it is a fixed descriptor section, not data-driven.
+The drop-down and the ``default`` report are pruned; the ``default`` report
+nests its sections in tabs, so pruning recurses through them. The card itself
+(slug ``search``) is left alone - it is a fixed descriptor section, not
+data-driven.
 """
 
 import logging
@@ -25,30 +27,103 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 DATA_SECTION = "arches_modular_reports/ModularReport/components/DataSection"
-EXPANDED_SLUG = "search_result_expanded"
+REPORT_TABS = "arches_modular_reports/ModularReport/components/ReportTabs"
+LINKED_SECTIONS = "arches_modular_reports/ModularReport/components/LinkedSections"
+RELATED_SECTION = (
+    "arches_modular_reports/ModularReport/components/RelatedResourcesSection"
+)
+PRUNED_SLUGS = {"search_result_expanded", "default"}
 
 
 def _populated_node_aliases(resourceinstanceid):
-    """Aliases of nodes that hold a value for this resource."""
+    """Aliases of nodes that hold a non-empty value for this resource."""
     from arches.app.models import models
 
-    nodegroup_ids = set(
-        models.TileModel.objects.filter(
-            resourceinstance_id=resourceinstanceid
-        ).values_list("nodegroup_id", flat=True)
-    )
-    if not nodegroup_ids:
-        return set()
+    node_ids = set()
+    tiles = models.TileModel.objects.filter(resourceinstance_id=resourceinstanceid)
+    for data in tiles.values_list("data", flat=True):
+        for node_id, value in (data or {}).items():
+            if value not in (None, "", [], {}):
+                node_ids.add(node_id)
 
     return set(
-        models.Node.objects.filter(nodegroup_id__in=nodegroup_ids)
+        models.Node.objects.filter(nodeid__in=node_ids)
         .exclude(alias__isnull=True)
         .exclude(alias="")
         .values_list("alias", flat=True)
     )
 
 
-def prune_empty_sections(config, resourceinstanceid):
+def _related_graph_slugs(resourceinstanceid):
+    """Slugs of the graphs this resource is related to, in either direction."""
+    from django.db.models import Q
+
+    from arches.app.models import models
+
+    relations = models.ResourceXResource.objects.filter(
+        Q(from_resource=resourceinstanceid) | Q(to_resource=resourceinstanceid)
+    ).values_list(
+        "from_resource_id", "from_resource_graph__slug", "to_resource_graph__slug"
+    )
+    return {
+        to_slug if str(from_id) == str(resourceinstanceid) else from_slug
+        for from_id, from_slug, to_slug in relations
+    }
+
+
+def _prune_components(components, populated, related=None):
+    """Drop empty DataSections, recursing into tabs and linked sections.
+
+    ``related`` is the set of related graph slugs for the ``default`` report,
+    which also goes read-only and shows only populated columns. ``None`` leaves
+    related-resource sections and columns alone.
+    """
+    kept = []
+    for component in components:
+        name = component.get("component")
+        config = component.get("config") or {}
+        if name == DATA_SECTION:
+            # Keep a section if any of its nodes carries a value on this resource.
+            aliases = config.get("node_aliases") or []
+            populated_aliases = [alias for alias in aliases if alias in populated]
+            if not populated_aliases:
+                continue
+            if related is None:
+                kept.append(component)
+            else:
+                config = {
+                    **config,
+                    "node_aliases": populated_aliases,
+                    "has_write_permission": False,
+                }
+                kept.append({**component, "config": config})
+        elif name == RELATED_SECTION and related is not None:
+            if config.get("graph_slug") in related:
+                kept.append(component)
+        elif name == REPORT_TABS:
+            tabs = _prune_groups(config.get("tabs") or [], populated, related)
+            if tabs:
+                kept.append({**component, "config": {**config, "tabs": tabs}})
+        elif name == LINKED_SECTIONS:
+            sections = _prune_groups(config.get("sections") or [], populated, related)
+            if sections:
+                kept.append({**component, "config": {**config, "sections": sections}})
+        else:
+            kept.append(component)
+    return kept
+
+
+def _prune_groups(groups, populated, related=None):
+    """Prune each tab or section's components, dropping the ones left empty."""
+    pruned = []
+    for group in groups:
+        components = _prune_components(group.get("components") or [], populated, related)
+        if components:
+            pruned.append({**group, "components": components})
+    return pruned
+
+
+def prune_empty_sections(config, resourceinstanceid, slug="default"):
     """Return ``config`` with data sections that have no data removed.
 
     Non-DataSection components are always kept: they may render something
@@ -58,24 +133,29 @@ def prune_empty_sections(config, resourceinstanceid):
     if not components:
         return config
 
-    populated = _populated_node_aliases(resourceinstanceid)
-
-    kept = []
-    for component in components:
-        if component.get("component") != DATA_SECTION:
-            kept.append(component)
-            continue
-        aliases = (component.get("config") or {}).get("node_aliases") or []
-        # Keep a section if any of its nodes carries a value on this resource.
-        if any(alias in populated for alias in aliases):
-            kept.append(component)
-
-    if len(kept) == len(components):
+    related = _related_graph_slugs(resourceinstanceid) if slug == "default" else None
+    kept = _prune_components(
+        components, _populated_node_aliases(resourceinstanceid), related
+    )
+    if kept == components:
         return config
 
-    pruned = dict(config)
-    pruned["components"] = kept
-    return pruned
+    return {**config, "components": kept}
+
+
+def _plain_controlled_lists(modular_report):
+    """Show concept and reference values as text: their list-item URIs do not resolve."""
+    original = modular_report.build_valueid_annotation
+    if getattr(original, "_coral_plain", False):
+        return
+
+    def build_valueid_annotation(data, is_user_rdm_admin, user_language):
+        if data.get("datatype") in ("concept", "concept-list", "reference"):
+            is_user_rdm_admin = False
+        return original(data, is_user_rdm_admin, user_language)
+
+    build_valueid_annotation._coral_plain = True
+    modular_report.build_valueid_annotation = build_valueid_annotation
 
 
 def apply():
@@ -87,6 +167,8 @@ def apply():
 
     from arches_modular_reports.app.views import modular_report
 
+    _plain_controlled_lists(modular_report)
+
     view_class = getattr(modular_report, "ModularReportConfigView", None)
     if view_class is None or getattr(view_class.get, "_coral_pruned", False):
         return
@@ -97,9 +179,9 @@ def apply():
         response = original_get(self, request)
 
         resourceinstanceid = request.GET.get("resourceId")
-        slug = request.GET.get("report_config_slug")
+        slug = request.GET.get("report_config_slug", "default")
         if (
-            slug != EXPANDED_SLUG
+            slug not in PRUNED_SLUGS
             or not resourceinstanceid
             or getattr(response, "status_code", None) != 200
         ):
@@ -107,7 +189,7 @@ def apply():
 
         try:
             config = json.loads(response.content)
-            pruned = prune_empty_sections(config, resourceinstanceid)
+            pruned = prune_empty_sections(config, resourceinstanceid, slug)
             if pruned is config:
                 return response
             response.content = json.dumps(pruned)

@@ -23,4 +23,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- feat(reports): heritage asset report rebuilt as a read-only modular report showing every populated node (#906)
+
 ### Notes
+
+- Heritage Asset report template switched by migration 8020; set HA `template_id` to `b0908227-ecc2-48dd-931b-314a9031caa0` in coral-graphs to match. Migration 8020 clashes with #903's `8020_ihr_number_index`; whichever merges second renumbers.

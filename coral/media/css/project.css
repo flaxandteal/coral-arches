@@ -1111,3 +1111,27 @@ span.rp-tile-title {
 .mh-500 { max-height: 500px; }
 
 .mt-1 { margin-top: 0.5rem }
+/* Modular report tables: keep columns readable and scroll instead of squishing. */
+.modular-report-mounting-point .p-datatable .p-datatable-table-container {
+    overflow-x: auto;
+}
+.modular-report-mounting-point .p-datatable .p-datatable-table {
+    table-layout: auto;
+    min-width: 100%;
+}
+.modular-report-mounting-point .p-datatable th:not(.expander-column),
+.modular-report-mounting-point .p-datatable td:not(.expander-column) {
+    min-width: 12rem;
+}
+.modular-report-mounting-point .linked-section-container .section-table-header h4 {
+    display: none;
+}
+.modular-report-mounting-point .linked-section-container .p-datatable-header.section-table-header:not(:has(input)) {
+    display: none;
+}
+main > div:has(> .resource-report-abstract-container .modular-report-mounting-point) {
+    height: 100%;
+}
+.resource-report-abstract-container:has(.modular-report-mounting-point) {
+    height: 100%;
+}
