@@ -28,7 +28,7 @@ function viewModel(params) {
       });
     });
 
-  const heritageAssetId = this.tile.data["58a2b98f-a255-11e9-9a30-00224800b26d"]()[0].resourceId
+  const heritageAssetId = this.tile.data["58a2b98f-a255-11e9-9a30-00224800b26d"]?.()?.[0]?.resourceId;
 
   this.fetchTileData = async (resourceId, nodeId) => {
     const tilesResponse = await window.fetch(
@@ -40,10 +40,14 @@ function viewModel(params) {
   };
 
   this.prepareResource = async function () {
+    if (!heritageAssetId) {
+      this.grade("None");
+      return;
+    }
     const tiles = await this.fetchTileData(heritageAssetId, "6af2b696-efc5-11eb-b0b5-a87eeabdefba")
     for (const tile of tiles) {
-      const gradeData = _.filter(tile.display_values, (value) => {return value.nodeid === '6af2b696-efc5-11eb-b0b5-a87eeabdefba'})
-      this.grade(gradeData[0].value !== "" ? gradeData[0].value : "None")
+      const gradeData = _.find(tile.display_values, (value) => value.nodeid === '6af2b696-efc5-11eb-b0b5-a87eeabdefba')
+      this.grade(gradeData?.value ? gradeData.value : "None")
     }
     if (this.grade() === "Loading...") {
       this.grade("None")

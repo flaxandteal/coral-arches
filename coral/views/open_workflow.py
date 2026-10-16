@@ -100,22 +100,55 @@ class OpenWorkflow(View):
         return workflow_step_data, step_mapping
 
     def group_tiles(self, tiles):
+        # Keyed by id so ancestry can be walked via parenttile_id without
+        # re-querying the DB for tiles we already have in `tiles`.
+        tiles_by_id = {str(tile.tileid): tile for tile in tiles}
+
         for tile in tiles:
             nodegroup_id = str(tile.nodegroup.nodegroupid)
 
-            parent_tile_ids = self.open_config.get("parentTileIds", {})
-            parent_nodegroup_id = (
-                str(tile.parenttile.nodegroup.nodegroupid) if tile.parenttile else None
-            )
-
-            if parent_nodegroup_id and parent_nodegroup_id in parent_tile_ids:
-                parent_tile_id = str(tile.parenttile.tileid)
-                if parent_tile_id != parent_tile_ids[parent_nodegroup_id]:
-                    continue
+            if self.excluded_by_ancestor(tile, tiles_by_id):
+                continue
 
             if nodegroup_id not in self.grouped_tiles:
                 self.grouped_tiles[nodegroup_id] = []
             self.grouped_tiles[nodegroup_id].append(tile)
+
+    def excluded_by_ancestor(self, tile, tiles_by_id):
+        # A tile belongs to a fresh Start New report if none of its ancestors is a
+        # tile of a cardinality-n required-parent nodegroup other than the one
+        # chosen (or, on Start New, other than the not-yet-created one) for that
+        # nodegroup -- otherwise it is another report's tile leaking in.
+        parent_tile_ids = self.open_config.get("parentTileIds", {})
+        if not parent_tile_ids:
+            return False
+
+        ancestor_id = tile.parenttile_id
+        while ancestor_id:
+            ancestor = tiles_by_id.get(str(ancestor_id))
+            if ancestor is None:
+                break
+            ancestor_nodegroup_id = str(ancestor.nodegroup.nodegroupid)
+            if (
+                ancestor_nodegroup_id in parent_tile_ids
+                and ancestor.nodegroup.cardinality == "n"
+                and str(ancestor.tileid) != parent_tile_ids[ancestor_nodegroup_id]
+            ):
+                return True
+            ancestor_id = ancestor.parenttile_id
+
+        return False
+
+    def create_parent_tile(self, nodegroup_id):
+        tile = Tile(
+            tileid=uuid.uuid4(),
+            resourceinstance=self.resource,
+            data={},
+            nodegroup=self.nodegroups[nodegroup_id],
+            sortorder=None,
+        )
+        tile.save()
+        return tile
 
     def get_parent_tile_lookups(self, required_parent_tiles, grouped_tiles):
         lookup_tile_ids = {}
@@ -126,7 +159,16 @@ class OpenWorkflow(View):
 
             tile = None
             parent_tile_ids = self.open_config.get("parentTileIds", {})
-            if parent_tile_ids and nodegroup_id in parent_tile_ids:
+            start_new = self.open_config.get("startNew") and (
+                self.nodegroups[nodegroup_id].cardinality == "n"
+            )
+
+            if start_new:
+                # Start New always gets its own tile for a cardinality-n required
+                # parent, whatever parentTileIds holds.
+                tile = self.create_parent_tile(nodegroup_id)
+                self.group_tiles([tile])
+            elif parent_tile_ids and nodegroup_id in parent_tile_ids:
                 tile_id = parent_tile_ids.get(nodegroup_id)
                 if tile_id:
                     for t in tiles:
@@ -136,27 +178,13 @@ class OpenWorkflow(View):
                             break
                 else:
                     # No tile id exists so creating new
-                    tile = Tile(
-                        tileid=uuid.uuid4(),
-                        resourceinstance=self.resource,
-                        data={},
-                        nodegroup=self.nodegroups[nodegroup_id],
-                        sortorder=None,
-                    )
-                    tile.save()
+                    tile = self.create_parent_tile(nodegroup_id)
                     self.group_tiles([tile])
             else:
                 if len(tiles):
                     tile = tiles[0]
                 else:
-                    tile = Tile(
-                        tileid=uuid.uuid4(),
-                        resourceinstance=self.resource,
-                        data={},
-                        nodegroup=self.nodegroups[nodegroup_id],
-                        sortorder=None,
-                    )
-                    tile.save()
+                    tile = self.create_parent_tile(nodegroup_id)
 
             if tile:
                 lookup_tile_ids[lookup_name] = str(tile.tileid)

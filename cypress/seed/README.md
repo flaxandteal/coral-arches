@@ -20,7 +20,7 @@ python3 -m venv .venv && ./.venv/bin/pip install -r cypress/seed/requirements.tx
 ./.venv/bin/python cypress/seed/seed.py \
   --pkg-dir coral/pkg \
   --graphs "Heritage Asset" -n 9 \
-  --only-aliases monument_name,resourceid,smr_number,ihr_number,hb_number,historic_parks_and_gardens \
+  --only-aliases monument_name,resourceid,smr_number,ihr_number,hb_number,historic_parks_and_gardens,monument_type,historical_period_type,townland,irish_grid_reference_tm65_,description,area_name,area_type,assessment_date_value,assessment_done_by_value,building_name_value,cm_reference_number,council_consulted_date,council_response,council_response_date,county_value,designation_description,designation_description_type,desg_approved_by,desg_approved_date_value,director_sign_off_date_value,grade,land_folio_number,land_use_site,listing_criteria,local_authority_notification_date_value,location_description,occupier,owner,owner_notified_date_value,postcode_value,recommended_designation_type,scheduling_criteria,statutory_consultee_notification_date_value,street_value,town_or_city_value \
   --overrides cypress/seed/coral_e2e_overrides.json \
   -o seeded.json
 

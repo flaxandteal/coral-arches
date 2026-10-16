@@ -148,16 +148,31 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
     });
 });
 
-Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
-    cy.get(`.widget-wrapper.${cardClass}`).first().as('dateCard');
-    cy.get('@dateCard').scrollIntoView();
-    cy.get('@dateCard').filter(':visible').should('exist');
-    cy.get('@dateCard').find('input.form-control').filter(':visible').first()
-        .type(`${date}{enter}`, { force: true });
-    cy.get('@dateCard').find('input.form-control').filter(':visible').first()
-        .should('not.have.value', '');
+// Workflow steps nest two scroll containers and a focused select2 scrolls
+// them back; Cypress's own scrolling leaves lower widgets under the footer.
+Cypress.Commands.add("scrollToWidget", (cardClass) => {
+    cy.document().then((doc) => doc.activeElement?.blur());
+    cy.get(`.widget-wrapper.${cardClass}`).first().scrollIntoCentre();
 });
 
+// Retried until it holds: editors further up keep growing the step as they load.
+Cypress.Commands.add("scrollIntoCentre", { prevSubject: 'element' }, ($el) => {
+    cy.wrap($el).should(($target) => {
+        const el = $target[0];
+        el.scrollIntoView({ block: 'center' });
+        const { top, bottom } = el.getBoundingClientRect();
+        const height = el.ownerDocument.defaultView.innerHeight;
+        expect(top, 'widget scrolled clear of the header').to.be.greaterThan(120);
+        expect(bottom, 'widget scrolled clear of the footer').to.be.lessThan(height - 120);
+    });
+});
+
+Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
+    const input = () => cy.get(`.widget-wrapper.${cardClass} input.form-control`).first();
+    cy.scrollToWidget(cardClass);
+    input().scrollIntoCentre().type(`${date}{enter}`, { force: true });
+    input().should('not.have.value', '');
+});
 
 Cypress.Commands.add("typeInCard", (cardClass, text) => {
     const input = () =>
@@ -177,17 +192,14 @@ Cypress.Commands.add("setBooleanTrue", (cardClass) => {
 
 Cypress.Commands.add("openRelationship", (ariaLabel) => {
     const sel = `.select2-selection[aria-label^="${ariaLabel}, "]`;
-    const target = () => cy.get(sel).filter(':visible').first();
+    const target = () => cy.get(sel).first().scrollIntoCentre();
 
-    cy.get(sel).first().scrollIntoView();
+    cy.document().then((doc) => doc.activeElement?.blur());
     cy.wait(300);
-    target().scrollIntoView();
-
-    cy.wait(600);
     const openOnce = (attempt) => {
         cy.get('body').then(($b) => {
             if ($b.find('.select2-dropdown').length) return; // already open
-            target().click();
+            target().click({ scrollBehavior: false });
             cy.wait(600);
             cy.get('body').then(($b2) => {
                 if (!$b2.find('.select2-dropdown').length && attempt < 4) {
@@ -201,8 +213,11 @@ Cypress.Commands.add("openRelationship", (ariaLabel) => {
 
     cy.get(
         '.select2-results__option:not(.loading-results)' +
-        ':not(.select2-results__option--load-more)'
+        ':not(.select2-results__option--load-more)',
+        { timeout: 30000 }
     ).should('have.length.greaterThan', 0);
+    // select2 re-renders the list once the search request returns.
+    cy.wait(800);
 });
 
 // Pick the first real option from an open relationship dropdown.
@@ -290,6 +305,24 @@ Cypress.Commands.add("typeRichText", (cardClass, content) => {
         inst.updateElement();
         inst.fire('change');
     });
+});
+
+Cypress.Commands.add("richTextValue", (cardClass) => {
+    const instance = (win) => Object.values(win.CKEDITOR?.instances ?? {}).find((inst) =>
+        inst.status === 'ready' && inst.container?.$?.closest(`.widget-wrapper.${cardClass}`));
+    cy.window().should((win) => expect(instance(win), `ready editor in ${cardClass}`).to.exist)
+        .then((win) => instance(win).getData());
+});
+
+// Intercepts POST /tile so waitForTileSaves() can wait on it instead of a fixed cy.wait(ms).
+Cypress.Commands.add("watchTileSaves", () => {
+    cy.intercept('POST', '/tile').as('tileSave');
+});
+
+Cypress.Commands.add("waitForTileSaves", (count = 1) => {
+    for (let i = 0; i < count; i++) {
+        cy.wait('@tileSave');
+    }
 });
 
 Cypress.Commands.add("select2Search", (term) => {
