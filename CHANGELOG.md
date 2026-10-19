@@ -23,4 +23,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(ha_number): generating an HA number keeps working past HA/99
+
 ### Notes

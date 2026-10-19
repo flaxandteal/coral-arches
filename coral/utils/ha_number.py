@@ -1,5 +1,7 @@
 from arches.app.models.tile import Tile
+from django.db.models import F, Func, IntegerField, Value
 from django.db.models.fields.json import KT
+from django.db.models.functions import Cast
 
 SYSTEM_REFERENCE_NODEGROUP = "325a2f2f-efe4-11eb-9b0c-a87eeabdefba"
 SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID = "325a430a-efe4-11eb-810b-a87eeabdefba"
@@ -23,12 +25,22 @@ class HaNumber:
                 **id_number_generated,
             )
             if resource_instance_id:
-                query_result.exclude(resourceinstance_id=resource_instance_id)
+                query_result = query_result.exclude(resourceinstance_id=resource_instance_id)
             query_result = query_result.annotate(
                     ha_id_number=KT(f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value")
                 ).filter(ha_id_number__startswith="HA/")
             
-            query_result = query_result.order_by("-ha_id_number")
+            # Text order puts "HA/99" above "HA/119"; order by the number instead.
+            query_result = query_result.annotate(
+                ha_index=Cast(
+                    Func(
+                        F("ha_id_number"),
+                        Value(r"^HA/(\d+)"),
+                        function="substring",
+                    ),
+                    IntegerField(),
+                )
+            ).order_by("-ha_index")
             latest_id_number_tile = query_result.first()
         except Exception as e:
             print(f"Failed querying for previous ID number tile: {e}")
