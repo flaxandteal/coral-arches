@@ -467,7 +467,11 @@ var Workflow = function(config) {
     };
 
     this.finishWorkflow = function() {
-        self.activeStep().save().then(self.markWorkflowComplete);
+        if (self.activeStep().hasUnsavedData()) {
+            self.activeStep().save().then(self.markWorkflowComplete);
+        } else {
+            self.markWorkflowComplete();
+        }
     };
 
     this.quitWorkflow = function(){
