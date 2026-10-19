@@ -23,6 +23,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(workflows): Save and Complete Workflow saves the last step's unsaved entries, and Save no longer shows after saving a single-tile step
 - fix(letters): planning combined response fetches only its placeholders, so generating no longer times out (#3447)
 - fix(letters): planning response picks up .PDF uploads as well as .pdf (#3415)
 
