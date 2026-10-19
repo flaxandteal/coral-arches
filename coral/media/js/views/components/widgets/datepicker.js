@@ -5,6 +5,7 @@ import WidgetViewModel from 'viewmodels/widget';
 import moment from 'moment';
 import datePickerWidgetTemplate from 'templates/views/components/widgets/datepicker.htm';
 import datepicker from 'bindings/datepicker';
+import datepickerClamp from 'bindings/datepicker-clamp';
 import momentDate from 'bindings/moment-date';
 import chosen from 'bindings/chosen';
 import keyEventsClick from 'bindings/key-events-click';
