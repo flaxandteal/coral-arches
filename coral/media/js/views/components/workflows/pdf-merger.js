@@ -127,7 +127,7 @@ function viewModel(params) {
             }
         }
         for(const tile of fileData){
-            const extension = tile.name.substring(tile.name.lastIndexOf('.') + 1);
+            const extension = tile.name.substring(tile.name.lastIndexOf('.') + 1).toLowerCase();
             if (extension == 'pdf'){
                 const file = {
                     'blob': tile.content,
