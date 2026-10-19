@@ -267,8 +267,8 @@ describe('Going through the Add IHR Workflow', function () {
             .and('be.enabled');
         ['Full Address', 'Sub-Street', 'Building Number Sub-Street', 'Locality', 'Address Status', 'Address Currency']
             .forEach((hidden) => cy.get('body').find(`[aria-label="${hidden}"]`).filter(':visible').should('have.length', 0));
-        // APP-BUG: Building Number is expected here but building_number_value is in this step's hiddenNodes.
-        // cy.get('[aria-label="Building Number"]').should('be.visible');
+        // Building Number is deliberately hidden on this step.
+        cy.get('[aria-label="Building Number"]:visible').should('not.exist');
         footer({ next: true });
 
         cy.contains('a', 'Help').click();

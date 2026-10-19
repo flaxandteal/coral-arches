@@ -132,6 +132,8 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
             .then((text) => parseInt(text.trim(), 10));
 
     stepIndex().then((from) => {
+        // A save or load in progress covers the footer with the loading mask.
+        cy.get('.loading-mask:visible', { timeout }).should('not.exist');
         cy.get('.tabbed-workflow-footer-button-container', { timeout })
             .find('button:not([disabled]):not(.disabled)', { timeout })
             .contains(/Save and Continue|Next Step/, { timeout })

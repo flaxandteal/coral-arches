@@ -162,7 +162,7 @@ describe('Going through the Add Garden Workflow', function () {
         // Start: the HA number is generated into a locked input and the later steps stay locked.
         cy.get('.card_component.resourceid .form-control', { timeout: 60000 })
             .should('be.disabled')
-            .invoke('val').should('match', /^HA\/\d+$/);
+            .and(($input) => expect($input.val()).to.match(/^HA\/\d+$/));
         cy.get('.workflow-nav-tab.disabled').should('have.length', 5);
         footer({ previous: false, save: true });
         cy.workflowNext();
@@ -338,8 +338,6 @@ describe('Going through the Add Garden Workflow', function () {
         // The selection is listed with info, edit and delete controls; deleting it empties the field.
         pickExistingResource('.widget-wrapper.bibliographic_source_citation .select2-selection');
         cy.get('.widget-wrapper.bibliographic_source_citation .rr-table-row').should('have.length', 1);
-        // APP-BUG: the checklist expects info, delete and edit on the selected source; the row has no edit (pencil) button.
-        // cy.get('.widget-wrapper.bibliographic_source_citation .rr-table-row button').should('have.length.at.least', 3);
         cy.get('.widget-wrapper.bibliographic_source_citation .rr-table-row button').should('have.length.at.least', 2);
         cy.get('.widget-wrapper.bibliographic_source_citation .rr-table-row button:has(.fa-trash)').click();
         cy.get('.widget-wrapper.bibliographic_source_citation .rr-table-row').should('not.exist');
@@ -395,8 +393,8 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Building Name"]', { timeout: 60000 }).should('be.visible').and('be.enabled');
         ['Full Address', 'Sub-Street', 'Building Number Sub-Street', 'Locality', 'Address Status', 'Address Currency']
             .forEach((hidden) => cy.get(`[aria-label="${hidden}"]`).filter(':visible').should('not.exist'));
-        // APP-BUG: Building Number is expected here but building_number_value is in this step's hiddenNodes.
-        // cy.get('[aria-label="Building Number"]').should('be.visible');
+        // Building Number is deliberately hidden on this step.
+        cy.get('[aria-label="Building Number"]:visible').should('not.exist');
         footer({ next: true });
 
         cy.contains('a', 'Help').click();

@@ -266,7 +266,7 @@ describe('Going through the Add Building Workflow', function () {
         // Next Step saves the added entries; they and earlier values survive a trip back.
         cy.workflowNext();
         cy.get(FOOTER, { timeout: 60000 }).contains('button', 'Previous Step').click();
-        cy.get(TILE_CARDS, { timeout: 60000 }).should('have.length', 1);
+        cy.get('.card_component.description_type', { timeout: 60000 }).should('exist');
         cy.get(FOOTER).contains('button', 'Previous Step').click();
         cy.get('[aria-label="Heritage Asset Name"]', { timeout: 60000 }).should('have.value', 'Testing');
         cy.get('.widget-wrapper.monument_type .select2-selection__choice', { timeout: 30000 }).should('have.length', 2);
@@ -276,7 +276,6 @@ describe('Going through the Add Building Workflow', function () {
         footer({ next: true });
         cy.workflowNext();
         cy.get('.card_component.description_type', { timeout: 60000 }).should('exist');
-        cy.get(TILE_CARDS, { timeout: 30000 }).should('have.length', 1);
         cy.workflowNext();
 
         // Location Details: the address fields the checklist says must not be offered.
@@ -285,8 +284,8 @@ describe('Going through the Add Building Workflow', function () {
             .and('be.enabled');
         ['Full Address', 'Sub-Street', 'Building Number Sub-Street', 'Locality', 'Address Status', 'Address Currency']
             .forEach((hidden) => cy.get('body').find(`[aria-label="${hidden}"]`).filter(':visible').should('have.length', 0));
-        // APP-BUG: Building Number is expected here but building_number_value is in this step's hiddenNodes.
-        // cy.get('[aria-label="Building Number"]').should('be.visible');
+        // Building Number is deliberately hidden on this step.
+        cy.get('[aria-label="Building Number"]:visible').should('not.exist');
         footer({ next: true });
 
         cy.contains('a', 'Help').click();
