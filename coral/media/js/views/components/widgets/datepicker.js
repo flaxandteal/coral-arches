@@ -135,7 +135,10 @@ var DatePickerWidget = function (params) {
    * Date format overriding logic
    */
   this.dateValue.subscribe((value) => {
-    if (!value) return;
+    if (!value) {
+      this.value(null);
+      return;
+    }
     const parsedDate = moment(value, 'DD-MM-YYYY');
     const formattedDate = parsedDate.format('YYYY-MM-DD');
     this.value(formattedDate);
