@@ -23,6 +23,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
-- fix(datepicker): a typed date is kept, and a typed date past the maximum becomes the maximum
+- fix(datepicker): typing over the date filled in on open replaces it, and a typed date past the maximum becomes the maximum
 
 ### Notes
