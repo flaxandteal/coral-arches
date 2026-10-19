@@ -1,4 +1,4 @@
-"""Letter placeholder parsing, without Django: the two pure helpers are lifted out of
+"""Letter placeholder parsing, without Django: the pure helpers are lifted out of
 file_template.py. `python tests/coral_tests/test_letter_placeholders.py`
 """
 
@@ -10,11 +10,12 @@ from docx import Document
 
 SOURCE = os.path.join(os.path.dirname(__file__), '..', '..', 'coral', 'views', 'file_template.py')
 tree = ast.parse(open(SOURCE).read())
-wanted = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in ('placeholders', 'split_placeholders')]
-assert len(wanted) == 2
+wanted = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in ('placeholders', 'split_placeholders', 'join_texts')]
+assert len(wanted) == 3
 namespace = {'re': re}
 exec(compile(ast.Module(body=wanted, type_ignores=[]), SOURCE, 'exec'), namespace)
 placeholders, split_placeholders = namespace['placeholders'], namespace['split_placeholders']
+join_texts = namespace['join_texts']
 
 doc = Document()
 doc.add_paragraph('Dear <owner>, re <monument_name>')
@@ -29,5 +30,8 @@ own, related, specials = split_placeholders(
 assert own == {'owner', 'street_value'}, own
 assert related == {'owner': {'street_value', 'county_value'}}, related
 assert specials == {'today'}, specials
+
+assert join_texts(['a', 'b'], True) == 'a\n \nb'
+assert join_texts(['a', 'b'], False) == 'a, b'
 
 print('ok')
