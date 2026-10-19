@@ -23,4 +23,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 
+- fix(resource-instance-select): resources already picked show greyed out in multi-value resource pickers
+
 ### Notes
