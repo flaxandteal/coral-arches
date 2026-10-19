@@ -200,8 +200,7 @@ describe('Going through the Add Monument Workflow', function () {
         // Next Step saves the added entries; they and earlier values survive a trip back.
         cy.workflowNext();
         cy.get(FOOTER, { timeout: 60000 }).contains('button', 'Previous Step').click();
-        // APP-BUG: the saved description is in the database but the revisited step lists none.
-        // cy.get(TILE_CARDS, { timeout: 60000 }).should('have.length', 1);
+        cy.get('.card_component.description_type', { timeout: 60000 }).should('exist');
         cy.get(FOOTER).contains('button', 'Previous Step').click();
         cy.get('[aria-label="Site Name"]', { timeout: 60000 }).should('have.value', 'Testing');
         cy.workflowNext();
@@ -212,8 +211,8 @@ describe('Going through the Add Monument Workflow', function () {
         cy.get('[aria-label="Building Name"]', { timeout: 60000 }).should('be.visible');
         ['Full Address', 'Sub-Street', 'Building Number Sub-Street', 'Locality', 'Address Status', 'Address Currency']
             .forEach((hidden) => notShown(`[aria-label="${hidden}"]`));
-        // APP-BUG: Building Number is expected here but building_number_value is in this step's hiddenNodes.
-        // cy.get('[aria-label="Building Number"]').should('be.visible');
+        // Building Number is deliberately hidden on this step.
+        cy.get('[aria-label="Building Number"]:visible').should('not.exist');
         footer({ next: true });
 
         cy.contains('a', 'Help').click();
