@@ -13,58 +13,56 @@ GARDEN_NUMBER_NODE_ID = "1edc61a9-b64b-51ae-9077-536908761903"
 COUNTY_NODE_ID = "87d3ff32-f44f-11eb-aa82-a87eeabdefba"
 
 
+def resolve_county(county_value, posted_label=None):
+    """GardenNumber for the county in a reference tile value; the posted label is only a fallback.
+
+    Raises ValueError when there is no county or it is not one the numbering knows.
+    """
+    county_name = reference_label(county_value) or posted_label
+    if not county_name:
+        raise ValueError("No county was found")
+    return GardenNumber(county_name=county_name)
+
+
+def bad_request(message):
+    return JSONResponse({"message": message}, status=400)
+
 
 class GardenNumberView(View):
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
         resource_instance_id = data.get("resourceInstanceId")
+        if not resource_instance_id:
+            return bad_request("No resource instance id was provided")
 
-        if resource_instance_id:
-            references_tile = Tile.objects.filter(
-                resourceinstance_id=resource_instance_id,
-                nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
-            ).first()
-            county_tile = Tile.objects.filter(
-                resourceinstance_id=resource_instance_id,
-                nodegroup_id=ADDRESS_NODEGROUP_ID,
-            ).first()
+        county_tile = Tile.objects.filter(
+            resourceinstance_id=resource_instance_id,
+            nodegroup_id=ADDRESS_NODEGROUP_ID,
+        ).first()
+        if not county_tile:
+            return bad_request("No county was found: the resource has no address")
 
-            if county_tile and references_tile:
-                county_name = reference_label(county_tile.data.get(COUNTY_NODE_ID))
-                county_abbreviation = GardenNumber(county_name).abbreviate_county(county_name)
-                garden_number = references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
-                abbreviation = None
-                if garden_number:
-                    abbreviation = (
-                        garden_number
-                        .get("en")
-                        .get("value")
-                        .split("-")[0]
-                    )
-                if county_abbreviation == abbreviation:
-                    if references_tile.data.get(GARDEN_NUMBER_NODE_ID, None):
-                        id = (
-                            references_tile.data.get(GARDEN_NUMBER_NODE_ID, None)
-                            .get("en")
-                            .get("value")
-                        )
-                        print("Historic Parks and Garden Number has already been generated: ", id)
-                        return JSONResponse(
-                            {
-                                "message": "Historic Parks and Garden has already been generated",
-                                "gardenNumber": id,
-                            }
-                        )
-            
-        self.county_name = ""
+        try:
+            gn = resolve_county(
+                county_tile.data.get(COUNTY_NODE_ID), data.get("selectedCountyLabel")
+            )
+        except ValueError as error:
+            return bad_request(f"Could not work out the county: {error}")
 
-        if county_tile:
-            self.county_name = reference_label(county_tile.data.get(COUNTY_NODE_ID))
+        references_tile = Tile.objects.filter(
+            resourceinstance_id=resource_instance_id,
+            nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
+        ).first()
+        garden_number = references_tile and references_tile.data.get(GARDEN_NUMBER_NODE_ID)
+        if garden_number:
+            existing = garden_number.get("en").get("value")
+            if existing.split("-")[0] == gn.county_abbreviation:
+                return JSONResponse(
+                    {
+                        "message": "Historic Parks and Garden has already been generated",
+                        "gardenNumber": existing,
+                    }
+                )
 
-        else:
-            raise ValueError("No county was found")
-
-        gn = GardenNumber(county_name=self.county_name)
         garden_number = gn.generate_id_number(resource_instance_id)
-
         return JSONResponse({"message": "Generated ID", "gardenNumber": garden_number})

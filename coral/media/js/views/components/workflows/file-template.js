@@ -39,6 +39,7 @@ function viewModel(params) {
   this.tile.data[this.LETTER_TYPE_NODE].subscribe((value) => {
     this.selectedLetterType(value);
   }, this);
+  this.selectedLetterType(this.tile.data[this.LETTER_TYPE_NODE]());
 
   this.document.subscribe((value) => {
     console.log("value will be", value)
@@ -171,7 +172,10 @@ function viewModel(params) {
    */
   params.form.save = () => {};
 
+  // The letter step has nothing to save, so finishing from it just leaves; any other step keeps the normal finish.
+  const finishWorkflow = this.form.workflow.finishWorkflow;
   this.form.workflow.finishWorkflow = () => {
+    if (!ko.unwrap(this.form.isStepActive)) return finishWorkflow();
     window.location.assign(this.form.workflow.quitUrl);
   };
 
