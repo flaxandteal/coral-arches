@@ -28,6 +28,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - test(cypress): `--env FAST=1` stops a spec at the first failed test with video off and 4s timeouts; every run logs failed requests and browser errors to `cypress/logs/<spec>.jsonl`
 - build(cypress): pass CORAL_ALLOW_TEST_SEED into the container so seeding runs; run E2E on release branch pushes and on demand, not on every PR; run the person and organisation fixture specs first (#905)
 
+- fix(workflows): Agri & Forestry / DAERA related HAs show townland, county and type, and the scheduled monument count follows the selection; the Within Deadline label clears its switch (#904)
 - fix(garden): garden reference number reads the county from the reference, not `/conceptvalue/`; the view returns 400 for a missing or unknown county (#902)
 
 - fix(heritage-asset): saving the references card is fast, and only notifies when a number is set or changed (#903)

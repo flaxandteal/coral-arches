@@ -339,28 +339,28 @@
                 <!-- ko foreach: { data: selectedMonuments(), as: 'monument', noChildContext: true } -->
                 <div  style="max-width: 600px !important; background: #eee; padding: 8px; border-radius: 6px; margin: 10px 5px 25px 5px; display: flex; flex-direction: column; gap: 12px">
                     <div style="display: flex; flex-direction: column; gap: 4px">
-                        <span style="font-weight: bold; font-size: 14px" data-bind="text: cards()[monument].haNumberLabel">Heritage Asset Reference</span>
-                        <span data-bind="text: cards()[monument].smrNumber" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <span style="font-weight: bold; font-size: 14px" data-bind="text: cards()[monument].haNumberLabel">Heritage Reference Number</span>
+                        <span data-bind="text: cards()[monument].smrNumber" style="background: white; padding: 4px 10px; border-radius: 4px">No data available</span>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px">
                         <span style="font-weight: bold; font-size: 14px">Monument Name</span>
-                        <span data-bind="text: cards()[monument].monumentName" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <span data-bind="text: cards()[monument].monumentName" style="background: white; padding: 4px 10px; border-radius: 4px">No data available</span>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px">
                         <span style="font-weight: bold; font-size: 14px">Heritage Asset Type</span>
                         <!-- ko foreach: cards()[monument].haType -->
-                        <span data-bind="text: $data" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <span data-bind="text: $data" style="background: white; padding: 4px 10px; border-radius: 4px">No data available</span>
                         <!-- /ko -->
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px">
                         <span style="font-weight: bold; font-size: 14px">Townland</span>
                         <!-- ko foreach: cards()[monument].townlandValue -->
-                        <span data-bind="text: $data" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <span data-bind="text: $data" style="background: white; padding: 4px 10px; border-radius: 4px">No data available</span>
                         <!-- /ko -->
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px">
                         <span style="font-weight: bold; font-size: 14px">County</span>
-                        <span data-bind="text: cards()[monument].countyValue" style="background: white; padding: 4px 10px; border-radius: 4px">None</span>
+                        <span data-bind="text: cards()[monument].countyValue" style="background: white; padding: 4px 10px; border-radius: 4px">No data available</span>
                     </div> 
                 </div>
                 <!-- /ko -->
