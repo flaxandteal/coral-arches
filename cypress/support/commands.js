@@ -77,14 +77,14 @@ Cypress.Commands.add("loginAs", (groupName) => {
 // default-card-util and file-template cards (e.g. Records NI, HMC Reference,
 // Letters) never apply. .widget-wrapper comes from the widget's own template
 // and is present no matter which card component renders it.
+// Reference-select results load async; waiting on the filtered selector retries until they arrive.
+const REAL_OPTIONS = '.select2-results__option:not(.loading-results):not(.select2-results__option--load-more):not(.select2-results__message)';
+
 Cypress.Commands.add("pickCardOption", (cardClass, indexOrText = 0) => {
     cy.get(`.widget-wrapper.${cardClass}`).scrollIntoView();
     cy.get(`.widget-wrapper.${cardClass}`).find('.select2-selection').first().click();
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
-    const options = () => cy.get('.select2-results__option')
-        .not('.loading-results')
-        .not('.select2-results__option--load-more')
-        .not('.select2-results__message');
+    const options = () => cy.get(REAL_OPTIONS, { timeout: 15000 });
     // Pass text when the first option will not do -- an assignee, say, has to be
     // someone the Update Response Assignee function accepts. Resource pickers page
     // their results, so search first: the wanted row is usually not rendered yet,
@@ -103,9 +103,7 @@ Cypress.Commands.add("pickOptionByLabelPrefix", (labelPrefix, indexOrText = 0) =
     cy.get(sel).first().scrollIntoView();
     cy.get(sel).first().click({ force: true });
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
-    const options = () => cy.get('.select2-results__option')
-        .not('.loading-results')
-        .not('.select2-results__option--load-more');
+    const options = () => cy.get(REAL_OPTIONS, { timeout: 15000 });
     if (typeof indexOrText === 'string') {
         options().contains(indexOrText).click();
     } else {
@@ -232,6 +230,16 @@ Cypress.Commands.add("pickRelationshipFirst", (ariaLabel) => {
         .click();
 });
 
+// The list still offers people already picked, so a second pick takes the second option.
+Cypress.Commands.add("pickRelationshipSecond", (ariaLabel) => {
+    cy.openRelationship(ariaLabel);
+    cy.get('.select2-results__option')
+        .not('.loading-results')
+        .not('.select2-results__option--load-more')
+        .eq(1)
+        .click();
+});
+
 Cypress.Commands.add("pickRelationshipByName", (ariaLabel, name, maxScrolls = 15) => {
     cy.openRelationship(ariaLabel);
     const tryScroll = (n) => {
@@ -346,4 +354,29 @@ Cypress.Commands.add("select2Search", (term) => {
         ':not(.select2-results__message)',
         { timeout: 20000 }
     ).should('have.length.greaterThan', 0);
+});
+
+// Search a relationship dropdown for `term` and pick the option containing `optionText`.
+Cypress.Commands.add("pickRelationshipSearch", (ariaLabel, term, optionText = term) => {
+    cy.openRelationship(ariaLabel);
+    cy.select2Search(term);
+    cy.get(REAL_OPTIONS, { timeout: 15000 }).contains(optionText).click();
+});
+
+// Overwrite the date already in a date widget (fillDate only types).
+Cypress.Commands.add("replaceDate", (cardClass, date) => {
+    const input = () => cy.get(`.widget-wrapper.${cardClass} input.form-control`).first();
+    cy.scrollToWidget(cardClass);
+    input().clear({ force: true });
+    input().type(`${date}{enter}`, { force: true });
+    input().should('have.value', date);
+});
+
+// Pick a day of the current month in a maxDate:today datepicker; typed dates are reset to today.
+Cypress.Commands.add("pickCalendarDay", (cardClass, day) => {
+    cy.scrollToWidget(cardClass);
+    cy.get(`.widget-wrapper.${cardClass} input.form-control`).first().click({ force: true });
+    cy.get('.bootstrap-datetimepicker-widget td.day:visible:not(.old):not(.new):not(.disabled)', { timeout: 10000 })
+        .contains(new RegExp(`^${day}$`)).click();
+    cy.get(`.widget-wrapper.${cardClass} input.form-control`).first().should('not.have.value', '');
 });
