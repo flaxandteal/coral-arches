@@ -35,6 +35,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 - fix(ha_number): generating an HA number keeps working past HA/99
 
+- fix(resource-instance-select): resources already picked show greyed out in multi-value resource pickers
+
 ### Notes
 
 - Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
