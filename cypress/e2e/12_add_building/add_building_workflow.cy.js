@@ -462,8 +462,7 @@ describe('Going through the Add Building Workflow', function () {
         label('wards_and_district_type', 'Wards and District Type');
         cy.contains('Generated HB');
         cy.get('[aria-label="Generated HB"]').should('be.disabled');
-        // APP-BUG: the placeholder should read "Auto-generated field" but it reads "Enter text".
-        // cy.get('[aria-label="Generated HB"]').should('have.attr', 'placeholder', 'Auto-generated field');
+        cy.get('[aria-label="Generated HB"]').should('have.attr', 'placeholder', 'Auto-generated field');
         cy.contains('button', 'Generate HB').should('be.disabled');
         cy.pickCardOption('wards_and_district_type');
         cy.get('.widget-wrapper.wards_and_district_type .select2-selection__clear').should('exist');

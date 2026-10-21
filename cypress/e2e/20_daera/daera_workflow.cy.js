@@ -220,10 +220,13 @@ describe('Going through the DAERA Workflow', function () {
             rows(alias).should('have.length', 2);
         });
 
-        // APP-BUG: Agent, Applicant, Applicant organisation and Referred to offer "Create a new ..." for text that matches nothing
-        // cy.openRelationship('Agent');
-        // cy.get('.select2-search__field:visible').first().type('XXXXXXX');
-        // cy.get('.select2-results__option').should('not.contain.text', 'Create a new');
+        // Agent and Applicant offer only existing people.
+        ['Agent', 'Applicant'].forEach((field) => {
+            cy.openRelationship(field);
+            cy.get('.select2-search__field:visible').first().type('XXXXXXX');
+            cy.get('.select2-results__option', { timeout: 30000 }).should('not.contain.text', 'Create a new');
+            cy.get('body').type('{esc}');
+        });
     }
 
     function fillDates() {
@@ -467,9 +470,8 @@ describe('Going through the DAERA Workflow', function () {
         cy.get('.widget-wrapper.consultation_type_n1 .select2-selection__placeholder').should('contain.text', 'Select an option');
         cy.workflowNext();
         cy.get('.workflow-nav-tab.active', { timeout: 60000 }).should('contain.text', 'Documentation');
-        // APP-BUG: Save and Complete Workflow finishes the workflow from here without Sign off ever being visited
-        // cy.get('.workflow-top-control').contains('Save and Complete Workflow').click();
-        // cy.location('pathname').should('not.include', '/plugins/init-workflow');
+        // Save and Complete Workflow is offered on every step, so the user can save and exit at any point.
+        cy.get('.workflow-top-control').contains('Save and Complete Workflow').should('be.visible');
     });
 
     it('Sets Within Deadline to No when there is no Response Date', function () {

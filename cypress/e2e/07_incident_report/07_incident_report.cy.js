@@ -269,8 +269,8 @@ describe('Issue Report workflow', () => {
             cy.location('search').then((search) => { entered.resourceId = new URLSearchParams(search).get('resource-id'); });
             label('reference_number', 'Reference Number');
             footer({ save: true });
-            // APP-BUG: later step tabs are clickable before the reference is saved
-            // cy.get('.workflow-nav-tab').contains('Record of the Issue').closest('.workflow-nav-tab').should('have.class', 'disabled');
+            // Later steps stay locked until the reference is saved.
+            cy.get('.workflow-nav-tab').contains('Record of the Issue').closest('.workflow-nav-tab').should('have.class', 'disabled');
             cy.workflowNext();
 
             // Record of the Issue
@@ -484,13 +484,17 @@ describe('Issue Report workflow', () => {
     describe('Record of the Issue', () => {
         it('Name is disabled', () => {
             openReport(SEEDED_REFERENCE);
-            cy.get('.workflow-nav-tab-container').contains('Record of the Issue').click();
+            // Tabs unlock once the reopened report's steps have loaded.
+            cy.get('.workflow-nav-tab-container').contains('Record of the Issue', { timeout: 60000 })
+                .closest('.workflow-nav-tab', { timeout: 60000 }).should('not.have.class', 'disabled').click();
             cy.get('[aria-label="Name"]', { timeout: 30000 }).should('be.disabled');
         });
 
         it('Issue Identified By accepts more than one person', () => {
             openReport(SEEDED_REFERENCE);
-            cy.get('.workflow-nav-tab-container').contains('Record of the Issue').click();
+            // Tabs unlock once the reopened report's steps have loaded.
+            cy.get('.workflow-nav-tab-container').contains('Record of the Issue', { timeout: 60000 })
+                .closest('.workflow-nav-tab', { timeout: 60000 }).should('not.have.class', 'disabled').click();
             cy.get('.widget-wrapper.damage_type', { timeout: 60000 }).should('exist');
             cy.get('.widget-wrapper.issue_identifier').scrollIntoView();
             cy.openRelationship('Issue Identified By');
@@ -503,7 +507,9 @@ describe('Issue Report workflow', () => {
 
         it('Area Archaeologist accepts more than one person', () => {
             openReport(SEEDED_REFERENCE);
-            cy.get('.workflow-nav-tab-container').contains('Record of the Issue').click();
+            // Tabs unlock once the reopened report's steps have loaded.
+            cy.get('.workflow-nav-tab-container').contains('Record of the Issue', { timeout: 60000 })
+                .closest('.workflow-nav-tab', { timeout: 60000 }).should('not.have.class', 'disabled').click();
             cy.get('.widget-wrapper.damage_type', { timeout: 60000 }).should('exist');
             cy.get('.widget-wrapper.area_archaeologist').scrollIntoView();
             cy.openRelationship('Area Archaeologist(s)');
@@ -516,7 +522,9 @@ describe('Issue Report workflow', () => {
 
         it('CWT Area Supervisor accepts more than one person', () => {
             openReport(SEEDED_REFERENCE);
-            cy.get('.workflow-nav-tab-container').contains('Record of the Issue').click();
+            // Tabs unlock once the reopened report's steps have loaded.
+            cy.get('.workflow-nav-tab-container').contains('Record of the Issue', { timeout: 60000 })
+                .closest('.workflow-nav-tab', { timeout: 60000 }).should('not.have.class', 'disabled').click();
             cy.get('.widget-wrapper.damage_type', { timeout: 60000 }).should('exist');
             cy.get('.widget-wrapper.cwt_area_supervisor').scrollIntoView();
             cy.openRelationship('CWT Area Supervisor(s)');
@@ -529,7 +537,9 @@ describe('Issue Report workflow', () => {
 
         it('Occupier accepts more than one person', () => {
             openReport(SEEDED_REFERENCE);
-            cy.get('.workflow-nav-tab-container').contains('Record of the Issue').click();
+            // Tabs unlock once the reopened report's steps have loaded.
+            cy.get('.workflow-nav-tab-container').contains('Record of the Issue', { timeout: 60000 })
+                .closest('.workflow-nav-tab', { timeout: 60000 }).should('not.have.class', 'disabled').click();
             cy.get('.widget-wrapper.damage_type', { timeout: 60000 }).should('exist');
             cy.get('.widget-wrapper.occupier').scrollIntoView();
             cy.openRelationship('Occupier(s)');
@@ -600,7 +610,9 @@ describe('Issue Report workflow', () => {
             cy.get('.workflow-nav-tab-container').contains('Issue Reference').click();
             cy.get('[aria-label="Reference Number"]').should('have.value', entered.reference);
 
-            cy.get('.workflow-nav-tab-container').contains('Record of the Issue').click();
+            // Tabs unlock once the reopened report's steps have loaded.
+            cy.get('.workflow-nav-tab-container').contains('Record of the Issue', { timeout: 60000 })
+                .closest('.workflow-nav-tab', { timeout: 60000 }).should('not.have.class', 'disabled').click();
             cy.get('.widget-wrapper.damage_type', { timeout: 60000 }).should('exist');
             cy.get('.widget-wrapper.damage_type').contains(entered.damageType, { timeout: 30000 });
             cy.get('.widget-wrapper.material_fabric_damage_type').contains(entered.materialFabricDamageType, { timeout: 30000 });
@@ -612,6 +624,7 @@ describe('Issue Report workflow', () => {
             cy.richTextValue('issue_note').should('contain', entered.notes);
 
             cy.get('.workflow-nav-tab-container').contains('Location details').click();
+            cy.get('.widget-wrapper.location_description', { timeout: 60000 }).should('exist');
             cy.richTextValue('location_description').should('contain', entered.locationDescription);
 
             cy.get('.workflow-nav-tab-container').contains('Map').click();
@@ -634,7 +647,9 @@ describe('Issue Report workflow', () => {
         it('the six contact pickers rehydrate on reopen', function () {
             if (!entered.reference) { this.skip(); return; }
             openReport(entered.reference);
-            cy.get('.workflow-nav-tab-container').contains('Record of the Issue').click();
+            // Tabs unlock once the reopened report's steps have loaded.
+            cy.get('.workflow-nav-tab-container').contains('Record of the Issue', { timeout: 60000 })
+                .closest('.workflow-nav-tab', { timeout: 60000 }).should('not.have.class', 'disabled').click();
             cy.get('.widget-wrapper.damage_type', { timeout: 60000 }).should('exist');
             cy.get('.widget-wrapper.issue_identifier').contains(entered.issueIdentifiedBy, { timeout: 30000 });
             cy.get('.widget-wrapper.area_archaeologist').contains(entered.areaArchaeologist, { timeout: 30000 });

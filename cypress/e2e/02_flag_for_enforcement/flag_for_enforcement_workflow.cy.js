@@ -213,8 +213,8 @@ describe('Going through the Flag For Enforcement Workflow', function () {
                 expect($options.toArray().map((o) => o.textContent.trim()))
                     .to.deep.equal(['All', 'New', 'Received', 'In Progress', 'Closed']);
             });
-            // APP-BUG: the All filter searches for hard-coded Status ids that are not in the controlled list, so the search returns 500 "ListItem matching query does not exist".
-            // cy.contains('.card-grid-item', enforcement.reasonWord, { timeout: 60000 });
+            // All lists the new enforcement.
+            cy.contains('.card-grid-item', enforcement.reasonWord, { timeout: 60000 });
 
             // The new enforcement has no status yet. Re-picking the filter reloads the list until it has been indexed.
             const showNew = (attemptsLeft) => {

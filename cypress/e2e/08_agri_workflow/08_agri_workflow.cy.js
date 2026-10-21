@@ -210,10 +210,11 @@ describe('Going through the Agri Workflow', function () {
             rows(alias).should('have.length', 2);
         });
 
-        // APP-BUG: Applicant offers "Create a new Person . . ." for text that matches nothing
-        // cy.openRelationship('Applicant');
-        // cy.get('.select2-search__field:visible').first().type('XXXXXXX');
-        // cy.get('.select2-results__option').should('not.contain.text', 'Create a new');
+        // Applicant offers only existing people.
+        cy.openRelationship('Applicant');
+        cy.get('.select2-search__field:visible').first().type('XXXXXXX');
+        cy.get('.select2-results__option', { timeout: 30000 }).should('not.contain.text', 'Create a new');
+        cy.get('body').type('{esc}');
     }
 
     function fillDates() {
