@@ -6,6 +6,7 @@ import arches from 'arches';
 import CardViewModel from 'viewmodels/card';
 import AlertViewModel from 'viewmodels/alert';
 import uuid from 'uuid';
+import sameTileData from 'utils/tile-data';
 import queueWorkflowHistory from 'utils/workflow-history-queue';
 import { cardDataFor, invalidateCardData, getGraphModel, selectTopCards, makeProvisionalTileViewModel } from 'utils/workflow-card-data';
 import workflowComponentAbstractTemplate from 'templates/views/components/workflows/workflow-component-abstract.htm';
@@ -406,7 +407,7 @@ function MultipleTileBasedComponent(title) {
                 if (!matchingTile) {
                     hasDirtyTiles = true;
                 }
-                else if (!_.isEqual(savedDatum.data, koMapping.toJS(matchingTile.data))) {
+                else if (!sameTileData(savedDatum.data, koMapping.toJS(matchingTile.data))) {
                     hasDirtyTiles = true;
                 }
             });
@@ -427,7 +428,7 @@ function MultipleTileBasedComponent(title) {
                 if (!matchingTile) {
                     hasDirtyTiles = true;
                 }
-                else if (!_.isEqual(persistedComponentData.data, koMapping.toJS(matchingTile.data))) {
+                else if (!sameTileData(persistedComponentData.data, koMapping.toJS(matchingTile.data))) {
                     hasDirtyTiles = true;
                 }
             });

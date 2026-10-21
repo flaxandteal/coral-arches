@@ -225,6 +225,14 @@ Don't batch specs on a laptop — the stack alone sits around 12 GB.
 npx cypress run
 ```
 
+### Fast mode
+
+```bash
+npx cypress@15.18.1 run --env FAST=1 --spec <spec>
+```
+
+Stops at the first failed test, turns video off and sets the default command timeout to 4s. Explicit `{ timeout: N }` in a spec still applies. Every run (fast or not) appends failed requests (status >= 400, excluding static, media and map tiles), `console.error` calls and swallowed uncaught exceptions to `cypress/logs/<spec file>.jsonl`, gitignored; delete it between runs if you want a clean log.
+
 ### 5.4 Pointing at a different app
 
 ```bash
