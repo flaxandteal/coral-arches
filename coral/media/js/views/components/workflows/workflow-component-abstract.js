@@ -674,6 +674,7 @@ function MultipleTileBasedComponent(title) {
     };
 
     this.clearEditor = function() {
+        self.tileLoadedInEditor(null);
         self.tile().reset();
     };
 
