@@ -130,73 +130,29 @@ const pageViewModel = function (params) {
     this.paginator.has_other_pages(this.totalPages() > 1);
   };
 
-  this.searchAll = JSON.stringify([
-    { op: 'and', 'c9711ef6-b555-11ee-baf6-0242ac120006': { op: 'null', val: '' } },
-    {
-      op: 'or',
-      'c9711ef6-b555-11ee-baf6-0242ac120006': {
-        op: 'eq',
-        val: '185bbad6-eb0f-424d-8802-fb4d93a64625'
-      }
-    },
-    {
-      op: 'or',
-      'c9711ef6-b555-11ee-baf6-0242ac120006': {
-        op: 'eq',
-        val: '58f1046b-2d43-4cd3-9636-436893e0ac6d'
-      }
-    },
-    {
-      op: 'or',
-      'c9711ef6-b555-11ee-baf6-0242ac120006': {
-        op: 'eq',
-        val: 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b'
-      }
-    }
-  ]),
+  const STATUS_NODE = 'c9711ef6-b555-11ee-baf6-0242ac120006';
+  const ENFORCEMENT_GRAPH = '8c3a4ae7-2704-4f47-aa68-4da7f9fc6d84';
+  const statusItemIds = {
+    received: '0315148a-02ff-5da9-849b-2aecacec12a1',
+    inProgress: '8fbe67b7-55ae-5a51-adef-217a0d818392',
+    closed: '3b61556a-4b5e-57d2-84d0-fdbfc080d8a9'
+  };
+  // The reference datatype's advanced-search filter never matches: it compares uris against an analysed
+  // text field. The term filter goes through the keyword-mapped references index instead.
+  const statusSearch = (itemId) => ({
+    'term-filter': JSON.stringify([{ type: 'reference', value: itemId, inverted: false }])
+  });
 
-  this.searchNew = JSON.stringify([
-    { op: 'and', 'c9711ef6-b555-11ee-baf6-0242ac120006': { op: 'null', val: '' } },
-  ]);
+  this.searchAll = { 'resource-type-filter': JSON.stringify([{ graphid: ENFORCEMENT_GRAPH, inverted: false }]) };
+  this.searchNew = { 'advanced-search': JSON.stringify([{ op: 'and', [STATUS_NODE]: { op: 'null', val: '' } }]) };
+  this.searchReceived = statusSearch(statusItemIds.received);
+  this.searchInProgress = statusSearch(statusItemIds.inProgress);
+  this.searchClosed = statusSearch(statusItemIds.closed);
 
-  this.searchReceived = JSON.stringify([
-    {
-      op: 'and',
-      'c9711ef6-b555-11ee-baf6-0242ac120006': {
-        op: 'eq',
-        val: '185bbad6-eb0f-424d-8802-fb4d93a64625'
-      }
-    }
-  ]),
+  this.searchParams = (search) => new URLSearchParams({ ...search, tiles: true, pages: 10 });
 
-  this.searchInProgress = JSON.stringify([
-    {
-      op: 'and',
-      'c9711ef6-b555-11ee-baf6-0242ac120006': {
-        op: 'eq',
-        val: '58f1046b-2d43-4cd3-9636-436893e0ac6d'
-      }
-    }
-  ]),
-
-  this.searchClosed = JSON.stringify([
-    {
-      op: 'and',
-      'c9711ef6-b555-11ee-baf6-0242ac120006': {
-        op: 'eq',
-        val: 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b'
-      }
-    }
-  ]),
-
-  this.searchParams = (advanceSearch) => new URLSearchParams({
-        'advanced-search': advanceSearch,
-        tiles: true,
-        pages: 10
-    });
-
-  this.fetchEnforcements = async (advanceSearch) => {
-      const searchParams = this.searchParams(advanceSearch);
+  this.fetchEnforcements = async (search) => {
+      const searchParams = this.searchParams(search);
       return window.fetch(`${arches.urls.search_results}?${searchParams}`)
         .then((response) => {
             if (response.ok) {
@@ -223,20 +179,18 @@ const pageViewModel = function (params) {
     const statusTile = consultation.tiles.find((tile) => {
       return tile.nodegroup === 'ac823b90-b555-11ee-805b-0242ac120006';
     });
-    return statusTile?.data['c9711ef6-b555-11ee-baf6-0242ac120006']
+    return statusTile?.data[STATUS_NODE]
   }
 
-  this.getStatusText = (nodeValueId) => {
-    switch (nodeValueId) {
-      case '185bbad6-eb0f-424d-8802-fb4d93a64625':
-        return 'Received';
-      case '58f1046b-2d43-4cd3-9636-436893e0ac6d':
-        return 'In progress';
-      case 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b':
-        return 'Closed';
-      default:
-        return 'New';
+  this.getStatusText = (status) => {
+    if (!Array.isArray(status)) {
+      return 'New';
     }
+    const itemId = status[0]?.labels?.[0]?.list_item_id;
+    if (itemId === statusItemIds.received) return 'Received';
+    if (itemId === statusItemIds.inProgress) return 'In progress';
+    if (itemId === statusItemIds.closed) return 'Closed';
+    return 'New';
   };
 
   this.openFlagged = (resourceId) => {
