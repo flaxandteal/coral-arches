@@ -232,12 +232,13 @@ Cypress.Commands.add("pickRelationshipFirst", (ariaLabel) => {
         .click();
 });
 
-// The list still offers people already picked, so a second pick takes the second option.
+// Already-picked options are greyed out, so a second pick skips them.
 Cypress.Commands.add("pickRelationshipSecond", (ariaLabel) => {
     cy.openRelationship(ariaLabel);
     cy.get('.select2-results__option')
         .not('.loading-results')
         .not('.select2-results__option--load-more')
+        .not('[aria-disabled="true"]')
         .eq(1)
         .click();
 });

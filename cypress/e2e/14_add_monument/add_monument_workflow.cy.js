@@ -94,9 +94,10 @@ describe('Going through the Add Monument Workflow', function () {
         footer({ next: true });
         cy.get('[aria-label="Site Name"]').type('Testing');
         footer({ save: true });
-        // APP-BUG: clearing the text should bring Next Step back, but the step stays unsaved-dirty.
-        // cy.get('[aria-label="Site Name"]').clear();
-        // footer({ next: true });
+        // Clearing the text brings Next Step back.
+        cy.get('[aria-label="Site Name"]').clear();
+        footer({ next: true });
+        cy.get('[aria-label="Site Name"]').type('Testing');
 
         label('monument_type', 'Heritage Asset Type');
         cy.pickCardOption('monument_type');
@@ -221,9 +222,10 @@ describe('Going through the Add Monument Workflow', function () {
 
         cy.get('[aria-label="Building Name"]').type('Testing Labs');
         footer({ save: true });
-        // APP-BUG: clearing the text should bring Next Step back, but the step stays unsaved-dirty.
-        // cy.get('[aria-label="Building Name"]').clear();
-        // footer({ next: true });
+        // Clearing the text brings Next Step back.
+        cy.get('[aria-label="Building Name"]').clear();
+        footer({ next: true });
+        cy.get('[aria-label="Building Name"]').type('Testing Labs');
         cy.get('[aria-label="Street"]').first().scrollIntoCentre().type('Testing Labs');
         cy.get('[aria-label="Town or City"]').first().scrollIntoCentre().type('Testing Labs');
         cy.get('[aria-label="Postcode"]').first().scrollIntoCentre().type('Testing Labs');
