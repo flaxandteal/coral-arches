@@ -41,6 +41,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 - fix(workflows): a cleared field no longer leaves Save and Continue showing, and unchanged multi-entry steps offer no Save
 - fix(letters): Generate is disabled until a letter type is chosen, and enabled when one is already saved
+- fix(workflows): Save and Complete Workflow saves the last step's unsaved entries, and Save no longer shows after saving a single-tile step
 
 ### Notes
 

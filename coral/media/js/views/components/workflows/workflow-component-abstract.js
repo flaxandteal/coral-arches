@@ -243,6 +243,8 @@ function TileBasedComponent() {
             };
         }));
 
+        self.value(self.savedData());
+        self.dirty(false);
         self.saving(false);
         self.complete(true);
     };
