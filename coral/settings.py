@@ -131,6 +131,12 @@ APP_VERSION = semantic_version.Version(
 TIME_ZONE = "Europe/London"
 USE_TZ = True
 
+# Group resources whose members stay read-only; every other group's members get Resource Editor.
+CORAL_READ_ONLY_GROUPS = [
+    "1b556c4a-e346-45ff-8cb8-45164f97c4e4",  # Read Access
+    "452ab9f2-ed4c-44dc-9ad3-ff9085734bc8",  # PUBLIC Group
+]
+
 GROUPINGS = {
     "groups": {
         "allowed_relationships": {
@@ -516,10 +522,14 @@ ALLOWED_SIGNUP_GROUPS = [
 ]
 
 USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
+
+CORAL_PERMISSIONS_IGNORE_SETS = os.getenv("CORAL_PERMISSIONS_IGNORE_SETS", "true").lower() == "true"
+
 if USE_CASBIN:
     AUTHENTICATION_BACKENDS = (
         *AUTHENTICATION_BACKENDS,
-        "dauthz.backends.CasbinBackend",
+        # Delegates has_perm to the framework's backend (CoralCasbinBackend), which answers plugin checks.
+        "arches.app.utils.permission_backend.PermissionBackend",
     )
     PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
     INSTALLED_APPS = (
