@@ -531,35 +531,15 @@ function MultipleTileBasedComponent(title) {
         self.tile().reset();
     };
 
-    self.resolveObservables = function (obj) {
-        Object.keys(obj).forEach(key => {
-            if (ko.isObservable(obj[key])) {
-                // If the property is an observable, call it to get its value
-                obj[key] = obj[key]();
-            } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-                // If the property is an object, recursively process it
-                obj[key] = self.resolveObservables(obj[key]);
-            }
-        });
-        return obj;
-    }
-
     this.loadTileIntoEditor = (data) => {
         self.tileLoadedInEditor(data);
 
         var tile = self.tile();
-
-        /* force the value of current tile data observables */ 
+        /* a copy, so editing or clearing the inputs leaves the listed entry untouched */
+        var values = koMapping.toJS(data.data);
         Object.keys(tile.data).forEach(function(key) {
-
-
             if (ko.isObservable(tile.data[key])) {
-                if (ko.isObservable(data.data[key])) {
-                    tile.data[key](data.data[key]());
-                } else {
-                    self.resolveObservables(data.data[key])
-                    tile.data[key](data.data[key]);
-                }
+                tile.data[key](values[key]);
             }
         });
     };
