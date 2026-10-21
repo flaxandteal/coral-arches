@@ -67,6 +67,10 @@ def placeholders(doc) -> set:
     return {name for p in paragraphs for name in re.findall(r'<([^<>]+)>', p.text)}
 
 
+def join_texts(texts, many_tiles):
+    return "\n \n".join(texts) if many_tiles else ", ".join(texts)
+
+
 def split_placeholders(names, expand, special):
     """(own aliases, {expand alias: [related aliases]}, special names) for a placeholder set."""
     own, related, specials = set(), {}, set()
@@ -705,7 +709,7 @@ class GenericTemplateProvider:
                 if text:
                     texts.append(text)
             if texts:
-                strings[alias] = ", ".join(texts)
+                strings[alias] = join_texts(texts, alias in self.config.get("many_tiles", ()))
         return strings
 
     def processDatatypes(self, mapping:Mapping) -> Mapping:
