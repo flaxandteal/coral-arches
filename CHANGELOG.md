@@ -40,6 +40,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(datepicker): typing over the date filled in on open replaces it, a typed date past the maximum becomes the maximum, and deleting the text clears the date
 
 - fix(workflows): a cleared field no longer leaves Save and Continue showing, and unchanged multi-entry steps offer no Save
+- fix(letters): Generate is disabled until a letter type is chosen, and enabled when one is already saved
 
 ### Notes
 

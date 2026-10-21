@@ -39,6 +39,7 @@ function viewModel(params) {
   this.tile.data[this.LETTER_TYPE_NODE].subscribe((value) => {
     this.selectedLetterType(value);
   }, this);
+  this.selectedLetterType(this.tile.data[this.LETTER_TYPE_NODE]());
 
   this.document.subscribe((value) => {
     console.log("value will be", value)
