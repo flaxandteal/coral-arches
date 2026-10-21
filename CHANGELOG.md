@@ -33,6 +33,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 - fix(heritage-asset): saving the references card is fast, and only notifies when a number is set or changed (#903)
 
+- fix(ha_number): generating an HA number keeps working past HA/99
+
 ### Notes
 
 - Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
