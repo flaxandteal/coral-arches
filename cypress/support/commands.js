@@ -16,6 +16,8 @@
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 
+import { recordFailure } from './e2e';
+
 Cypress.Commands.add("login", () => {
     cy.session('admin', () => {
         cy.visit('/auth/');
@@ -251,6 +253,7 @@ Cypress.Commands.add("pickRelationshipByName", (ariaLabel, name, maxScrolls = 15
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from failing the test temporary solution but we could log here and debug the uncaught issues
+    recordFailure({ uncaught: err.message })
     return false
 });
 
