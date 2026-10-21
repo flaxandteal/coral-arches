@@ -22,6 +22,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(workflows): Applicant (Agriculture & Forestry, DAERA) and Agent (DAERA) pickers offer only existing people, no "Create a new Person" row (#919)
+- fix(enforcements): View Enforcements filters by the v8 Status list again and shows each enforcement's real status instead of always New (#920)
 - fix(heritage-asset): Generated HB, SMR and Parks and Garden number inputs show "Auto-generated field" instead of "Enter text" (#922)
 - fix(workflows): Edit then Clear on a multi-entry step leaves the edited entry intact and goes back to adding a new entry (#917)
 - fix(widgets): Irish Grid Reference keeps what was typed while the preview is what is saved, Long/Lat accepts either order, and the grid letter check uses one letter
@@ -44,8 +46,12 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): a cleared field no longer leaves Save and Continue showing, and unchanged multi-entry steps offer no Save
 - fix(letters): Generate is disabled until a letter type is chosen, and enabled when one is already saved
 - fix(workflows): Save and Complete Workflow saves the last step's unsaved entries, and Save no longer shows after saving a single-tile step
+- test(cypress): Add Building, Add Garden and Add IHR specs updated to the v8 workflows and their UAT checklists; select2 search handles multi-value fields without deleting chosen values; page loads may take up to 180s (#908)
 - test(cypress): FMW Inspection, Issue Report, Flag for Enforcement, SMC, Agriculture and Forestry, DAERA, Curatorial and Add Monument specs updated to the v8 workflows and their UAT checklists; Test Person / Test Organisation added to the E2E seed (#907)
+- fix(workflows): Issue Report tabs after Issue Reference are no longer clickable before the Reference is saved, as Location details no longer counts as completing the step (#921)
 
 ### Notes
 
+- Run `python manage.py coral reload` to apply the Agriculture & Forestry and DAERA plugin change (no create on Applicant/Agent).
 - Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
+- Run `python manage.py coral reload` to pick up the Issue Report workflow change.

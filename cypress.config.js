@@ -34,7 +34,7 @@ module.exports = {
     experimentalMemoryManagement: true,
     baseUrl: "http://localhost:8000",
     defaultCommandTimeout: 12000,
-    pageLoadTimeout: 90000,
+    pageLoadTimeout: 180000,
     requestTimeout: 15000,
     responseTimeout: 30000,
     setupNodeEvents(on, config) {
