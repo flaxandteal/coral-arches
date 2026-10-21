@@ -278,7 +278,7 @@ export default ko.components.register('bngpoint', {
                     "TW":[6,0]}
 
 
-                pre = this.bngVal();
+                var pre = this.bngVal();
 
                 
                 
