@@ -44,7 +44,9 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(letters): Generate is disabled until a letter type is chosen, and enabled when one is already saved
 - fix(workflows): Save and Complete Workflow saves the last step's unsaved entries, and Save no longer shows after saving a single-tile step
 - test(cypress): FMW Inspection, Issue Report, Flag for Enforcement, SMC, Agriculture and Forestry, DAERA, Curatorial and Add Monument specs updated to the v8 workflows and their UAT checklists; Test Person / Test Organisation added to the E2E seed (#907)
+- fix(workflows): Issue Report tabs after Issue Reference are no longer clickable before the Reference is saved, as Location details no longer counts as completing the step (#921)
 
 ### Notes
 
 - Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
+- Run `python manage.py coral reload` to pick up the Issue Report workflow change.
