@@ -47,8 +47,10 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): Save and Complete Workflow saves the last step's unsaved entries, and Save no longer shows after saving a single-tile step
 - test(cypress): Add Building, Add Garden and Add IHR specs updated to the v8 workflows and their UAT checklists; select2 search handles multi-value fields without deleting chosen values; page loads may take up to 180s (#908)
 - test(cypress): FMW Inspection, Issue Report, Flag for Enforcement, SMC, Agriculture and Forestry, DAERA, Curatorial and Add Monument specs updated to the v8 workflows and their UAT checklists; Test Person / Test Organisation added to the E2E seed (#907)
+- fix(workflows): Issue Report tabs after Issue Reference are no longer clickable before the Reference is saved, as Location details no longer counts as completing the step (#921)
 
 ### Notes
 
 - Run `python manage.py coral reload` to apply the Agriculture & Forestry and DAERA plugin change (no create on Applicant/Agent).
 - Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
+- Run `python manage.py coral reload` to pick up the Issue Report workflow change.
