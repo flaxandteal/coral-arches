@@ -37,6 +37,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 - fix(resource-instance-select): resources already picked show greyed out in multi-value resource pickers
 
+- fix(datepicker): typing over the date filled in on open replaces it, a typed date past the maximum becomes the maximum, and deleting the text clears the date
+
 ### Notes
 
 - Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
