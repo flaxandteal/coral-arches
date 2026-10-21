@@ -490,8 +490,15 @@ var ResourceInstanceSelectViewModel = function(params) {
                         }
                     });
                 }
+                var selectedIds = [];
+                if (self.multiple) {
+                    [].concat(self.value() || []).forEach(function(v) {
+                        selectedIds.push(typeof v === 'string' ? v : ko.unwrap(v.resourceId));
+                    });
+                }
                 data.results.hits.hits.forEach(function(hit){
                     hit.id = hit._id;
+                    hit.disabled = selectedIds.includes(hit._id);
                 });
                 return {
                     "results": data.results.hits.hits,

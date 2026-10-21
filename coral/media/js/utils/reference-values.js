@@ -9,6 +9,9 @@
  * before the migration still holds the bare option id, and some paths hand back the list
  * item id on its own. All three are accepted here so a caller never has to care.
  */
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import arches from 'arches';
 
 /** Every controlled-list item id selected in a reference value. */
 export const selectedListItemIds = (value) => {
@@ -39,6 +42,23 @@ export const singleListItemId = (value) => selectedListItemIds(value)[0] ?? null
 export const lookupByListItem = (value, lookup, fallback = undefined) => {
   const found = selectedListItemIds(value).find((id) => id in lookup);
   return found === undefined ? fallback : lookup[found];
+};
+
+/** Comma-joined display labels of a reference value, or null; mirrors Python `reference_label`. */
+export const referenceLabel = (value) => {
+  const entries = koMapping.toJS(ko.unwrap(value));
+  if (!Array.isArray(entries)) return null;
+  const texts = [];
+  entries.forEach((entry) => {
+    const labels = entry?.labels || [];
+    const preferred =
+      labels.find(
+        (label) =>
+          label.language_id === arches.activeLanguage && label.valuetype_id === 'prefLabel'
+      ) || labels[0];
+    if (preferred?.value) texts.push(preferred.value);
+  });
+  return texts.length ? texts.join(', ') : null;
 };
 
 const referenceValueRequests = {};
