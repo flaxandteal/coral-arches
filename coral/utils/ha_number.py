@@ -1,5 +1,5 @@
 from arches.app.models.tile import Tile
-from django.db.models import F, Func, IntegerField, Value
+from django.db.models import Func, IntegerField, Value
 from django.db.models.fields.json import KT
 from django.db.models.functions import Cast
 
@@ -26,15 +26,11 @@ class HaNumber:
             )
             if resource_instance_id:
                 query_result = query_result.exclude(resourceinstance_id=resource_instance_id)
-            query_result = query_result.annotate(
-                    ha_id_number=KT(f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value")
-                ).filter(ha_id_number__startswith="HA/")
-            
             # Text order puts "HA/99" above "HA/119"; order by the number instead.
             query_result = query_result.annotate(
                 ha_index=Cast(
                     Func(
-                        F("ha_id_number"),
+                        KT(f"data__{SYSTEM_REFERENCE_RESOURCE_ID_NODE_ID}__en__value"),
                         Value(r"^HA/(\d+)"),
                         function="substring",
                     ),
