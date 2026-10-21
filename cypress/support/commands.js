@@ -91,7 +91,7 @@ Cypress.Commands.add("pickCardOption", (cardClass, indexOrText = 0) => {
     // and "Searching..."/"No results" are themselves .select2-results__option li's.
     if (typeof indexOrText === 'string') {
         cy.select2Search(indexOrText);
-        options().contains(indexOrText).click();
+        options().contains(indexOrText, { timeout: 15000 }).click();
     } else {
         options().eq(indexOrText).click();
     }
@@ -105,7 +105,7 @@ Cypress.Commands.add("pickOptionByLabelPrefix", (labelPrefix, indexOrText = 0) =
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
     const options = () => cy.get(REAL_OPTIONS, { timeout: 15000 });
     if (typeof indexOrText === 'string') {
-        options().contains(indexOrText).click();
+        options().contains(indexOrText, { timeout: 15000 }).click();
     } else {
         options().eq(indexOrText).click();
     }
@@ -132,6 +132,8 @@ Cypress.Commands.add("workflowNext", (options = {}) => {
             .then((text) => parseInt(text.trim(), 10));
 
     stepIndex().then((from) => {
+        // A save or load in progress covers the footer with the loading mask.
+        cy.get('.loading-mask:visible', { timeout }).should('not.exist');
         cy.get('.tabbed-workflow-footer-button-container', { timeout })
             .find('button:not([disabled]):not(.disabled)', { timeout })
             .contains(/Save and Continue|Next Step/, { timeout })
@@ -338,13 +340,17 @@ Cypress.Commands.add("waitForTileSaves", (count = 1) => {
 
 Cypress.Commands.add("select2Search", (term) => {
     cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
-    cy.get('.select2-dropdown').then(($dropdown) => {
-        const $field = $dropdown.find('.select2-search__field:visible');
+    // A multi-value select2 puts its search box inline in the selection, not in the dropdown.
+    cy.get('body').then(($body) => {
+        const $field = $body.find('.select2-container--open .select2-search__field:visible');
         if (!$field.length) {
             cy.log(`select2Search: search box hidden (<5 results), picking "${term}" from the list`);
             return;
         }
-        cy.wrap($field.first()).clear();
+        // In a multi-value select2, backspace in an empty search box deletes the last chosen value.
+        if ($field.first().val()) {
+            cy.wrap($field.first()).clear();
+        }
         cy.wrap($field.first()).type(term);
     });
 
