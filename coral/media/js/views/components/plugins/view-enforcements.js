@@ -130,27 +130,39 @@ const pageViewModel = function (params) {
     this.paginator.has_other_pages(this.totalPages() > 1);
   };
 
+  const statusItemIds = {
+    received: '0315148a-02ff-5da9-849b-2aecacec12a1',
+    inProgress: '8fbe67b7-55ae-5a51-adef-217a0d818392',
+    closed: '3b61556a-4b5e-57d2-84d0-fdbfc080d8a9'
+  };
+  const statusUri = (id) => [`https://coral-her.flaxandteal.co.uk/${id}`];
+  const statusUris = {
+    received: statusUri(statusItemIds.received),
+    inProgress: statusUri(statusItemIds.inProgress),
+    closed: statusUri(statusItemIds.closed)
+  };
+
   this.searchAll = JSON.stringify([
     { op: 'and', 'c9711ef6-b555-11ee-baf6-0242ac120006': { op: 'null', val: '' } },
     {
       op: 'or',
       'c9711ef6-b555-11ee-baf6-0242ac120006': {
         op: 'eq',
-        val: '185bbad6-eb0f-424d-8802-fb4d93a64625'
+        val: statusUris.received
       }
     },
     {
       op: 'or',
       'c9711ef6-b555-11ee-baf6-0242ac120006': {
         op: 'eq',
-        val: '58f1046b-2d43-4cd3-9636-436893e0ac6d'
+        val: statusUris.inProgress
       }
     },
     {
       op: 'or',
       'c9711ef6-b555-11ee-baf6-0242ac120006': {
         op: 'eq',
-        val: 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b'
+        val: statusUris.closed
       }
     }
   ]),
@@ -164,7 +176,7 @@ const pageViewModel = function (params) {
       op: 'and',
       'c9711ef6-b555-11ee-baf6-0242ac120006': {
         op: 'eq',
-        val: '185bbad6-eb0f-424d-8802-fb4d93a64625'
+        val: statusUris.received
       }
     }
   ]),
@@ -174,7 +186,7 @@ const pageViewModel = function (params) {
       op: 'and',
       'c9711ef6-b555-11ee-baf6-0242ac120006': {
         op: 'eq',
-        val: '58f1046b-2d43-4cd3-9636-436893e0ac6d'
+        val: statusUris.inProgress
       }
     }
   ]),
@@ -184,7 +196,7 @@ const pageViewModel = function (params) {
       op: 'and',
       'c9711ef6-b555-11ee-baf6-0242ac120006': {
         op: 'eq',
-        val: 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b'
+        val: statusUris.closed
       }
     }
   ]),
@@ -226,17 +238,15 @@ const pageViewModel = function (params) {
     return statusTile?.data['c9711ef6-b555-11ee-baf6-0242ac120006']
   }
 
-  this.getStatusText = (nodeValueId) => {
-    switch (nodeValueId) {
-      case '185bbad6-eb0f-424d-8802-fb4d93a64625':
-        return 'Received';
-      case '58f1046b-2d43-4cd3-9636-436893e0ac6d':
-        return 'In progress';
-      case 'f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b':
-        return 'Closed';
-      default:
-        return 'New';
+  this.getStatusText = (status) => {
+    if (!Array.isArray(status)) {
+      return 'New';
     }
+    const itemId = status[0]?.labels?.[0]?.list_item_id;
+    if (itemId === statusItemIds.received) return 'Received';
+    if (itemId === statusItemIds.inProgress) return 'In progress';
+    if (itemId === statusItemIds.closed) return 'Closed';
+    return 'New';
   };
 
   this.openFlagged = (resourceId) => {
