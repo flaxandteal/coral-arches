@@ -22,45 +22,9 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(widgets): Irish Grid Reference keeps what was typed while the preview is what is saved, Long/Lat accepts either order, and the grid letter check uses one letter
+- fix(widgets): Irish Grid Reference shows a saved value as Absolute or Long/Lat when the format is switched, and labels it Saved Value; the BNG widget no longer throws in strict mode, which broke the FMW Irish Grid step
+- fix(workflows): FMW Inspection monument panel shows designation type, townland and B-file again, loaded in one `/orm/resources` request
 - test(cypress): `--env FAST=1` stops a spec at the first failed test with video off and 4s timeouts; every run logs failed requests and browser errors to `cypress/logs/<spec>.jsonl`
-- fix(permissions): resource reports show their cards and tiles again — Casbin returned node group ids as strings where core compares UUIDs
-- fix(workflows): applying an HA Designation revision no longer fails creating the merge tracker (its description type and metatype are now reference values)
-- fix(letters): designation letters fill in the owner and the asset's own address, fetching only the placeholders' values instead of hydrating the revision
-- perf(dashboards): designation dashboard reads card values off tiles without hydrating resources; evaluation meeting pages no longer error (#891)
-- fix(workflow): Start New on the Issue Report launcher always opens a fresh report, and other reports' tiles no longer leak into an open workflow
-- fix(migration): Heritage Asset TM65 functions repointed at the live Irish Grid Reference node
-- fix(workflows): reference dropdowns honour `disabled` from a workflow's nodeOptions
-- test(cypress): Issue Report spec rewritten, with a `--reset` for `seed_test_issue_report` so HA/03 resets between runs
-- fix(migrations): HA Revision relevant-parties nodes repointed at the live relationship concept, fixing the 500 on save
-- fix(letters): Letters step resolves the selected letter type's reference value before lookup, and keys the two advance listing letters on the live list items
-- fix(shim): `ResourceModel.items()` resolves aliases through the same lookup `_SemanticNode` uses, so a real node alias starting with `_` (e.g. `_legacy_record`) no longer raises
-- feat(seed): HA/04 carries values for every field the designation workflow shows
-- fix(letters): the letter tile records the chosen letter type instead of a pre-v8 concept id, so generated letters are linked and shown
-- fix(workflows): HA Designation Start step shows the revision's SMR Number from HA References, not the empty Generated SMR field
-- fix(workflows): HA Designation launcher's revision list shows only the selected HA's revisions, not every HA's
-- feat(seed): `seed_test_ha_revision` builds an open Monument Revision for HA/04 via the same task the designation launcher uses, skipping if one is already open
-- fix(workflows): the evaluation meeting's last step renders again, and a new meeting with no building no longer errors
-- feat(seed): seeded HA/04-06 carry an HB Number so the evaluation meeting building picker lists them
-- fix(functions): add building saves with a blank HB Number, clearing any existing one, instead of asking for a Ward and District
-- fix(workflows): Evaluation Meeting Location Details reads the Heritage Asset by alias, shows reference labels, and no longer flashes node chains while loading
-- fix(migrations): unused Area Type list items (Council, County, Town, Townland and others) removed, leaving Barony, District, Parish and Ward
-- fix(migrations): Area Name list cut to Barony, District, Parish and Ward, after repointing each value to the same-named entry under its Area Type's heading; items still in use are kept
-- fix(notifications): the HA designation remap notification names the revision and its Open revision button opens the designation workflow again
-- fix(migrations): duplicate Historic England period entries (Medieval, Early Medieval, Uncertain …) removed from existing databases, existing values repointed to the surviving entry
-
 ### Notes
-- Migration 8017 rewrites Area Name tile data in SQL, which bypasses Arches signals, so run a search reindex after deploy.
-- Migration 8018 rewrites period values in SQL, which bypasses Arches signals, so run a search reindex after deploy.
-- Run `python manage.py coral reload` for the designation workflow letter config (`fetch: placeholders`).
-- fix(workflows): HA Designation Start step no longer shows the SMR Number card; the reference numbers live on the Heritage Asset Details step, as #2047 intended
 
-### Notes
-- Run `python manage.py coral reload` after deploy for the Heritage Asset Designation Start step change.
-- After deploy, run `python manage.py coral reload` so the `disableStartNew: false`
-  change in `open-issue-report-workflow.json` / `open-workflow.json` and the Heritage
-  Asset Designation Start step change take effect — `get_plugin()` reads the
-  `plugins` DB table, not the JSON file.
-- Run `python manage.py coral reload` and rebuild webpack for the Evaluation Meeting
-  Location Details change (`evaluation-meeting-workflow.json` now lists node aliases).
-- The TM65 and HA Revision relationship fixes apply through `migrate` on deploy.
-- The advance listing letter `.docx` files must already exist in `docx/` in storage.
