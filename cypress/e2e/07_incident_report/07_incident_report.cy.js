@@ -36,11 +36,15 @@ describe('Issue Report workflow', () => {
         expect($body.find(selector).filter(':visible'), selector).to.have.length(0));
 
     // Clearing or removing a select2 value can leave its list open over the next widget.
-    const closeDropdown = () => {
-        // The list opens a moment after the click; an Escape sent before it opens is lost.
+    // The list opens a moment after the click and an Escape sent before it opens is lost, so retry.
+    const closeDropdown = (attemptsLeft = 5) => {
         cy.wait(400);
-        cy.get('body').type('{esc}');
-        cy.get('.select2-dropdown').should('not.exist');
+        cy.get('body').then(($body) => {
+            if (!$body.find('.select2-dropdown').length) return;
+            expect(attemptsLeft, 'select2 list closes').to.be.greaterThan(0);
+            cy.get('body').type('{esc}');
+            closeDropdown(attemptsLeft - 1);
+        });
         cy.document().then((doc) => doc.activeElement?.blur());
     };
 
@@ -255,6 +259,7 @@ describe('Issue Report workflow', () => {
             startNewReport();
 
             cy.get('.workflow-nav-tab.active').should('contain.text', 'Initial step');
+            cy.get('.widget-wrapper.resourceid', { timeout: 60000 }).should('exist');
             label('resourceid', 'HA Number');
             cy.get('[aria-label="HA Number"]').should('be.disabled').should('have.value', 'HA/03');
             footer({ previous: false, next: true });

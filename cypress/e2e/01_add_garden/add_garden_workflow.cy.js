@@ -592,12 +592,19 @@ describe('Going through the Add Garden Workflow', function () {
 
             cy.get('.workflow-nav-tab').contains('Location Details').click();
             cy.get('[aria-label="Building Name"]', { timeout: 60000 }).should('be.visible');
-            pickByText('county_value', county);
-            selectedText('county_value').should('contain', county);
-            // The number is worked out from the saved county, so the save has to land first.
-            cy.watchTileSaves();
-            cy.workflowNext();
-            cy.waitForTileSaves(1);
+            // HA/08 is reused across runs, so it may already hold this county; then nothing changes and nothing saves.
+            selectedText('county_value').then((before) => {
+                pickByText('county_value', county);
+                selectedText('county_value').should('contain', county);
+                // The number is worked out from the saved county, so the save has to land first.
+                if (before.includes(county)) {
+                    cy.workflowNext();
+                } else {
+                    cy.watchTileSaves();
+                    cy.workflowNext();
+                    cy.waitForTileSaves(1);
+                }
+            });
 
             cy.get('.workflow-nav-tab').contains('Finish').click();
             cy.contains('button', 'Generate', { timeout: 60000 }).should('not.be.disabled').click();
