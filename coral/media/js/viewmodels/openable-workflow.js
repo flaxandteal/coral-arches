@@ -7,6 +7,7 @@ import AlertViewModel from 'viewmodels/alert';
 import arches from 'arches';
 import uuid from 'uuid';
 import WorkflowViewModel from 'viewmodels/workflow';
+import queueWorkflowHistory from 'utils/workflow-history-queue';
 
 const OpenWorkflow = function (config) {
   WorkflowViewModel.apply(this, [config]);
@@ -51,6 +52,11 @@ const OpenWorkflow = function (config) {
         });
 
         if (response?.stepdata) {
+          // The open flag is used up here, so every later history load (tab, back, next) reads the saved row.
+          await queueWorkflowHistory(workflowId, this.plugin.componentname, {
+            stepdata: response.stepdata,
+            componentdata: response.componentdata || {}
+          });
           return response;
         } else {
           this.alert(
