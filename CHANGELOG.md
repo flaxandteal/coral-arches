@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- perf(webpack): pages load 11 scripts instead of 568 — shared chunks are no longer forced one per entry set, and vendors is one chunk (#923)
 - fix(workflows): Applicant (Agriculture & Forestry, DAERA) and Agent (DAERA) pickers offer only existing people, no "Create a new Person" row (#919)
 - fix(enforcements): View Enforcements filters by the v8 Status list again and shows each enforcement's real status instead of always New (#920)
 - fix(heritage-asset): Generated HB, SMR and Parks and Garden number inputs show "Auto-generated field" instead of "Enter text" (#922)
@@ -51,6 +52,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): Issue Report tabs after Issue Reference are no longer clickable before the Reference is saved, as Location details no longer counts as completing the step (#921)
 
 ### Notes
+
+- A full webpack build is needed for #923: every chunk filename and hash changes.
 
 - Run `python manage.py coral reload` to apply the Agriculture & Forestry and DAERA plugin change (no create on Applicant/Agent).
 - Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
