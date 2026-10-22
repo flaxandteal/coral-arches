@@ -87,17 +87,6 @@ describe('Going through the Add Garden Workflow', function () {
     };
     const entries = (anchor) => block(anchor).find(TILE_CARDS);
 
-    // Retried until the editor holds (or, for '', has emptied of) the text.
-    const richTextHolds = (alias, text) => cy.window().should((win) => {
-        const editor = Object.values(win.CKEDITOR.instances).find((inst) =>
-            inst.status === 'ready' && win.document.body.contains(inst.container?.$)
-            && inst.container.$.closest(`.widget-wrapper.${alias}`));
-        expect(editor, `ready editor in ${alias}`).to.exist;
-        const value = editor.getData().replace(/<[^>]*>/g, '').trim();
-        if (text === '') expect(value).to.equal('');
-        else expect(value).to.contain(text);
-    });
-
     const dateInput = (alias) => cy.get(`.widget-wrapper.${alias} input.form-control`).first();
     const dateAddon = (alias) => cy.get(`.card_component.${alias} > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon`);
 
@@ -172,9 +161,10 @@ describe('Going through the Add Garden Workflow', function () {
         footer({ next: true });
         cy.get('[aria-label="Site Name"]').type('Testing');
         footer({ save: true });
-        // APP-BUG: clearing the text should bring Next Step back, but the step stays unsaved-dirty.
-        // cy.get('[aria-label="Site Name"]').clear();
-        // footer({ next: true });
+        // Clearing the text brings Next Step back.
+        cy.get('[aria-label="Site Name"]').clear();
+        footer({ next: true });
+        cy.get('[aria-label="Site Name"]').type('Testing');
 
         cy.pickCardOption('monument_type');
         cy.pickCardOption('land_use_classification', 'Arable');
@@ -276,8 +266,6 @@ describe('Going through the Add Garden Workflow', function () {
         footer({ next: true });
         manyButton(DESCRIPTION, 'Clear').click();
         noManyButtons(DESCRIPTION);
-        // APP-BUG: Clear removes the Add/Clear buttons and the type but leaves the description text in the editor.
-        // richTextHolds('description', '');
 
         cy.pickCardOption('description_type');
         cy.typeRichText('description', 'test, Description two');
@@ -292,8 +280,6 @@ describe('Going through the Add Garden Workflow', function () {
         entries(DESCRIPTION).should('have.length', 1).and('contain.text', 'test, Description');
         entries(DESCRIPTION).should('contain.text', 'Remove').and('contain.text', 'Edit');
         noManyButtons(DESCRIPTION);
-        // APP-BUG: Add leaves the typed description in the editor (checklist: text clears after Add).
-        // richTextHolds('description', '');
         footer({ save: true });
 
         cy.pickCardOption('description_type', 1);
@@ -303,8 +289,6 @@ describe('Going through the Add Garden Workflow', function () {
 
         // The newest entry is listed first, so the oldest is the last. Editing loads it back into the inputs; Save overwrites it, Clear abandons it.
         entries(DESCRIPTION).last().contains('Edit').click();
-        // APP-BUG: Edit fills the type but the Description editor keeps whatever was typed last.
-        // richTextHolds('description', 'test, Description three');
         manyButton(DESCRIPTION, 'Save').should('exist');
         manyButton(DESCRIPTION, 'Clear').should('exist');
         cy.typeRichText('description', 'test, changed Description');
@@ -453,9 +437,10 @@ describe('Going through the Add Garden Workflow', function () {
         cy.get('[aria-label="Building Name"]').scrollIntoCentre().should('have.attr', 'placeholder', 'Enter text');
         cy.get('[aria-label="Building Name"]').type('Testing Labs');
         footer({ save: true });
-        // APP-BUG: clearing the text should bring Next Step back, but the step stays unsaved-dirty.
-        // cy.get('[aria-label="Building Name"]').clear();
-        // footer({ next: true });
+        // Clearing the text brings Next Step back.
+        cy.get('[aria-label="Building Name"]').clear();
+        footer({ next: true });
+        cy.get('[aria-label="Building Name"]').type('Testing Labs');
         cy.get('[aria-label="Street"]').first().scrollIntoCentre().type('Testing Labs');
         cy.get('[aria-label="Town or City"]').first().scrollIntoCentre().type('Testing Labs');
         cy.get('[aria-label="Postcode"]').first().scrollIntoCentre().type('Testing Labs');
@@ -472,10 +457,9 @@ describe('Going through the Add Garden Workflow', function () {
         label('townland', 'Townland');
         cy.pickCardOption('townland');
         cy.get('.widget-wrapper.townland .select2-selection__placeholder').should('not.exist');
-        // APP-BUG?: the checklist expects a second townland to replace the first, but the graph
-        // makes townland multi-valued (multiValue: true), so a second pick adds a chip instead.
-        // cy.pickCardOption('townland', 1);
-        // cy.get('.widget-wrapper.townland .select2-selection__choice').should('have.length', 1);
+        // Townland holds several values; the checklist's single-value expectation is out of date.
+        cy.pickCardOption('townland', 1);
+        cy.get('.widget-wrapper.townland .select2-selection__choice').should('have.length', 2);
 
         label('council', 'Council');
         offers('council', ['LA06 - Ards and North Down Borough Council'], 11);
@@ -608,12 +592,19 @@ describe('Going through the Add Garden Workflow', function () {
 
             cy.get('.workflow-nav-tab').contains('Location Details').click();
             cy.get('[aria-label="Building Name"]', { timeout: 60000 }).should('be.visible');
-            pickByText('county_value', county);
-            selectedText('county_value').should('contain', county);
-            // The number is worked out from the saved county, so the save has to land first.
-            cy.watchTileSaves();
-            cy.workflowNext();
-            cy.waitForTileSaves(1);
+            // HA/08 is reused across runs, so it may already hold this county; then nothing changes and nothing saves.
+            selectedText('county_value').then((before) => {
+                pickByText('county_value', county);
+                selectedText('county_value').should('contain', county);
+                // The number is worked out from the saved county, so the save has to land first.
+                if (before.includes(county)) {
+                    cy.workflowNext();
+                } else {
+                    cy.watchTileSaves();
+                    cy.workflowNext();
+                    cy.waitForTileSaves(1);
+                }
+            });
 
             cy.get('.workflow-nav-tab').contains('Finish').click();
             cy.contains('button', 'Generate', { timeout: 60000 }).should('not.be.disabled').click();

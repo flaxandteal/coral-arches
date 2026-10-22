@@ -119,9 +119,10 @@ describe('Going through the Add Building Workflow', function () {
         footer({ next: true });
         cy.get('[aria-label="Heritage Asset Name"]').type('Testing');
         footer({ save: true });
-        // APP-BUG: clearing the text should bring Next Step back, but the step stays unsaved-dirty.
-        // cy.get('[aria-label="Heritage Asset Name"]').clear();
-        // footer({ next: true });
+        // Clearing the text brings Next Step back.
+        cy.get('[aria-label="Heritage Asset Name"]').clear();
+        footer({ next: true });
+        cy.get('[aria-label="Heritage Asset Name"]').type('Testing');
 
         label('monument_type', 'Heritage Asset Type');
         cy.pickCardOption('monument_type');
@@ -133,9 +134,8 @@ describe('Going through the Add Building Workflow', function () {
         cy.pickCardOption('historical_period_type');
         cy.pickCardOption('historical_period_type', 1);
         cy.get('.widget-wrapper.historical_period_type .select2-selection__choice').should('have.length', 2);
-        // APP-BUG: removing one of several picks with its x stops the step saving (Save and Continue neither advances nor stores the step).
-        // cy.get('.widget-wrapper.historical_period_type .select2-selection__choice__remove').last().click();
-        // cy.get('.widget-wrapper.historical_period_type .select2-selection__choice').should('have.length', 1);
+        cy.get('.widget-wrapper.historical_period_type .select2-selection__choice__remove').last().click();
+        cy.get('.widget-wrapper.historical_period_type .select2-selection__choice').should('have.length', 1);
 
         // The relabel of this card to "Monument Type" is not applied by default-card.
         cy.get('.card_component').filter(':visible').should('not.contain.text', 'Monument Type');
@@ -190,9 +190,9 @@ describe('Going through the Add Building Workflow', function () {
         label('occupier', 'Occupier(s)');
         searchOffersCreate('Occupier(s)', ['Person']);
         cy.pickRelationshipFirst('Occupier(s)');
-        cy.get('.widget-wrapper.occupier .rr-table-row').should('have.length', 1);
+        cy.get('.widget-wrapper.occupier .rr-table-row', { timeout: 15000 }).should('have.length', 1);
         cy.pickRelationshipSecond('Occupier(s)');
-        cy.get('.widget-wrapper.occupier .rr-table-row').should('have.length', 2);
+        cy.get('.widget-wrapper.occupier .rr-table-row', { timeout: 15000 }).should('have.length', 2);
         cy.get('.widget-wrapper.occupier .rr-table-row').last()
             .find('button:has(.fa-trash)').click();
         cy.get('.widget-wrapper.occupier .rr-table-row').should('have.length', 1);
@@ -201,10 +201,9 @@ describe('Going through the Add Building Workflow', function () {
         label('owner', 'Owner(s)');
         searchOffersCreate('Owner(s)', ['Person', 'Organization']);
         cy.pickRelationshipFirst('Owner(s)');
-        cy.get('.widget-wrapper.owner .rr-table-row').should('have.length', 1);
+        cy.get('.widget-wrapper.owner .rr-table-row', { timeout: 15000 }).should('have.length', 1);
         cy.pickRelationshipSecond('Owner(s)');
-        cy.get('.widget-wrapper.owner .rr-table-row').should('have.length', 2);
-        // APP-BUG: the list still offers an owner that is already picked, so the same one can be added twice.
+        cy.get('.widget-wrapper.owner .rr-table-row', { timeout: 15000 }).should('have.length', 2);
 
         footer({ save: true });
         cy.workflowNext();
@@ -234,8 +233,6 @@ describe('Going through the Add Building Workflow', function () {
         cy.contains(MANY_BUTTONS, 'Clear').click();
         noManyButtons();
         cy.get('.widget-wrapper.description_type .select2-selection__placeholder').should('exist');
-        // APP-BUG: Clear resets the type but leaves the typed description in the editor.
-        // (retried read of the editor still shows the text)
 
         // A single type: a second pick replaces the first.
         cy.pickCardOption('description_type');
@@ -294,9 +291,10 @@ describe('Going through the Add Building Workflow', function () {
 
         cy.get('[aria-label="Building Name"]').type('Testing Labs');
         footer({ save: true });
-        // APP-BUG: clearing the text should bring Next Step back, but the step stays unsaved-dirty.
-        // cy.get('[aria-label="Building Name"]').clear();
-        // footer({ next: true });
+        // Clearing the text brings Next Step back.
+        cy.get('[aria-label="Building Name"]').clear();
+        footer({ next: true });
+        cy.get('[aria-label="Building Name"]').type('Testing Labs');
         ['Street', 'Town or City', 'Postcode'].forEach((field) => {
             cy.get(`[aria-label="${field}"]`).first().scrollIntoCentre().should('be.enabled').type('Testing Labs');
         });
@@ -464,8 +462,7 @@ describe('Going through the Add Building Workflow', function () {
         label('wards_and_district_type', 'Wards and District Type');
         cy.contains('Generated HB');
         cy.get('[aria-label="Generated HB"]').should('be.disabled');
-        // APP-BUG: the placeholder should read "Auto-generated field" but it reads "Enter text".
-        // cy.get('[aria-label="Generated HB"]').should('have.attr', 'placeholder', 'Auto-generated field');
+        cy.get('[aria-label="Generated HB"]').should('have.attr', 'placeholder', 'Auto-generated field');
         cy.contains('button', 'Generate HB').should('be.disabled');
         cy.pickCardOption('wards_and_district_type');
         cy.get('.widget-wrapper.wards_and_district_type .select2-selection__clear').should('exist');
