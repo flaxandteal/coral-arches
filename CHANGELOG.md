@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(workflows): a reopened workflow keeps its data when moving to another step straight away (#924)
 - fix(workflows): Applicant (Agriculture & Forestry, DAERA) and Agent (DAERA) pickers offer only existing people, no "Create a new Person" row (#919)
 - fix(enforcements): View Enforcements filters by the v8 Status list again and shows each enforcement's real status instead of always New (#920)
 - fix(heritage-asset): Generated HB, SMR and Parks and Garden number inputs show "Auto-generated field" instead of "Enter text" (#922)
