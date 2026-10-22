@@ -3,7 +3,6 @@ from coral.utils.ha_number import HaNumber
 from arches.app.models.tile import Tile
 import re
 import logging
-import pdb
 
 logger = logging.getLogger(__name__)
 
@@ -37,9 +36,9 @@ class IHRValidationFunction(BaseFunction):
             raise ValueError("The IHR Number format is incorrect please format as 00000:000:00")
 
         ihr_string_query = {
-            f"data__{IHR_NUMBER_NODE_ID}__icontains": input_ihr_string,
+            f"data__{IHR_NUMBER_NODE_ID}__en__value": input_ihr_string,
         }
-        
+
         existing_tile = Tile.objects.filter(
             nodegroup_id=HERITAGE_ASSET_REFERENCES_NODEGROUP_ID,
             **ihr_string_query,

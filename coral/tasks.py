@@ -11,8 +11,10 @@ from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
 from django.db import connection, transaction
+from django.urls import reverse
 from django.core.exceptions import ValidationError
 from coral.utils.casbin import SetApplicator
+from coral.utils.reference_values import reference_value
 from tempfile import NamedTemporaryFile
 
 from arches.app.models.system_settings import settings
@@ -122,12 +124,15 @@ def remap_monument_to_revision(user_id, target_resource_id):
         soft_delete_tile.save(context={"escape_function": True})
 
             
+        revision_name = f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}"
+        workflow_path = reverse("plugins", kwargs={"slug": "heritage-asset-designation-workflow"})
         notification = models.Notification(
-            message="The Monument remap process has completed you can now begin making isolated changes to this resource.",
+            message=f"The Monument remap process has completed for {revision_name}. You can now begin making isolated changes to this resource.",
             context={
                 "resource_instance_id": result['destinationResourceId'],
-                "resource_id": f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}",
-                "response_slug": "heritage-asset-designation-workflow"
+                "resource_id": revision_name,
+                "response_slug": "heritage-asset-designation-workflow",
+                "link": f"{workflow_path}?resource-id={result['destinationResourceId']}",
             },
         )
         notification.save()
@@ -298,9 +303,9 @@ def setup_merge_resource_tracker(user):
     TRACKER_DESCRIPTION_NODEGROUP = "5dff7478-ccdf-11ee-af2a-0242ac180006"
     TRACKER_DESCRIPTION_NODE = "5dff7e8c-ccdf-11ee-af2a-0242ac180006"
     TRACKER_DESCRIPTION_TYPE_NODE = "5dff80e4-ccdf-11ee-af2a-0242ac180006"
-    TRACKER_DESCRIPTION_TYPE_DEFAULT = "daa4cddc-8636-4842-b836-eb2e10aabe18"
+    TRACKER_DESCRIPTION_TYPE_DEFAULT = "f1cbae8f-0090-47dc-8252-ee533a2deb29"
     TRACKER_DESCRIPTION_METATYPE_NODE = "5dff8332-ccdf-11ee-af2a-0242ac180006"
-    TRACKER_DESCRIPTION_METATYPE_DEFAULT = "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+    TRACKER_DESCRIPTION_METATYPE_DEFAULT = "58283be2-b1d1-4e00-83f2-af87ca292738"
     merge_tracker_sys_ref = Tile(
         resourceinstance=merge_tracker_resource,
         data={
@@ -310,8 +315,12 @@ def setup_merge_resource_tracker(user):
                     "direction": "ltr",
                 }
             },
-            TRACKER_DESCRIPTION_TYPE_NODE: TRACKER_DESCRIPTION_TYPE_DEFAULT,
-            TRACKER_DESCRIPTION_METATYPE_NODE: TRACKER_DESCRIPTION_METATYPE_DEFAULT,
+            TRACKER_DESCRIPTION_TYPE_NODE: reference_value(
+                TRACKER_DESCRIPTION_TYPE_DEFAULT
+            ),
+            TRACKER_DESCRIPTION_METATYPE_NODE: reference_value(
+                TRACKER_DESCRIPTION_METATYPE_DEFAULT
+            ),
         },
         nodegroup=get_nodegroup(TRACKER_DESCRIPTION_NODEGROUP),
         sortorder=0,

@@ -42,7 +42,7 @@ def _permitted_nodegroup_ids(user: Optional[Any], graphid: str) -> Optional[List
         from arches.app.utils.permission_backend import get_nodegroups_by_perm
 
         nodegroups = get_nodegroups_by_perm(user, "models.read_nodegroup")
-        return [str(ng.nodegroupid) for ng in nodegroups]
+        return [str(ng) for ng in nodegroups]
     except Exception as exc:
         logger.warning(
             "querysets_shim: permission lookup failed (%s) — defaulting to deny",

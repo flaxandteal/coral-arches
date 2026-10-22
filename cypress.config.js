@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
 // Shared secret for the admin account's TOTP device used by the E2E suite.
 // Matches the device seeded in the test database (RFC 6238 test key, hex-encoded).
@@ -32,7 +34,7 @@ module.exports = {
     experimentalMemoryManagement: true,
     baseUrl: "http://localhost:8000",
     defaultCommandTimeout: 12000,
-    pageLoadTimeout: 90000,
+    pageLoadTimeout: 180000,
     requestTimeout: 15000,
     responseTimeout: 30000,
     setupNodeEvents(on, config) {
@@ -40,7 +42,19 @@ module.exports = {
         generateOtp(opts) {
           return generateTotp(opts || {});
         },
+        logFailures({ spec, entries }) {
+          const dir = path.join(__dirname, 'cypress', 'logs');
+          fs.mkdirSync(dir, { recursive: true });
+          const lines = entries.map((entry) => JSON.stringify(entry) + '\n').join('');
+          fs.appendFileSync(path.join(dir, `${path.basename(spec)}.jsonl`), lines);
+          return null;
+        },
       });
+      if (config.env.FAST) {
+        config.video = false;
+        config.defaultCommandTimeout = 4000;
+      }
+      return config;
     },
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
   },

@@ -6,6 +6,7 @@ import arches from 'arches';
 import CardViewModel from 'viewmodels/card';
 import AlertViewModel from 'viewmodels/alert';
 import uuid from 'uuid';
+import sameTileData from 'utils/tile-data';
 import queueWorkflowHistory from 'utils/workflow-history-queue';
 import { cardDataFor, invalidateCardData, getGraphModel, selectTopCards, makeProvisionalTileViewModel } from 'utils/workflow-card-data';
 import workflowComponentAbstractTemplate from 'templates/views/components/workflows/workflow-component-abstract.htm';
@@ -242,6 +243,8 @@ function TileBasedComponent() {
             };
         }));
 
+        self.value(self.savedData());
+        self.dirty(false);
         self.saving(false);
         self.complete(true);
     };
@@ -404,7 +407,7 @@ function MultipleTileBasedComponent(title) {
                 if (!matchingTile) {
                     hasDirtyTiles = true;
                 }
-                else if (!_.isEqual(savedDatum.data, koMapping.toJS(matchingTile.data))) {
+                else if (!sameTileData(savedDatum.data, koMapping.toJS(matchingTile.data))) {
                     hasDirtyTiles = true;
                 }
             });
@@ -425,7 +428,7 @@ function MultipleTileBasedComponent(title) {
                 if (!matchingTile) {
                     hasDirtyTiles = true;
                 }
-                else if (!_.isEqual(persistedComponentData.data, koMapping.toJS(matchingTile.data))) {
+                else if (!sameTileData(persistedComponentData.data, koMapping.toJS(matchingTile.data))) {
                     hasDirtyTiles = true;
                 }
             });
@@ -528,35 +531,15 @@ function MultipleTileBasedComponent(title) {
         self.tile().reset();
     };
 
-    self.resolveObservables = function (obj) {
-        Object.keys(obj).forEach(key => {
-            if (ko.isObservable(obj[key])) {
-                // If the property is an observable, call it to get its value
-                obj[key] = obj[key]();
-            } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-                // If the property is an object, recursively process it
-                obj[key] = self.resolveObservables(obj[key]);
-            }
-        });
-        return obj;
-    }
-
     this.loadTileIntoEditor = (data) => {
         self.tileLoadedInEditor(data);
 
         var tile = self.tile();
-
-        /* force the value of current tile data observables */ 
+        /* a copy, so editing or clearing the inputs leaves the listed entry untouched */
+        var values = koMapping.toJS(data.data);
         Object.keys(tile.data).forEach(function(key) {
-
-
             if (ko.isObservable(tile.data[key])) {
-                if (ko.isObservable(data.data[key])) {
-                    tile.data[key](data.data[key]());
-                } else {
-                    self.resolveObservables(data.data[key])
-                    tile.data[key](data.data[key]);
-                }
+                tile.data[key](values[key]);
             }
         });
     };
@@ -671,6 +654,7 @@ function MultipleTileBasedComponent(title) {
     };
 
     this.clearEditor = function() {
+        self.tileLoadedInEditor(null);
         self.tile().reset();
     };
 

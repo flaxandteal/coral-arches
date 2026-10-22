@@ -62,13 +62,13 @@ class HbNumberFunction(BaseFunction):
         concept_value = models.Value.objects.filter(valueid=value).first()
         return concept_value.value if concept_value else None
 
-    def is_last_char_letter(self, value):
+    def hb_text(self, value):
         if isinstance(value, dict):
-            string = value.get('en', {}).get('value', None)
-        else:
-            string = value
-        if not string:
-            return ValueError("No ID number present")
+            return value.get('en', {}).get('value', None)
+        return value
+
+    def is_last_char_letter(self, value):
+        string = self.hb_text(value)
         return string[-1].isalpha() if string else False
 
     def post_save(self, tile, request, context):
@@ -77,6 +77,9 @@ class HbNumberFunction(BaseFunction):
 
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
         id_number = tile.data.get(GENERATED_HB_NODE_ID, None)
+        if not self.hb_text(id_number):
+            self.update_ha_references(resource_instance_id, "", request)
+            return
         if self.is_last_char_letter(id_number):
             hns = HbNumberSuffix(id_number)
             if hns.validate_id(id_number, resource_instance_id=resource_instance_id):
