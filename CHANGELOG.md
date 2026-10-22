@@ -51,6 +51,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - test(cypress): Add Building, Add Garden and Add IHR specs updated to the v8 workflows and their UAT checklists; select2 search handles multi-value fields without deleting chosen values; page loads may take up to 180s (#908)
 - test(cypress): FMW Inspection, Issue Report, Flag for Enforcement, SMC, Agriculture and Forestry, DAERA, Curatorial and Add Monument specs updated to the v8 workflows and their UAT checklists; Test Person / Test Organisation added to the E2E seed (#907)
 - fix(workflows): Issue Report tabs after Issue Reference are no longer clickable before the Reference is saved, as Location details no longer counts as completing the step (#921)
+- feat(ci): Trivy vulnerability scan and CycloneDX/SPDX SBOM generation added to the build-arches workflow
 
 ### Notes
 

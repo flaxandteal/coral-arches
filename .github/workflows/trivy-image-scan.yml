@@ -1,0 +1,79 @@
+name: Trivy Container Scan
+
+# Reusable image scan and SBOM generation.
+
+on:
+  workflow_call:
+    inputs:
+      image-ref:
+        required: true
+        type: string
+        description: 'Full image reference to scan (e.g. ghcr.io/flaxandteal/arches_coral:tag-runid).'
+
+jobs:
+  trivy-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      packages: read
+    steps:
+      - name: Log in to Github Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Trivy
+        run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Scan image with Trivy
+        continue-on-error: true
+        run: |
+          trivy image \
+            --format sarif \
+            --output trivy-results.sarif \
+            --severity CRITICAL,HIGH \
+            "${{ inputs.image-ref }}"
+
+      - name: Upload Trivy scan to GitHub Security
+        uses: github/codeql-action/upload-sarif@v4
+        continue-on-error: true
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Generate CycloneDX SBOM
+        continue-on-error: true
+        run: |
+          trivy image \
+            --format cyclonedx \
+            --output sbom-cyclonedx.json \
+            "${{ inputs.image-ref }}"
+
+      - name: Generate SPDX SBOM
+        continue-on-error: true
+        run: |
+          trivy image \
+            --format spdx-json \
+            --output sbom-spdx.json \
+            "${{ inputs.image-ref }}"
+
+      # Artifact names must be unique within a run - callers with a matrix of
+      # images (Scan-Arches-Static-And-Final) invoke this workflow once per
+      # image, so the sanitized image-ref keeps each SBOM upload distinct.
+      - name: Sanitize image ref for artifact name
+        id: artifact_name
+        run: |
+          safe=$(echo "${{ inputs.image-ref }}" | tr -c 'a-zA-Z0-9_.-' '-')
+          echo "name=$safe" >> "$GITHUB_OUTPUT"
+
+      - name: Upload SBOMs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sbom-${{ steps.artifact_name.outputs.name }}
+          path: |
+            sbom-cyclonedx.json
+            sbom-spdx.json
+          if-no-files-found: warn

@@ -91,6 +91,16 @@ jobs:
         run: |
           name=${{ fromJSON(steps.build.outputs.metadata)['image.name'] }}
           echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
+
+  Scan-Arches:
+    needs: [Build-Arches]
+    uses: ./.github/workflows/trivy-image-scan.yml
+    permissions:
+      security-events: write
+      packages: read
+    with:
+      image-ref: ${{ needs['Build-Arches'].outputs.image }}
+
   Build-Arches-Static:
     runs-on: ubuntu-latest
     needs: [Build-Arches]
@@ -164,6 +174,7 @@ jobs:
         run: |
           name=${{ fromJSON(steps.buildx.outputs.metadata)['image.name'] }}
           echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
+
   Build-Arches-Final:
     needs: [Build-Arches-Static, Build-Arches]
     runs-on: ubuntu-latest
@@ -241,3 +252,18 @@ jobs:
         run: |
           name=${{ fromJSON(steps.buildx.outputs.metadata)['image.name'] }}
           echo "image_name=$name" | sed 's/,.*//g' >> $GITHUB_OUTPUT
+
+  Scan-Arches-Static-And-Final:
+    needs: [Build-Arches-Static, Build-Arches-Final]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: ${{ needs['Build-Arches-Static'].outputs.image }}
+          - image: ${{ needs['Build-Arches-Final'].outputs.image }}
+    uses: ./.github/workflows/trivy-image-scan.yml
+    permissions:
+      security-events: write
+      packages: read
+    with:
+      image-ref: ${{ matrix.image }}
