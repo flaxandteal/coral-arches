@@ -538,6 +538,11 @@ var ResourceInstanceSelectViewModel = function(params) {
         initSelection: function(ele, callback) {
             self.select2ele = ele;
             self.select2ele.prop("disabled", self.disabled());
+            // select2 keeps the last list on screen until the new search returns; that list predates
+            // the latest pick, so a resource just picked would briefly show as selectable again.
+            self.select2ele.on('select2:open', function() {
+                $('.select2-container--open .select2-results__option').not('.loading-results').remove();
+            });
 
             if(!self.displayOntologyTable && !!self.value() && !self.graphIds().includes(self.value())) {
                 var values = self.value();
