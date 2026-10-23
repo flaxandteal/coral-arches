@@ -18,6 +18,8 @@
     "",
     "monument_name is the CONSTANT 'Testing', not 'Testing {n}'. 02_flag_for_enforcement asserts the exact text of the associated resource: cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing'). A per-instance suffix would render 'HA/02 Testing 2' and fail that equality. This also matches how the display names look in a real coral database.",
     "",
+    "HA/05 and HA/06 carry a monument type, townland and a Scheduled Monument designation, and HA/04 deliberately does not: the Agri and DAERA specs relate all three and assert 2 scheduled monuments out of 3.",
+    "",
     "Instances 7-9 are named 'Garden Test', not 'Testing', and exist ONLY for 01_add_garden's three 'open an existing HA' tests. Those tests drive an existing Heritage Asset through the Add Garden workflow, and merely opening it rewrites its display name - if the test then fails part way through, the asset is left with a BLANK name. When they shared the 'Testing' assets they silently wiped the names off HA/01-03, and 02_flag_for_enforcement (which runs later in the same CI run) then found an unnamed option instead of 'HA/02 Testing'. Keeping them on their own assets, matched by a search term the other specs do not use, restores isolation. Note the whole suite runs against ONE database in CI, so anything a spec mutates is visible to every spec after it."
   ],
   "Heritage Asset": [
@@ -94,7 +96,10 @@
       "smr_number": "SMR-TEST-005",
       "ihr_number": null,
       "hb_number": "HB05/00/005",
-      "historic_parks_and_gardens": null
+      "historic_parks_and_gardens": null,
+      "monument_type": ["Ecclesiastical Site"],
+      "townland": ["Knockans"],
+      "recommended_designation_type": ["Scheduled Monument"]
     },
     {
       "monument_name": "Testing",
@@ -102,7 +107,10 @@
       "smr_number": "SMR-TEST-006",
       "ihr_number": null,
       "hb_number": "HB06/00/006",
-      "historic_parks_and_gardens": null
+      "historic_parks_and_gardens": null,
+      "monument_type": ["Chambered Tomb"],
+      "townland": ["Dunteige"],
+      "recommended_designation_type": ["Scheduled Monument"]
     },
     {
       "monument_name": "Garden Test",

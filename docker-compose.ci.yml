@@ -95,6 +95,7 @@ services:
         - ARCHES_PROJECT=$ARCHES_PROJECT
         # `compose exec` does not forward the runner's env, so the seed guard needs it here.
         - CORAL_ALLOW_TEST_SEED=${CORAL_ALLOW_TEST_SEED:-0}
+        - MAPBOX_API_KEY=${MAPBOX_API_KEY:-}
         # --- CI bootstrap: build a fresh DB with the coral package + data ---
         - ALLOW_BOOTSTRAP=True
         - INSTALL_PACKAGE=True

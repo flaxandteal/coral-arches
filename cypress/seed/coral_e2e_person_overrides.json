@@ -1,10 +1,13 @@
 {
   "__comment__": [
-    "Seeds the Person that the Flag for Enforcement spec picks as the flagging actor."
+    "Seeds the Persons the workflow specs pick: Test Person as the first, Another Person as the second."
   ],
   "Person": [
     {
       "full_name": "Test Person"
+    },
+    {
+      "full_name": "Another Person"
     }
   ]
 }
