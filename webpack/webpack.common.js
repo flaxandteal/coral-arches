@@ -289,8 +289,13 @@ module.exports = () => {
                     // distinct set of sharing entries got its own chunk and a page loaded ~570 scripts.
                     minSize: 200000,
                     cacheGroups: {
+                        // Split JavaScript only. Moving CSS into shared chunks changes the order
+                        // stylesheets load in, and library rules then override coral's.
+                        default: false,
+                        defaultVendors: false,
                         vendors: {
                             test: /[\\/]node_modules[\\/]/,
+                            type: /javascript/,
                             name: 'vendors',
                             priority: -10,
                             reuseExistingChunk: true,
@@ -298,6 +303,7 @@ module.exports = () => {
                         },
                         commons: {
                             minChunks: 2,
+                            type: /javascript/,
                             priority: -20,
                             reuseExistingChunk: true,
                             filename: 'chunks/commons.[contenthash].js'
