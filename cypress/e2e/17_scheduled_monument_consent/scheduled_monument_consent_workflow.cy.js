@@ -93,8 +93,8 @@ describe('Going through the Scheduled Monument Consent Workflow', function () {
     };
 
     // Seeded people. Pickers are searched by name: a sparse database lists "Create a new ..." first, and the list re-renders under a click.
-    const FIRST_PERSON = 'Name07';
-    const SECOND_PERSON = 'Name29';
+    const FIRST_PERSON = 'Test Person';
+    const SECOND_PERSON = 'Another Person';
 
     // A picked person gets delete and info buttons; info opens a summary that Return leaves.
     const personRowActions = (alias) => {
