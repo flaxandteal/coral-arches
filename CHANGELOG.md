@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(widgets): an empty number field stays empty instead of being written as 0, so steps with one no longer open as changed (#929)
 - fix(resource-instance-select): a resource just picked is greyed straight away when the picker reopens (#928)
 - perf(search): resource pickers and searches answer about 4x faster — the user's searchable graphs are found in one query (#927)
 - fix(webpack): page styles load in their original order again — shared chunks split JavaScript only (#926)
