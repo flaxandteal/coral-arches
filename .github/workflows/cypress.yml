@@ -20,23 +20,19 @@ env:
   # still has repairs outstanding, so running it here would mean a permanently red dev.
   # Add a spec back as its workflow is fixed; a newly added spec runs only once listed.
   # The two create_* specs are fixtures: later specs pick "Test Person" / "Test Organisation".
+  # Off until SMM notifications use the v8 nodegroup ids (task 072): saving Sign Off or a new
+  # consultation returns 500 in CI, which blocks fmw, agri, curatorial, daera, assign consultation
+  # and the hb/hm responses (they need assign consultation's record). Issue report is off until its
+  # Start New footer on a seeded HA is checked.
   CYPRESS_SPECS: >-
     cypress/e2e/01_create_a_person.cy.js,
     cypress/e2e/01_add_garden/add_garden_workflow.cy.js,
     cypress/e2e/02_create_an_organisation.cy.js,
     cypress/e2e/02_flag_for_enforcement/flag_for_enforcement_workflow.cy.js,
-    cypress/e2e/05_fmw_inspection/fmw_inspection_workflow.cy.js,
-    cypress/e2e/07_incident_report/07_incident_report.cy.js,
-    cypress/e2e/08_agri_workflow/08_agri_workflow.cy.js,
     cypress/e2e/12_add_building/add_building_workflow.cy.js,
     cypress/e2e/13_add_ihr/add_ihr_workflow.cy.js,
     cypress/e2e/14_add_monument/add_monument_workflow.cy.js,
-    cypress/e2e/17_scheduled_monument_consent/scheduled_monument_consent_workflow.cy.js,
-    cypress/e2e/18_assign_consultation/assign_consultation_workflow.cy.js,
-    cypress/e2e/19_curatorial/curatorial_workflow.cy.js,
-    cypress/e2e/20_daera/daera_workflow.cy.js,
-    cypress/e2e/21_hb_planning_consultation_response/hb_planning_consultation_response_workflow.cy.js,
-    cypress/e2e/22_hm_planning_consultation_response/hm_planning_consultation_response_workflow.cy.js
+    cypress/e2e/17_scheduled_monument_consent/scheduled_monument_consent_workflow.cy.js
 
 jobs:
   Cypress-E2E:

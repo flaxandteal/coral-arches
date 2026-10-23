@@ -217,10 +217,10 @@ describe('Issue Report workflow', () => {
             // The combobox's aria-label is only present while empty, so target
             // it by position once a value is already selected.
             cy.get('.select2-selection').first().click();
-            cy.select2Search('HB12/09/013');
-            options().contains('HB12/09/013').click();
+            cy.select2Search('HA/02');
+            options().contains('HA/02').click();
             cy.get('.select2-selection__rendered').first()
-                .should('contain.text', 'HB12/09/013')
+                .should('contain.text', 'HA/02')
                 .should('not.contain.text', 'HA/03');
 
             cy.get('.select2-selection__clear').first().click({ force: true });
