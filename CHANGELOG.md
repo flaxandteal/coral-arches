@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(resource-instance-select): a resource just picked is greyed straight away when the picker reopens (#928)
 - perf(webpack): pages load 11 scripts instead of 568 — shared chunks are no longer forced one per entry set, and vendors is one chunk (#923)
 - fix(workflows): a reopened workflow keeps its data when moving to another step straight away (#924)
 - fix(workflows): Applicant (Agriculture & Forestry, DAERA) and Agent (DAERA) pickers offer only existing people, no "Create a new Person" row (#919)
