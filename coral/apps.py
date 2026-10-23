@@ -44,6 +44,12 @@ class CoralConfig(AppConfig):
 
             search_counts.apply()
 
+        # Look up a user's searchable graphs in one query instead of loading every node.
+        if getattr(settings, "CORAL_FAST_PERMITTED_GRAPHIDS", True):
+            from coral.perf import permitted_graphids
+
+            permitted_graphids.apply()
+
 
 def _patch_arches_search_indexing_factory():
     """Work around an arches_search IndexingFactory import bug.

@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- perf(search): resource pickers and searches answer about 4x faster — the user's searchable graphs are found in one query (#927)
 - fix(webpack): page styles load in their original order again — shared chunks split JavaScript only (#926)
 - perf(webpack): pages load 11 scripts instead of 568 — shared chunks are no longer forced one per entry set, and vendors is one chunk (#923)
 - fix(workflows): a reopened workflow keeps its data when moving to another step straight away (#924)
