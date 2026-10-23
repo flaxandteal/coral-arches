@@ -20,7 +20,10 @@
     "",
     "HA/05 and HA/06 carry a monument type, townland and a Scheduled Monument designation, and HA/04 deliberately does not: the Agri and DAERA specs relate all three and assert 2 scheduled monuments out of 3.",
     "",
-    "Instances 7-9 are named 'Garden Test', not 'Testing', and exist ONLY for 01_add_garden's three 'open an existing HA' tests. Those tests drive an existing Heritage Asset through the Add Garden workflow, and merely opening it rewrites its display name - if the test then fails part way through, the asset is left with a BLANK name. When they shared the 'Testing' assets they silently wiped the names off HA/01-03, and 02_flag_for_enforcement (which runs later in the same CI run) then found an unnamed option instead of 'HA/02 Testing'. Keeping them on their own assets, matched by a search term the other specs do not use, restores isolation. Note the whole suite runs against ONE database in CI, so anything a spec mutates is visible to every spec after it."
+    "Instances 7-9 are named 'Garden Test', not 'Testing', and exist ONLY for 01_add_garden's three 'open an existing HA' tests. Those tests drive an existing Heritage Asset through the Add Garden workflow, and merely opening it rewrites its display name - if the test then fails part way through, the asset is left with a BLANK name. When they shared the 'Testing' assets they silently wiped the names off HA/01-03, and 02_flag_for_enforcement (which runs later in the same CI run) then found an unnamed option instead of 'HA/02 Testing'. Keeping them on their own assets, matched by a search term the other specs do not use, restores isolation. Note the whole suite runs against ONE database in CI, so anything a spec mutates is visible to every spec after it.",
+    "",
+    "Every instance has a primary_reference_number, as real heritage assets do: core's number widget",
+    "writes 0 into an empty number field when it renders, which makes a step that shows it open as changed."
   ],
   "Heritage Asset": [
     {
@@ -29,7 +32,8 @@
       "smr_number": null,
       "ihr_number": null,
       "hb_number": null,
-      "historic_parks_and_gardens": null
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90001
     },
     {
       "monument_name": "Testing",
@@ -37,7 +41,8 @@
       "smr_number": null,
       "ihr_number": null,
       "hb_number": null,
-      "historic_parks_and_gardens": null
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90002
     },
     {
       "monument_name": "Testing",
@@ -45,7 +50,8 @@
       "smr_number": null,
       "ihr_number": null,
       "hb_number": null,
-      "historic_parks_and_gardens": null
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90003
     },
     {
       "monument_name": "Testing",
@@ -54,9 +60,15 @@
       "ihr_number": null,
       "hb_number": "HB04/00/004",
       "historic_parks_and_gardens": null,
-      "monument_type": ["Barilla Mill"],
-      "historical_period_type": ["Early Bronze Age"],
-      "townland": ["Abbey Park"],
+      "monument_type": [
+        "Barilla Mill"
+      ],
+      "historical_period_type": [
+        "Early Bronze Age"
+      ],
+      "townland": [
+        "Abbey Park"
+      ],
       "irish_grid_reference_tm65_": "J3050082100",
       "description": "Test description for HA/04.",
       "building_name_value": "Test House",
@@ -69,15 +81,29 @@
       "location_description": "Test location description for HA/04.",
       "designation_description": "Test designation description for HA/04.",
       "designation_description_type": "Architects comments",
-      "grade": ["A"],
+      "grade": [
+        "A"
+      ],
       "land_folio_number": "LF-TEST-004",
-      "land_use_site": ["Other 1 (Allotment)"],
-      "listing_criteria": ["A. Style"],
-      "recommended_designation_type": ["Area of Archaeological Potential"],
-      "scheduling_criteria": ["Diversity"],
+      "land_use_site": [
+        "Other 1 (Allotment)"
+      ],
+      "listing_criteria": [
+        "A. Style"
+      ],
+      "recommended_designation_type": [
+        "Area of Archaeological Potential"
+      ],
+      "scheduling_criteria": [
+        "Diversity"
+      ],
       "cm_reference_number": "CM-TEST-004",
-      "occupier": ["c182b234-04cb-549a-94da-3c08d910c46d"],
-      "owner": ["c182b234-04cb-549a-94da-3c08d910c46d"],
+      "occupier": [
+        "c182b234-04cb-549a-94da-3c08d910c46d"
+      ],
+      "owner": [
+        "c182b234-04cb-549a-94da-3c08d910c46d"
+      ],
       "assessment_date_value": "2024-01-15",
       "assessment_done_by_value": "c182b234-04cb-549a-94da-3c08d910c46d",
       "council_consulted_date": "2024-01-20",
@@ -88,7 +114,8 @@
       "desg_approved_date_value": "2024-03-01",
       "director_sign_off_date_value": "2024-03-05",
       "local_authority_notification_date_value": "2024-03-10",
-      "owner_notified_date_value": "2024-03-10"
+      "owner_notified_date_value": "2024-03-10",
+      "primary_reference_number": 90004
     },
     {
       "monument_name": "Testing",
@@ -97,9 +124,16 @@
       "ihr_number": null,
       "hb_number": "HB05/00/005",
       "historic_parks_and_gardens": null,
-      "monument_type": ["Ecclesiastical Site"],
-      "townland": ["Knockans"],
-      "recommended_designation_type": ["Scheduled Monument"]
+      "monument_type": [
+        "Ecclesiastical Site"
+      ],
+      "townland": [
+        "Knockans"
+      ],
+      "recommended_designation_type": [
+        "Scheduled Monument"
+      ],
+      "primary_reference_number": 90005
     },
     {
       "monument_name": "Testing",
@@ -108,9 +142,16 @@
       "ihr_number": null,
       "hb_number": "HB06/00/006",
       "historic_parks_and_gardens": null,
-      "monument_type": ["Chambered Tomb"],
-      "townland": ["Dunteige"],
-      "recommended_designation_type": ["Scheduled Monument"]
+      "monument_type": [
+        "Chambered Tomb"
+      ],
+      "townland": [
+        "Dunteige"
+      ],
+      "recommended_designation_type": [
+        "Scheduled Monument"
+      ],
+      "primary_reference_number": 90006
     },
     {
       "monument_name": "Garden Test",
@@ -118,7 +159,8 @@
       "smr_number": null,
       "ihr_number": null,
       "hb_number": null,
-      "historic_parks_and_gardens": null
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90007
     },
     {
       "monument_name": "Garden Test",
@@ -126,7 +168,8 @@
       "smr_number": null,
       "ihr_number": null,
       "hb_number": null,
-      "historic_parks_and_gardens": null
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90008
     },
     {
       "monument_name": "Garden Test",
@@ -134,7 +177,8 @@
       "smr_number": null,
       "ihr_number": null,
       "hb_number": null,
-      "historic_parks_and_gardens": null
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90009
     }
   ]
 }
