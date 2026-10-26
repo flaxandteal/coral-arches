@@ -77,6 +77,16 @@ which would otherwise never be visible:
 | 4–6 | Testing | HA/04–06 | SMR-TEST-004… | `SMR-TEST-004 Testing` … |
 | 7–9 | Garden Test | HA/07–09 | — | `HA/07 Garden Test` … |
 
+HA/04 is unscheduled (Barilla Mill, Abbey Park). HA/05 (Ecclesiastical Site, Knockans)
+and HA/06 (Chambered Tomb, Dunteige) carry a Scheduled Monument designation; the Agri and
+DAERA specs relate all three and expect 2 scheduled out of 3. `seed_test_scheduled_monument`
+defaults to HA/05 (`--ha-number`).
+
+People: `Test Person` and `Another Person` (`coral_e2e_person_overrides.json`, `-n 2`)
+stand in for the first and second person the workflow specs pick; `Test Organisation`
+is the only organisation, so the Agri and DAERA specs pick one and not a second.
+The Issue Report spec opens `ISSUE-TEST-001` on HA/03, seeded by `seed_test_issue_report --reset`.
+
 Verified against a live database: they import cleanly, the descriptor and the
 `display_name` node both come out as above, and the resources are indexed into
 Elasticsearch (which is what the launchers query — `09_state_care` runs an advanced

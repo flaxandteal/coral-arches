@@ -1,12 +1,12 @@
 describe('Going through the Agri Workflow', function () {
 
-    // Real Heritage Assets present in a populated development database. The two
-    // scheduled ones have a recommended designation of Scheduled Monument; the
-    // third does not. HA/02 has no reference, type or address (all "No data available").
+    // Seeded Heritage Assets (cypress/seed). The first two have a recommended
+    // designation of Scheduled Monument; the third does not. HA/02 has no reference,
+    // type or address (all "No data available").
     const HA_NO_DATA = 'HA/02 Testing';
-    const HA_SCHEDULED_1 = 'ANT 001:009';
-    const HA_SCHEDULED_2 = 'ANT 035:002';
-    const HA_NOT_SCHEDULED = 'ANT 014:009';
+    const HA_SCHEDULED_1 = 'SMR-TEST-005 Testing';
+    const HA_SCHEDULED_2 = 'SMR-TEST-006 Testing';
+    const HA_NOT_SCHEDULED = 'SMR-TEST-004 Testing';
 
     // Date Received drives Due Date: the `update-dates` component writes received + 14 into Due Date.
     // Date Received, Date Acknowledged, Response Date and the sign-off Date are capped at today.
@@ -80,24 +80,10 @@ describe('Going through the Agri Workflow', function () {
 
     const afcNumber = (id) => Number(id.match(/^AFC(\d+)-/)[1]);
 
-    // The new consultation may not be indexed yet, so the launcher search is repeated until it lists the ID.
     const openFromLauncher = (id) => {
         openLauncher();
         cy.contains('button', 'Open Selected').should('be.disabled');
-        cy.get('.select2-selection').first().click();
-        const findInDropdown = (attemptsLeft) => {
-            cy.select2Search(id);
-            cy.get('body').then(($body) => {
-                const listed = $body.find('.select2-results__option').toArray()
-                    .some((option) => option.textContent.trim() === id);
-                if (listed) return;
-                expect(attemptsLeft, `${id} in the launcher list`).to.be.greaterThan(0);
-                cy.wait(5000);
-                findInDropdown(attemptsLeft - 1);
-            });
-        };
-        findInDropdown(6);
-        cy.get(REAL_OPTIONS).contains(id).click();
+        selectInDropdown(id);
         cy.contains('button', 'Open Selected').should('not.be.disabled').click();
         cy.get('[aria-label="Consultation ID"]', { timeout: 90000 }).should('have.value', id);
     };
@@ -170,19 +156,19 @@ describe('Going through the Agri Workflow', function () {
         rows('related_heritage_assets_n1').should('have.length', 1);
         counts(1, 0);
 
-        cy.pickRelationshipSearch('Related Heritage Assets', 'Kilvoruan', HA_SCHEDULED_1);
+        cy.pickRelationshipSearch('Related Heritage Assets', 'SMR-TEST-005', HA_SCHEDULED_1);
         cy.contains('SMR Number', { timeout: 30000 }).should('exist');
         cy.contains(HA_SCHEDULED_1, { timeout: 30000 }).should('exist');
         cy.contains('Ecclesiastical Site', { timeout: 30000 }).should('exist');
         cy.contains('Knockans', { timeout: 30000 }).should('exist');
         counts(2, 1);
 
-        cy.pickRelationshipSearch('Related Heritage Assets', '035:002', HA_SCHEDULED_2);
+        cy.pickRelationshipSearch('Related Heritage Assets', 'SMR-TEST-006', HA_SCHEDULED_2);
         cy.contains('Chambered Tomb', { timeout: 30000 }).should('exist');
         cy.contains('Dunteige', { timeout: 30000 }).should('exist');
         counts(3, 2);
 
-        cy.pickRelationshipSearch('Related Heritage Assets', 'Tirkilly', HA_NOT_SCHEDULED);
+        cy.pickRelationshipSearch('Related Heritage Assets', 'SMR-TEST-004', HA_NOT_SCHEDULED);
         counts(4, 2);
         rows('related_heritage_assets_n1').should('have.length', 4);
 
@@ -197,15 +183,16 @@ describe('Going through the Agri Workflow', function () {
     // Each people field is searchable and takes several resources, shown as rows below the field.
     function fillPeople() {
         const fields = [
-            { alias: 'applicant_n1', label: 'Applicant', term: 'Name07' },
-            { alias: 'applicant_organisation', label: 'Applicant organisation', term: 'Air Ministry' },
-            { alias: 'referred_to', label: 'Referred to', term: 'Name07' },
+            { alias: 'applicant_n1', label: 'Applicant', term: 'Test Person' },
+            { alias: 'applicant_organisation', label: 'Applicant organisation', term: 'Test Organisation', second: false },
+            { alias: 'referred_to', label: 'Referred to', term: 'Test Person' },
         ];
-        fields.forEach(({ alias, label, term }) => {
+        fields.forEach(({ alias, label, term, second = true }) => {
             cy.openRelationship(label);
             cy.select2Search(term);
             cy.get(REAL_OPTIONS).contains(term).click();
             rows(alias).should('have.length', 1);
+            if (!second) return;
             cy.pickRelationshipSecond(label);
             rows(alias).should('have.length', 2);
         });
@@ -288,9 +275,10 @@ describe('Going through the Agri Workflow', function () {
         cy.get('.widget-wrapper.date_received', { timeout: 60000 }).should('exist');
         rows('related_heritage_assets_n1').should('have.length', 2);
         counts(2, 1);
-        ['referred_to', 'applicant_n1', 'applicant_organisation'].forEach((alias) => {
+        ['referred_to', 'applicant_n1'].forEach((alias) => {
             rows(alias).should('have.length', 2);
         });
+        rows('applicant_organisation').should('have.length', 1);
         dateInput('date_received').should('have.value', DATE_RECEIVED_AGAIN);
         dateInput('due_date').should('have.value', DUE_DATE);
         dateInput('date_acknowledged').should('have.value', DATE_ACKNOWLEDGED);
@@ -354,21 +342,23 @@ describe('Going through the Agri Workflow', function () {
         });
     };
 
-    it('Shows the start and open controls on the launcher', function () {
-        cy.get('[href="/plugins/open-workflow?workflow-slug=agriculture-and-forestry-consultation-workflow"] > .workflow-select-card', { timeout: 60000 }).click();
-        cy.contains('Agriculture and Forestry Consultation', { timeout: 60000 }).should('be.visible');
-        cy.contains('button', 'Start New', { timeout: 60000 }).should('be.visible');
-        cy.contains('button', 'Open Selected').should('be.visible').and('be.disabled');
-        cy.get('.select2-selection__placeholder').should('contain.text', 'Start new or please select from below');
-
+    // The new consultation may not be indexed yet, so the search is repeated until it lists the ID.
+    const selectInDropdown = (id) => {
         cy.get('.select2-selection').first().click();
-        cy.get(REAL_OPTIONS, { timeout: 30000 }).should('have.length.greaterThan', 0);
-        cy.get(REAL_OPTIONS).first().click();
-        cy.contains('button', 'Open Selected').should('not.be.disabled');
-
-        cy.get('.select2-selection__clear').first().click();
-        cy.contains('button', 'Open Selected').should('be.disabled');
-    });
+        const findInDropdown = (attemptsLeft) => {
+            cy.select2Search(id);
+            cy.get('body').then(($body) => {
+                const listed = $body.find('.select2-results__option').toArray()
+                    .some((option) => option.textContent.trim() === id);
+                if (listed) return;
+                expect(attemptsLeft, `${id} in the launcher list`).to.be.greaterThan(0);
+                cy.wait(5000);
+                findInDropdown(attemptsLeft - 1);
+            });
+        };
+        findInDropdown(6);
+        cy.get(REAL_OPTIONS).contains(id).click();
+    };
 
     it('Start new and go through the workflow to completion', function () {
         startNew();
@@ -395,6 +385,21 @@ describe('Going through the Agri Workflow', function () {
         // Workflow completes and returns to the workflow launcher list.
         cy.location('pathname', { timeout: 60000 }).should('include', '/plugins/init-workflow');
         cy.get('.workflow-select-card', { timeout: 60000 }).should('have.length.greaterThan', 0);
+    });
+
+    it('Shows the start and open controls on the launcher', function () {
+        if (!consultation.id) { this.skip(); return; }
+        cy.get('[href="/plugins/open-workflow?workflow-slug=agriculture-and-forestry-consultation-workflow"] > .workflow-select-card', { timeout: 60000 }).click();
+        cy.contains('Agriculture and Forestry Consultation', { timeout: 60000 }).should('be.visible');
+        cy.contains('button', 'Start New', { timeout: 60000 }).should('be.visible');
+        cy.contains('button', 'Open Selected').should('be.visible').and('be.disabled');
+        cy.get('.select2-selection__placeholder').should('contain.text', 'Start new or please select from below');
+
+        selectInDropdown(consultation.id);
+        cy.contains('button', 'Open Selected').should('not.be.disabled');
+
+        cy.get('.select2-selection__clear').first().click();
+        cy.contains('button', 'Open Selected').should('be.disabled');
     });
 
     it('Finds the completed consultation by its ID with what was entered', function () {

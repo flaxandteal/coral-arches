@@ -238,9 +238,13 @@ Cypress.Commands.add("pickRelationshipSecond", (ariaLabel) => {
     cy.get('.select2-results__option')
         .not('.loading-results')
         .not('.select2-results__option--load-more')
-        .not('[aria-disabled="true"]')
-        .eq(1)
-        .click();
+        .not(':contains("Create a new")')
+        .should('have.length.greaterThan', 1)
+        .then(($options) => {
+            // Where the first pick is greyed out, take the first one still enabled; otherwise the second.
+            const enabled = $options.not('[aria-disabled="true"]');
+            cy.wrap(enabled.length < $options.length ? enabled.first() : $options.eq(1)).click();
+        });
 });
 
 Cypress.Commands.add("pickRelationshipByName", (ariaLabel, name, maxScrolls = 15) => {

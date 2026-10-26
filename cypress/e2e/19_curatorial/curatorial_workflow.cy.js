@@ -72,8 +72,8 @@ describe('Going through the Curatorial Inspection Workflow', function () {
     };
 
     // Seeded people. Pickers are searched by name: the list re-renders under a click.
-    const FIRST_PERSON = 'Name07';
-    const SECOND_PERSON = 'Name29';
+    const FIRST_PERSON = 'Test Person';
+    const SECOND_PERSON = 'Another Person';
 
     // A picked person gets delete and info buttons (no edit in this version); info opens a summary that Return leaves.
     // Picking the same person again adds nothing, a different one adds; the field is left with one person.
@@ -164,20 +164,23 @@ describe('Going through the Curatorial Inspection Workflow', function () {
 
     const consultation = {};
 
-    it('Shows the start and open controls on the launcher', function () {
-        cy.contains('Curatorial Inspection', { timeout: 120000 }).click();
-        cy.contains('button', 'Start New', { timeout: 60000 }).should('be.visible');
-        cy.contains('button', 'Open Selected').should('be.visible').and('be.disabled');
-
+    // The new consultation may not be indexed yet, so the search is repeated until it lists the ID.
+    const selectInDropdown = (id) => {
         cy.get('.select2-selection').first().click();
-        cy.get(REAL_OPTIONS, { timeout: 30000 }).should('have.length.greaterThan', 0);
-        cy.get(REAL_OPTIONS).first().click();
-        cy.get('.select2-selection__rendered').first().invoke('text').should('match', /\S/);
-        cy.contains('button', 'Open Selected').should('not.be.disabled');
-
-        cy.get('.select2-selection__clear').first().click();
-        cy.contains('button', 'Open Selected').should('be.disabled');
-    });
+        const findInDropdown = (attemptsLeft) => {
+            cy.select2Search(id);
+            cy.get('body').then(($body) => {
+                const listed = $body.find('.select2-results__option').toArray()
+                    .some((option) => option.textContent.trim() === id);
+                if (listed) return;
+                expect(attemptsLeft, `${id} in the launcher list`).to.be.greaterThan(0);
+                cy.wait(5000);
+                findInDropdown(attemptsLeft - 1);
+            });
+        };
+        findInDropdown(6);
+        cy.get(REAL_OPTIONS).contains(id).click();
+    };
 
     it('Create new inspection and go through the workflow and populate all fields', function () {
         cy.contains('Workflows', { timeout: 60000 });
@@ -402,25 +405,25 @@ describe('Going through the Curatorial Inspection Workflow', function () {
         cy.get('.workflow-select-card', { timeout: 20000 }).should('have.length.greaterThan', 0);
     });
 
+    it('Shows the start and open controls on the launcher', function () {
+        if (!consultation.reference) { this.skip(); return; }
+        cy.contains('Curatorial Inspection', { timeout: 120000 }).click();
+        cy.contains('button', 'Start New', { timeout: 60000 }).should('be.visible');
+        cy.contains('button', 'Open Selected').should('be.visible').and('be.disabled');
+
+        selectInDropdown(consultation.reference);
+        cy.get('.select2-selection__rendered').first().invoke('text').should('match', /\S/);
+        cy.contains('button', 'Open Selected').should('not.be.disabled');
+
+        cy.get('.select2-selection__clear').first().click();
+        cy.contains('button', 'Open Selected').should('be.disabled');
+    });
+
     it('Opens the new consultation from the launcher with what was entered', function () {
         if (!consultation.reference) { this.skip(); return; }
         cy.contains('Curatorial Inspection', { timeout: 120000 }).click();
         cy.contains('button', 'Open Selected', { timeout: 60000 }).should('be.disabled');
-        cy.get('.select2-selection').first().click();
-        // The new consultation may not be indexed yet, so the search is repeated until it shows.
-        const findInDropdown = (attemptsLeft) => {
-            cy.select2Search(consultation.reference);
-            cy.get('body').then(($body) => {
-                const listed = $body.find('.select2-results__option').toArray()
-                    .some((option) => option.textContent.trim() === consultation.reference);
-                if (listed) return;
-                expect(attemptsLeft, `${consultation.reference} in the launcher list`).to.be.greaterThan(0);
-                cy.wait(5000);
-                findInDropdown(attemptsLeft - 1);
-            });
-        };
-        findInDropdown(6);
-        cy.get(REAL_OPTIONS).contains(consultation.reference).click();
+        selectInDropdown(consultation.reference);
         cy.contains('button', 'Open Selected').should('not.be.disabled').click();
 
         // Back on the Start step, the ID matches and the other steps are open.
