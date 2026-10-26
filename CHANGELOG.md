@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(controlled-lists): Controlled List Manager shows 200 items per node with a Show more row, so Townlands and other big lists open without freezing the tab
 - perf(dashboards): the State Care dashboard reads card values off tiles, and filters, sorts and pages in the database, without hydrating resources (#930)
 - build(deps): pin `arches-json-importer` to v0.2.0 — Arches JSON loads can be undone, and overwrite replaces a resource's tiles instead of the resource (#931)
 - fix(resource-instance-select): a resource just picked is greyed straight away when the picker reopens (#928)
