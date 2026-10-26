@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- perf(dashboards): the State Care dashboard reads card values off tiles, and filters, sorts and pages in the database, without hydrating resources (#930)
 - build(deps): pin `arches-json-importer` to v0.2.0 — Arches JSON loads can be undone, and overwrite replaces a resource's tiles instead of the resource (#931)
 - fix(resource-instance-select): a resource just picked is greyed straight away when the picker reopens (#928)
 - perf(search): resource pickers and searches answer about 4x faster — the user's searchable graphs are found in one query (#927)
