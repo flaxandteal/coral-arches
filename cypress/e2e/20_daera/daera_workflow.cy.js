@@ -154,7 +154,7 @@ describe('Going through the DAERA Workflow', function () {
 
         // Missing details read "No data available" under the generic reference label.
         cy.pickRelationshipSearch('Related Heritage Assets', 'HA/02', HA_NO_DATA);
-        cy.contains('Heritage Reference Number').should('be.visible');
+        cy.contains('Heritage Asset Ref Number').should('be.visible');
         cy.contains('No data available').should('exist');
         counts(1, 0);
 
@@ -182,7 +182,7 @@ describe('Going through the DAERA Workflow', function () {
         rows('related_heritage_assets_n1').should('have.length', 4);
 
         removeHeritageAsset(HA_NO_DATA);
-        cy.contains('Heritage Reference Number', { timeout: 30000 }).should('not.exist');
+        cy.contains('Heritage Asset Ref Number', { timeout: 30000 }).should('not.exist');
         counts(3, 2);
         removeHeritageAsset(HA_SCHEDULED_1);
         counts(2, 1);

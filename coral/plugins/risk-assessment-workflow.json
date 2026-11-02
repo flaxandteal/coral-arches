@@ -73,6 +73,10 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "fields": [["monument_name", "Heritage Asset Name"], ["ha_reference"], ["monument_type", "Heritage Asset Type"], ["designation_or_protection_type", "Designation Type", ", "], ["b_file_reference_number", "B File(s)", ",\n"], ["townland", "Townland"], ["council", "Council"], ["irish_grid_reference_tm65_", "Irish Grid Ref"]],
+                  "noData": "No data available",
+                  "refFallbackLabel": "Heritage Asset Ref Number",
+                  "showScheduled": true,
                   "label": "Select Heritage Assets",
                   "graphid": "eb8e5877-7e36-416d-95a9-d0ff8045fd26",
                   "resourceid": "['initial-step-step']['heritage-asset'][0]['resourceid']['resourceInstanceId']",
@@ -90,7 +94,7 @@
                   "semanticName": "Heritage Asseets details"
                 },
                 "tilesManaged": "one",
-                "componentName": "get-ha-details",
+                "componentName": "get-selected-monument-details",
                 "uniqueInstanceName": "6cae135a-8a8c-4bbc-92a7-1572a4111bc6"
               },
               {

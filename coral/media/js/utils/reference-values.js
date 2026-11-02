@@ -94,3 +94,16 @@ export const resolvePrefilledNodes = async (prefilledNodes) => {
   );
   return resolved;
 };
+
+const RECOMMENDED_DESIGNATION_NODE = '5aa9d22a-29c6-5de0-8119-84ee1e93081f';
+const SCHEDULED_MONUMENT_ITEM = '1e898077-9144-9ef0-b6e1-08f4e4881972';
+
+/** Whether a Heritage Asset's recommended designation holds the Scheduled Monument list item. */
+export const isScheduledMonument = async (resourceId) => {
+  const url = arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId);
+  const response = await window.fetch(`${url}?nodeid=${RECOMMENDED_DESIGNATION_NODE}`);
+  const { tiles } = await response.json();
+  return tiles.some((tile) =>
+    hasListItem(tile.data?.[RECOMMENDED_DESIGNATION_NODE], SCHEDULED_MONUMENT_ITEM)
+  );
+};

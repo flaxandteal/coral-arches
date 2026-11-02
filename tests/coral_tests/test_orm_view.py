@@ -58,6 +58,24 @@ def test_many_ids_come_back_keyed_by_id_as_label_text():
         assert not any(len(t) == 36 and t.count('-') == 4 for t in texts), (alias, texts)
 
 
+DETAIL_ALIASES = [
+    'townland', 'monument_type', 'council', 'county_value', 'irish_grid_reference_tm65_',
+    'designation_or_protection_type', 'recommended_designation_type',
+]
+
+
+def test_detail_panel_aliases_come_back_as_readable_text():
+    from arches.app.models.models import TileModel
+
+    ids = [str(i) for i in TileModel.objects.filter(
+        nodegroup_id=DESIGNATIONS_NODEGROUP).values_list('resourceinstance_id', flat=True).distinct()[:300]]
+    result = post(**{'resourceids[]': ids, 'show_nodes[]': DETAIL_ALIASES})
+    for alias in DETAIL_ALIASES:
+        texts = [t for rid in ids for t in result[rid][alias]]
+        assert texts, f'no Heritage Asset in this database has {alias}'
+        assert all(isinstance(t, str) and not (len(t) == 36 and t.count('-') == 4) for t in texts), (alias, texts[:3])
+
+
 def test_single_resourceid_shape_is_unchanged():
     rid = monument_with_designation_and_townland()
     single = post(resourceid=rid, **{'show_nodes[]': SHOW_NODES})
