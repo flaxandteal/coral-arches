@@ -276,12 +276,12 @@ describe('Going through the FWM Inspection Workflow', function () {
         // Sign Off tab
         cy.get('.send_papers', { timeout: 60000 }).contains('Send Papers');
 
-        // Send Papers is a three-state switch (unset, off, on), not radio buttons. Within Deadline and Cur E are hidden.
-        cy.get('.send_papers .switch').should('have.attr', 'aria-checked', 'mixed').click();
-        cy.get('.send_papers .switch').should(($switch) => {
-            expect($switch.attr('aria-checked'), 'off is neither mixed nor true').to.not.be.oneOf(['mixed', 'true']);
-        }).and('not.have.class', 'on').click();
-        cy.get('.send_papers .switch').should('have.attr', 'aria-checked', 'true').and('have.class', 'on');
+        // Send Papers is a Yes/No radio, unset until picked. Within Deadline and Cur E are hidden.
+        cy.get('.send_papers label.active').should('not.exist');
+        cy.get('.send_papers label[role="radio"]').contains('Yes').click();
+        cy.get('.send_papers label.active').should('contain.text', 'Yes');
+        cy.get('.send_papers label[role="radio"]').contains('No').click();
+        cy.get('.send_papers label.active').should('contain.text', 'No');
 
         label('sign_off_date_value', 'Signed Off On');
         cy.get('.sign_off_date_value').scrollIntoCentre();

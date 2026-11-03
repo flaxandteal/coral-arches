@@ -37,7 +37,7 @@ describe('Going through the DAERA Workflow', function () {
 
     const CONSULTATION_GRAPH = '8d41e49e-a250-11e9-9eab-00224800b26d';
     const STATUS = 'Approved';
-    const TYPE = 'Abstraction';
+    const TYPE = 'Deforestation';
     const CM_REFERENCE = 'CM-TEST-001';
     const COMMENTS = 'Cypress consultation comments.';
     const LETTER_TYPE = 'DAERA AIL Consultation';
@@ -118,17 +118,12 @@ describe('Going through the DAERA Workflow', function () {
         cy.workflowNext();          // Consultation -> Documentation
         cy.workflowNext();          // Documentation -> Letters
         cy.workflowNext();          // Letters -> Sign off
-        cy.contains('.arches-toggle-sm', 'Within Deadline', { timeout: 60000 }).should('exist');
+        cy.get('.widget-wrapper.within_deadline', { timeout: 60000 }).should('contain.text', 'Within Deadline');
     };
-    // An unset switch has no aria-checked, so No is the attribute not being "true", re-read after the deadline lookup settles.
+    // update-deadline sets the Yes/No radio from the dates, so the active label is re-read until it settles.
     const withinDeadline = (expected) => {
-        const getSwitch = () => cy.get('span.switch[aria-label^="Within Deadline"]', { timeout: 30000 });
-        if (expected) {
-            getSwitch().should('have.attr', 'aria-checked', 'true');
-            return;
-        }
-        cy.wait(5000);
-        getSwitch().should('not.have.attr', 'aria-checked', 'true');
+        cy.get('.widget-wrapper.within_deadline label.active', { timeout: 30000 })
+            .should('contain.text', expected ? 'Yes' : 'No');
     };
 
     // Start step: ID generated into a locked box, later steps locked, no Undo.
@@ -321,9 +316,7 @@ describe('Going through the DAERA Workflow', function () {
         futureDaysBlocked('sign_off_date_value', '.step-counter');
         cy.replaceDate('sign_off_date_value', SIGN_OFF_DATE);
 
-        // Within Deadline is core's switch widget, which has no .widget-wrapper.<alias> class, so it is found by its aria-label.
-        // Checklist predates v8: the switch shows no "Click to switch" subtitle.
-        cy.contains('.arches-toggle-sm', 'Within Deadline').should('exist');
+        cy.get('.widget-wrapper.within_deadline').should('contain.text', 'Within Deadline');
         // The Response Date is before the Due Date.
         withinDeadline(true);
 
