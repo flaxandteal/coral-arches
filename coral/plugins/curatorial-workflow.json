@@ -64,6 +64,9 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "fields": [["ha_reference"], ["monument_name", "Monument Name"], ["designation_or_protection_type", "Designation Type", ", "], ["townland", "Townland"], ["b_file_reference_number", "B File(s)", ",\n"]],
+                  "noData": "No data available",
+                  "refFallbackLabel": "Heritage Asset Ref Number",
                   "labels": [
                     [
                       "Monument or Area",
