@@ -27,8 +27,6 @@ import generateAfcNumber from 'views/components/workflows/agriculture-and-forest
 import updateDeadline from 'views/components/workflows/update-deadline';
 import generateAilNumber from 'views/components/workflows/daera-workflow/generate-ail-number';
 import getSelectedMonumentDetailsWithCount from 'views/components/workflows/get-selected-monument-details-with-count';
-import getHaDetails from 'views/components/workflows/risk-assessment-workflow/get-ha-details';
-import getHaSmcDetails from 'views/components/workflows/risk-assessment-workflow/get-ha-smc-details';
 import getCalculatedRisk from 'views/components/workflows/risk-assessment-workflow/get-calculated-risk';
 
 export default ko.components.register('workflow-builder-loader', {

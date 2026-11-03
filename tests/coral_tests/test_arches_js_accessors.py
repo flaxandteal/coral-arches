@@ -40,8 +40,6 @@ def test_no_undefined_viewmodel_alert():
     known = {
         'coral/media/js/views/components/workflows/get-selected-monument-details-with-count.js',
         'coral/media/js/views/components/workflows/fmw-workflow/get-selected-monument-details.js',
-        'coral/media/js/views/components/workflows/risk-assessment-workflow/get-ha-details.js',
-        'coral/media/js/views/components/workflows/risk-assessment-workflow/get-ha-smc-details.js',
         'coral/media/js/views/components/workflows/merge-workflow/heritage-asset-map.js',
     }
     found = {os.path.relpath(p, ROOT) for p in offenders}

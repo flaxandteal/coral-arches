@@ -191,6 +191,8 @@ describe('Going through the Scheduled Monument Consent Workflow', function () {
         cy.get('.widget-wrapper.distinction .select2-selection', { timeout: 60000 }).should('exist');
         ['Heritage Asset Name', 'SMR Number', 'Heritage Asset Type', 'Townland'].forEach((text) =>
             cy.get(STEP_BODY).should('contain.text', text));
+        cy.get(STEP_BODY).contains('span', 'Townland').parent().find('span').eq(1)
+            .invoke('text').should('match', /\S/).and('not.equal', 'No data available');
         notShown('[aria-label="Site Name"]');
         footer({ next: true });
 

@@ -1,6 +1,7 @@
 import ko from 'knockout';
 import arches from 'arches';
 import CardComponentViewModel from 'viewmodels/card-component';
+import { isScheduledMonument } from 'utils/reference-values';
 import template from 'templates/views/components/workflows/fmw-workflow/get-selected-monument-details.htm';
 
   const HERITAGE_ASSET_REFS = [
@@ -10,18 +11,28 @@ import template from 'templates/views/components/workflows/fmw-workflow/get-sele
     ['historic_parks_and_gardens', 'Historic Parks and Gardens Number']
   ];
 
-  const SHOW_NODES = [
-    ...HERITAGE_ASSET_REFS.map(([alias]) => alias),
-    'monument_name',
-    'designation_or_protection_type',
-    'townland',
-    'b_file_reference_number'
+  const REFERENCE = 'ha_reference';
+  const DEFAULT_FIELDS = [
+    [REFERENCE],
+    ['monument_name', 'Monument Name'],
+    ['designation_or_protection_type', 'Designation Type', ', '],
+    ['townland', 'Townland'],
+    ['b_file_reference_number', 'B File(s)', ',\n']
   ];
 
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
 
     this.labels = params.labels || [];
+
+    // [alias, label, join?]: no join renders one span per value; REFERENCE marks the ref row.
+    const fields = params.fields || DEFAULT_FIELDS;
+    const noData = params.noData || 'No data available';
+    const refFallbackLabel = params.refFallbackLabel || 'Heritage Asset Ref Number';
+    const showNodes = [
+      ...HERITAGE_ASSET_REFS.map(([alias]) => alias),
+      ...fields.map(([alias]) => alias).filter((alias) => alias !== REFERENCE)
+    ];
 
     this.selectedMonuments = ko.observable([]);
 
@@ -58,25 +69,34 @@ import template from 'templates/views/components/workflows/fmw-workflow/get-sele
         type: 'POST',
         url: arches.urls.orm || '/orm/resources',
         dataType: 'json',
-        data: { resourceids: resourceIds, show_nodes: SHOW_NODES }
+        data: { resourceids: resourceIds, show_nodes: showNodes }
         });
       } catch (error) {
         this.selectedMonuments([]);
         return;
       }
+      const scheduled = params.showScheduled
+        ? await Promise.all(resourceIds.map(isScheduledMonument))
+        : [];
       const cards = {};
-      for (const id of resourceIds) {
+      resourceIds.forEach((id, index) => {
         const details = response[id] || {};
-        const reference = HERITAGE_ASSET_REFS.find(([alias]) => details[alias]?.length);
-        cards[id] = {
-          haNumberLabel: reference ? reference[1] : 'Heritage Asset Ref Number',
-          smrNumber: reference ? details[reference[0]][0] : 'None',
-          monumentName: details.monument_name?.[0]?.trim() || 'None',
-          designationType: details.designation_or_protection_type?.join(', ') || 'None',
-          townlandValue: details.townland?.length ? details.townland : ['None'],
-          bFile: details.b_file_reference_number?.join(',\n') || 'None'
-        };
-      }
+        const rows = fields.map(([alias, label, join]) => {
+          if (alias === REFERENCE) {
+            const reference = HERITAGE_ASSET_REFS.find(([refAlias]) => details[refAlias]?.length);
+            return reference
+              ? { label: reference[1], values: [details[reference[0]][0]] }
+              : { label: refFallbackLabel, values: [noData] };
+          }
+          const texts = (details[alias] || []).map((text) => text.trim());
+          if (!texts.length) return { label, values: [noData] };
+          return { label, values: join ? [texts.join(join)] : texts };
+        });
+        if (params.showScheduled) {
+          rows.push({ label: 'Scheduled (Yes/ No)', values: [scheduled[index] ? 'Yes' : 'No'] });
+        }
+        cards[id] = rows;
+      });
       this.cards(cards);
       this.selectedMonuments(resourceIds);
     }
