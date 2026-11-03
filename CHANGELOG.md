@@ -23,6 +23,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 - fix(letters): the worker starts again — letter templates load `querysets_shim.view_models` themselves instead of relying on another module importing it first
+- fix(workflows): FMW Inspection SMR Number(s) picker lists only Scheduled Monuments, and Site Visits hides Location Description and its type
 - fix(workflows): the selected Heritage Asset panel is one config-driven component in SMC, Risk Assessment, DAERA, Agriculture & Forestry, FMW, Ranger and Curatorial; SMC and Risk Assessment show townlands again, and Risk Assessment shows the real Council and Designation Type (#933)
 - perf(dashboards): the State Care dashboard reads card values off tiles, and filters, sorts and pages in the database, without hydrating resources (#930)
 - build(deps): pin `arches-json-importer` to v0.2.0 — Arches JSON loads can be undone, and overwrite replaces a resource's tiles instead of the resource (#931)
@@ -61,6 +62,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - feat(ci): Trivy vulnerability scan and CycloneDX/SPDX SBOM generation added to the build-arches workflow
 
 ### Notes
+- Reload the FMW inspection workflow plugin (`python manage.py coral reload`) to apply the scheduled-only SMR picker and the hidden Location Description fields.
 - Reload the SMC, Risk Assessment, DAERA, Agriculture & Forestry, FMW Inspection, Ranger Inspection and Curatorial workflow plugins: the details panel is now configured by `fields` in their JSON, which does not migrate on deploy
 - A full webpack build is needed for #923: every chunk filename and hash changes.
 
