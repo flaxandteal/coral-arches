@@ -175,7 +175,7 @@ describe('Going through the FWM Inspection Workflow', function () {
         // rich-text widget on the same tab.
         // same applies to all other rich-text widgets in this workflow
         cy.typeRichText('location_description_1', 'Location description for automated testing.');
-        cy.pickRelationshipFirst('Location Description Type');
+        cy.contains('Location Description Type').should('not.exist');
 
         // The Score field is condition x risk, and 0 while either is empty.
         const scoreInput = () => cy.get('.widget-wrapper:not(.total_score)')
