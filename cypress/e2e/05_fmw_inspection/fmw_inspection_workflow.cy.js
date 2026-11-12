@@ -166,10 +166,16 @@ describe('Going through the FWM Inspection Workflow', function () {
         calendarBlocksFuture('Date of Visit');
         futureDateRefused('Date of Visit');
 
-        // Location Description and its type are hidden on the Site Visits card.
-        cy.get('.widget-wrapper.date_of_visit').should('be.visible');
-        cy.get('.widget-wrapper.location_description_1').should('not.exist');
-        cy.contains('Location Description').should('not.exist');
+        // Location Description is a CKEditor 4 rich-text widget: its
+        // <textarea data-bind="ckeditor: currentText"> stays
+        // visibility:hidden/display:none once CKEditor replaces it with an
+        // iframe-based WYSIWYG editor, so typing into the textarea directly
+        // does nothing. Drive the CKEDITOR instance's API instead, scoped to
+        // this widget's wrapper class so it doesn't pick up another
+        // rich-text widget on the same tab.
+        // same applies to all other rich-text widgets in this workflow
+        cy.typeRichText('location_description_1', 'Location description for automated testing.');
+        cy.contains('Location Description Type').should('not.exist');
 
         // The Score field is condition x risk, and 0 while either is empty.
         const scoreInput = () => cy.get('.widget-wrapper:not(.total_score)')
@@ -335,6 +341,7 @@ describe('Going through the FWM Inspection Workflow', function () {
         cy.get('.widget-wrapper.land_use_classification .select2-selection__choice', { timeout: 60000 }).should('have.length', 2);
         ['owner', 'occupier', 'fm_warden'].forEach((alias) => rows(alias).should('have.length', 2));
         cy.get('.widget-wrapper.casework_officer', { timeout: 30000 }).should('contain.text', 'Name');
+        cy.richTextValue('location_description_1').should('contain', 'Location description for automated testing.');
         cy.richTextValue('inspection_report').should('contain', 'Inspection report for automated testing.');
         cy.richTextValue('recommendation_description').should('contain', 'Recommendation for automated testing.');
         cy.richTextValue('consultation_description').should('contain', 'Notes for automated testing.');
