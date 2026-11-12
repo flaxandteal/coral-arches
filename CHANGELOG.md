@@ -61,6 +61,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - test(cypress): FMW Inspection, Issue Report, Flag for Enforcement, SMC, Agriculture and Forestry, DAERA, Curatorial and Add Monument specs updated to the v8 workflows and their UAT checklists; Test Person / Test Organisation added to the E2E seed (#907)
 - fix(workflows): Issue Report tabs after Issue Reference are no longer clickable before the Reference is saved, as Location details no longer counts as completing the step (#921)
 - feat(ci): Trivy vulnerability scan and CycloneDX/SPDX SBOM generation added to the build-arches workflow
+- fix(workflow): Issue Report CM reference input is enabled
 
 ### Notes
 - Migration 8022 replaces the items of the Consultation type list, points Agri's `consultation_type` at it (an Agri value saved from the old list is no longer matched) and switches the Within Deadline and Send Papers widgets to radio buttons, in the graph and its published copy. It runs with `migrate`; deploys with the Consultation graph loaded need nothing else. The matching coral-graphs change must be on the graph build, or a rebuild reverts it.
