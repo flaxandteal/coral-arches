@@ -1,21 +1,21 @@
-define([
-  'knockout',
-  'arches',
-  'uuid',
-  'underscore',
-  'views/components/widgets/text',
-  'templates/views/components/widgets/auto-generate-id-widget.htm'
-], function (ko, arches, uuid, _, TextViewModel, autoGenerateIdTemplate) {
-  /**
-   * registers a text-widget component for use in forms
-   * @function external:"ko.components".text-widget
-   * @param {object} params
-   * @param {string} params.value - the value being managed
-   * @param {function} params.config - observable containing config object
-   * @param {string} params.config().label - label to use alongside the text input
-   * @param {string} params.config().placeholder - default text to show in the text input
-   */
-  return ko.components.register('auto-generate-id-widget', {
+import ko from 'knockout';
+import arches from 'arches';
+import uuid from 'uuid';
+import _ from 'underscore';
+import TextViewModel from 'views/components/widgets/text';
+import autoGenerateIdTemplate from 'templates/views/components/widgets/auto-generate-id-widget.htm';
+
+/**
+ * registers a text-widget component for use in forms
+ * @function external:"ko.components".text-widget
+ * @param {object} params
+ * @param {string} params.value - the value being managed
+ * @param {function} params.config - observable containing config object
+ * @param {string} params.config().label - label to use alongside the text input
+ * @param {string} params.config().placeholder - default text to show in the text input
+ */
+
+export default ko.components.register('auto-generate-id-widget', {
     viewModel: function (params) {
       params.configKeys = ['id_placeholder', 'label', 'disabled', 'prefix'];
       TextViewModel.apply(this, [params]);
@@ -128,4 +128,3 @@ define([
     },
     template: autoGenerateIdTemplate
   });
-});

@@ -11,9 +11,28 @@ coral/uploadedfiles/*
 coral/settings_local.py
 coral/webpack/webpack-stats.json
 coral/webpack/webpack-user-config.js
+webpack/webpack-stats.json
+webpack/webpack-user-config.js
+node_modules
+coverage/
+*.egg-info
+.DS_STORE
 .vscode/
 CACHE
 coral/docx
 .venv/
 loadable/
 .env/
+coral/output/*
+# Arches 8.x frontend configuration
+frontend_configuration
+
+# Packaging
+build/
+dist/
+
+# Written by CI on non-main builds, read by settings.py for the displayed version
+coral/BUILD
+
+# Cypress failed-request/browser-error logs
+cypress/logs/

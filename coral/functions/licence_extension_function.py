@@ -1,5 +1,6 @@
 from arches.app.functions.base import BaseFunction
 from arches.app.models.tile import Tile
+from coral.utils.reference_values import has_list_item
 import uuid
 
 
@@ -110,7 +111,16 @@ class LicenceExtensionFunction(BaseFunction):
 
         # Mark the transfer as applied and save if both staff approve
         tile.data[self.config["extension_applied_node"]] = True
-        if tile.data[self.config["cur_e_decision_node"]] == "5e82bfd8-a455-4a2b-90d2-abe5854b537a" and tile.data[self.config["cur_d_decision_node"]] == "0c888ace-b068-470a-91cb-9e5f57c660b4":
+        # One v7 option id served all three Grade E Decision nodes under three labels;
+        # v8 collapses them onto one list, so the affirmative is "Approve transfer of licence"
+        # even in the extension context.
+        grade_e_approved = has_list_item(
+            tile.data.get(self.config["cur_e_decision_node"]), "2aef13e3-9259-58a6-b5be-5e7cbc0d3abe"
+        )
+        grade_d_approved = has_list_item(
+            tile.data.get(self.config["cur_d_decision_node"]), "696f00b1-e806-59f0-916d-dc8a39c2ed6c"
+        )
+        if grade_e_approved and grade_d_approved:
             decision_tile.data[self.config["decision_valid_until_node"]] = extension_tile_data[self.config["valid_until_node"]]
             decision_tile.save()
 

@@ -101,9 +101,9 @@ class GroupManagerView(View):
         def _test_relationship(resourceid, rr):
             forward, back = allowed_relationships.get(rr["relationshiptype"], (False, False))
             return (
-                back and str(resourceid) == str(rr["resourceinstanceidfrom"])
+                back and str(resourceid) == str(rr["from_resource"])
             ) or (
-                forward and str(resourceid) == str(rr["resourceinstanceidto"])
+                forward and str(resourceid) == str(rr["to_resource"])
             )
 
         while (level := level + 1) < 5:
@@ -120,7 +120,7 @@ class GroupManagerView(View):
                     ]
                     all_resources["resource_relationships"] += relationships
                     relevant_resources = set(sum([
-                        [str(rr["resourceinstanceidfrom"]), str(rr["resourceinstanceidto"])]
+                        [str(rr["from_resource"]), str(rr["to_resource"])]
                         for rr in relationships
                     ], []))
                     all_resources["related_resources"].update({

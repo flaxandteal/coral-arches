@@ -2,7 +2,8 @@ from datetime import date
 import random
 from arches.app.functions.base import BaseFunction
 from arches.app.models import models
-from arches_orm.models import Person, Group
+from querysets_shim.models import Person, Group
+from coral.utils.person_user import person_user
 
 SYSTEM_REF_NODEGROUP = "ba39c036-b551-11ee-94ee-0242ac120006"
 SYSTEM_REF_RESOURCE_ID_NODE = "ba3a083e-b551-11ee-94ee-0242ac120006"
@@ -19,7 +20,7 @@ ASSOCIATED_ACTOR_NODE = "f0b9edd4-b551-11ee-805b-0242ac120006"
 FLAGGED_DATE_NODEGROUP = "229501c2-b552-11ee-805b-0242ac120006"
 FLAGGED_DATE_NODE = "2295085c-b552-11ee-805b-0242ac120006"
 
-ENFORCEMENT_GROUP = "0134acdc-bcfc-4e96-9d2b-c3ed2a396cfc"
+ENFORCEMENT_GROUP = "3bbeaceb-5c69-4fb8-9d06-9a12ac1581f8"
 
 
 details = {
@@ -99,11 +100,18 @@ class NotifyEnforcement(BaseFunction):
         notification.save()
 
         enforcement_group = Group.find(ENFORCEMENT_GROUP)
+        if enforcement_group is None:
+            # Group resource is missing (e.g. stale ENFORCEMENT_GROUP id after a
+            # data reload). The enforcement + notification are still saved above;
+            # just skip per-user delivery rather than failing the tile save.
+            return
 
-        persons = [Person.find(member.id) for member in enforcement_group.members if isinstance(member, Person)]
+        persons = [Person.find(member.id) for member in (enforcement_group.members or []) if isinstance(member, Person)]
 
         for person in persons:
-            user = person.user_account
+            user = person_user(person)
+            if user is None:
+                continue
             notification.context['username'] = user.username
             notification.context['email'] = user.email
 

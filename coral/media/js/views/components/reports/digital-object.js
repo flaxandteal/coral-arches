@@ -1,16 +1,15 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/digital-object.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/copyright',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils, digitalObjectReportTemplate) {
-    return ko.components.register('digital-object-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import digitalObjectReportTemplate from 'templates/views/components/reports/digital-object.htm';
+import name from 'views/components/reports/scenes/name';
+import copyright from 'views/components/reports/scenes/copyright';
+import json from 'views/components/reports/scenes/json';
+
+export default ko.components.register('digital-object-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -111,4 +110,3 @@ define([
         },
         template: digitalObjectReportTemplate
     });
-});

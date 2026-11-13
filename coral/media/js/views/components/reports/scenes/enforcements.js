@@ -1,16 +1,15 @@
-define([
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/report',
-    'views/components/workflows/summary-step',
-    'views/components/resource-report-abstract',
-    'viewmodels/report', 
-    'templates/views/components/reports/scenes/enforcements.htm',
-    'bindings/datatable',
-    'views/components/workflows/render-nodes',
-], function(_, ko, arches, reportUtils, SummaryStep, resourceReportAbstract, ReportViewModel, allReportTemplate) {
-    return ko.components.register('views/components/reports/scenes/enforcements', {
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import reportUtils from 'utils/report';
+import SummaryStep from 'views/components/workflows/summary-step';
+import resourceReportAbstract from 'views/components/resource-report-abstract';
+import ReportViewModel from 'viewmodels/report';
+import allReportTemplate from 'templates/views/components/reports/scenes/enforcements.htm';
+import datatable from 'bindings/datatable';
+import renderNodes from 'views/components/workflows/render-nodes';
+
+export default ko.components.register('views/components/reports/scenes/enforcements', {
         viewModel: function(params) {
             console.log("Enforcement Scene Enforcement", params)
             
@@ -57,4 +56,3 @@ define([
         },
         template: allReportTemplate
     });
-});

@@ -1,0 +1,127 @@
+{
+  "graph_slug": "group",
+  "graph_name": "Group",
+  "configs": {
+    "search": {
+      "name": "Group",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Group",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Name of Group",
+            "nodegroup_alias": "basic_info",
+            "node_aliases": [
+              "image",
+              "name",
+              "source"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Description about Group",
+            "nodegroup_alias": "statement",
+            "node_aliases": [
+              "description"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Type of Group",
+            "nodegroup_alias": "group_type",
+            "node_aliases": [
+              "group_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Identifier of Group",
+            "nodegroup_alias": "identifier",
+            "node_aliases": [
+              "identifier_content"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Formation Event of Group",
+            "nodegroup_alias": "formation",
+            "node_aliases": [
+              "date",
+              "location_n1",
+              "person"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Guideline approval",
+            "nodegroup_alias": "guideline_approval",
+            "node_aliases": [
+              "guideline_approval"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Arches Plugins",
+            "nodegroup_alias": "arches_plugins",
+            "node_aliases": [
+              "arches_plugins"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Django Group",
+            "nodegroup_alias": "django_group",
+            "node_aliases": [
+              "django_group"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Members",
+            "nodegroup_alias": "members",
+            "node_aliases": [
+              "members"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Permissions",
+            "nodegroup_alias": "permissions",
+            "node_aliases": [
+              "action",
+              "object"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

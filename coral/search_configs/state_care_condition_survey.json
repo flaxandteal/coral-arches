@@ -1,0 +1,133 @@
+{
+  "graph_slug": "state_care_condition_survey",
+  "graph_name": "State Care Condition Survey",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "assessment_type",
+      "label": "Assessment Type",
+      "sortorder": 0,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "completed_by",
+      "label": "Completed by",
+      "sortorder": 1,
+      "datatype": "resource-instance",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "completed_by_role_type",
+      "label": "Completed by role type",
+      "sortorder": 2,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "completed_on",
+      "label": "Completed On",
+      "sortorder": 3,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "condition_score",
+      "label": "Condition Score",
+      "sortorder": 4,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "digital_file_s_",
+      "label": "Digital File(s)",
+      "sortorder": 5,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "heritage_asset",
+      "label": "Heritage Asset",
+      "sortorder": 6,
+      "datatype": "resource-instance",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id",
+      "label": "Legacy ID",
+      "sortorder": 7,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id_type",
+      "label": "Legacy ID Type",
+      "sortorder": 8,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "notes",
+      "label": "Notes",
+      "sortorder": 9,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "primary_reference_number",
+      "label": "Primary Reference Number",
+      "sortorder": 10,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "primary_reference_number_type",
+      "label": "Primary Reference Number Type",
+      "sortorder": 11,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "priority",
+      "label": "Priority",
+      "sortorder": 12,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "resourceid",
+      "label": "ResourceID",
+      "sortorder": 13,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "resourceid_type",
+      "label": "ResourceID Type",
+      "sortorder": 14,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "signed_off_by",
+      "label": "Signed Off By",
+      "sortorder": 15,
+      "datatype": "resource-instance",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "signed_off_date",
+      "label": "Signed Off Date",
+      "sortorder": 16,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "works_required",
+      "label": "Works Required",
+      "sortorder": 17,
+      "datatype": "reference",
+      "support": "renderable"
+    }
+  ]
+}

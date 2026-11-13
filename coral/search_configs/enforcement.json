@@ -1,0 +1,287 @@
+{
+  "graph_slug": "enforcement",
+  "graph_name": "Enforcement",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "actor",
+      "label": "Actor",
+      "sortorder": 0,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "associated_resources",
+      "label": "Associated Resources",
+      "sortorder": 1,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "association_type",
+      "label": "Association Type",
+      "sortorder": 2,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "case_reference_description",
+      "label": "Case Reference Description",
+      "sortorder": 3,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "case_reference_description_type",
+      "label": "Case Reference Description Type",
+      "sortorder": 4,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "case_reference_number",
+      "label": "Case Reference Number",
+      "sortorder": 5,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "case_reference_source",
+      "label": "Case Reference Source",
+      "sortorder": 6,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "cm_reference_description",
+      "label": "CM Reference Description",
+      "sortorder": 7,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "cm_reference_description_type",
+      "label": "CM Reference Description Type",
+      "sortorder": 8,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "cm_reference_number",
+      "label": "CM Reference Number",
+      "sortorder": 9,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "cm_reference_source",
+      "label": "CM Reference Source",
+      "sortorder": 10,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "crime_reference_description",
+      "label": "Crime Reference Description",
+      "sortorder": 11,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "crime_reference_description_type",
+      "label": "Crime Reference Description Type",
+      "sortorder": 12,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "crime_reference_number",
+      "label": "Crime Reference Number",
+      "sortorder": 13,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "crime_reference_source",
+      "label": "Crime Reference Source",
+      "sortorder": 14,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "date_qualifier",
+      "label": "Date Qualifier",
+      "sortorder": 15,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description",
+      "label": "Description",
+      "sortorder": 16,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "description_metatype_n1",
+      "label": "Description Metatype",
+      "sortorder": 17,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description_metatype_n2",
+      "label": "Description Metatype",
+      "sortorder": 18,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description_metatype_n3",
+      "label": "Description Metatype",
+      "sortorder": 19,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description_n1",
+      "label": "Description",
+      "sortorder": 20,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "description_n2",
+      "label": "Description",
+      "sortorder": 21,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "description_n3",
+      "label": "Description",
+      "sortorder": 22,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "description_type",
+      "label": "Description Type",
+      "sortorder": 23,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description_type_n1",
+      "label": "Description Type",
+      "sortorder": 24,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description_type_n2",
+      "label": "Description Type",
+      "sortorder": 25,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description_type_n3",
+      "label": "Description Type",
+      "sortorder": 26,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "flagged_date_value",
+      "label": "Flagged Date Value",
+      "sortorder": 27,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id",
+      "label": "Legacy ID",
+      "sortorder": 28,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id_type",
+      "label": "Legacy ID Type",
+      "sortorder": 29,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "name",
+      "label": "Name",
+      "sortorder": 30,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "name_currency",
+      "label": "Name Currency",
+      "sortorder": 31,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "name_type",
+      "label": "Name Type",
+      "sortorder": 32,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "name_use_type",
+      "label": "Name Use Type",
+      "sortorder": 33,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "primary_reference_number",
+      "label": "Primary Reference Number",
+      "sortorder": 34,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "primary_reference_number_type",
+      "label": "Primary Reference Number Type",
+      "sortorder": 35,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "resourceid",
+      "label": "ResourceID",
+      "sortorder": 36,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "resourceid_type",
+      "label": "ResourceID Type",
+      "sortorder": 37,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "role_type",
+      "label": "Role Type",
+      "sortorder": 38,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "status",
+      "label": "Status",
+      "sortorder": 39,
+      "datatype": "reference",
+      "support": "renderable"
+    }
+  ]
+}

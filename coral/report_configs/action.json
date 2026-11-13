@@ -1,0 +1,99 @@
+{
+  "graph_slug": "action",
+  "graph_name": "Action",
+  "configs": {
+    "search": {
+      "name": "Action",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Action",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Timeline",
+            "nodegroup_alias": "timeline",
+            "node_aliases": [
+              "completion_date",
+              "log_date",
+              "target_date_end_",
+              "target_date_start"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Action Item Type",
+            "nodegroup_alias": "action_item_type",
+            "node_aliases": [
+              "action_item_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Legacy Record",
+            "nodegroup_alias": "_legacy_record",
+            "node_aliases": [
+              "_legacy_record"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Name",
+            "nodegroup_alias": "name",
+            "node_aliases": [
+              "name"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Requirements",
+            "nodegroup_alias": "requirements",
+            "node_aliases": [
+              "content",
+              "content_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Results",
+            "nodegroup_alias": "results",
+            "node_aliases": [
+              "result",
+              "result_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

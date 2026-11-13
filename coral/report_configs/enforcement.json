@@ -1,0 +1,152 @@
+{
+  "graph_slug": "enforcement",
+  "graph_name": "Enforcement",
+  "configs": {
+    "search": {
+      "name": "Enforcement",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Enforcement",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Case References",
+            "nodegroup_alias": "case_references",
+            "node_aliases": [
+              "case_reference_number"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "CM References",
+            "nodegroup_alias": "cm_references",
+            "node_aliases": [
+              "cm_reference_number"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Crime References",
+            "nodegroup_alias": "crime_references",
+            "node_aliases": [
+              "crime_reference_number"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Resources",
+            "nodegroup_alias": "associated_resources",
+            "node_aliases": [
+              "associated_resources"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Agreed Action Description",
+            "nodegroup_alias": "agreed_action_description",
+            "node_aliases": [
+              "description_n1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Actors",
+            "nodegroup_alias": "associated_actors",
+            "node_aliases": [
+              "actor"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Current Position Description",
+            "nodegroup_alias": "current_position_description",
+            "node_aliases": [
+              "description_n2"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Enforcement Status",
+            "nodegroup_alias": "enforcement_status",
+            "node_aliases": [
+              "status"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Flagged Date",
+            "nodegroup_alias": "flagged_date",
+            "node_aliases": [
+              "flagged_date_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Names",
+            "nodegroup_alias": "enforcement_names",
+            "node_aliases": [
+              "name"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Reason Description",
+            "nodegroup_alias": "reason_description",
+            "node_aliases": [
+              "description"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Result Description",
+            "nodegroup_alias": "result_description",
+            "node_aliases": [
+              "description_n3"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

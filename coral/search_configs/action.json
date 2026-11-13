@@ -1,0 +1,140 @@
+{
+  "graph_slug": "action",
+  "graph_name": "Action",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "action_item_type",
+      "label": "Action Item Type",
+      "sortorder": 0,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "completion_date",
+      "label": "Completion Date",
+      "sortorder": 1,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "content",
+      "label": "Content",
+      "sortorder": 2,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "content_type",
+      "label": "Content Type",
+      "sortorder": 3,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "date_qualifier",
+      "label": "Date Qualifier",
+      "sortorder": 4,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "legacy_id",
+      "label": "Legacy ID",
+      "sortorder": 5,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id_type",
+      "label": "Legacy ID Type",
+      "sortorder": 6,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "_legacy_record",
+      "label": "Legacy Record",
+      "sortorder": 7,
+      "datatype": "non-localized-string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "log_date",
+      "label": "Log Date",
+      "sortorder": 8,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "name",
+      "label": "Name",
+      "sortorder": 9,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "primary_reference_number",
+      "label": "Primary Reference Number",
+      "sortorder": 10,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "primary_reference_number_type",
+      "label": "Primary Reference Number Type",
+      "sortorder": 11,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "resourceid",
+      "label": "ResourceID",
+      "sortorder": 12,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "resourceid_type",
+      "label": "ResourceID Type",
+      "sortorder": 13,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "result",
+      "label": "Result",
+      "sortorder": 14,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "result_type",
+      "label": "Result Type",
+      "sortorder": 15,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "target_date_end_",
+      "label": "Target Date End ",
+      "sortorder": 16,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "target_date_qualifier",
+      "label": "Target Date Qualifier",
+      "sortorder": 17,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "target_date_start",
+      "label": "Target Date Start",
+      "sortorder": 18,
+      "datatype": "date",
+      "support": "backend-only"
+    }
+  ]
+}

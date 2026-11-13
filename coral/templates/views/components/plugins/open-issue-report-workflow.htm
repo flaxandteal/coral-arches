@@ -72,7 +72,7 @@
       style="min-height: 40.56px"
       data-bind="click: async () => {
         {% comment %} window.location.href = workflowUrl(); {% endcomment %}
-        await openWorkflow();
+        await openWorkflow(true);
       }, disable: !selectedResource()"
     >
       <span>Start New</span>

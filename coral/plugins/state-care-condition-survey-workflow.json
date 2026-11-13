@@ -12,7 +12,9 @@
         "name": "initial-step-step",
         "title": "Initial Step",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -50,7 +52,9 @@
         "name": "survey-reference-step",
         "title": "Survey Reference",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -66,8 +70,12 @@
                   },
                   "semanticName": "System Reference Numbers",
                   "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']",
-                  "labels": [["ResourceID", "Survey Reference"]]
-
+                  "labels": [
+                    [
+                      "ResourceID",
+                      "Survey Reference"
+                    ]
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card-util",
@@ -91,24 +99,24 @@
                   "nodegroupid": "c43324d0-5329-11ef-9337-0242ac120006",
                   "semanticName": "Assessments",
                   "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']",
-                  "nodeOptions":{
+                  "nodeOptions": {
                     "e5c8e976-532a-11ef-9d2a-0242ac120006": {
-                      "node":{
+                      "node": {
                         "isrequired": true
                       }
                     },
                     "918ac3e8-532a-11ef-9337-0242ac120006": {
-                      "node":{
+                      "node": {
                         "isrequired": true
                       }
                     },
                     "8ef1921e-532b-11ef-9d2a-0242ac120006": {
-                      "node":{
+                      "node": {
                         "isrequired": true
                       }
                     },
                     "e5d079bc-5329-11ef-9d2a-0242ac120006": {
-                      "node":{
+                      "node": {
                         "isrequired": true
                       }
                     }
@@ -124,7 +132,6 @@
                   "nodegroupid": "ff232bf6-532b-11ef-9d2a-0242ac120006",
                   "semanticName": "Notes",
                   "resourceid": "['initial-step-step']['e769c1dc-f1ca-4982-bf7e-f7e2ee344dea'][0]['resourceid']['resourceInstanceId']"
-
                 },
                 "tilesManaged": "one",
                 "componentName": "default-card",
@@ -133,7 +140,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "documentation-step",
@@ -156,7 +166,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "sign-off-step",
@@ -193,7 +206,9 @@
                         "6ba1b471-6faf-4f96-9179-94b2a1662512",
                         "5b8d8413-ee01-465f-9774-e5b247cd205a"
                       ],
-                      "conflictNode": ["924abf1a-1b78-11f0-af7b-e2231a6d3ec2"],
+                      "conflictNode": [
+                        "924abf1a-1b78-11f0-af7b-e2231a6d3ec2"
+                      ],
                       "conflictAllowBlank": false,
                       "allowInstanceCreation": false
                     },
@@ -216,7 +231,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

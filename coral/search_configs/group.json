@@ -1,0 +1,112 @@
+{
+  "graph_slug": "group",
+  "graph_name": "Group",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "action",
+      "label": "Action",
+      "sortorder": 0,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "arches_plugins",
+      "label": "Arches Plugins",
+      "sortorder": 1,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "date",
+      "label": "Date",
+      "sortorder": 2,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "description",
+      "label": "Description",
+      "sortorder": 3,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "django_group",
+      "label": "Django Group",
+      "sortorder": 4,
+      "datatype": "django-group",
+      "support": "unsupported"
+    },
+    {
+      "node_alias": "group_type",
+      "label": "Group type",
+      "sortorder": 5,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "guideline_approval",
+      "label": "Guideline approval",
+      "sortorder": 6,
+      "datatype": "boolean",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "identifier_content",
+      "label": "Identifier_content",
+      "sortorder": 7,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "image",
+      "label": "Image",
+      "sortorder": 8,
+      "datatype": "file-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "location_n1",
+      "label": "Location",
+      "sortorder": 9,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "members",
+      "label": "Members",
+      "sortorder": 10,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "name",
+      "label": "Name",
+      "sortorder": 11,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "object",
+      "label": "Object",
+      "sortorder": 12,
+      "datatype": "resource-instance",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "person",
+      "label": "Person",
+      "sortorder": 13,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "source",
+      "label": "Source",
+      "sortorder": 14,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    }
+  ]
+}

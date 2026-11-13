@@ -163,6 +163,78 @@ Initializes the permission table, it allows all of the users within the system t
 make manage CMD="print_permissions_table"
 ```
 
+## Importing business data
+
+Bulk business-data loads now go through
+[arches-json-importer](https://github.com/flaxandteal/arches-json-importer),
+installed as an Arches application (see `ARCHES_APPLICATIONS` in
+`coral/settings.py`). It replaces `packages -o import_business_data` for
+anything large: it writes tiles directly instead of staging a second copy of the
+data in Postgres, and it takes `.jsonl` so a big export streams rather than
+being parsed whole.
+
+In the UI it is *Bulk Data Manager -> Import -> Import Arches JSON*. The Bulk
+Data Manager plugin ships hidden (`{"show": false}` on the plugin row), so it is
+usually absent from the sidebar - go straight to the URL:
+
+```
+<host>/plugins/bulk-data-manager
+```
+
+e.g. http://localhost:8000/plugins/bulk-data-manager locally.
+
+Headless, which is what to use for a full load:
+
+```
+echo '{"overwrite": true}' > etl-config.json
+
+make manage CMD="etl arches-json-importer -s coral/pkg/business_data/all_business_data.jsonl -c etl-config.json -mp -mxp 15"
+```
+
+`manage.py etl` has no `-ow` flag - that is `packages` only. Overwrite is a load
+option, so it goes in the `-c` config file (written into the project dir, since
+`make manage` resolves the path inside the container); without it a resourceid that already
+exists is a validation failure rather than a replacement. `-mp`/`-mxp` index the
+loaded resources across subprocesses. The importer's README covers the flags and
+the version pinning.
+
+## Updating Arches Versions
+
+If updating the arches version there are several places to update the version number to ensure arches is synced locally and in the build.
+
+### Local
+You need to update the Make file within the project, not in the docker submodule
+
+`ARCHES_BASE = ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1`
+
+This line can be changed to use the appropriate base image.
+
+The base images are created by Flax and Teal and use an arches base version with additional patches applied to work with our container set up.
+
+Changing this ensures when `make build` is ran, the correct base image is used to build arches
+
+### pyproject.toml
+The `pyproject.toml` also needs to be updated so that you are pinned to the exact version needed
+
+```
+dependencies = [
+    "arches>=8.1.0,<=8.2.0a8"
+]
+```
+
+This can be set to a range or an exact version.
+Here we have pinned to an upper limit that matches our base image. If this is set higher, on a build the latest version will be pulled and may not match our base image.
+
+This step is important, we do not want to drift from the base image version. This will not be immediately apparent as arches will still run.
+
+### Github Action
+The final place to update is within the github actions. These control the builds that are pushed to the environments.
+
+Both `project.yml` and `release.yml` need the `ARCHES_BASE` updated to match the above.
+
+```
+ARCHES_BASE: ghcr.io/flaxandteal/arches-base:v8.2.0a8-v1
+```
 
 ### Contribution 
 

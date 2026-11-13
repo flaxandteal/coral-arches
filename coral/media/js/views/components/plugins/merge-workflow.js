@@ -1,13 +1,12 @@
-define([
-  'knockout',
-  'arches',
-  'viewmodels/openable-workflow',
-  'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/select-resource-id',
-  'views/components/workflows/merge-workflow/submit-merge',
-  'views/components/workflows/merge-workflow/heritage-asset-map'
-], function (ko, arches, OpenableWorkflow, workflowTemplate) {
-  return ko.components.register('merge-workflow', {
+import ko from 'knockout';
+import arches from 'arches';
+import OpenableWorkflow from 'viewmodels/openable-workflow';
+import workflowTemplate from 'templates/views/components/plugins/default-workflow.htm';
+import selectResourceId from 'views/components/workflows/select-resource-id';
+import submitMerge from 'views/components/workflows/merge-workflow/submit-merge';
+import heritageAssetMap from 'views/components/workflows/merge-workflow/heritage-asset-map';
+
+export default ko.components.register('merge-workflow', {
     viewModel: function (params) {
       this.componentName = 'merge-workflow';
       this.stepConfig = [
@@ -259,4 +258,3 @@ define([
     },
     template: workflowTemplate
   });
-});

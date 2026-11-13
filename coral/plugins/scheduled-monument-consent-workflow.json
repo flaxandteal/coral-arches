@@ -12,18 +12,31 @@
         "name": "start-meeting-step",
         "title": "Start Meeting",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
               {
                 "parameters": {
-                  "labels": [["Consultation ID", "SMC Reference Number"]],
+                  "labels": [
+                    [
+                      "Consultation ID",
+                      "SMC Reference Number"
+                    ]
+                  ],
                   "prefix": "SMC",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "hiddenNodes": [
+                    "b37552bd-9527-11ea-97f4-f875a44e0e11",
                     "b37552bf-9527-11ea-9c87-f875a44e0e11",
-                    "b37552bd-9527-11ea-97f4-f875a44e0e11"
+                    "b37552c3-9527-11ea-b334-f875a44e0e11",
+                    "b37552c4-9527-11ea-b8e3-f875a44e0e11",
+                    "b37552c5-9527-11ea-9d83-f875a44e0e11",
+                    "b37552c6-9527-11ea-a161-f875a44e0e11",
+                    "b37552c7-9527-11ea-8d0a-f875a44e0e11",
+                    "b37552c8-9527-11ea-bad1-f875a44e0e11"
                   ],
                   "nodeOptions": {
                     "b37552be-9527-11ea-9213-f875a44e0e11": {
@@ -49,7 +62,7 @@
                   "requiredParentTiles": [
                     {
                       "lookupName": "locationData",
-                      "parentNodegroupId": "083e2924-ca61-11ee-afca-0242ac180006"
+                      "parentNodegroupId": "de90c7cf-6764-5f5b-bfb3-73369cfd9021"
                     }
                   ]
                 },
@@ -71,6 +84,9 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "fields": [["monument_name", "Heritage Asset Name"], ["ha_reference"], ["monument_type", "Heritage Asset Type"], ["townland", "Townland"]],
+                  "noData": "No data available",
+                  "refFallbackLabel": "Heritage Asset Ref Number",
                   "label": "Select Heritage Assets",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
@@ -80,22 +96,22 @@
                     "58a2b98f-a255-11e9-9a30-00224800b26d"
                   ],
                   "nodeOptions": {
-                  "58a2b98f-a255-11e9-9a30-00224800b26d" : {
-                    "searchString": "",
-                    "allowInstanceCreation": false
-                  }
-                },
+                    "58a2b98f-a255-11e9-9a30-00224800b26d": {
+                      "searchString": "",
+                      "allowInstanceCreation": false
+                    }
+                  },
                   "semanticName": "Heritage Asseets details"
                 },
                 "tilesManaged": "one",
-                "componentName": "get-ha-smc-details",
+                "componentName": "get-selected-monument-details",
                 "uniqueInstanceName": "6cae135a-8a8c-4bbc-92a7-1572a4111bc6"
               },
               {
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "7ed9de0e-30b6-11f0-a4b6-baf4c38851fd",
+                  "nodegroupid": "e2608e0e-8362-5f22-9a2a-2558bff9bd4a",
                   "semanticName": "Distinction"
                 },
                 "tilesManaged": "one",
@@ -104,7 +120,12 @@
               },
               {
                 "parameters": {
-                  "labels": [["Consultation Name", "Application Reference"]],
+                  "labels": [
+                    [
+                      "Consultation Name",
+                      "Application Reference"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "nodegroupid": "4ad66f55-951f-11ea-b2e2-f875a44e0e11",
@@ -121,7 +142,7 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "9d158534-c768-11ee-a945-0242ac180006",
+                  "nodegroupid": "82b4d25a-e6d1-5c54-b2a5-0ecfcd55f9c6",
                   "semanticName": "CM References"
                 },
                 "tilesManaged": "one",
@@ -130,18 +151,23 @@
               },
               {
                 "parameters": {
-                  "labels": [["Date Received from DfI", "Received Date"]],
+                  "labels": [
+                    [
+                      "Date Received from DfI",
+                      "Received Date"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "04492152-c769-11ee-82c4-0242ac180006",
+                  "nodegroupid": "4b195f82-50eb-5030-9f82-acdd3f7ba6c9",
                   "semanticName": "Received Date",
                   "hiddenNodes": [
-                    "04494ede-c769-11ee-82c4-0242ac180006"
+                    "a60376ed-a010-5b1e-a488-eddb31c2e1b6"
                   ],
                   "nodeOptions": {
-                    "04494bbe-c769-11ee-82c4-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                    "932dee8f-ebc8-57ea-bac3-18920b43f4a6": {
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -152,10 +178,15 @@
               },
               {
                 "parameters": {
-                  "labels": [["Reason", "Proposal Summary"]],
+                  "labels": [
+                    [
+                      "Reason",
+                      "Proposal Summary"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "c1a49ce2-24cd-11ef-97ad-0242ac130006",
+                  "nodegroupid": "5cdc5331-6802-5884-a7e9-90f0f3e7f285",
                   "semanticName": "Reason Descriptions"
                 },
                 "tilesManaged": "one",
@@ -164,13 +195,18 @@
               },
               {
                 "parameters": {
-                  "labels": [["Applicant", "Entered By"]],
+                  "labels": [
+                    [
+                      "Applicant",
+                      "Entered By"
+                    ]
+                  ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "8780196a-dfda-11ef-a67e-0242ac120006",
+                  "nodegroupid": "75cfed54-ee04-5d21-a94d-1ed4eba91205",
                   "hiddenNodes": [
-                    "939ac87e-e3ab-11ef-8530-0242ac120007",
-                    "714a4b84-faa1-11ef-b148-8e7ccd27c960"
+                    "127844d2-4ad8-5674-9245-1467ca9d7c16",
+                    "7be8fad4-977b-58b8-92b3-f670cd4afdf6"
                   ],
                   "semanticName": "Applicants"
                 },
@@ -181,7 +217,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "bdbe4290-b596-4b0d-99cd-109619a8e3d8",
@@ -193,25 +232,37 @@
               {
                 "parameters": {
                   "labels": [
-                    ["Agent", "Agent(s)"],
-                    ["Owner", "Owner(s)"],
-                    ["Applicant", "Applicant(s)"],
-                    ["Occupier", "Occupier(s)"]
+                    [
+                      "Agent",
+                      "Agent(s)"
+                    ],
+                    [
+                      "Owner",
+                      "Owner(s)"
+                    ],
+                    [
+                      "Applicant",
+                      "Applicant(s)"
+                    ],
+                    [
+                      "Occupier",
+                      "Occupier(s)"
+                    ]
                   ],
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
                   "hiddenNodes": [
-                    "a3047fd4-031a-11ef-8ec2-0242ac150006",
-                    "54131242-24cf-11ef-a3a4-0242ac130006",
+                    "66bb6fa8-6847-5260-b7c3-e6f2b10fbbbc",
+                    "5a7141d3-ca7c-50b3-a7d9-d840d2f51362",
                     "b7304f4c-3ace-11eb-8884-f875a44e0e11",
-                    "ecbda08c-fb2d-11ee-838d-0242ac190006",
-                    "53388daa-24d1-11ef-a3a4-0242ac130006",
+                    "b903a99b-6fa1-554c-8021-dec7197b3204",
+                    "ed61d2aa-2087-5d5a-a577-ddaf80a2dc1f",
                     "4ea4a197-184f-11eb-9152-f875a44e0e11",
                     "5fd6dc6c-d2c9-11ec-a72f-a87eeabdefba",
                     "4ea4a192-184f-11eb-a0d6-f875a44e0e11",
-                    "db45aa50-24ce-11ef-97ad-0242ac130006",
-                    "166ed240-031a-11ef-8ec2-0242ac150006",
-                    "936fdbc8-24cf-11ef-97ad-0242ac130006"
+                    "2d4d164c-64d9-5325-a49d-a7086f39dcd5",
+                    "7c633e01-4eef-57a6-9667-a58a7df64d98",
+                    "6614fcb5-4310-5764-94f6-3f6e0c74b761"
                   ],
                   "nodegroupid": "4ea4a189-184f-11eb-b45e-f875a44e0e11",
                   "semanticName": "Contacts"
@@ -223,7 +274,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "13a2c73c-46c3-4c6d-940a-4e843d637bb1",
@@ -247,7 +301,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "ea74e8cb-ce03-49c6-aeef-b5a0e62f8cdf",
@@ -261,21 +318,48 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "hiddenNodes": ["87e0b839-9391-11ea-8a85-f875a44e0e11", "9162c0a8-184d-11eb-804a-f875a44e0e11"],
+                  "hiddenNodes": [
+                    "87e0b839-9391-11ea-8a85-f875a44e0e11",
+                    "9162c0a8-184d-11eb-804a-f875a44e0e11"
+                  ],
                   "nodegroupid": "8d41e4b4-a250-11e9-993d-00224800b26d",
                   "semanticName": "Correspondence",
                   "letterMetatype": "9162c0a8-184d-11eb-804a-f875a44e0e11",
                   "letterTypeNode": "8d41e4df-a250-11e9-af01-00224800b26d",
                   "letterResourceNode": "87e0b839-9391-11ea-8a85-f875a44e0e11",
                   "letterOptions": [
-                    { "text": "SMC Addendum Letter", "id": "smc-addendum-template.docx" },
-                    { "text": "SMC Provisional Letter", "id": "smc-provisional-template.docx"},
-                    { "text": "SMC Refusal Letter", "id": "smc-refusal-template.docx"},
-                    { "text": "SMC Final Letter", "id": "smc-final-template.docx"},
-                    { "text": "SMC Final No Conditions Letter", "id": "smc-final-no-conditions-template.docx"},
-                    { "text": "SMC Provisional No Conditions Letter", "id": "smc-provisional-no-conditions-template.docx"},
-                    { "text": "SMC-CL Provisional Letter", "id": "smc-cl-provisional-template.docx"},
-                    { "text": "SMC-CL Final Letter", "id": "smc-cl-final-template.docx"}
+                    {
+                      "text": "SMC Addendum Letter",
+                      "id": "smc-addendum-template.docx"
+                    },
+                    {
+                      "text": "SMC Provisional Letter",
+                      "id": "smc-provisional-template.docx"
+                    },
+                    {
+                      "text": "SMC Refusal Letter",
+                      "id": "smc-refusal-template.docx"
+                    },
+                    {
+                      "text": "SMC Final Letter",
+                      "id": "smc-final-template.docx"
+                    },
+                    {
+                      "text": "SMC Final No Conditions Letter",
+                      "id": "smc-final-no-conditions-template.docx"
+                    },
+                    {
+                      "text": "SMC Provisional No Conditions Letter",
+                      "id": "smc-provisional-no-conditions-template.docx"
+                    },
+                    {
+                      "text": "SMC-CL Provisional Letter",
+                      "id": "smc-cl-provisional-template.docx"
+                    },
+                    {
+                      "text": "SMC-CL Final Letter",
+                      "id": "smc-cl-final-template.docx"
+                    }
                   ],
                   "config": {
                     "special": {
@@ -293,7 +377,10 @@
           }
         ],
         "workflowstepclass": "workflow-form-component",
-        "hiddenWorkflowButtons": ["save"]
+        "hiddenWorkflowButtons": [
+          "save",
+          "undo"
+        ]
       },
       {
         "name": "decision-step",
@@ -307,9 +394,9 @@
                 "parameters": {
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "e599bd64-1f89-11f0-a917-667c62aab752",
+                  "nodegroupid": "59db62ef-3757-5482-9365-e64951c936a5",
                   "nodeOptions": {
-                    "e599c070-1f89-11f0-a917-667c62aab752": {
+                    "80a3d806-117a-5472-ae07-e0f0d1dc82c8": {
                       "component": "user-to-model-select",
                       "signOffGroups": [
                         "c78e1dca-7e14-4d17-8a88-60aa4e1640b5",
@@ -318,9 +405,9 @@
                       ],
                       "allowInstanceCreation": false
                     },
-                    "e599c160-1f89-11f0-a917-667c62aab752": {
-                      "config":{
-                        "maxDate":"today"
+                    "10e31952-6034-5d1a-b1f3-78b796110e30": {
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -332,7 +419,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

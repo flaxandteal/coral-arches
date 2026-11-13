@@ -1,69 +1,67 @@
-define([
-  'underscore',
-  'knockout',
-  'knockout-mapping',
-  'uuid',
-  'arches',
-  'viewmodels/card-component',
-  'viewmodels/alert',
-  'templates/views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge.htm'
-], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
-  function viewModel(params) {
-    this.resourceId = ko.observable(params.resourceid);
+import _ from 'underscore';
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import uuid from 'uuid';
+import arches from 'arches';
+import CardComponentViewModel from 'viewmodels/card-component';
+import AlertViewModel from 'viewmodels/alert';
+import template from 'templates/views/components/workflows/heritage-asset-designation-workflow/start-remap-and-merge.htm';
 
-    this.configKeys = ko.observable({ placeholder: 0 });
+function viewModel(params) {
+  this.resourceId = ko.observable(params.resourceid);
 
-    this.checkboxOptions = ko.observable([
-      {
-        text: '',
-        id: 'acknowledged'
-      }
-    ]);
+  this.configKeys = ko.observable({ placeholder: 0 });
 
-    this.selectedCheckboxOptions = ko.observableArray();
+  this.checkboxOptions = ko.observable([
+    {
+      text: '',
+      id: 'acknowledged'
+    }
+  ]);
 
-    this.hasAcknowledgedProcess = ko.computed(() => {
-      return !!this.selectedCheckboxOptions().includes('acknowledged');
-    }, this);
+  this.selectedCheckboxOptions = ko.observableArray();
 
-    this.applyRevision = async () => {
-      const data = {
-        targetResourceId: this.resourceId()
-      };
-      params.pageVm.alert(
-        new AlertViewModel(
-          'ep-alert-blue',
-          `Are you sure?`,
-          `This process cannot be undone. Once the apply revision process has started it will begin moving all changes made in this workflow back into the original Heritage Asset. This will result in this revision being deleted and stored as a historical change on a merge tracker.`,
-          () => null,
-          async () => {
-            params.pageVm.loading(true);
-            try {
-              const response = await $.ajax({
-                type: 'POST',
-                url: '/remap-revision-to-monument',
-                dataType: 'json',
-                data: JSON.stringify(data),
-                context: this,
-                error: (response, status, error) => {
-                  console.log(response, status, error);
-                }
-              });
-              window.window.location = arches.urls.plugin('init-workflow');
-            } catch (error) {
-              console.error(error);
-            }
-            params.pageVm.loading(false);
-          }
-        )
-      );
+  this.hasAcknowledgedProcess = ko.computed(() => {
+    return !!this.selectedCheckboxOptions().includes('acknowledged');
+  }, this);
+
+  this.applyRevision = async () => {
+    const data = {
+      targetResourceId: this.resourceId()
     };
-  }
+    params.pageVm.alert(
+      new AlertViewModel(
+        'ep-alert-blue',
+        `Are you sure?`,
+        `This process cannot be undone. Once the apply revision process has started it will begin moving all changes made in this workflow back into the original Heritage Asset. This will result in this revision being deleted and stored as a historical change on a merge tracker.`,
+        () => null,
+        async () => {
+          params.pageVm.loading(true);
+          try {
+            const response = await $.ajax({
+              type: 'POST',
+              url: '/remap-revision-to-monument',
+              dataType: 'json',
+              data: JSON.stringify(data),
+              context: this,
+              error: (response, status, error) => {
+                console.log(response, status, error);
+              }
+            });
+            window.window.location = arches.urls.plugin('init-workflow');
+          } catch (error) {
+            console.error(error);
+          }
+          params.pageVm.loading(false);
+        }
+      )
+    );
+  };
+}
 
-  ko.components.register('start-remap-and-merge', {
-    viewModel: viewModel,
-    template: template
-  });
-
-  return viewModel;
+ko.components.register('start-remap-and-merge', {
+  viewModel: viewModel,
+  template: template
 });
+
+export default viewModel;

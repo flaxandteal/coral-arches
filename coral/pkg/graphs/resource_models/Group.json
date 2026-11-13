@@ -7,7 +7,6 @@
                     "active": true,
                     "cardid": "12707d3d-c05e-11e9-9866-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [
                         {
                             "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
@@ -18,7 +17,6 @@
                             "uniquetoallinstances": true
                         }
                     ],
-                    "cssclass": null,
                     "description": {
                         "en": "# Specific:\n\n\n# General:\nIt is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications. See: https://linked.art/model/base/#names\n\n# Arches Note:\nThis node's content should be the value for the title descriptor function, when used for a resource model.\n\n* BranchId: la-name\n* FieldId: \n"
                     },
@@ -45,7 +43,6 @@
                     "active": true,
                     "cardid": "280206c0-c05e-11e9-9cc4-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [
                         {
                             "card_id": "280206c0-c05e-11e9-9cc4-a4d18cec433a",
@@ -56,7 +53,6 @@
                             "uniquetoallinstances": true
                         }
                     ],
-                    "cssclass": null,
                     "description": {
                         "en": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n"
                     },
@@ -83,9 +79,7 @@
                     "active": true,
                     "cardid": "32db9714-c05e-11e9-8b31-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n"
                     },
@@ -112,9 +106,7 @@
                     "active": true,
                     "cardid": "389f4a16-027c-11ed-9dee-0242ac180008",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "Person responsible for uploading/submitting the data assures that the GDPR compliance and UKRI guidelines are taken care of"
                     },
@@ -141,9 +133,7 @@
                     "active": true,
                     "cardid": "3b5f6987-c05e-11e9-9e36-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: la-activity-base\n* FieldId: \n"
                     },
@@ -170,9 +160,7 @@
                     "active": true,
                     "cardid": "59059dba-b69f-44d2-ae6c-1cbee1f222ec",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                     "helpenabled": false,
@@ -197,9 +185,7 @@
                     "active": true,
                     "cardid": "5ea9e3d1-15c6-465c-8e66-e43dca3e3daf",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                     "helpenabled": false,
@@ -224,9 +210,7 @@
                     "active": true,
                     "cardid": "79f14677-1839-4546-b00f-a62804e99597",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                     "helpenabled": false,
@@ -251,10 +235,10 @@
                     "active": true,
                     "cardid": "7c29a5df-ccd0-438e-b537-f617249bcf09",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
-                    "description": "Arches Plugins (e.g. workflows) to which members of this group have access.",
+                    "description": {
+                        "en": "Arches Plugins (e.g. workflows) to which members of this group have access."
+                    },
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                     "helpenabled": false,
                     "helptext": {
@@ -278,9 +262,7 @@
                     "active": true,
                     "cardid": "97f352eb-b323-11e9-a625-a4d18cec433a",
                     "component_id": "f05e4d3a-53c1-11e8-b0ea-784f435179ea",
-                    "config": null,
                     "constraints": [],
-                    "cssclass": null,
                     "description": {
                         "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n"
                     },
@@ -325,28 +307,6 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "ff3c400a-76ec-11e7-a793-784f435179ea"
-                },
-                {
-                    "card_id": "97f352eb-b323-11e9-a625-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Type",
-                        "options": [],
-                        "placeholder": {
-                            "en": "Type of team"
-                        }
-                    },
-                    "id": "0d9d167d-cd05-11e9-a775-a4d18cec433a",
-                    "label": {
-                        "en": "Type"
-                    },
-                    "node_id": "97f2c366-b323-11e9-98a8-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000012"
                 },
                 {
                     "card_id": "7c29a5df-ccd0-438e-b537-f617249bcf09",
@@ -408,24 +368,6 @@
                 {
                     "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
                     "config": {
-                        "acceptedFiles": ".jpg, .png.",
-                        "defaultValue": [],
-                        "label": "Image (Max 3 files)",
-                        "maxFilesize": "200",
-                        "rerender": true
-                    },
-                    "id": "61af9f20-027f-11ed-a307-0242ac180008",
-                    "label": {
-                        "en": "Image (Max 3 files)"
-                    },
-                    "node_id": "6b7fc7e2-0279-11ed-b140-0242ac180008",
-                    "sortorder": 5,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000019"
-                },
-                {
-                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
-                    "config": {
                         "defaultResourceInstance": [],
                         "i18n_properties": [
                             "placeholder"
@@ -479,30 +421,6 @@
                         "en": "Name"
                     },
                     "node_id": "127095f5-c05e-11e9-bb57-a4d18cec433a",
-                    "sortorder": 0,
-                    "visible": true,
-                    "widget_id": "10000000-0000-0000-0000-000000000001"
-                },
-                {
-                    "card_id": "280206c0-c05e-11e9-9cc4-a4d18cec433a",
-                    "config": {
-                        "defaultValue": "",
-                        "i18n_properties": [
-                            "placeholder"
-                        ],
-                        "label": "Identifier",
-                        "maxLength": null,
-                        "placeholder": {
-                            "en": "Id for team"
-                        },
-                        "uneditable": false,
-                        "width": "100%"
-                    },
-                    "id": "ec1c3e7d-cd04-11e9-83d9-a4d18cec433a",
-                    "label": {
-                        "en": "Identifier"
-                    },
-                    "node_id": "28020d8c-c05e-11e9-8753-a4d18cec433a",
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000001"
@@ -592,6 +510,69 @@
                     "sortorder": 0,
                     "visible": true,
                     "widget_id": "10000000-0000-0000-0000-000000000005"
+                },
+                {
+                    "card_id": "97f352eb-b323-11e9-a625-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Type",
+                        "placeholder": {
+                            "en": "Type of team"
+                        }
+                    },
+                    "id": "988e1a3a-5ec5-5dd2-bcd2-d608220dcbc0",
+                    "label": {
+                        "en": "Type"
+                    },
+                    "node_id": "97f2c366-b323-11e9-98a8-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "19e56148-82b8-47eb-b66e-f6243639a1a8"
+                },
+                {
+                    "card_id": "280206c0-c05e-11e9-9cc4-a4d18cec433a",
+                    "config": {
+                        "defaultValue": "",
+                        "i18n_properties": [
+                            "placeholder"
+                        ],
+                        "label": "Identifier",
+                        "maxLength": null,
+                        "placeholder": {
+                            "en": "Id for team"
+                        },
+                        "uneditable": false,
+                        "width": "100%"
+                    },
+                    "id": "4893a7ef-5361-55c2-b2af-df1da73446dd",
+                    "label": {
+                        "en": "Identifier"
+                    },
+                    "node_id": "28020d8c-c05e-11e9-8753-a4d18cec433a",
+                    "sortorder": 0,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000001"
+                },
+                {
+                    "card_id": "12707d3d-c05e-11e9-9866-a4d18cec433a",
+                    "config": {
+                        "acceptedFiles": ".jpg, .png.",
+                        "defaultValue": [],
+                        "label": "Image (Max 3 files)",
+                        "maxFilesize": "200",
+                        "rerender": true
+                    },
+                    "id": "6fcf3e61-b983-593a-a1de-629651931ce7",
+                    "label": {
+                        "en": "Image (Max 3 files)"
+                    },
+                    "node_id": "6b7fc7e2-0279-11ed-b140-0242ac180008",
+                    "sortorder": 5,
+                    "visible": true,
+                    "widget_id": "10000000-0000-0000-0000-000000000019"
                 }
             ],
             "color": "rgba(231,111,81,0.75)",
@@ -918,7 +899,9 @@
                     "alias": "group",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -939,7 +922,9 @@
                     "alias": "basic_info",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "It is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications.",
+                    "description": {
+                        "en": "It is strongly recommended that every resource that should be rendered to an end user have at least one name. Different types of name can be distinguished using classifications."
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -960,7 +945,9 @@
                     "alias": "name",
                     "config": {},
                     "datatype": "string",
-                    "description": "The string value of the full name.\n",
+                    "description": {
+                        "en": "The string value of the full name.\n"
+                    },
                     "exportable": true,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -994,7 +981,9 @@
                         "searchString": ""
                     },
                     "datatype": "resource-instance-list",
-                    "description": "Arches Plugins (e.g. workflows) to which members of this group have access.",
+                    "description": {
+                        "en": "Arches Plugins (e.g. workflows) to which members of this group have access."
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1040,7 +1029,9 @@
                         "searchString": ""
                     },
                     "datatype": "resource-instance-list",
-                    "description": "Person by which the team was formed in the system",
+                    "description": {
+                        "en": "Person by which the team was formed in the system"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1070,7 +1061,9 @@
                         "searchString": ""
                     },
                     "datatype": "resource-instance-list",
-                    "description": "Location where the team was formed in the system",
+                    "description": {
+                        "en": "Location where the team was formed in the system"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1091,7 +1084,9 @@
                     "alias": "identifier",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nMany resources have identifier values associated with them of different types, such as accession numbers, database numbers, lot numbers for auctions and so forth.  Identifiers are similar to Names, but instead use the Identifier class and do not have a language associated with them. See: https://linked.art/model/base/#identifiers\n\n# Arches Note:\n\n\n* BranchId: la-identifier\n* FieldId: \n"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1112,7 +1107,9 @@
                     "alias": "identifier_content",
                     "config": {},
                     "datatype": "string",
-                    "description": "The string value of the identifier.\n",
+                    "description": {
+                        "en": "The string value of the identifier.\n"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1133,7 +1130,9 @@
                     "alias": "statement",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n",
+                    "description": {
+                        "en": "# Specific:\n\n\n# General:\nIn many cases, current data does not support the level of specificity that the full ontology allows, or the information is simply best expressed in human-readable form. For example, instead of a completely modeled set of parts with materials, many museum collection management systems allow only a single human-readable string for the \"medium\" or \"materials statement\".  Any time that there is a description of the resource, with or without qualification as to the type of description, then this branch can be used to record the descriptive text. See: https://linked.art/model/base/#statements-about-a-resource\n\n# Arches Note:\n\n\n* BranchId: la-statement\n* FieldId: \n"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1154,7 +1153,9 @@
                     "alias": "description",
                     "config": {},
                     "datatype": "string",
-                    "description": "This field records the string content of the statement.\n",
+                    "description": {
+                        "en": "This field records the string content of the statement.\n"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1186,7 +1187,9 @@
                         }
                     },
                     "datatype": "boolean",
-                    "description": "Person responsible for uploading/submitting the data assures that the GDPR compliance and UKRI guidelines are taken care of",
+                    "description": {
+                        "en": "Person responsible for uploading/submitting the data assures that the GDPR compliance and UKRI guidelines are taken care of"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1207,7 +1210,9 @@
                     "alias": "formation_time",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "TimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points. ",
+                    "description": {
+                        "en": "TimeSpan is used to record a span of time between two, possibly fuzzy, points. It can also have a known duration between those points. "
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1228,7 +1233,9 @@
                     "alias": "formation",
                     "config": {},
                     "datatype": "semantic",
-                    "description": "This branch can be used for activities associated with other entities, such as the production of an object, or the professional activity of a group or person.",
+                    "description": {
+                        "en": "This branch can be used for activities associated with other entities, such as the production of an object, or the professional activity of a group or person."
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1251,7 +1258,9 @@
                         "dateFormat": "YYYY-MM-DD HH:mm:ssZ"
                     },
                     "datatype": "date",
-                    "description": "Date when the team was formed in the system",
+                    "description": {
+                        "en": "Date when the team was formed in the system"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1344,7 +1353,9 @@
                         "maxFiles": 3
                     },
                     "datatype": "file-list",
-                    "description": "Pictures of the team (Max 3 files)",
+                    "description": {
+                        "en": "Pictures of the team (Max 3 files)"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1364,9 +1375,10 @@
                 {
                     "alias": "action",
                     "config": {
-                        "rdmCollection": "cfe3d404-7461-433a-a6fd-05697d5ad0ca"
+                        "controlledList": "cfe3d404-7461-433a-a6fd-05697d5ad0ca",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
+                    "datatype": "reference",
                     "description": null,
                     "exportable": false,
                     "fieldname": null,
@@ -1387,10 +1399,13 @@
                 {
                     "alias": "group_type",
                     "config": {
-                        "rdmCollection": "093ddd50-2a48-4d20-8b46-344ade2af30c"
+                        "controlledList": "093ddd50-2a48-4d20-8b46-344ade2af30c",
+                        "multiValue": true
                     },
-                    "datatype": "concept-list",
-                    "description": "Type of team",
+                    "datatype": "reference",
+                    "description": {
+                        "en": "Type of team"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1507,7 +1522,9 @@
                         "searchString": ""
                     },
                     "datatype": "resource-instance-list",
-                    "description": "Any parent team",
+                    "description": {
+                        "en": "Any parent team"
+                    },
                     "exportable": false,
                     "fieldname": null,
                     "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1529,8 +1546,8 @@
             "publication": {
                 "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
                 "notes": null,
-                "publicationid": "bcaac244-1158-11ef-a6e2-0242ac170006",
-                "published_time": "2024-05-13T18:43:49.187"
+                "publicationid": "cfa2d859-a18c-57f7-a249-8b6ed4676b28",
+                "published_time": "2026-08-25T10:49:26.948+00:00"
             },
             "relatable_resource_model_ids": [],
             "resource_2_resource_constraints": [],
@@ -1538,7 +1555,9 @@
                 "alias": "group",
                 "config": {},
                 "datatype": "semantic",
-                "description": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n",
+                "description": {
+                    "en": "# Specific:\n\n\n# General:\n\n\n# Arches Note:\n\n\n* BranchId: \n* FieldId: \n"
+                },
                 "exportable": false,
                 "fieldname": null,
                 "graph_id": "07883c9e-b25c-11e9-975a-a4d18cec433a",
@@ -1551,6 +1570,7 @@
                 "nodegroup_id": null,
                 "nodeid": "07882b8c-b25c-11e9-a3e2-a4d18cec433a",
                 "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E74_Group",
+                "parentproperty": null,
                 "sortorder": 0,
                 "sourcebranchpublication_id": null
             },
@@ -1559,13 +1579,8 @@
                 "en": "One or more people or sub-groups that act collectively"
             },
             "template_id": "50000000-0000-0000-0000-000000000001",
-            "version": ""
+            "version": "",
+            "is_active": true
         }
-    ],
-    "metadata": {
-        "db": "PostgreSQL 12.2 (Debian 12.2-2.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit",
-        "git hash": "62bd9f152 2024-05-15 15:32:24 +0100",
-        "os": "Linux",
-        "os version": "6.5.0-28-generic"
-    }
+    ]
 }

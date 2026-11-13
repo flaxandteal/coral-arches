@@ -1,0 +1,13 @@
+{
+  "__comment__": [
+    "Seeds a single Bibliographic Source resource so the Add Garden workflow's",
+    "citation picker (resource-instance-list widget on Heritage Asset) has a",
+    "real result to select instead of falling through to Arches' 'create a new",
+    "related resource inline' affordance when the search returns nothing."
+  ],
+  "Bibliographic Source": [
+    {
+      "bibliographic_source_name": "Test Bibliographic Source"
+    }
+  ]
+}

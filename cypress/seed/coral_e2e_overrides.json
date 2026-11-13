@@ -1,0 +1,184 @@
+{
+  "__comment__": [
+    "Per-instance value overrides for seed.py, keyed by graph name then instance index.",
+    "These pin the literals the Cypress specs pick dropdown options by; everything else",
+    "on the resource keeps seed.py's generated filler.",
+    "",
+    "Why the split at instance 4: coral's generate_ha_name_function builds the display",
+    "name as '{smr_number} {site_name}' as soon as ANY reference number is present, and",
+    "only as '{ha_number} {site_name}' when none is. 02_flag_for_enforcement searches for",
+    "'HA/02', so instances 1-3 must carry no reference numbers at all - hence the nulls",
+    "on smr/ihr/hb/historic_parks. 09_state_care's launcher runs an advanced search for a",
+    "non-null SMR Number, so instances 4-6 carry one.",
+    "",
+    "Six instances, not five: arches sets minimumResultsForSearch: 5, below which selectWoo",
+    "renders no search box at all (see cy.select2Search in cypress/support/commands.js).",
+    "",
+    "display_name is deliberately NOT seeded: generate_ha_name_function creates that tile itself on the first save (Tile.get_blank_tile_from_nodegroup_id), so supplying one too gives two tiles for a cardinality-1 nodegroup and the import fails.",
+    "",
+    "monument_name is the CONSTANT 'Testing', not 'Testing {n}'. 02_flag_for_enforcement asserts the exact text of the associated resource: cy.contains('Associated Resources:').siblings().should('have.text', 'HA/02 Testing'). A per-instance suffix would render 'HA/02 Testing 2' and fail that equality. This also matches how the display names look in a real coral database.",
+    "",
+    "HA/05 and HA/06 carry a monument type, townland and a Scheduled Monument designation, and HA/04 deliberately does not: the Agri and DAERA specs relate all three and assert 2 scheduled monuments out of 3.",
+    "",
+    "Instances 7-9 are named 'Garden Test', not 'Testing', and exist ONLY for 01_add_garden's three 'open an existing HA' tests. Those tests drive an existing Heritage Asset through the Add Garden workflow, and merely opening it rewrites its display name - if the test then fails part way through, the asset is left with a BLANK name. When they shared the 'Testing' assets they silently wiped the names off HA/01-03, and 02_flag_for_enforcement (which runs later in the same CI run) then found an unnamed option instead of 'HA/02 Testing'. Keeping them on their own assets, matched by a search term the other specs do not use, restores isolation. Note the whole suite runs against ONE database in CI, so anything a spec mutates is visible to every spec after it.",
+    "",
+    "Every instance has a primary_reference_number, as real heritage assets do: core's number widget",
+    "writes 0 into an empty number field when it renders, which makes a step that shows it open as changed."
+  ],
+  "Heritage Asset": [
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/01",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90001
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/02",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90002
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/03",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90003
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/04",
+      "smr_number": "SMR-TEST-004",
+      "ihr_number": null,
+      "hb_number": "HB04/00/004",
+      "historic_parks_and_gardens": null,
+      "monument_type": [
+        "Barilla Mill"
+      ],
+      "historical_period_type": [
+        "Early Bronze Age"
+      ],
+      "townland": [
+        "Abbey Park"
+      ],
+      "irish_grid_reference_tm65_": "J3050082100",
+      "description": "Test description for HA/04.",
+      "building_name_value": "Test House",
+      "street_value": "Test Street",
+      "town_or_city_value": "Test Town",
+      "postcode_value": "BT1 1AA",
+      "county_value": "Antrim",
+      "area_name": "Antrim",
+      "area_type": "Barony",
+      "location_description": "Test location description for HA/04.",
+      "designation_description": "Test designation description for HA/04.",
+      "designation_description_type": "Architects comments",
+      "grade": [
+        "A"
+      ],
+      "land_folio_number": "LF-TEST-004",
+      "land_use_site": [
+        "Other 1 (Allotment)"
+      ],
+      "listing_criteria": [
+        "A. Style"
+      ],
+      "recommended_designation_type": [
+        "Area of Archaeological Potential"
+      ],
+      "scheduling_criteria": [
+        "Diversity"
+      ],
+      "cm_reference_number": "CM-TEST-004",
+      "occupier": [
+        "c182b234-04cb-549a-94da-3c08d910c46d"
+      ],
+      "owner": [
+        "c182b234-04cb-549a-94da-3c08d910c46d"
+      ],
+      "assessment_date_value": "2024-01-15",
+      "assessment_done_by_value": "c182b234-04cb-549a-94da-3c08d910c46d",
+      "council_consulted_date": "2024-01-20",
+      "council_response": "No objection raised.",
+      "council_response_date": "2024-02-01",
+      "statutory_consultee_notification_date_value": "2024-01-25",
+      "desg_approved_by": "c182b234-04cb-549a-94da-3c08d910c46d",
+      "desg_approved_date_value": "2024-03-01",
+      "director_sign_off_date_value": "2024-03-05",
+      "local_authority_notification_date_value": "2024-03-10",
+      "owner_notified_date_value": "2024-03-10",
+      "primary_reference_number": 90004
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/05",
+      "smr_number": "SMR-TEST-005",
+      "ihr_number": null,
+      "hb_number": "HB05/00/005",
+      "historic_parks_and_gardens": null,
+      "monument_type": [
+        "Ecclesiastical Site"
+      ],
+      "townland": [
+        "Knockans"
+      ],
+      "recommended_designation_type": [
+        "Scheduled Monument"
+      ],
+      "primary_reference_number": 90005
+    },
+    {
+      "monument_name": "Testing",
+      "resourceid": "HA/06",
+      "smr_number": "SMR-TEST-006",
+      "ihr_number": null,
+      "hb_number": "HB06/00/006",
+      "historic_parks_and_gardens": null,
+      "monument_type": [
+        "Chambered Tomb"
+      ],
+      "townland": [
+        "Dunteige"
+      ],
+      "recommended_designation_type": [
+        "Scheduled Monument"
+      ],
+      "primary_reference_number": 90006
+    },
+    {
+      "monument_name": "Garden Test",
+      "resourceid": "HA/07",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90007
+    },
+    {
+      "monument_name": "Garden Test",
+      "resourceid": "HA/08",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90008
+    },
+    {
+      "monument_name": "Garden Test",
+      "resourceid": "HA/09",
+      "smr_number": null,
+      "ihr_number": null,
+      "hb_number": null,
+      "historic_parks_and_gardens": null,
+      "primary_reference_number": 90009
+    }
+  ]
+}

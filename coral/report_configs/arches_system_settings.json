@@ -1,0 +1,58 @@
+{
+  "graph_slug": "arches_system_settings",
+  "graph_name": "Arches System Settings",
+  "configs": {
+    "search": {
+      "name": "Arches System Settings",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Arches System Settings",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Saved Searches",
+            "nodegroup_alias": "saved_searches",
+            "node_aliases": [
+              "image",
+              "search_description",
+              "search_name",
+              "search_url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Settings Basic Search",
+            "nodegroup_alias": "basic_search_settings",
+            "node_aliases": [
+              "search_dropdown_length",
+              "search_export_limit",
+              "search_items_per_page"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Settings Time Search",
+            "nodegroup_alias": "temporal_search",
+            "node_aliases": [
+              "color_ramp",
+              "time_wheel_configuration"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

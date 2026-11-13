@@ -18,6 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 import json
+import logging
 import os
 import re
 import uuid
@@ -43,12 +44,48 @@ from arches.app.models.system_settings import settings
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
-import arches_orm
-from arches_orm.wkrm import get_well_known_resource_model_by_graph_id
-import pytz
+import querysets_shim.view_models
+from querysets_shim.wkrm import get_well_known_resource_model_by_graph_id
+from querysets_shim.wrapper import _SemanticNode
+from coral.utils.reference_values import display_value, reference_label
+from zoneinfo import ZoneInfo
 from django.core.files.storage import  default_storage
 from coral.views.pdf_extract import PdfExtract
 import os
+
+logger = logging.getLogger(__name__)
+
+
+def placeholders(doc) -> set:
+    """Every <name> placeholder in the body, tables, headers and footers of a docx."""
+    paragraphs = list(doc.paragraphs)
+    for table in doc.tables:
+        for row in table.rows:
+            paragraphs += [p for cell in row.cells for p in cell.paragraphs]
+    for section in doc.sections:
+        paragraphs += section.header.paragraphs + section.footer.paragraphs
+    return {name for p in paragraphs for name in re.findall(r'<([^<>]+)>', p.text)}
+
+
+def join_texts(texts, many_tiles):
+    return "\n \n".join(texts) if many_tiles else ", ".join(texts)
+
+
+def split_placeholders(names, expand, special):
+    """(own aliases, {expand alias: [related aliases]}, special names) for a placeholder set."""
+    own, related, specials = set(), {}, set()
+    for name in names:
+        head, _, tail = name.partition("__")
+        if tail and head in expand:
+            related.setdefault(head, set()).add(tail)
+        elif name in special:
+            specials.add(name)
+        else:
+            own.add(name)
+    return own, related, specials
+
+
+
 class FileTemplateView(View):
     def __init__(self):
         self.doc = None
@@ -95,19 +132,12 @@ class FileTemplateView(View):
 
         fs = default_storage
         template_dict = self.get_template_path(template_id)
-        template_path = None
-        filesystem_class = default_storage.__class__.__name__
-        if filesystem_class == 'S3Boto3Storage':
-            template_path = os.path.join(
-                "docx", template_dict["filename"]
-            )
-        elif filesystem_class == 'FileSystemStorage':
-            template_path = os.path.join(
-                settings.APP_ROOT, "docx", template_dict["filename"]
-            )
+        # storage-relative: MEDIA_ROOT is APP_ROOT, so this resolves the same on S3 and local disk
+        template_path = os.path.join("docx", template_dict["filename"])
         try:
             self.doc = Document(fs.open(template_path))
-        except:
+        except Exception:
+            logger.exception("coral: could not open letter template %s", template_path)
             return HttpResponseNotFound("No Template Found")
         
         if extract_pdf:
@@ -116,14 +146,7 @@ class FileTemplateView(View):
              files = data.get('files')
              for file in files:
                 filename = file["name"].replace(" ", "_")
-                if filesystem_class == 'S3Boto3Storage':
-                    file_path = os.path.join(
-                        "uploadedfiles", filename
-                    )
-                elif filesystem_class == 'FileSystemStorage':
-                    file_path = os.path.join(
-                        settings.APP_ROOT, "uploadedfiles", filename
-                    )
+                file_path = os.path.join("uploadedfiles", filename)
                 try:
                     file = fs.open(file_path)
                     text = pdf_extract.extract_text(file.read())
@@ -138,7 +161,7 @@ class FileTemplateView(View):
 
         self.edit_letter(self.resource, template_dict["provider"], config)
 
-        timezone = pytz.timezone("Europe/London") 
+        timezone = ZoneInfo("Europe/London")
         current_datetime = datetime.now(timezone)
         # Date and time as "DD-MM-YYYY-HH-MM"
         formatted_datetime = current_datetime.strftime("%d-%m-%Y-%H-%M")
@@ -264,11 +287,11 @@ class FileTemplateView(View):
                 "filename": "extension-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
             },
-            "bb6e23cf-0331-ea39-7164-a3af1607a958": {
+            "7f28d22e-6fc2-25f7-df26-ab2d45502f7f": {
                 "filename": "advance-listing-letter-to-owner-occupier.docx",
                 "provider": GenericTemplateProvider,
             },
-            "95456a6b-30e0-b727-91f9-ccc0acfcac87": {
+            "7da22e36-5009-636f-4d98-453fd6e4c14f": {
                 "filename": "advance-listing-letter-to-council.docx",
                 "provider": GenericTemplateProvider,
             },
@@ -291,21 +314,8 @@ class FileTemplateView(View):
         return { "filename": template_id, "provider": GenericTemplateProvider}
 
     def edit_letter(self, resource, provider, config):
-        # include = []
-
-        # if len(self.doc.paragraphs) > 0:
-        #     for paragraph in self.doc.paragraphs:
-        #          if re.search('<.*>', paragraph.text):
-        #             include += re.findall('<([^<]*)>', paragraph.text)
-
-        # if len(self.doc.tables) > 0:
-        #     for table in self.doc.tables:
-        #         for row in table.rows:
-        #             for cell in row.cells:
-        #                  if re.search('<.*>', cell.text):
-        #                     include += re.findall('<([^<]*)>', cell.text)
-
-        # config["include"] = include
+        if config.get("fetch") == "placeholders":
+            config["placeholders"] = placeholders(self.doc)
         mapping_dict = provider(resource).get_mapping(config)
 
         if config.get("extract_pdf", False):
@@ -317,7 +327,7 @@ class FileTemplateView(View):
     def apply_mapping(self, mapping):
         htmlTags = re.compile(r"<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>")
         for key in mapping:
-            if (isinstance(mapping[key], (arches_orm.view_models.concepts.EmptyConceptValueViewModel))):
+            if (isinstance(mapping[key], (querysets_shim.view_models.concepts.EmptyConceptValueViewModel))):
                 mapping[key] = None
             if (isinstance(mapping[key], (bool))):
                 mapping[key] = str(mapping[key])
@@ -498,7 +508,7 @@ def validate_uuid_string(uuid_string: str) -> UUIDString:
     except ValueError:
         return False
     return str(uuid_obj) == uuid_string
-RelatedResource = NewType("RelatedResource", arches_orm.view_models.node_list.NodeListViewModel)
+RelatedResource = NewType("RelatedResource", querysets_shim.view_models.node_list.NodeListViewModel)
 
 class GenericTemplateProvider:
     def __init__(self, resource_instance: Resource):
@@ -557,11 +567,23 @@ class GenericTemplateProvider:
                         newloop += item[1].items()
                         found_semantic = True
                     except:
-                        segment = {item[0] : item[1]}
-                        mapping = mapping | self.processDatatypes(segment)
+                        repeated = self.repeated_items(item[1])
+                        if repeated:
+                            newloop += repeated
+                            found_semantic = True
+                        else:
+                            segment = {item[0] : item[1]}
+                            mapping = self.merge_mappings(mapping, self.processDatatypes(segment))
                     node_list = newloop
                     children_present = found_semantic
         return mapping
+
+    def repeated_items(self, value) -> list:
+        """(alias, value) pairs from each child of a repeating nodegroup, or [] if it is not one."""
+        try:
+            return [pair for child in value for pair in child.items()]
+        except:
+            return []
     
     def merge_mappings(self, original: dict, new: dict):
         merged = original.copy() if original is not None else {}
@@ -610,6 +632,8 @@ class GenericTemplateProvider:
                 @example special: {'todays_date': ['make_date', 'today']} # adds 'todays_date' as an alias and uses the make_date function to create today's date
         """
         self.config = config
+        if config.get("fetch") == "placeholders":
+            return self.mapping_from_placeholders(config)
 
         # wkrm
         wkrm = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
@@ -628,15 +652,65 @@ class GenericTemplateProvider:
         # if "exclude" in self.config:
         #      semantic_node_list = [item for item in semantic_node_list if not item[0] in self.config['exclude']]
 
-        mapping = self.extract(semantic_node_list)  
-        if "special" in self.config:
-            for special_case in self.config["special"].items():
-                if special_case[1] == 'today':
-                    mapping[special_case[0]] = datetime.today().strftime("%d/%m/%Y")
-                elif special_case[1] == 'user':
-                     mapping = self.get_user(mapping, special_case[0])
+        mapping = self.extract(semantic_node_list)
+        mapping = self.apply_specials(mapping)
 
         return self.processDatatypes(mapping)         
+
+    def apply_specials(self, mapping:Mapping) -> Mapping:
+        for alias, special in self.config.get("special", {}).items():
+            if special == 'today':
+                mapping[alias] = datetime.today().strftime("%d/%m/%Y")
+            elif special == 'user':
+                mapping = self.get_user(mapping, alias)
+        return mapping
+
+    def mapping_from_placeholders(self, config) -> Mapping:
+        """Builds the mapping from a few alias queries, for just the letter's placeholders."""
+        from querysets_shim.adapter import admin
+        from querysets_shim.values import EMPTY, descriptor_names, related_resource_ids, values_by_resource
+        from arches.app.models.models import ResourceInstance
+
+        own, related, _ = split_placeholders(
+            config.get("placeholders", ()), config.get("expand", ()), config.get("special", {}))
+        model = get_well_known_resource_model_by_graph_id(self.resource_instance.graph_id)
+        rid = str(self.resource_instance.resourceinstanceid)
+        mapping = {}
+        with admin():
+            values = values_by_resource(model, [rid], list(own) + list(related)).get(rid, EMPTY)
+            mapping.update(self.stringify_values(model, values, own))
+            for alias, fields in related.items():
+                # ponytail: first owner only; one letter per owner is out of scope
+                owner_ids = related_resource_ids(values.get(alias))
+                if not owner_ids:
+                    continue
+                owner_id = owner_ids[0]
+                mapping[alias] = descriptor_names([owner_id])[owner_id]
+                graph_id = ResourceInstance.objects.values_list("graph_id", flat=True).get(pk=owner_id)
+                owner_model = get_well_known_resource_model_by_graph_id(graph_id)
+                owner_values = values_by_resource(owner_model, [owner_id], list(fields)).get(owner_id, EMPTY)
+                for name, text in self.stringify_values(owner_model, owner_values, fields).items():
+                    mapping[f"{alias}__{name}"] = text
+        return self.apply_specials(mapping)
+
+    def stringify_values(self, model, values, aliases) -> Mapping:
+        nodes = model._._node_objects_by_alias()
+        strings = {}
+        for alias in aliases:
+            if alias not in nodes:
+                continue
+            datatype = nodes[alias].datatype
+            texts = []
+            for value in values.all(alias):
+                if datatype in ("date", "edtf") and value:
+                    text = datetime.fromisoformat(value).strftime("%d/%m/%Y")
+                else:
+                    text = display_value(value, datatype)
+                if text:
+                    texts.append(text)
+            if texts:
+                strings[alias] = join_texts(texts, alias in self.config.get("many_tiles", ()))
+        return strings
 
     def processDatatypes(self, mapping:Mapping) -> Mapping:
         """Provides the logic for extracting a node lists's values for different datatypes.
@@ -645,20 +719,27 @@ class GenericTemplateProvider:
 
             @return mapping: A processed Mapping with values stringified
         """
+        from querysets_shim.arches_django.datatypes.user import UserViewModel
+
         for item in mapping.items():
             alias, value = item
 
-            if isinstance(value, arches_orm.view_models.node_list.NodeListViewModel):
+            if isinstance(value, _SemanticNode):
+                # A reference node arrives as objects carrying their own labels; an empty
+                # nodegroup arrives as one of these too and has nothing to show.
+                mapping[alias] = reference_label(list(value))
+                continue
+            if isinstance(value, querysets_shim.view_models.node_list.NodeListViewModel):
                 for node in value:
-                    if isinstance(node, arches_orm.view_models.semantic.SemanticViewModel):
+                    if isinstance(node, querysets_shim.view_models.semantic.SemanticViewModel):
                         mapping = self.merge_mappings(mapping, self.extract(list(node.items())))
                 # TODO handle node lists that are not semantic e.g bibligraphic source is a resource-instance but has children. Currently we ignore the children 
                 mapping[alias] = None
                 continue
-            if isinstance(value, (arches_orm.view_models.concepts.EmptyConceptValueViewModel, arches_orm.arches_django.datatypes.user.UserViewModel)):
+            if isinstance(value, (querysets_shim.view_models.concepts.EmptyConceptValueViewModel, UserViewModel)):
                 mapping[alias] = None
                 continue
-            if isinstance(value, (arches_orm.view_models.resources.RelatedResourceInstanceListViewModel)):             
+            if isinstance(value, (querysets_shim.view_models.resources.RelatedResourceInstanceListViewModel)):             
                 if "expand" in self.config and alias in self.config["expand"] and len(value) > 0:
                     for related_resource in value:
                         mapping = mapping | self.extract_from_related_resource(alias, related_resource)
@@ -669,16 +750,16 @@ class GenericTemplateProvider:
                         resource_list.append(str(related_resource))
                     mapping[alias] = resource_list
                 continue
-            if isinstance(value, (arches_orm.view_models.concepts.ConceptListValueViewModel)):
+            if isinstance(value, (querysets_shim.view_models.concepts.ConceptListValueViewModel)):
                 concept_list = []
                 for datum in value.data:
                     concept_list.append(str(datum))
                 mapping[alias] = concept_list
                 continue
-            if isinstance(value, (arches_orm.view_models.concepts.ConceptValueViewModel)):
+            if isinstance(value, (querysets_shim.view_models.concepts.ConceptValueViewModel)):
                 mapping[alias] = str(value)
                 continue
-            if isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel)):
+            if isinstance(value, (querysets_shim.view_models.semantic.SemanticViewModel)):
                 dicted_value = {}
                 for key in list(value.keys()):
                     if key:
@@ -686,7 +767,7 @@ class GenericTemplateProvider:
                 mapping = mapping | self.extract(list(dicted_value.items()))
                 mapping[alias] = None
                 continue
-            if isinstance(value, str) and not isinstance(value, (arches_orm.view_models.semantic.SemanticViewModel, arches_orm.view_models.concepts.ConceptValueViewModel, arches_orm.view_models.string.StringViewModel)):
+            if isinstance(value, str) and not isinstance(value, (querysets_shim.view_models.semantic.SemanticViewModel, querysets_shim.view_models.concepts.ConceptValueViewModel, querysets_shim.view_models.string.StringViewModel)):
                 # Arches ORM doesn't seem to have date datatype
                 try:
                     mapping[alias] = datetime.fromisoformat(value).strftime("%d/%m/%Y")
@@ -711,8 +792,8 @@ class GenericTemplateProvider:
          pass
     
     def get_user(self, mapping:Mapping, alias:Alias) -> Mapping:
-        from arches_orm.models import Person
-        from arches_orm.adapter import admin
+        from querysets_shim.models import Person
+        from querysets_shim.adapter import admin
         try:
             with admin():
                 person = Person.where(user_account=self.config["user"].id).get()
@@ -736,8 +817,8 @@ class MonumentTemplateProvider:
     MONUMENT_SYSTEM_REF_RESOURCE_ID_NODEGROUP = '325a2f2f-efe4-11eb-9b0c-a87eeabdefba'
     MONUMENT_SYSTEM_REF_RESOURCE_ID_NODE = '325a430a-efe4-11eb-810b-a87eeabdefba'
 
-    MONUMENT_CONTACTS_NODEGROUP = 'aa629840-d23e-11ee-9ae7-0242ac180006'
-    MONUMENT_CONTACTS_APPLICANT_NODE = 'aa62a736-d23e-11ee-9ae7-0242ac180006'
+    MONUMENT_CONTACTS_NODEGROUP = 'd62dd807-4739-59d7-91d1-e13038eb6eec'
+    MONUMENT_CONTACTS_APPLICANT_NODE = '81e17dca-83a5-5d0d-bd90-2cafec54eec3'
 
     MONUMENT_LOCALITIES_ADMIN_AREA_NODEGROUP = '87d38725-f44f-11eb-8d4b-a87eeabdefba'
     MONUMENT_AREA_NAME_NODE = '87d3c3ea-f44f-11eb-b532-a87eeabdefba'
@@ -745,11 +826,11 @@ class MonumentTemplateProvider:
     MONUMENT_ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba'
     MONUMENT_COUNTY_NODE = '87d3ff32-f44f-11eb-aa82-a87eeabdefba'
 
-    MONUMENT_CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006'
-    MONUMENT_CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006'
+    MONUMENT_CM_REFERENCE_NODEGROUP = 'c9c4e6dc-aa34-5254-a7b5-4f79bd8b73c1'
+    MONUMENT_CM_REFERENCE_NODE = '9c4a43d9-a689-5ba2-bed5-4fbbd6ad47e6'
 
-    SMC_RECEIVED_DATE_NODEGROUP = 'eeec9986-d23c-11ee-9373-0242ac180006'
-    SMC_RECEIVED_DATE_NODE = 'eeec9e68-d23c-11ee-9373-0242ac180006'
+    SMC_RECEIVED_DATE_NODEGROUP = 'f95a80c0-5509-5293-8ef9-5471a84055f4'
+    SMC_RECEIVED_DATE_NODE = '126b8c3c-d980-5ebc-8719-a8a8376577f6'
 
     APPLICANT_TITLE_NODEGROUP = '4110f741-1a44-11e9-885e-000d3ab1e588'
     APPLICANT_TITLE_NODE = '6da2f03b-7e55-11ea-8fe5-f875a44e0e11'
@@ -1025,8 +1106,8 @@ class LicenceTemplateProvider:
     ACTIVITY_COUNCIL_NODEGROUP = '5f81a8d4-d7de-11ee-b2c1-0242ac120006'
     ACTIVITY_COUNCIL_NODE = '5f81a8d4-d7de-11ee-b2c1-0242ac120006'
 
-    ACTIVITY_GRID_REFERENCES_NODEGROUP = '33b4430a-16be-11ef-8633-0242ac180006'
-    ACTIVITY_IRISH_GRID_REFERENCE_NODE = '4bd349a4-16be-11ef-af79-0242ac180006'
+    ACTIVITY_GRID_REFERENCES_NODEGROUP = 'a5416b43-f121-11eb-b691-a87eeabdefba'
+    ACTIVITY_IRISH_GRID_REFERENCE_NODE = '94c1b326-6ba9-5702-a7e2-5bc5eec17cee'
 
     ACTIVITY_LOCATION_DESCRIPTION_NODEGROUP = 'a541b934-f121-11eb-9d20-a87eeabdefba:'
     ACTIVITY_LOCATION_DESCRIPTION_NODE = 'a5416b40-f121-11eb-9cb6-a87eeabdefba'

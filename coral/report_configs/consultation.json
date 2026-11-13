@@ -1,0 +1,696 @@
+{
+  "graph_slug": "consultation",
+  "graph_name": "Consultation",
+  "configs": {
+    "search": {
+      "name": "Consultation",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Consultation",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Agriculture dates ",
+            "nodegroup_alias": "agriculture_dates_",
+            "node_aliases": [
+              "date_acknowledged",
+              "date_received",
+              "due_date",
+              "response_date"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Agriculture Letter",
+            "nodegroup_alias": "agriculture_letter",
+            "node_aliases": [
+              "designation_letter_type",
+              "letter_n1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Applicants",
+            "nodegroup_alias": "applicants_n1",
+            "node_aliases": [
+              "agent_n1",
+              "applicant_n1",
+              "applicant_organisation",
+              "referred_to"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Assignment",
+            "nodegroup_alias": "assignment",
+            "node_aliases": [
+              "assigned_to",
+              "assignment_team",
+              "re_assigned_to"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "BDLO Reference",
+            "nodegroup_alias": "bdlo_reference",
+            "node_aliases": [
+              "bdlo_reference_number"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Classification Type",
+            "nodegroup_alias": "classification_type",
+            "node_aliases": [
+              "classification_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "CM References",
+            "nodegroup_alias": "cm_references",
+            "node_aliases": [
+              "cm_reference_number"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Composite Score",
+            "nodegroup_alias": "composite_score",
+            "node_aliases": [
+              "condition_score",
+              "risk_score",
+              "total_score"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Condition Type",
+            "nodegroup_alias": "condition_type",
+            "node_aliases": [
+              "condition_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Consultation Names",
+            "nodegroup_alias": "consultation_names",
+            "node_aliases": [
+              "consultation_name",
+              "consultation_name_currency"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Consultation status",
+            "nodegroup_alias": "consultation_status",
+            "node_aliases": [
+              "consultation_status"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Consultation type",
+            "nodegroup_alias": "consultation_type_n1",
+            "node_aliases": [
+              "consultation_type_n1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Curatorial Descriptions",
+            "nodegroup_alias": "curatorial_descriptions",
+            "node_aliases": [
+              "curatorial_description",
+              "curatorial_description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Decision",
+            "nodegroup_alias": "decision",
+            "node_aliases": [
+              "actual_issued_date",
+              "consent",
+              "issued_by",
+              "provisional_issued_date",
+              "status_n1",
+              "works_to_be_carried_out"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "DfI Received Date",
+            "nodegroup_alias": "dfi_received_date",
+            "node_aliases": [
+              "dfi_received_date_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Display Name",
+            "nodegroup_alias": "display_name",
+            "node_aliases": [
+              "display_name_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Distinction",
+            "nodegroup_alias": "distinction",
+            "node_aliases": [
+              "distinction"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Evaluation",
+            "nodegroup_alias": "evaluation",
+            "node_aliases": [
+              "description",
+              "enforcement_type",
+              "evaluation_criteria",
+              "follow_up_meeting_date_value",
+              "har_consideration",
+              "proposed_grade_type",
+              "propose_type",
+              "senior_conservation_architect",
+              "start_date"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Evaluation Meeting Type",
+            "nodegroup_alias": "evaluation_meeting_type",
+            "node_aliases": [
+              "evaluation_meeting_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Existing Grade Type",
+            "nodegroup_alias": "existing_grade_type",
+            "node_aliases": [
+              "existing_grade_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Full Survey Requirement Type",
+            "nodegroup_alias": "full_survey_requirement_type",
+            "node_aliases": [
+              "full_survey_requirement_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "HA assets group",
+            "nodegroup_alias": "ha_assets_group",
+            "node_aliases": [
+              "monuments_n1",
+              "related_heritage_assets_n1",
+              "scheduled_monuments_n1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Hierarchy Type",
+            "nodegroup_alias": "hierarchy_type",
+            "node_aliases": [
+              "hierarchy_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "HPRM Reference",
+            "nodegroup_alias": "hprm_reference",
+            "node_aliases": [
+              "hprm_reference_number"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Inspection Reports",
+            "nodegroup_alias": "inspection_reports",
+            "node_aliases": [
+              "inspection_report"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Listing Query",
+            "nodegroup_alias": "listing_query",
+            "node_aliases": [
+              "listing_query"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Planning References",
+            "nodegroup_alias": "planning_references",
+            "node_aliases": [
+              "planning_reference"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Reason Descriptions",
+            "nodegroup_alias": "reason_descriptions",
+            "node_aliases": [
+              "reason_description"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Recommendation Descriptions",
+            "nodegroup_alias": "recommendation_descriptions",
+            "node_aliases": [
+              "recommendation_description"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Related Heritage Assets",
+            "nodegroup_alias": "related_heritage_assets",
+            "node_aliases": [
+              "related_heritage_assets"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Response Action",
+            "nodegroup_alias": "response_action",
+            "node_aliases": [
+              "response_summary_value",
+              "response_team",
+              "response_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Response Files",
+            "nodegroup_alias": "response_files",
+            "node_aliases": [
+              "response_digital_objects",
+              "response_team_files"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Risk Type",
+            "nodegroup_alias": "risk_type",
+            "node_aliases": [
+              "risk_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Sign Off",
+            "nodegroup_alias": "sign_off",
+            "node_aliases": [
+              "cur_e",
+              "cur_e_role_type",
+              "report_submitted_by_value",
+              "reviewed_by_value",
+              "send_papers",
+              "sign_off_date_value",
+              "within_deadline"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Site Type",
+            "nodegroup_alias": "site_type",
+            "node_aliases": [
+              "site_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Consultation Descriptions",
+            "nodegroup_alias": "consultation_descriptions",
+            "node_aliases": [
+              "consultation_description"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Consultation Dates",
+            "nodegroup_alias": "consultation_dates",
+            "node_aliases": [
+              "completion_date",
+              "log_date",
+              "target_date_start"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Proposal",
+            "nodegroup_alias": "proposal",
+            "node_aliases": [
+              "digital_file_s__n1",
+              "proposal_text"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Contacts",
+            "nodegroup_alias": "contacts",
+            "node_aliases": [
+              "agent",
+              "applicant",
+              "archaeologist",
+              "architect",
+              "casework_officer",
+              "consulting_contact",
+              "cwt_area_manager",
+              "cwt_area_supervisor",
+              "fm_warden",
+              "hed_staff_value",
+              "historian",
+              "occupier",
+              "owner",
+              "planning_body",
+              "planning_officer"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Application Type",
+            "nodegroup_alias": "application_type",
+            "node_aliases": [
+              "application_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External System References",
+            "nodegroup_alias": "references",
+            "node_aliases": [
+              "agency",
+              "reference",
+              "reference_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Development Type",
+            "nodegroup_alias": "development_type",
+            "node_aliases": [
+              "development_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Consultation Type",
+            "nodegroup_alias": "consultation_type",
+            "node_aliases": [
+              "consultation_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Assessment of Significance",
+            "nodegroup_alias": "assessment_of_significance",
+            "node_aliases": [
+              "notes"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Advice",
+            "nodegroup_alias": "advice",
+            "node_aliases": [
+              "advice_applied_by",
+              "advice_applied_end_date",
+              "advice_text",
+              "advice_type",
+              "date_advice_applied"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Actions",
+            "nodegroup_alias": "action",
+            "node_aliases": [
+              "action_status",
+              "action_text",
+              "action_type",
+              "assigned_to_n1",
+              "date_entered",
+              "date_uploaded",
+              "target_date_n1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Correspondence",
+            "nodegroup_alias": "correspondence",
+            "node_aliases": [
+              "letter",
+              "letter_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Communications",
+            "nodegroup_alias": "communications",
+            "node_aliases": [
+              "attendees_n1",
+              "communication_description",
+              "communication_description_type",
+              "communication_type",
+              "date",
+              "digital_file_s_",
+              "end_date_n1",
+              "follow_on_actions_n1",
+              "related_condition",
+              "subject"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Site Visits",
+            "nodegroup_alias": "site_visits",
+            "node_aliases": [
+              "date_of_visit",
+              "location_description_1",
+              "location_description_type_1"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Consultation Status",
+            "nodegroup_alias": "status",
+            "node_aliases": [
+              "status"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Outcomes",
+            "nodegroup_alias": "outcomes",
+            "node_aliases": [
+              "audit_outcome",
+              "planning_outcome"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Consultations",
+            "nodegroup_alias": "associated_consultations",
+            "node_aliases": [
+              "associated_consultations"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Activities",
+            "nodegroup_alias": "associated_activities",
+            "node_aliases": [
+              "associated_activities"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Monuments and Areas",
+            "nodegroup_alias": "related_monuments_and_areas",
+            "node_aliases": [
+              "related_monuments_and_areas"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Contested Heritage Assignment",
+            "nodegroup_alias": "contested_heritage_assignment",
+            "node_aliases": [
+              "contested_heritage"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Digital Files",
+            "nodegroup_alias": "file_s_",
+            "node_aliases": [
+              "file_s_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

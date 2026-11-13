@@ -1,81 +1,79 @@
-define([
-  'underscore',
-  'knockout',
-  'knockout-mapping',
-  'uuid',
-  'arches',
-  'viewmodels/card-component',
-  'viewmodels/alert',
-  'templates/views/components/workflows/merge-workflow/submit-merge.htm'
-], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
-  function viewModel(params) {
-    console.log('submit-merge params: ', params);
+import _ from 'underscore';
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import uuid from 'uuid';
+import arches from 'arches';
+import CardComponentViewModel from 'viewmodels/card-component';
+import AlertViewModel from 'viewmodels/alert';
+import template from 'templates/views/components/workflows/merge-workflow/submit-merge.htm';
 
-    this.configKeys = ko.observable({ placeholder: 0 });
+function viewModel(params) {
+  console.log('submit-merge params: ', params);
 
-    this.checkboxOptions = ko.observable([
-      {
-        text: '',
-        id: 'acknowledged'
-      }
-    ]);
+  this.configKeys = ko.observable({ placeholder: 0 });
 
-    this.selectedCheckboxOptions = ko.observableArray();
+  this.checkboxOptions = ko.observable([
+    {
+      text: '',
+      id: 'acknowledged'
+    }
+  ]);
 
-    this.hasAcknowledgedProcess = ko.computed(() => {
-      return !!this.selectedCheckboxOptions().includes('acknowledged');
-    }, this);
+  this.selectedCheckboxOptions = ko.observableArray();
 
-    this.submitMerge = async () => {
-      console.log('submitting merge');
+  this.hasAcknowledgedProcess = ko.computed(() => {
+    return !!this.selectedCheckboxOptions().includes('acknowledged');
+  }, this);
 
-      const data = {
-        baseResourceId: params.baseResourceId,
-        mergeResourceId: params.mergeResourceId,
-        mergeTrackerResourceId: params.mergeTrackerResourceId
-      };
-      params.pageVm.loading(true);
-      try {
-        const response = await $.ajax({
-          type: 'POST',
-          url: '/merge-resources',
-          dataType: 'json',
-          data: JSON.stringify(data),
-          context: this,
-          error: (response, status, error) => {
-            console.log(response, status, error);
-          }
-        });
-        params.pageVm.alert(
-          new AlertViewModel(
-            'ep-alert-blue',
-            'Merge process has STARTED',
-            'You can now safely save and exit the workflow. Be aware that these two resources are in the process of merging which can take up to 5 minutes to complete.',
-            null,
-            function () {
-              window.window.location = arches.urls.plugin('init-workflow');
-            }
-          )
-        );
-      } catch (e) {
-        params.pageVm.alert(
-          new AlertViewModel(
-            'ep-alert-red',
-            'Resources failed to merge',
-            'Please contact an administrator and report the incident.',
-            null,
-            function () {}
-          )
-        );
-      }
-      params.pageVm.loading(false);
+  this.submitMerge = async () => {
+    console.log('submitting merge');
+
+    const data = {
+      baseResourceId: params.baseResourceId,
+      mergeResourceId: params.mergeResourceId,
+      mergeTrackerResourceId: params.mergeTrackerResourceId
     };
-  }
+    params.pageVm.loading(true);
+    try {
+      const response = await $.ajax({
+        type: 'POST',
+        url: '/merge-resources',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        context: this,
+        error: (response, status, error) => {
+          console.log(response, status, error);
+        }
+      });
+      params.pageVm.alert(
+        new AlertViewModel(
+          'ep-alert-blue',
+          'Merge process has STARTED',
+          'You can now safely save and exit the workflow. Be aware that these two resources are in the process of merging which can take up to 5 minutes to complete.',
+          null,
+          function () {
+            window.window.location = arches.urls.plugin('init-workflow');
+          }
+        )
+      );
+    } catch (e) {
+      params.pageVm.alert(
+        new AlertViewModel(
+          'ep-alert-red',
+          'Resources failed to merge',
+          'Please contact an administrator and report the incident.',
+          null,
+          function () {}
+        )
+      );
+    }
+    params.pageVm.loading(false);
+  };
+}
 
-  ko.components.register('submit-merge', {
-    viewModel: viewModel,
-    template: template
-  });
-
-  return viewModel;
+ko.components.register('submit-merge', {
+  viewModel: viewModel,
+  template: template
 });
+
+export default viewModel;

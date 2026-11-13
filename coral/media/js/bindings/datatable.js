@@ -1,12 +1,11 @@
-define([
-    'jquery',
-    'knockout',
-    'underscore',
-    'datatables.net-buttons-bs',
-    'datatables.net-responsive-bs',
-    'datatables.net-buttons-print',
-    'datatables.net-buttons-html5'
-], function($, ko, _, DataTable) {
+import $ from 'jquery';
+import ko from 'knockout';
+import _ from 'underscore';
+import DataTable from 'datatables.net-buttons-bs';
+import datatablesNetResponsiveBs from 'datatables.net-responsive-bs';
+import datatablesNetButtonsPrint from 'datatables.net-buttons-print';
+import datatablesNetButtonsHtml5 from 'datatables.net-buttons-html5';
+
     ko.bindingHandlers.datatable = {
         init: function(element, valueAccessor) {
             var config = ko.unwrap(valueAccessor());
@@ -72,6 +71,7 @@ define([
             };
         }
     };
+ko.bindingHandlers.datatable.init = ko.bindingHandlers.datatable.init.bind(ko.bindingHandlers.datatable);
+ko.bindingHandlers.dataTablesForEach.init = ko.bindingHandlers.dataTablesForEach.init.bind(ko.bindingHandlers.dataTablesForEach);
 
-    return ko.bindingHandlers.datatable;
-});
+export default ko.bindingHandlers.datatable;

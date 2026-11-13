@@ -1,0 +1,21 @@
+{
+  "graph_slug": "logical_set",
+  "graph_name": "Logical Set",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "member_definition",
+      "label": "Member Definition",
+      "sortorder": 0,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "title_text",
+      "label": "Title Text",
+      "sortorder": 1,
+      "datatype": "string",
+      "support": "backend-only"
+    }
+  ]
+}

@@ -692,7 +692,7 @@
           class="btn btn-shim btn-success btn-lg"
           data-bind="click: () => {
             retrieveFile();
-        }, disable: loading()"
+        }, disable: loading() || !selectedLetterType()"
         >
           <span>Generate</span>
         </button>

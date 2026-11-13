@@ -1,6 +1,7 @@
 from arches.app.datatypes.base import BaseDataType
 from arches.app.models.models import Widget
 from arches.app.models.system_settings import settings
+from arches.app.search.search_term import SearchTerm
 
 bngpoint = Widget.objects.get(name="bngpoint")
 
@@ -19,7 +20,12 @@ details = {
 
 
 class BNGCentreDataType(BaseDataType):
-    def validate(self, value, row_number=None, source=None, node=None, nodeid=None, strict=False, request=None):
+    def validate(self, value, row_number=None, source=None, node=None, nodeid=None, strict=False, request=None, **kwargs):
+        # Arches 8 keeps Node.config in an I18n_JSONField, so a node with no
+        # config round-trips as {"en": ""} (I18n_JSON._parse: value is None ->
+        # ret[lang] = ""). Callers that splat the config in as kwargs hand us
+        # language keys; core's BaseDataType.validate ends in **kwargs for that
+        # reason, so match it rather than stripping the config.
         if not value: 
             return []
 
@@ -113,4 +119,6 @@ class BNGCentreDataType(BaseDataType):
         document["strings"].append({"string": nodevalue, "nodegroup_id": tile.nodegroup_id})
 
     def get_search_terms(self, nodevalue, nodeid=None):
-        return [nodevalue]
+        if nodevalue:
+            return [SearchTerm(value=nodevalue)]
+        return []

@@ -13,6 +13,7 @@ import sys
 import arches
 import inspect
 import semantic_version
+from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime, timedelta
 from csp.constants import SELF, NONE
@@ -23,11 +24,118 @@ try:
 except ImportError:
     pass
 
+try:
+    from arches.settings_utils import transmit_webpack_django_config
+except ImportError:
+    import importlib
+    import site
+
+    def transmit_webpack_django_config(
+        root_dir, app_root, static_url, public_server_address,
+        webpack_development_server_port, arches_applications=None,
+    ):
+        arches_applications_paths = {}
+        if arches_applications:
+            for app in arches_applications:
+                importlib.import_module(app)
+                arches_applications_paths[app] = os.path.split(
+                    sys.modules[app].__spec__.origin
+                )[0]
+        sys.stdout.write(json.dumps({
+            "APP_ROOT": os.path.realpath(app_root),
+            "ARCHES_APPLICATIONS": list(arches_applications) if arches_applications else [],
+            "ARCHES_APPLICATIONS_PATHS": arches_applications_paths,
+            "SITE_PACKAGES_DIRECTORY": site.getsitepackages()[0],
+            "PUBLIC_SERVER_ADDRESS": public_server_address,
+            "ROOT_DIR": os.path.realpath(root_dir),
+            "STATIC_URL": static_url,
+            "WEBPACK_DEVELOPMENT_SERVER_PORT": webpack_development_server_port,
+        }))
+        sys.stdout.flush()
+
+try:
+    from arches.settings_utils import build_staticfiles_dirs
+except ImportError:
+    def build_staticfiles_dirs(*, app_root=None, additional_directories=None):
+        directories = []
+        if additional_directories:
+            for additional_directory in additional_directories:
+                directories.append(additional_directory)
+        if app_root:
+            directories.append(os.path.join(app_root, "media", "build"))
+            directories.append(os.path.join(app_root, "media"))
+            directories.append((
+                "node_modules",
+                os.path.normpath(os.path.join(app_root, "..", "node_modules")),
+            ))
+        return tuple(directories)
+
+try:
+    from arches.settings_utils import build_templates_config
+except ImportError:
+    def build_templates_config(
+        *, debug, app_root=None, additional_directories=None, context_processors=None,
+    ):
+        directories = []
+        if additional_directories:
+            for additional_directory in additional_directories:
+                directories.append(additional_directory)
+        if app_root:
+            directories.append(os.path.join(app_root, "templates"))
+        return [
+            {
+                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "DIRS": directories,
+                "APP_DIRS": True,
+                "OPTIONS": {
+                    "context_processors": (
+                        context_processors
+                        if context_processors
+                        else [
+                            "django.contrib.auth.context_processors.auth",
+                            "django.template.context_processors.debug",
+                            "django.template.context_processors.i18n",
+                            "django.template.context_processors.media",
+                            "django.template.context_processors.static",
+                            "django.template.context_processors.tz",
+                            "django.template.context_processors.request",
+                            "django.contrib.messages.context_processors.messages",
+                            "arches.app.utils.context_processors.livereload",
+                            "arches.app.utils.context_processors.map_info",
+                            "arches.app.utils.context_processors.app_settings",
+                        ]
+                    ),
+                    "debug": debug,
+                },
+            },
+        ]
+
 APP_NAME = 'coral'
-APP_VERSION = semantic_version.Version(major=7, minor=16, patch=53)
+
+# Version comes from pyproject.toml, and is bumped only at release by ./release.
+# CI writes coral/BUILD on non-main builds only, so dev shows v8.1.0+dev.ab12cd34
+# (same version line, built from that commit) while prod shows a clean v8.1.0.
+_pyproject = Path(__file__).resolve().parent.parent / "pyproject.toml"
+if _pyproject.exists():
+    _version = tomllib.loads(_pyproject.read_text())["project"]["version"]
+else:
+    from importlib.metadata import version as _dist_version
+
+    _version = _dist_version("coral-arches")
+
+_build = Path(__file__).resolve().parent / "BUILD"
+APP_VERSION = semantic_version.Version(
+    f"{_version}+{_build.read_text().strip()}" if _build.exists() else _version
+)
 
 TIME_ZONE = "Europe/London"
 USE_TZ = True
+
+# Group resources whose members stay read-only; every other group's members get Resource Editor.
+CORAL_READ_ONLY_GROUPS = [
+    "1b556c4a-e346-45ff-8cb8-45164f97c4e4",  # Read Access
+    "452ab9f2-ed4c-44dc-9ad3-ff9085734bc8",  # PUBLIC Group
+]
 
 GROUPINGS = {
     "groups": {
@@ -48,12 +156,10 @@ GROUPINGS = {
 }
 
 APP_ROOT = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-MIN_ARCHES_VERSION = arches.__version__
-MAX_ARCHES_VERSION = arches.__version__
 
 WEBPACK_LOADER = {
     "DEFAULT": {
-        "STATS_FILE": os.path.join(APP_ROOT, 'webpack/webpack-stats.json'),
+        "STATS_FILE": os.path.join(APP_ROOT, "..", "webpack/webpack-stats.json"),
     },
 }
 
@@ -85,8 +191,10 @@ DAUTHZ = {
 }
 DATATYPE_LOCATIONS.append('coral.datatypes')
 FUNCTION_LOCATIONS.append('coral.functions')
+ETL_MODULE_LOCATIONS = list(globals().get('ETL_MODULE_LOCATIONS', []))
 ETL_MODULE_LOCATIONS.append('coral.etl_modules')
 SEARCH_COMPONENT_LOCATIONS.append('coral.search_components')
+PERMISSION_LOCATIONS = list(globals().get('PERMISSION_LOCATIONS', []))
 PERMISSION_LOCATIONS.append('coral.permissions')
 TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'functions', 'templates'))
 TEMPLATES[0]['DIRS'].append(os.path.join(APP_ROOT, 'widgets', 'templates'))
@@ -103,10 +211,10 @@ except:
 
 LOCALE_PATHS.append(os.path.join(APP_ROOT, 'locale'))
 
-FILE_TYPE_CHECKING = False
+FILE_TYPE_CHECKING = None
 FILE_TYPES = ["bmp", "gif", "jpg", "jpeg", "pdf", "png", "psd", "rtf", "tif", "tiff", "xlsx", "csv", "zip"]
 FILENAME_GENERATOR = "arches.app.utils.storage_filename_generator.generate_filename"
-UPLOADED_FILES_DIR = "uploadedfiles"
+UPLOADED_FILES_DIR = os.environ.get("UPLOADED_FILES_DIR", "uploadedfiles")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
@@ -122,6 +230,8 @@ SECRET_KEY = '!^1-(*%x1ww9-_qp5qg(+d((3dj!m!w5v^qm#lfkjf*^73_8tf'
 DEBUG = False
 
 ROOT_URLCONF = 'coral.urls'
+ROOT_HOSTCONF = 'coral.hosts'
+DEFAULT_HOST = 'coral'
 
 # Modify this line as needed for your project to connect to elasticsearch with a password that you generate
 ES_TIMEOUT = int(os.getenv("ES_TIMEOUT", "60"))
@@ -143,12 +253,39 @@ ELASTICSEARCH_HOSTS = [{"scheme": "http", "host": os.environ.get("ESHOST", "loca
 # a prefix to append to all elasticsearch indexes, note: must be lower case
 ELASTICSEARCH_PREFIX = 'coral'
 
-ELASTICSEARCH_CUSTOM_INDEXES = []
-# [{
-#     'module': 'coral.search_indexes.sample_index.SampleIndex',
-#     'name': 'my_new_custom_index', <-- follow ES index naming rules
-#     'should_update_asynchronously': False  <-- denotes if asynchronously updating the index would affect custom functionality within the project.
-# }]
+INDEX_BATCH_SIZE = 2000 
+
+REFERENCES_INDEX_NAME = "references"
+ELASTICSEARCH_CUSTOM_INDEXES = [
+    {
+        "module": "arches_controlled_lists.search_indexes.reference_index.ReferenceIndex",
+        "name": REFERENCES_INDEX_NAME,
+        "should_update_asynchronously": True,
+    },
+]
+TERM_SEARCH_TYPES = [
+    {
+        "type": "term",
+        "label": _("Term Matches"),
+        "key": "terms",
+        "module": "arches.app.search.search_term.TermSearch",
+    },
+    {
+        "type": "concept",
+        "label": _("Concepts"),
+        "key": "concepts",
+        "module": "arches.app.search.concept_search.ConceptSearch",
+    },
+    {
+        "type": "reference",
+        "label": _("References"),
+        "key": REFERENCES_INDEX_NAME,
+        "module": "arches_controlled_lists.search_indexes.reference_index.ReferenceIndex",
+    },
+]
+ES_MAPPING_MODIFIER_CLASSES = [
+    "arches_controlled_lists.search.references_es_mapping_modifier.ReferencesEsMappingModifier"
+]
 
 KIBANA_URL = "http://localhost:5601/"
 KIBANA_CONFIG_BASEPATH = "kibana"  # must match Kibana config.yml setting (server.basePath) but without the leading slash,
@@ -170,7 +307,9 @@ DATABASES = {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         "HOST": "localhost",
         "NAME": "arches2",
-        "OPTIONS": {},
+        "OPTIONS": {
+            "options": "-c cursor_tuple_fraction=1",
+        },
         "PASSWORD": "postgres",
         "PORT": "5432",
         "POSTGIS_TEMPLATE": "template_postgis",
@@ -187,25 +326,36 @@ DATABASES = {
 
 SEARCH_THUMBNAILS = False
 
+SAVED_SEARCHES = []
+
 INSTALLED_APPS = (
     "csp",
     "webpack_loader",
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "django.contrib.postgres",
+    "django_hosts",
+    "arches_controlled_lists",
+    "arches_querysets",
+    "arches_vue_components",
+    "arches_modular_reports",
+    "arches_search",
+    "arches_json_importer",
     "arches",
     "arches.app.models",
     "arches.management",
     "guardian",
-    "captcha",
+    "django_recaptcha",
     "revproxy",
     "corsheaders",
     "oauth2_provider",
     "django_celery_results",
+    "django_migrate_sql",
+    "pgtrigger",
     "dauthz.apps.DauthzConfig",
     "django_otp",
     "django_otp.plugins.otp_static",
@@ -213,14 +363,24 @@ INSTALLED_APPS = (
     "two_factor",
     # "silk",
     "coral",
-    "arches_orm.arches_django.apps.ArchesORMConfig",
+    "querysets_shim.apps.QuerysetsShimConfig",
 )
+
+# Placing this last ensures any templates provided by Arches Applications
+# take precedence over core arches templates in arches/app/templates.
+INSTALLED_APPS += (
+    "arches.app",
+    "django.contrib.admin",
+)
+
 if DEBUG:
     INSTALLED_APPS = (*INSTALLED_APPS, "debug_toolbar",)
 
-ARCHES_APPLICATIONS = ()
+ARCHES_APPLICATIONS = ("arches_modular_reports", "arches_search", "arches_json_importer",)
 
 MIDDLEWARE = [
+    "django_hosts.middleware.HostsRequestMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "csp.middleware.CSPMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -235,10 +395,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "arches.app.utils.middleware.SetAnonymousUser",
+    "coral.middleware.GateCookieMiddleware",
     "django_otp.middleware.OTPMiddleware",
     # "coral.middleware.TwoFactorAuthMiddleware",  # DISABLED - 2FA now integrated into LoginView
     # "silk.middleware.SilkyMiddleware",
-    "arches_orm.arches_django.middleware.ArchesORMContextMiddleware",
+    "querysets_shim.middleware.QuerysetsShimContextMiddleware",
+    "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -252,12 +414,28 @@ CONTENT_SECURITY_POLICY = {
         "img-src": [SELF, "blob:", "data:", "mo.ev.openindustry.in"],
         "font-src": [SELF, "blob:", "cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com"],
         "style-src": [SELF, "'unsafe-inline'", "cdnjs.cloudflare.com", "fonts.googleapis.com", "api.mapbox.com"],
-        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com"],
+        "connect-src": [SELF, "cdnjs.cloudflare.com", "api.mapbox.com", "events.mapbox.com", "mo.ev.openindustry.in", "storage.googleapis.com", "tiles.openfreemap.org"],
         "worker-src": [SELF, "blob:"],
     },
 }
 
 X_FRAME_OPTIONS = 'DENY'
+
+MAPBOX_API_KEY = os.environ.get("MAPBOX_API_KEY", MAPBOX_API_KEY)
+
+BASEMAPS = [
+    {
+        "name": "bright",
+        "title": "Light",
+        "url": os.environ.get(
+            "BASEMAP_STYLE_URL",
+            "https://tiles.openfreemap.org/styles/bright",
+        ),
+        "addtomap": True,
+    }
+]
+
+USE_LOCAL_STORAGE = os.environ.get("USE_LOCAL_STORAGE", "False").lower() == "true"
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -278,7 +456,14 @@ AWS_SECRET_ACCESS_KEY=os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 AWS_ACCESS_KEY_ID=os.environ.get("AWS_ACCESS_KEY_ID", None)
 
 if AWS_STORAGE_BUCKET_NAME and AWS_S3_ENDPOINT_URL and AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID:
+    from botocore.config import Config as BotocoreConfig
+
     INSTALLED_APPS = (*INSTALLED_APPS, "storages",)
+    # botocore >=1.36 signs a CRC32 trailer that our MinIO rejects with XAmzContentSHA256Mismatch
+    AWS_S3_CLIENT_CONFIG = BotocoreConfig(
+        request_checksum_calculation="when_required",
+        response_checksum_validation="when_required",
+    )
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
@@ -290,18 +475,14 @@ if AWS_STORAGE_BUCKET_NAME and AWS_S3_ENDPOINT_URL and AWS_SECRET_ACCESS_KEY and
     }
 
 STATICFILES_DIRS = build_staticfiles_dirs(
-    root_dir=ROOT_DIR,
     app_root=APP_ROOT,
-    arches_applications=ARCHES_APPLICATIONS,
 )
 
 SERVE_STATIC = os.getenv("SERVE_STATIC", "True") == "True"
 
 TEMPLATES = build_templates_config(
-    root_dir=ROOT_DIR,
     debug=DEBUG,
     app_root=APP_ROOT,
-    arches_applications=ARCHES_APPLICATIONS,
 )
 
 ALLOWED_HOSTS = []
@@ -341,10 +522,14 @@ ALLOWED_SIGNUP_GROUPS = [
 ]
 
 USE_CASBIN = os.getenv("USE_CASBIN", "true").lower() == "true"
+
+CORAL_PERMISSIONS_IGNORE_SETS = os.getenv("CORAL_PERMISSIONS_IGNORE_SETS", "true").lower() == "true"
+
 if USE_CASBIN:
     AUTHENTICATION_BACKENDS = (
         *AUTHENTICATION_BACKENDS,
-        "dauthz.backends.CasbinBackend",
+        # Delegates has_perm to the framework's backend (CoralCasbinBackend), which answers plugin checks.
+        "arches.app.utils.permission_backend.PermissionBackend",
     )
     PERMISSION_FRAMEWORK = "casbin.CasbinPermissionFramework"
     INSTALLED_APPS = (
@@ -387,7 +572,12 @@ LOGGING = {
             'handlers': ['file', 'console'],
             'level': 'WARNING',
             'propagate': True
-        }
+        },
+        'django.request': {
+            'handlers': ['file', 'console'],
+            'level': 'WARNING',
+            'propagate': True
+        },
     }
 }
 
@@ -399,16 +589,26 @@ RATE_LIMIT = "5/m"
 # Sets default max upload size to 15MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640
 
+GATEWAY_GATE_SECRET = os.environ.get("GATEWAY_GATE_SECRET", "")
+
 # Unique session cookie ensures that logins are treated separately for each app
 SESSION_COOKIE_NAME = 'coral'
 
-# Additional cookie security params 
+# Session expires after 8 hours instead of Django's 2-week default
+SESSION_COOKIE_AGE = 60 * 60 * 8  # 8 hours
+
+# Additional cookie security params
+# DJANGO_INSECURE_COOKIES=True disables Secure flag for local HTTP dev.
+# Browsers refuse to transmit Secure cookies over plain HTTP, which manifests as
+# "CSRF token from the 'X-Csrftoken' HTTP header has incorrect length" because the
+# JS reads a stale/empty csrftoken cookie.
+_INSECURE_COOKIES = os.getenv("DJANGO_INSECURE_COOKIES", "False").lower() in ("true", "1")
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = "Strict"
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = not _INSECURE_COOKIES
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Strict"
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = not _INSECURE_COOKIES
 
 LOGIN_URL = 'auth'
 LOGIN_REDIRECT_URL = 'two_factor:profile'
@@ -435,6 +635,18 @@ CACHES = {
         'LOCATION': 'dashboard_version_cache',
     }
 }
+
+# -- arches_search patches ----------------------------
+
+CORAL_PRUNE_EMPTY_REPORT_SECTIONS = True
+
+CORAL_INDEX_DESCRIPTORS = True
+
+CORAL_DESCRIPTOR_RELEVANCE_SORT = os.environ.get("CORAL_DESCRIPTOR_RELEVANCE_SORT", "True").lower() != "false"
+
+CORAL_FAST_RESOURCE_TYPE_COUNTS = os.environ.get("CORAL_FAST_RESOURCE_TYPE_COUNTS", "True").lower() != "false"
+
+# -- arches_search patches end -------------------------
 
 # Hide nodes and cards in a report that have no data
 HIDE_EMPTY_NODES_IN_REPORT = True
@@ -471,7 +683,7 @@ ENABLE_CAPTCHA = False
 NOCAPTCHA = True
 # RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
 if DEBUG is True:
-    SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
+    SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
 
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", 'django.core.mail.backends.console.EmailBackend')
@@ -508,7 +720,7 @@ CELERY_BEAT_SCHEDULE = {
 # This might be necessary if the worker pool is regulary fully active, with no idle workers, or if
 # you need to run the celery task using solo pool (e.g. on Windows). You may need to provide another
 # way of monitoring celery so you can detect the background task not being available.
-CELERY_CHECK_ONLY_INSPECT_BROKER = False
+CELERY_CHECK_ONLY_INSPECT_BROKER = True
 
 CANTALOUPE_DIR = os.path.join(ROOT_DIR, UPLOADED_FILES_DIR)
 CANTALOUPE_HTTP_ENDPOINT = "http://localhost:8182/"

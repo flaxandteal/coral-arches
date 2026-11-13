@@ -1,0 +1,161 @@
+{
+  "graph_slug": "arches_system_settings",
+  "graph_name": "Arches System Settings",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "app_name",
+      "label": "APP_NAME",
+      "sortorder": 0,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "color_ramp",
+      "label": "COLOR_RAMP",
+      "sortorder": 1,
+      "datatype": "domain-value",
+      "support": "unsupported"
+    },
+    {
+      "node_alias": "default_bounds",
+      "label": "DEFAULT_BOUNDS",
+      "sortorder": 2,
+      "datatype": "geojson-feature-collection",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "default_map_zoom",
+      "label": "DEFAULT_MAP_ZOOM",
+      "sortorder": 3,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "etl_username",
+      "label": "ETL_USERNAME",
+      "sortorder": 4,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "google_analytics_tracking_id",
+      "label": "GOOGLE_ANALYTICS_TRACKING_ID",
+      "sortorder": 5,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "hex_bin_precision",
+      "label": "HEX_BIN_PRECISION",
+      "sortorder": 6,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "hex_bin_size",
+      "label": "HEX_BIN_SIZE",
+      "sortorder": 7,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "image",
+      "label": "IMAGE",
+      "sortorder": 8,
+      "datatype": "file-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "mapbox_api_key",
+      "label": "MAPBOX_API_KEY",
+      "sortorder": 9,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "mapbox_glyphs",
+      "label": "MAPBOX_GLYPHS",
+      "sortorder": 10,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "mapbox_sprites",
+      "label": "MAPBOX_SPRITES",
+      "sortorder": 11,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "map_max_zoom",
+      "label": "MAP_MAX_ZOOM",
+      "sortorder": 12,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "map_min_zoom",
+      "label": "MAP_MIN_ZOOM",
+      "sortorder": 13,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "search_description",
+      "label": "SEARCH_DESCRIPTION",
+      "sortorder": 14,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "search_dropdown_length",
+      "label": "SEARCH_DROPDOWN_LENGTH",
+      "sortorder": 15,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "search_export_limit",
+      "label": "SEARCH_EXPORT_LIMIT",
+      "sortorder": 16,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "search_items_per_page",
+      "label": "SEARCH_ITEMS_PER_PAGE",
+      "sortorder": 17,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "search_name",
+      "label": "SEARCH_NAME",
+      "sortorder": 18,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "search_url",
+      "label": "SEARCH_URL",
+      "sortorder": 19,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "sparql_endpoint_provider",
+      "label": "SPARQL_ENDPOINT_PROVIDER",
+      "sortorder": 20,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "time_wheel_configuration",
+      "label": "TIME_WHEEL_CONFIGURATION",
+      "sortorder": 21,
+      "datatype": "string",
+      "support": "backend-only"
+    }
+  ]
+}

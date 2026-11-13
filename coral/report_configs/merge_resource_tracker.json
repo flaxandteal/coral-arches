@@ -1,0 +1,92 @@
+{
+  "graph_slug": "merge_resource_tracker",
+  "graph_name": "Merge Resource Tracker",
+  "configs": {
+    "search": {
+      "name": "Merge Resource Tracker",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Merge Resource Tracker",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Resources",
+            "nodegroup_alias": "associated_resources",
+            "node_aliases": [
+              "associated_resources"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Actors",
+            "nodegroup_alias": "associated_actors",
+            "node_aliases": [
+              "actor"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Base Resource Data",
+            "nodegroup_alias": "base_resource_data",
+            "node_aliases": [
+              "base_resource_data"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Descriptions",
+            "nodegroup_alias": "descriptions",
+            "node_aliases": [
+              "description"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Merged Resource Data",
+            "nodegroup_alias": "merged_resource_data",
+            "node_aliases": [
+              "merged_resource_data"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Timespan (date)",
+            "nodegroup_alias": "date_of_submission",
+            "node_aliases": [
+              "date_of_submission_value"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

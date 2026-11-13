@@ -1,12 +1,11 @@
-define([
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/report',
-    'templates/views/components/reports/scenes/keyvalue.htm',
-    'bindings/datatable',
-], function(_, ko, arches, reportUtils, keyvalueReportTemplate) {
-    return ko.components.register('views/components/reports/scenes/keyvalue', {
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import reportUtils from 'utils/report';
+import keyvalueReportTemplate from 'templates/views/components/reports/scenes/keyvalue.htm';
+import datatable from 'bindings/datatable';
+
+export default ko.components.register('views/components/reports/scenes/keyvalue', {
         // IMPORTANT:  this scene *requires* you to compile your own data.  Aboutness is too disparate across all models.
         viewModel: function(params) {
             var self = this;
@@ -24,4 +23,3 @@ define([
         },
         template: keyvalueReportTemplate
     });
-});

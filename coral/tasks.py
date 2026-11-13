@@ -10,22 +10,22 @@ from coral.utils.remap_resources import RemapResources
 from arches.app.models.tile import Tile
 from arches.app.models.resource import Resource
 from arches.app.models.graph import Graph
-from django.db import transaction
+from django.db import connection, transaction
+from django.urls import reverse
 from django.core.exceptions import ValidationError
 from coral.utils.casbin import SetApplicator
+from coral.utils.reference_values import reference_value
 from tempfile import NamedTemporaryFile
 
 from arches.app.models.system_settings import settings
 from arches.app.utils.arches_crypto import AESCipher
-from arches.management.commands.packages import Command as PackageCommand
-
-from coral.permissions.casbin import CasbinPermissionFramework
 
 logging.basicConfig()
 
 
 @shared_task
 def recalculate_permissions_table():
+    from coral.permissions.casbin import CasbinPermissionFramework
     framework = CasbinPermissionFramework()
     enforcer = framework._enforcer
 
@@ -53,17 +53,20 @@ def merge_resources_task(
         merge_tracker_resource_id,
         overwrite_multiple_tiles,
     )
-    deleted_tile = Tile.objects.filter(
+    deleted_tiles = Tile.objects.filter(
                 resourceinstance_id=merge_resource_id,
                 nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2",
-            ).first()
-    if not deleted_tile:
+            )
+    if deleted_tiles.exists():
+        for tile in deleted_tiles:
+            tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
+            tile.save()
+    else:
         deleted_tile = Tile.get_blank_tile_from_nodegroup_id(
                 nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2", resourceid=merge_resource_id
             )
-
-    deleted_tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
-    deleted_tile.save()
+        deleted_tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
+        deleted_tile.save()
 
 @shared_task
 def remap_monument_to_revision(user_id, target_resource_id):
@@ -121,12 +124,15 @@ def remap_monument_to_revision(user_id, target_resource_id):
         soft_delete_tile.save(context={"escape_function": True})
 
             
+        revision_name = f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}"
+        workflow_path = reverse("plugins", kwargs={"slug": "heritage-asset-designation-workflow"})
         notification = models.Notification(
-            message="The Monument remap process has completed you can now begin making isolated changes to this resource.",
+            message=f"The Monument remap process has completed for {revision_name}. You can now begin making isolated changes to this resource.",
             context={
                 "resource_instance_id": result['destinationResourceId'],
-                "resource_id": f"REV: {display_name_tile.data.get(REVISION_DISPLAY_NAME_NODE_ID).get('en').get('value')}",
-                "response_slug": "heritage-asset-designation-workflow"
+                "resource_id": revision_name,
+                "response_slug": "heritage-asset-designation-workflow",
+                "link": f"{workflow_path}?resource-id={result['destinationResourceId']}",
             },
         )
         notification.save()
@@ -157,7 +163,7 @@ def remap_and_merge_revision_task(user_id, target_resource_id):
         )
         result = rr.remap_resources(user)
 
-        DISPLAY_NAME_NODEGROUP_ID = "ce85b994-3f5f-11ef-b9b0-0242ac140006"
+        DISPLAY_NAME_NODEGROUP_ID = "0efb4349-fded-583a-a8af-08d6c0781e40"
         DISPLAY_NAME_NODE_ID = DISPLAY_NAME_NODEGROUP_ID
 
         display_name_tile = Tile.objects.filter(
@@ -297,9 +303,9 @@ def setup_merge_resource_tracker(user):
     TRACKER_DESCRIPTION_NODEGROUP = "5dff7478-ccdf-11ee-af2a-0242ac180006"
     TRACKER_DESCRIPTION_NODE = "5dff7e8c-ccdf-11ee-af2a-0242ac180006"
     TRACKER_DESCRIPTION_TYPE_NODE = "5dff80e4-ccdf-11ee-af2a-0242ac180006"
-    TRACKER_DESCRIPTION_TYPE_DEFAULT = "daa4cddc-8636-4842-b836-eb2e10aabe18"
+    TRACKER_DESCRIPTION_TYPE_DEFAULT = "f1cbae8f-0090-47dc-8252-ee533a2deb29"
     TRACKER_DESCRIPTION_METATYPE_NODE = "5dff8332-ccdf-11ee-af2a-0242ac180006"
-    TRACKER_DESCRIPTION_METATYPE_DEFAULT = "6fbe3775-e51d-4f90-af53-5695dd204c9a"
+    TRACKER_DESCRIPTION_METATYPE_DEFAULT = "58283be2-b1d1-4e00-83f2-af87ca292738"
     merge_tracker_sys_ref = Tile(
         resourceinstance=merge_tracker_resource,
         data={
@@ -309,8 +315,12 @@ def setup_merge_resource_tracker(user):
                     "direction": "ltr",
                 }
             },
-            TRACKER_DESCRIPTION_TYPE_NODE: TRACKER_DESCRIPTION_TYPE_DEFAULT,
-            TRACKER_DESCRIPTION_METATYPE_NODE: TRACKER_DESCRIPTION_METATYPE_DEFAULT,
+            TRACKER_DESCRIPTION_TYPE_NODE: reference_value(
+                TRACKER_DESCRIPTION_TYPE_DEFAULT
+            ),
+            TRACKER_DESCRIPTION_METATYPE_NODE: reference_value(
+                TRACKER_DESCRIPTION_METATYPE_DEFAULT
+            ),
         },
         nodegroup=get_nodegroup(TRACKER_DESCRIPTION_NODEGROUP),
         sortorder=0,
@@ -352,6 +362,7 @@ def reset_database(lock_code_enc):
                 return
 
     if in_window:
+        from arches.management.commands.packages import Command as PackageCommand
         command = PackageCommand()
         with NamedTemporaryFile() as tf:
             # This is a workaround for the fact that we cannot pass a flag to
@@ -375,3 +386,41 @@ def reset_database(lock_code_enc):
             settings.CORAL_UPGRADE_WINDOW_FILE
         )
         return
+
+
+@shared_task(autoretry_for=(Exception,), retry_backoff=True, max_retries=3)
+def index_resource_instance(resource_id):
+    """Recompute a whole resource's descriptors and re-index it, off the request path.
+
+    Dispatched by the Tile.index patch in coral.utils.deferred_tile_index, once
+    per tile save, so a step saving four tiles queues four of these. Both halves
+    rebuild from current database state, so only one of them has any work to do —
+    the rest take the advisory lock's no and return.
+
+    The lock is what makes that safe rather than merely cheaper: two of these
+    running at once would each read the resource and then overwrite the other's
+    document, and the one that wrote last is not necessarily the one that read
+    last, which loses a tile from the index with nothing to signal it.
+    """
+
+    # Advisory locks take a bigint, so fold the resource id down to one.
+    lock_id = int.from_bytes(uuid.UUID(resource_id).bytes[:8], "big", signed=True)
+
+    # The xact form releases on commit or rollback, so a task that dies holding
+    # it cannot wedge the resource.
+    with transaction.atomic():
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT pg_try_advisory_xact_lock(%s)", [lock_id])
+            if not cursor.fetchone()[0]:
+                return
+
+        try:
+            resource = Resource.objects.get(pk=resource_id)
+        except Resource.DoesNotExist:
+            # Deleted between the tile save and this task running; the delete
+            # path removes its documents, so there is nothing to index.
+            return
+
+        # Runs after the burst, so parallel tile saves cannot race the name back.
+        resource.save_descriptors()
+        resource.index()

@@ -1,0 +1,89 @@
+{
+  "graph_slug": "state_care_condition_survey",
+  "graph_name": "State Care Condition Survey",
+  "configs": {
+    "search": {
+      "name": "State Care Condition Survey",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "State Care Condition Survey",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Assessments",
+            "nodegroup_alias": "assessments",
+            "node_aliases": [
+              "assessment_type",
+              "condition_score",
+              "priority",
+              "works_required"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Digital File(s)",
+            "nodegroup_alias": "digital_file_s_",
+            "node_aliases": [
+              "digital_file_s_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Heritage Asset",
+            "nodegroup_alias": "heritage_asset",
+            "node_aliases": [
+              "heritage_asset"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Notes",
+            "nodegroup_alias": "notes",
+            "node_aliases": [
+              "notes"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Sign Off",
+            "nodegroup_alias": "sign_off",
+            "node_aliases": [
+              "completed_by",
+              "completed_by_role_type",
+              "completed_on",
+              "signed_off_by",
+              "signed_off_date"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

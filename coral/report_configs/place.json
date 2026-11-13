@@ -1,0 +1,135 @@
+{
+  "graph_slug": "place",
+  "graph_name": "Place",
+  "configs": {
+    "search": {
+      "name": "Place",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Place",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Placenames",
+            "nodegroup_alias": "names",
+            "node_aliases": [
+              "placename",
+              "placename_currency",
+              "placename_type",
+              "placename_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Descriptions",
+            "nodegroup_alias": "descriptions",
+            "node_aliases": [
+              "description",
+              "description_language",
+              "description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Place Type",
+            "nodegroup_alias": "place_type",
+            "node_aliases": [
+              "place_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Mapped Location",
+            "nodegroup_alias": "geometry",
+            "node_aliases": [
+              "feature_shape",
+              "geospatial_coordinates"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Localities/Administrative Area Types",
+            "nodegroup_alias": "localities_administrative_area_types",
+            "node_aliases": [
+              "area_currency_type",
+              "area_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Addresses",
+            "nodegroup_alias": "addresses",
+            "node_aliases": [
+              "address_currency",
+              "address_status",
+              "building_name_value",
+              "building_number_sub_street_value",
+              "building_number_value",
+              "county_value",
+              "full_address",
+              "locality_value",
+              "postcode_value",
+              "street_value",
+              "sub_street_value",
+              "town_or_city_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

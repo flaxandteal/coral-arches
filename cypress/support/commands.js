@@ -16,11 +16,378 @@
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 
+import { recordFailure } from './e2e';
 
 Cypress.Commands.add("login", () => {
-    cy.visit('/auth/?next=/index.htm');
+    cy.session('admin', () => {
+        cy.visit('/auth/');
 
-    cy.get('.input-group > .floating-label-group > input[name="username"].form-control').type(`admin{enter}`);
-    cy.get('.input-group > .floating-label-group > input[name="password"].form-control').type(`admin{enter}`);
+        cy.get('#username').type('admin');
+        cy.get('#password').type('admin{enter}');
+
+        cy.get('input[name="otp_token"]').should('be.visible').then(($input) => {
+            cy.task('generateOtp').then((otp) => {
+                cy.wrap($input).type(`${otp}{enter}`);
+            });
+        });
+
+        // Land on an authenticated page before caching the session.
+        cy.location('pathname', { timeout: 20000 }).should('not.include', '/auth');
+    }, { cacheAcrossSpecs: true });
+});
+
+// Log in as the non-superuser seeded into a given coral Group, e.g.
+//   cy.loginAs('HB Planning Users')
+// `admin` is a superuser and short-circuits every permission check, so it is
+// useless for asserting that a workflow is hidden or a save is refused — use
+// this instead. The accounts come from `manage.py seed_test_permissions`, which
+// also writes the fixture read here; see cypress/seed/README.md.
+Cypress.Commands.add("loginAs", (groupName) => {
+    cy.fixture('permission_users').then((seed) => {
+        const username = seed.users[groupName];
+        if (!username) {
+            throw new Error(
+                `No E2E login is seeded for group "${groupName}". ` +
+                `Seeded groups: ${Object.keys(seed.users).join(', ')}`
+            );
+        }
+
+        // One device per user, so distinct users never trip each other's TOTP
+        // replay protection — but a single user logging in twice inside one
+        // 30s step does, hence the cached session.
+        cy.session(username, () => {
+            cy.visit('/auth/');
+
+            cy.get('#username').type(username);
+            cy.get('#password').type(`${seed.password}{enter}`);
+
+            cy.get('input[name="otp_token"]').should('be.visible').then(($input) => {
+                cy.task('generateOtp').then((otp) => {
+                    cy.wrap($input).type(`${otp}{enter}`);
+                });
+            });
+
+            cy.location('pathname', { timeout: 20000 }).should('not.include', '/auth');
+        }, { cacheAcrossSpecs: true });
+    });
+});
+
+// .widget-wrapper (not .card_component) is the selector here: .card_component
+// only gets added by default.htm's componentCssClasses binding, which
+// default-card-util and file-template cards (e.g. Records NI, HMC Reference,
+// Letters) never apply. .widget-wrapper comes from the widget's own template
+// and is present no matter which card component renders it.
+// Reference-select results load async; waiting on the filtered selector retries until they arrive.
+const REAL_OPTIONS = '.select2-results__option:not(.loading-results):not(.select2-results__option--load-more):not(.select2-results__message)';
+
+Cypress.Commands.add("pickCardOption", (cardClass, indexOrText = 0) => {
+    cy.get(`.widget-wrapper.${cardClass}`).scrollIntoView();
+    cy.get(`.widget-wrapper.${cardClass}`).find('.select2-selection').first().click();
+    cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+    const options = () => cy.get(REAL_OPTIONS, { timeout: 15000 });
+    // Pass text when the first option will not do -- an assignee, say, has to be
+    // someone the Update Response Assignee function accepts. Resource pickers page
+    // their results, so search first: the wanted row is usually not rendered yet,
+    // and "Searching..."/"No results" are themselves .select2-results__option li's.
+    if (typeof indexOrText === 'string') {
+        cy.select2Search(indexOrText);
+        options().contains(indexOrText, { timeout: 15000 }).click();
+    } else {
+        options().eq(indexOrText).click();
+    }
+});
+
+Cypress.Commands.add("pickOptionByLabelPrefix", (labelPrefix, indexOrText = 0) => {
+    const sel = `[aria-label^="${labelPrefix}"]`;
+
+    cy.get(sel).first().scrollIntoView();
+    cy.get(sel).first().click({ force: true });
+    cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+    const options = () => cy.get(REAL_OPTIONS, { timeout: 15000 });
+    if (typeof indexOrText === 'string') {
+        options().contains(indexOrText, { timeout: 15000 }).click();
+    } else {
+        options().eq(indexOrText).click();
+    }
+});
+
+Cypress.Commands.add("pickDomainByLabel", (labelPrefix, optionText) => {
+    const sel = `.select2-selection[aria-label^="${labelPrefix}, "]`;
+    cy.get(sel).filter(':visible').first().scrollIntoView();
+    cy.get(sel).filter(':visible').first().click();
+    cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+    cy.get('.select2-results__option')
+        .not('.loading-results')
+        .not('.select2-results__option--load-more')
+        .not('.select2-results__message')
+        .contains(optionText)
+        .click();
+});
+
+Cypress.Commands.add("workflowNext", (options = {}) => {
+    const timeout = options.timeout || 60000;
+
+    const stepIndex = () =>
+        cy.get('.step-counter span', { timeout }).first({ timeout }).invoke('text')
+            .then((text) => parseInt(text.trim(), 10));
+
+    stepIndex().then((from) => {
+        // A save or load in progress covers the footer with the loading mask.
+        cy.get('.loading-mask:visible', { timeout }).should('not.exist');
+        cy.get('.tabbed-workflow-footer-button-container', { timeout })
+            .find('button:not([disabled]):not(.disabled)', { timeout })
+            .contains(/Save and Continue|Next Step/, { timeout })
+            .click();
+
+        cy.get('.step-counter span', { timeout })
+            .first({ timeout })
+            .should(($el) => {
+                expect(
+                    parseInt($el.text().trim(), 10),
+                    'workflow advanced past step ' + from
+                ).to.be.greaterThan(from);
+            });
+    });
+});
+
+// Workflow steps nest two scroll containers and a focused select2 scrolls
+// them back; Cypress's own scrolling leaves lower widgets under the footer.
+Cypress.Commands.add("scrollToWidget", (cardClass) => {
+    cy.document().then((doc) => doc.activeElement?.blur());
+    cy.get(`.widget-wrapper.${cardClass}`).first().scrollIntoCentre();
+});
+
+// Retried until it holds: editors further up keep growing the step as they load.
+Cypress.Commands.add("scrollIntoCentre", { prevSubject: 'element' }, ($el) => {
+    cy.wrap($el).should(($target) => {
+        const el = $target[0];
+        el.scrollIntoView({ block: 'center' });
+        const { top, bottom } = el.getBoundingClientRect();
+        const height = el.ownerDocument.defaultView.innerHeight;
+        expect(top, 'widget scrolled clear of the header').to.be.greaterThan(120);
+        expect(bottom, 'widget scrolled clear of the footer').to.be.lessThan(height - 120);
+    });
+});
+
+Cypress.Commands.add("fillDate", (cardClass, date = '28-07-2026') => {
+    const input = () => cy.get(`.widget-wrapper.${cardClass} input.form-control`).first();
+    cy.scrollToWidget(cardClass);
+    input().scrollIntoCentre().type(`${date}{enter}`, { force: true });
+    input().should('not.have.value', '');
+});
+
+Cypress.Commands.add("typeInCard", (cardClass, text) => {
+    const input = () =>
+        cy.get(`.widget-wrapper.${cardClass} input.form-control`).filter(':visible').first();
+    input().scrollIntoView();
+    input().clear({ force: true });
+    input().type(text, { force: true });
+    input().should('have.value', text);
+});
+
+Cypress.Commands.add("setBooleanTrue", (cardClass) => {
+    const card = `.widget-wrapper.${cardClass}`;
+    cy.get(`${card} label[role="radio"]`).filter(':visible').first().scrollIntoView();
+    cy.get(`${card} label[role="radio"]`).filter(':visible').first().click({ force: true });
+    cy.get(`${card} label[aria-checked="true"]`).should('have.length', 1);
+});
+
+Cypress.Commands.add("openRelationship", (ariaLabel) => {
+    const sel = `.select2-selection[aria-label^="${ariaLabel}, "]`;
+    const target = () => cy.get(sel).first().scrollIntoCentre();
+
+    cy.document().then((doc) => doc.activeElement?.blur());
+    cy.wait(300);
+    const openOnce = (attempt) => {
+        cy.get('body').then(($b) => {
+            if ($b.find('.select2-dropdown').length) return; // already open
+            target().click({ scrollBehavior: false });
+            cy.wait(600);
+            cy.get('body').then(($b2) => {
+                if (!$b2.find('.select2-dropdown').length && attempt < 4) {
+                    openOnce(attempt + 1);
+                }
+            });
+        });
+    };
+    openOnce(0);
+    cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+
+    cy.get(
+        '.select2-results__option:not(.loading-results)' +
+        ':not(.select2-results__option--load-more)',
+        { timeout: 30000 }
+    ).should('have.length.greaterThan', 0);
+    // select2 re-renders the list once the search request returns.
+    cy.wait(800);
+});
+
+// Pick the first real option from an open relationship dropdown.
+Cypress.Commands.add("pickRelationshipFirst", (ariaLabel) => {
+    cy.openRelationship(ariaLabel);
+    cy.get('.select2-results__option')
+        .not('.loading-results')
+        .not('.select2-results__option--load-more')
+        .first()
+        .click();
+});
+
+// Already-picked options are greyed out, so a second pick skips them.
+Cypress.Commands.add("pickRelationshipSecond", (ariaLabel) => {
+    cy.openRelationship(ariaLabel);
+    cy.get('.select2-results__option')
+        .not('.loading-results')
+        .not('.select2-results__option--load-more')
+        .not(':contains("Create a new")')
+        .should('have.length.greaterThan', 1)
+        .then(($options) => {
+            // Where the first pick is greyed out, take the first one still enabled; otherwise the second.
+            const enabled = $options.not('[aria-disabled="true"]');
+            cy.wrap(enabled.length < $options.length ? enabled.first() : $options.eq(1)).click();
+        });
+});
+
+Cypress.Commands.add("pickRelationshipByName", (ariaLabel, name, maxScrolls = 15) => {
+    cy.openRelationship(ariaLabel);
+    const tryScroll = (n) => {
+        cy.get('.select2-results__options').then(($ul) => {
+            const match = $ul.find('.select2-results__option').toArray()
+                .find((li) => li.textContent.trim() === name);
+            if (match) {
+                cy.wrap(match).click();
+                return;
+            }
+            if (n <= 0) throw new Error(`relationship option not found after scrolling: ${name}`);
+            cy.wrap($ul).scrollTo('bottom', { ensureScrollable: false });
+            cy.wait(1000);
+            tryScroll(n - 1);
+        });
+    };
+    tryScroll(maxScrolls);
+});
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from failing the test temporary solution but we could log here and debug the uncaught issues
+    recordFailure({ uncaught: err.message })
+    return false
+});
+
+Cypress.Commands.add("type_ckeditor", (element, content) => {
+    // A CKEDITOR instance is registered as soon as creation starts, well
+    // before its iframe document finishes loading. Calling setData() on a
+    // not-yet-ready instance gets silently discarded once CKEditor finishes
+    // initializing and loads the field's original (empty) value, leaving
+    // the editor visibly empty even though this command reported success.
+    // So wait for a ready, on-screen instance before touching it, not just
+    // for any instance to be registered.
+    const findVisibleReady = (win) => {
+        const names = Object.keys(win.CKEDITOR.instances);
+        return names.find((n) => {
+            const inst = win.CKEDITOR.instances[n];
+            const el = inst && inst.container && inst.container.$;
+            return inst.status === 'ready' && el && el.offsetParent !== null;
+        });
+    };
+    cy.window().should((win) => {
+        expect(win.CKEDITOR, 'CKEDITOR global to exist').to.exist;
+        const preferred = win.CKEDITOR.instances[element];
+        const ready = (preferred && preferred.status === 'ready') || findVisibleReady(win);
+        expect(ready, 'a visible, ready CKEDITOR instance to exist').to.be.ok;
+    }).then((win) => {
+        const preferred = win.CKEDITOR.instances[element];
+        const name = (preferred && preferred.status === 'ready') ? element : findVisibleReady(win);
+        const inst = win.CKEDITOR.instances[name];
+        inst.setData(content);
+        inst.updateElement();
+        inst.fire('change');
+    });
+});
   
+Cypress.Commands.add("typeRichText", (cardClass, content) => {
+    const readyInstance = (win) => Object.keys(win.CKEDITOR?.instances ?? {}).find((n) => {
+        const inst = win.CKEDITOR.instances[n];
+        const el = inst?.container?.$;
+        return inst.status === 'ready' && el && el.closest(`.widget-wrapper.${cardClass}`);
+    });
+
+    cy.get(`.widget-wrapper.${cardClass}`).should('exist');
+    cy.window().should((win) => {
+        expect(win.CKEDITOR, 'CKEDITOR global to exist').to.exist;
+        expect(
+            readyInstance(win),
+            `a ready CKEDITOR instance inside .widget-wrapper.${cardClass}`
+        ).to.exist;
+    }).then((win) => {
+        const inst = win.CKEDITOR.instances[readyInstance(win)];
+        inst.setData(content);
+        inst.updateElement();
+        inst.fire('change');
+    });
+});
+
+Cypress.Commands.add("richTextValue", (cardClass) => {
+    const instance = (win) => Object.values(win.CKEDITOR?.instances ?? {}).find((inst) =>
+        inst.status === 'ready' && inst.container?.$?.closest(`.widget-wrapper.${cardClass}`));
+    cy.window().should((win) => expect(instance(win), `ready editor in ${cardClass}`).to.exist)
+        .then((win) => instance(win).getData());
+});
+
+// Intercepts POST /tile so waitForTileSaves() can wait on it instead of a fixed cy.wait(ms).
+Cypress.Commands.add("watchTileSaves", () => {
+    cy.intercept('POST', '/tile').as('tileSave');
+});
+
+Cypress.Commands.add("waitForTileSaves", (count = 1) => {
+    for (let i = 0; i < count; i++) {
+        cy.wait('@tileSave');
+    }
+});
+
+Cypress.Commands.add("select2Search", (term) => {
+    cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
+    // A multi-value select2 puts its search box inline in the selection, not in the dropdown.
+    cy.get('body').then(($body) => {
+        const $field = $body.find('.select2-container--open .select2-search__field:visible');
+        if (!$field.length) {
+            cy.log(`select2Search: search box hidden (<5 results), picking "${term}" from the list`);
+            return;
+        }
+        // In a multi-value select2, backspace in an empty search box deletes the last chosen value.
+        if ($field.first().val()) {
+            cy.wrap($field.first()).clear();
+        }
+        cy.wrap($field.first()).type(term);
+    });
+
+    cy.get(
+        '.select2-results__option:not(.loading-results)' +
+        ':not(.select2-results__option--load-more)' +
+        ':not(.select2-results__message)',
+        { timeout: 20000 }
+    ).should('have.length.greaterThan', 0);
+});
+
+// Search a relationship dropdown for `term` and pick the option containing `optionText`.
+Cypress.Commands.add("pickRelationshipSearch", (ariaLabel, term, optionText = term) => {
+    cy.openRelationship(ariaLabel);
+    cy.select2Search(term);
+    cy.get(REAL_OPTIONS, { timeout: 15000 }).contains(optionText).click();
+});
+
+// Overwrite the date already in a date widget (fillDate only types).
+Cypress.Commands.add("replaceDate", (cardClass, date) => {
+    const input = () => cy.get(`.widget-wrapper.${cardClass} input.form-control`).first();
+    cy.scrollToWidget(cardClass);
+    input().clear({ force: true });
+    input().type(`${date}{enter}`, { force: true });
+    input().should('have.value', date);
+});
+
+// Pick a day of the current month in a maxDate:today datepicker; typed dates are reset to today.
+Cypress.Commands.add("pickCalendarDay", (cardClass, day) => {
+    cy.scrollToWidget(cardClass);
+    cy.get(`.widget-wrapper.${cardClass} input.form-control`).first().click({ force: true });
+    cy.get('.bootstrap-datetimepicker-widget td.day:visible:not(.old):not(.new):not(.disabled)', { timeout: 10000 })
+        .contains(new RegExp(`^${day}$`)).click();
+    cy.get(`.widget-wrapper.${cardClass} input.form-control`).first().should('not.have.value', '');
 });

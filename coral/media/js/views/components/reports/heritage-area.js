@@ -1,20 +1,19 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/heritage-area.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/assessments',
-    'views/components/reports/scenes/images',
-    'views/components/reports/scenes/people',
-    'views/components/reports/scenes/people',
-    'views/components/reports/scenes/resources',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils, heritageAreaReportTemplate) {
-    return ko.components.register('heritage-area-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import heritageAreaReportTemplate from 'templates/views/components/reports/heritage-area.htm';
+import name from 'views/components/reports/scenes/name';
+import assessments from 'views/components/reports/scenes/assessments';
+import images from 'views/components/reports/scenes/images';
+import people from 'views/components/reports/scenes/people';
+import people1 from 'views/components/reports/scenes/people';
+import resources from 'views/components/reports/scenes/resources';
+import json from 'views/components/reports/scenes/json';
+
+export default ko.components.register('heritage-area-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -143,4 +142,3 @@ define([
         },
         template: heritageAreaReportTemplate
     });
-});

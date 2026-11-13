@@ -1,53 +1,44 @@
-define([
-  'underscore',
-  'knockout',
-  'knockout-mapping',
-  'uuid',
-  'arches',
-  'viewmodels/card-component',
-  'viewmodels/alert',
-  'templates/views/components/workflows/fmw-workflow/get-selected-monument-details.htm'
-], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, AlertViewModel, template) {
+import ko from 'knockout';
+import arches from 'arches';
+import CardComponentViewModel from 'viewmodels/card-component';
+import { isScheduledMonument } from 'utils/reference-values';
+import template from 'templates/views/components/workflows/fmw-workflow/get-selected-monument-details.htm';
+
+  const HERITAGE_ASSET_REFS = [
+    ['smr_number', 'SMR Number'],
+    ['hb_number', 'HB Number'],
+    ['ihr_number', 'IHR Number'],
+    ['historic_parks_and_gardens', 'Historic Parks and Gardens Number']
+  ];
+
+  const REFERENCE = 'ha_reference';
+  const DEFAULT_FIELDS = [
+    [REFERENCE],
+    ['monument_name', 'Monument Name'],
+    ['designation_or_protection_type', 'Designation Type', ', '],
+    ['townland', 'Townland'],
+    ['b_file_reference_number', 'B File(s)', ',\n']
+  ];
+
   function viewModel(params) {
     CardComponentViewModel.apply(this, [params]);
-    this.SYSTEM_REFERENCE_NODEGROUP = '325a2f2f-efe4-11eb-9b0c-a87eeabdefba';
-    this.SYSTEM_REFERENCE_RESOURCE_ID_NODE = '325a430a-efe4-11eb-810b-a87eeabdefba';
-
-    this.HERRITAGE_ASSET_REFERENCES_NODEGROUP = 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
-    this.SMR_NUMBER_NODE = '158e1ed2-3aae-11ef-a2d0-0242ac120003';
-
-    this.DESIGNATIONS_NODEGROUP = '6af2a0cb-efc5-11eb-8436-a87eeabdefba';
-    this.DESIGNATIONS_TYPE_NODE = '6af2a0ce-efc5-11eb-88d1-a87eeabdefba';
-
-    this.MONUMENT_NAMES_NODEGROUP = '676d47f9-9c1c-11ea-9aa0-f875a44e0e11';
-    this.MONUMENT_NAMES_NODE = '676d47ff-9c1c-11ea-b07f-f875a44e0e11';
-
-    this.CM_REFERENCE_NODEGROUP = '3d415e98-d23b-11ee-9373-0242ac180006';
-    this.CM_REFERENCE_NODE = '3d419020-d23b-11ee-9373-0242ac180006';
-
-    this.ADDRESSES_NODEGROUP = '87d39b25-f44f-11eb-95e5-a87eeabdefba'
-    this.TOWNLAND_NODEGROUP = '919bcb94-345c-11ef-a5b7-0242ac120003';
-    this.TOWNLAND_NODE = 'd033683a-345c-11ef-a5b7-0242ac120003';
-
-    this.BFILE_NODEGROUP = "4e6c2d46-1f3f-11ef-ac74-0242ac150006";
-    this.BFILE_NODE = "72331a22-4ff1-11ef-a810-0242ac120009";
-
-    this.haRefStrings = {
-      '158e1ed2-3aae-11ef-a2d0-0242ac120003': 'SMR Number',
-      '250002fe-3aae-11ef-91fd-0242ac120003': 'HB Number',
-      '1de9abf0-3aae-11ef-91fd-0242ac120003': 'IHR Number',
-      '2c2d02fc-3aae-11ef-91fd-0242ac120003': 'Historic Parks and Gardens Number'
-    }
 
     this.labels = params.labels || [];
+
+    // [alias, label, join?]: no join renders one span per value; REFERENCE marks the ref row.
+    const fields = params.fields || DEFAULT_FIELDS;
+    const noData = params.noData || 'No data available';
+    const refFallbackLabel = params.refFallbackLabel || 'Heritage Asset Ref Number';
+    const showNodes = [
+      ...HERITAGE_ASSET_REFS.map(([alias]) => alias),
+      ...fields.map(([alias]) => alias).filter((alias) => alias !== REFERENCE)
+    ];
 
     this.selectedMonuments = ko.observable([]);
 
     this.cards = ko.observable({})
 
     this.dataNode = params.node;
-
-    const self = this;
 
     this.searchString = params.searchString;
 
@@ -65,144 +56,50 @@ define([
     this.tile.data[this.dataNode].subscribe((value) => {
       if (value && value.length) {
         const currentResources = value.map(t => ko.unwrap(t.resourceId))
-        currentResources.forEach(id => {
-          this.cards({...this.cards(), [id] : {
-            designationType : "",
-            monumentName : "",
-            cmNumber : "",
-            smrNumber : "",
-            bFile : "",
-            townlandValue : ""
-          }})
-          this.getMonumentDetails(id);
-        })
-        this.selectedMonuments(currentResources);
+        this.getMonumentDetails(currentResources);
       } else {
         this.selectedMonuments([])
       }
     }, this);
 
-    this.fetchTileData = async (resourceId) => {
-      const tilesResponse = await window.fetch(
-        arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId)
-      );
-      const data = await tilesResponse.json();
-      return data.tiles;
-    };
-
-    this.getMonumentDetails = async (resourceId) => {
-      const tiles = await this.fetchTileData(resourceId);
-      const designationType = ko.observable('None');
-      const monumentName = ko.observable('None');
-      const haRefNumber = ko.observable('None');
-      const haNumberLabel = ko.observable('Heritage Asset Ref Number');
-      const bFile = ko.observable('None');
-      const townlandValue = ko.observableArray(['None']);
-
-      const additionalPromises = []
-
-      for (const tile of tiles) {
-        if (tile.nodegroup === this.HERRITAGE_ASSET_REFERENCES_NODEGROUP) {
-          for (const [key, value] of Object.entries(tile.data)){
-            if (value){
-              haRefNumber(value.en.value);
-              haNumberLabel(this.haRefStrings[key]);
-            }
+    this.getMonumentDetails = async (resourceIds) => {
+      let response;
+      try {
+        response = await $.ajax({
+        type: 'POST',
+        url: arches.urls.orm || '/orm/resources',
+        dataType: 'json',
+        data: { resourceids: resourceIds, show_nodes: showNodes }
+        });
+      } catch (error) {
+        this.selectedMonuments([]);
+        return;
+      }
+      const scheduled = params.showScheduled
+        ? await Promise.all(resourceIds.map(isScheduledMonument))
+        : [];
+      const cards = {};
+      resourceIds.forEach((id, index) => {
+        const details = response[id] || {};
+        const rows = fields.map(([alias, label, join]) => {
+          if (alias === REFERENCE) {
+            const reference = HERITAGE_ASSET_REFS.find(([refAlias]) => details[refAlias]?.length);
+            return reference
+              ? { label: reference[1], values: [details[reference[0]][0]] }
+              : { label: refFallbackLabel, values: [noData] };
           }
+          const texts = (details[alias] || []).map((text) => text.trim());
+          if (!texts.length) return { label, values: [noData] };
+          return { label, values: join ? [texts.join(join)] : texts };
+        });
+        if (params.showScheduled) {
+          rows.push({ label: 'Scheduled (Yes/ No)', values: [scheduled[index] ? 'Yes' : 'No'] });
         }
-
-        if (tile.nodegroup === this.MONUMENT_NAMES_NODEGROUP) {
-          monumentName(tile.data[this.MONUMENT_NAMES_NODE].en.value);
-        }
-
-        if (tile.nodegroup === this.BFILE_NODEGROUP) {
-          let bfileIds = tile.data[this.BFILE_NODE].map(t => t.resourceId)
-          bFile('');
-          for (let id of bfileIds) {
-            additionalPromises.push($.ajax({
-              type: 'GET',
-              url: arches.urls.api_resource_report(id),
-              context: self,
-              success: async function (responseJSON, status, response) {
-                bFile(bFile() ? `${bFile()},\n${responseJSON.report_json["Display Name"]["Display Name Value"]}`: responseJSON.report_json["Display Name"]["Display Name Value"])
-              },
-              error: function (response, status, error) {
-                if (response.statusText !== 'abort') {
-                  this.viewModel.alert(
-                    new AlertViewModel(
-                      'ep-alert-red',
-                      arches.requestFailed.title,
-                      response.responseText
-                    )
-                  );
-                }
-              }
-          }))
-        }
-      }
-
-        if (tile.nodegroup === this.DESIGNATIONS_NODEGROUP) {
-          const typeId = tile.data[this.DESIGNATIONS_TYPE_NODE];
-          if(!typeId) continue;
-          additionalPromises.push($.ajax({
-            type: 'GET',
-            url: arches.urls.concept_value + `?valueid=${typeId}`,
-            context: self,
-            success: function (responseJSON, status, response) {
-              designationType(responseJSON.value);
-            },
-            error: function (response, status, error) {
-              if (response.statusText !== 'abort') {
-                const alert = new AlertViewModel(
-                  'ep-alert-red',
-                  arches.requestFailed.title,
-                  response.responseText
-                )
-                this.viewModel.alert( alert );
-              }
-              return
-            }
-          }))
-        }
-
-        if (tile.nodegroup === this.ADDRESSES_NODEGROUP) {
-          const typeId = tile.data[this.TOWNLAND_NODE];
-          if (!typeId) continue;
-          townlandValue.removeAll()
-          typeId.forEach(id => {
-            additionalPromises.push($.ajax({
-              type: 'GET',
-              url: arches.urls.concept_value + `?valueid=${id}`,
-              context: self,
-              success: function (responseJSON, status, response) {
-                townlandValue.push(responseJSON.value);
-              },
-              error: function (response, status, error) {
-                if (response.statusText !== 'abort') {
-                  const alert = new AlertViewModel(
-                    'ep-alert-red',
-                    arches.requestFailed.title,
-                    response.responseText
-                  )
-                  this.viewModel.alert( alert );
-                }
-                return
-              }
-            }))
-          })
-        }
-      }
-      await Promise.all(additionalPromises);
-        
-    this.cards({...this.cards(), [resourceId]: {
-              designationType : designationType(),
-              monumentName : monumentName(),
-              haNumberLabel: haNumberLabel(),
-              smrNumber : haRefNumber(),
-              bFile : bFile(),
-              townlandValue : townlandValue()
-            }})
-  }
+        cards[id] = rows;
+      });
+      this.cards(cards);
+      this.selectedMonuments(resourceIds);
+    }
 
   // This will force a refresh to generate the tile if it already exists - not ideal
   this.tile.data[this.dataNode](this.tile.data[this.dataNode]())
@@ -214,5 +111,4 @@ define([
     template: template
   });
 
-  return viewModel;
-});
+export default viewModel;
