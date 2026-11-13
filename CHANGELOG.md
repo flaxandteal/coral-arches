@@ -22,55 +22,5 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
-- fix(letters): the worker starts again — letter templates load `querysets_shim.view_models` themselves instead of relying on another module importing it first
-- fix(consultation): DAERA and Agriculture & Forestry Consultation type offers Deforestation, Afforestation, Hedge Removal, Thinning and Maintenance; sign-off Within Deadline and Send Papers are Yes/No radio buttons
-- fix(workflows): FMW Inspection SMR Number(s) picker lists only Scheduled Monuments, and Site Visits hides Location Description Type
-- fix(workflows): the selected Heritage Asset panel is one config-driven component in SMC, Risk Assessment, DAERA, Agriculture & Forestry, FMW, Ranger and Curatorial; SMC and Risk Assessment show townlands again, and Risk Assessment shows the real Council and Designation Type (#933)
-- perf(dashboards): the State Care dashboard reads card values off tiles, and filters, sorts and pages in the database, without hydrating resources (#930)
-- build(deps): pin `arches-json-importer` to v0.2.0 — Arches JSON loads can be undone, and overwrite replaces a resource's tiles instead of the resource (#931)
-- fix(resource-instance-select): a resource just picked is greyed straight away when the picker reopens (#928)
-- perf(search): resource pickers and searches answer about 4x faster — the user's searchable graphs are found in one query (#927)
-- fix(webpack): page styles load in their original order again — shared chunks split JavaScript only (#926)
-- perf(webpack): pages load 11 scripts instead of 568 — shared chunks are no longer forced one per entry set, and vendors is one chunk (#923)
-- fix(workflows): a reopened workflow keeps its data when moving to another step straight away (#924)
-- fix(workflows): Applicant (Agriculture & Forestry, DAERA) and Agent (DAERA) pickers offer only existing people, no "Create a new Person" row (#919)
-- fix(enforcements): View Enforcements filters by the v8 Status list again and shows each enforcement's real status instead of always New (#920)
-- fix(heritage-asset): Generated HB, SMR and Parks and Garden number inputs show "Auto-generated field" instead of "Enter text" (#922)
-- fix(workflows): Edit then Clear on a multi-entry step leaves the edited entry intact and goes back to adding a new entry (#917)
-- fix(widgets): Irish Grid Reference keeps what was typed while the preview is what is saved, Long/Lat accepts either order, and the grid letter check uses one letter
-- fix(widgets): Irish Grid Reference shows a saved value as Absolute or Long/Lat when the format is switched, and labels it Saved Value; the BNG widget no longer throws in strict mode, which broke the FMW Irish Grid step
-- fix(workflows): FMW Inspection monument panel shows designation type, townland and B-file again, loaded in one `/orm/resources` request
-- test(cypress): `--env FAST=1` stops a spec at the first failed test with video off and 4s timeouts; every run logs failed requests and browser errors to `cypress/logs/<spec>.jsonl`
-- build(cypress): pass CORAL_ALLOW_TEST_SEED into the container so seeding runs; run E2E on release branch pushes and on demand, not on every PR; run the person and organisation fixture specs first (#905)
-
-- fix(workflows): Agri & Forestry / DAERA related HAs show townland, county and type, and the scheduled monument count follows the selection; the Within Deadline label clears its switch (#904)
-- fix(garden): garden reference number reads the county from the reference, not `/conceptvalue/`; the view returns 400 for a missing or unknown county (#902)
-
-- fix(heritage-asset): saving the references card is fast, and only notifies when a number is set or changed (#903)
-
-- fix(ha_number): generating an HA number keeps working past HA/99
-
-- fix(resource-instance-select): resources already picked show greyed out in multi-value resource pickers
-
-- fix(datepicker): typing over the date filled in on open replaces it, a typed date past the maximum becomes the maximum, and deleting the text clears the date
-
-- fix(workflows): a cleared field no longer leaves Save and Continue showing, and unchanged multi-entry steps offer no Save
-- fix(letters): Generate is disabled until a letter type is chosen, and enabled when one is already saved
-- fix(workflows): Save and Complete Workflow saves the last step's unsaved entries, and Save no longer shows after saving a single-tile step
-- test(cypress): Add Building, Add Garden and Add IHR specs updated to the v8 workflows and their UAT checklists; select2 search handles multi-value fields without deleting chosen values; page loads may take up to 180s (#908)
-- test(cypress): FMW Inspection, Issue Report, Flag for Enforcement, SMC, Agriculture and Forestry, DAERA, Curatorial and Add Monument specs updated to the v8 workflows and their UAT checklists; Test Person / Test Organisation added to the E2E seed (#907)
-- fix(workflows): Issue Report tabs after Issue Reference are no longer clickable before the Reference is saved, as Location details no longer counts as completing the step (#921)
-- feat(ci): Trivy vulnerability scan and CycloneDX/SPDX SBOM generation added to the build-arches workflow
-- fix(workflow): Issue Report CM reference input is enabled
 
 ### Notes
-- Migration 8022 replaces the items of the Consultation type list, points Agri's `consultation_type` at it (an Agri value saved from the old list is no longer matched) and switches the Within Deadline and Send Papers widgets to radio buttons, in the graph and its published copy. It runs with `migrate`; deploys with the Consultation graph loaded need nothing else. The matching coral-graphs change must be on the graph build, or a rebuild reverts it.
-- Reload the FMW inspection workflow plugin (`python manage.py coral reload`) to apply the scheduled-only SMR picker and the hidden Location Description Type.
-- Reload the SMC, Risk Assessment, DAERA, Agriculture & Forestry, FMW Inspection, Ranger Inspection and Curatorial workflow plugins: the details panel is now configured by `fields` in their JSON, which does not migrate on deploy
-- A full webpack build is needed for #923: every chunk filename and hash changes.
-
-- Reinstall `arches-json-importer` (v0.2.0), run `migrate` for its `0002_reversible`, and rebuild the JS for its new panel.
-
-- Run `python manage.py coral reload` to apply the Agriculture & Forestry and DAERA plugin change (no create on Applicant/Agent).
-- Migration `8020_ihr_number_index` creates an index on the IHR number (`CREATE INDEX CONCURRENTLY`).
-- Run `python manage.py coral reload` to pick up the Issue Report workflow change.
