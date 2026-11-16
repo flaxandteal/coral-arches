@@ -9,6 +9,9 @@
  * before the migration still holds the bare option id, and some paths hand back the list
  * item id on its own. All three are accepted here so a caller never has to care.
  */
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import arches from 'arches';
 
 /** Every controlled-list item id selected in a reference value. */
 export const selectedListItemIds = (value) => {
@@ -39,6 +42,23 @@ export const singleListItemId = (value) => selectedListItemIds(value)[0] ?? null
 export const lookupByListItem = (value, lookup, fallback = undefined) => {
   const found = selectedListItemIds(value).find((id) => id in lookup);
   return found === undefined ? fallback : lookup[found];
+};
+
+/** Comma-joined display labels of a reference value, or null; mirrors Python `reference_label`. */
+export const referenceLabel = (value) => {
+  const entries = koMapping.toJS(ko.unwrap(value));
+  if (!Array.isArray(entries)) return null;
+  const texts = [];
+  entries.forEach((entry) => {
+    const labels = entry?.labels || [];
+    const preferred =
+      labels.find(
+        (label) =>
+          label.language_id === arches.activeLanguage && label.valuetype_id === 'prefLabel'
+      ) || labels[0];
+    if (preferred?.value) texts.push(preferred.value);
+  });
+  return texts.length ? texts.join(', ') : null;
 };
 
 const referenceValueRequests = {};
@@ -73,4 +93,17 @@ export const resolvePrefilledNodes = async (prefilledNodes) => {
     })
   );
   return resolved;
+};
+
+const RECOMMENDED_DESIGNATION_NODE = '5aa9d22a-29c6-5de0-8119-84ee1e93081f';
+const SCHEDULED_MONUMENT_ITEM = '1e898077-9144-9ef0-b6e1-08f4e4881972';
+
+/** Whether a Heritage Asset's recommended designation holds the Scheduled Monument list item. */
+export const isScheduledMonument = async (resourceId) => {
+  const url = arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId);
+  const response = await window.fetch(`${url}?nodeid=${RECOMMENDED_DESIGNATION_NODE}`);
+  const { tiles } = await response.json();
+  return tiles.some((tile) =>
+    hasListItem(tile.data?.[RECOMMENDED_DESIGNATION_NODE], SCHEDULED_MONUMENT_ITEM)
+  );
 };

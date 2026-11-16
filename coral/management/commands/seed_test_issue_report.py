@@ -227,14 +227,16 @@ class Command(BaseCommand):
         contacts = Tile.objects.filter(
             resourceinstance_id=resource_id, nodegroup_id=CONTACTS_NODEGROUP
         ).first()
-        if contacts is not None:
-            contacts.data = CONTACTS_RESET_DATA
-            contacts.save(request=request)
+        found = contacts is not None
+        if not found:
+            contacts = Tile(resourceinstance_id=resource_id, nodegroup_id=CONTACTS_NODEGROUP)
+        contacts.data = CONTACTS_RESET_DATA
+        contacts.save(request=request)
 
         self.stdout.write(
             self.style.SUCCESS(
                 f"Reset: removed {removed} Issue Report(s), kept "
                 f"'{keep_reference_number}', restored Contacts tile "
-                f"({'found' if contacts else 'none on this HA'})"
+                f"({'found' if found else 'created'})"
             )
         )

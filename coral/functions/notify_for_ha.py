@@ -1,4 +1,5 @@
 from arches.app.functions.base import BaseFunction
+from arches.app.models.models import TileModel
 from querysets_shim.adapter import admin
 from coral.functions.notifications.notification_manager import NotificationManager
 from coral.functions.notifications.notification_base_strategy import NotificationStrategy
@@ -40,9 +41,41 @@ details = {
     'component': '',
 }
 
+REFERENCE_NODES = [GARDEN, IHR, HB, SMR]
+
+
+def _en_value(value):
+    if not value:
+        return None
+    return (value.get("en") or {}).get("value") or None
+
+
+def _reference_numbers(data):
+    return {node: _en_value((data or {}).get(node)) for node in REFERENCE_NODES}
+
+
+def changed_reference(before, after):
+    """First of GARDEN, IHR, HB, SMR whose value is now set and differs from before, else None."""
+    for node in REFERENCE_NODES:
+        if after[node] and after[node] != before[node]:
+            return node
+    return None
+
+
 class NotifyForHA(BaseFunction):
+    def save(self, tile, request, context):
+        stored = TileModel.objects.filter(pk=tile.tileid).first() if tile.tileid else None
+        tile._ha_numbers_before = _reference_numbers(stored.data if stored else None)
+
     def post_save(self, tile, request, context):
         if context and context.get('escape_function', False):
+            return
+
+        ha_type = changed_reference(
+            getattr(tile, "_ha_numbers_before", _reference_numbers(None)),
+            _reference_numbers(tile.data),
+        )
+        if not ha_type:
             return
 
         strategy_registry = { 
@@ -54,6 +87,7 @@ class NotifyForHA(BaseFunction):
                     'notiftype_id': "f49995b9-59ea-4f85-adbb-0e3a60587bd6",
                     'groups_to_notify': [],
                     'email': True,
+                    'ha_type': ha_type,
                 }
             },
         }
@@ -64,11 +98,7 @@ class NotifyForHA(BaseFunction):
 
 class HeritageAssetStrategy(NotificationStrategy):
     def send_notification(self):
-            ha_type = None
-
-            for key, value in self.tile.data.items():
-                if value is not None:
-                    ha_type = key
+            ha_type = self.config['ha_type']
 
             if ha_type == GARDEN:
                 self.config['groups_to_notify'] = [RANDDMANAGERS, RANDDUSERS]

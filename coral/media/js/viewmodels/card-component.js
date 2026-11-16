@@ -1,6 +1,8 @@
 import ko from 'knockout';
 import _ from 'underscore';
 import arches from 'arches';
+import koMapping from 'knockout-mapping';
+import sameTileData from 'utils/tile-data';
 import AlertViewModel from 'viewmodels/alert';
 import scrollto from 'bindings/scrollTo';
 
@@ -75,7 +77,8 @@ export default function(params) {
                 }
                 else {
                     return ko.unwrap(self.tiles).reduce(function(acc, tile) {
-                        if (tile.dirty()) {
+                        var saved = tile._tileData() ? JSON.parse(tile._tileData()) : {};
+                        if (!sameTileData(saved, koMapping.toJS(tile.data))) {
                             acc = true;
                         }
                         return acc;
