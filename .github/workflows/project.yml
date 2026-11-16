@@ -307,6 +307,8 @@ jobs:
 
   Scan-Arches:
     needs: [Build-Arches]
+    # always(): ZAP is skipped off main, and a skipped ancestor otherwise skips every job below.
+    if: always() && needs.Build-Arches.result == 'success'
     uses: ./.github/workflows/trivy-image-scan.yml
     permissions:
       security-events: write
@@ -317,6 +319,7 @@ jobs:
   Build-Arches-Static:
     runs-on: ubuntu-latest
     needs: [Build-Arches]
+    if: always() && needs.Build-Arches.result == 'success'
     permissions:
       contents: read
       packages: write
@@ -390,6 +393,7 @@ jobs:
 
   Build-Arches-Final:
     needs: [Build-Arches-Static, Build-Arches]
+    if: always() && needs.Build-Arches.result == 'success' && needs.Build-Arches-Static.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -468,6 +472,7 @@ jobs:
 
   Scan-Arches-Static-And-Final:
     needs: [Build-Arches-Static, Build-Arches-Final]
+    if: always() && needs.Build-Arches-Static.result == 'success' && needs.Build-Arches-Final.result == 'success'
     strategy:
       fail-fast: false
       matrix:
