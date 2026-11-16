@@ -14,8 +14,8 @@ jobs:
     # Gates the push to the production branch. Job-level `if` can't read the
     # `env` context, so `refs/heads/<branch>` below must be kept in sync by
     # hand with whichever branch Flux's ImagePolicy in coral-fluxcd-prod is
-    # currently tracking (feat/coral-arches-v8-upgrade at time of writing).
-    if: github.ref == 'refs/heads/feat/coral-arches-v8-upgrade'
+    # currently tracking.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
