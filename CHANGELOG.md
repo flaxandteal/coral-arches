@@ -22,5 +22,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- ci: builds off `main` still publish the static images when the ZAP scan is skipped
 
 ### Notes
