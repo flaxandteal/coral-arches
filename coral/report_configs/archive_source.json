@@ -1,0 +1,222 @@
+{
+  "graph_slug": "archive_source",
+  "graph_name": "Archive Source",
+  "configs": {
+    "search": {
+      "name": "Archive Source",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Archive Source",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Archive Source Names",
+            "nodegroup_alias": "archive_source_names",
+            "node_aliases": [
+              "archive_source_name",
+              "archive_source_name_currency",
+              "archive_source_name_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Descriptions",
+            "nodegroup_alias": "descriptions",
+            "node_aliases": [
+              "description",
+              "description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Archive Source Type",
+            "nodegroup_alias": "archive_source_type",
+            "node_aliases": [
+              "archive_source_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Languages",
+            "nodegroup_alias": "language",
+            "node_aliases": [
+              "language"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Subjects",
+            "nodegroup_alias": "subjects",
+            "node_aliases": [
+              "subjects"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Images",
+            "nodegroup_alias": "images",
+            "node_aliases": [
+              "caption",
+              "copyright_holder",
+              "copyright_note_text",
+              "copyright_type_n1",
+              "images"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Copyright Details",
+            "nodegroup_alias": "copyright_details",
+            "node_aliases": [
+              "copyright_statement",
+              "copyright_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Bibliographic Sources",
+            "nodegroup_alias": "bibliographic_source_citation",
+            "node_aliases": [
+              "bibliographic_source_citation",
+              "comment",
+              "figs_",
+              "page_s_",
+              "plate_s_",
+              "source_number_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Digital Files",
+            "nodegroup_alias": "digital_file_s_",
+            "node_aliases": [
+              "digital_file_s_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Periods",
+            "nodegroup_alias": "periods",
+            "node_aliases": [
+              "periods"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "File ID",
+            "nodegroup_alias": "file_id",
+            "node_aliases": [
+              "file_id_number"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Archive Loaning",
+            "nodegroup_alias": "archive_loaning",
+            "node_aliases": [
+              "archive_holder",
+              "archive_holder_end_date",
+              "archive_holder_start_date"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Display Name",
+            "nodegroup_alias": "display_name",
+            "node_aliases": [
+              "display_name_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "File Status",
+            "nodegroup_alias": "file_status",
+            "node_aliases": [
+              "status"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Subtitles",
+            "nodegroup_alias": "subtitles",
+            "node_aliases": [
+              "subtitle"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

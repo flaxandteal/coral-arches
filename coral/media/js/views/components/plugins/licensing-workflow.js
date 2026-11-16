@@ -1,21 +1,20 @@
-define([
-  'knockout',
-  'arches',
-  'viewmodels/openable-workflow',
-  'templates/views/components/plugins/default-workflow.htm',
-  'views/components/workflows/default-card-util',
-  'views/components/workflows/licensing-workflow/licence-initial-step',
-  'views/components/workflows/related-document-upload',
-  'views/components/workflows/licensing-workflow/licence-cover-letter',
-  'views/components/workflows/file-template',
-  'views/components/workflows/licensing-workflow/licence-final-step',
-  'views/components/workflows/licensing-workflow/fetch-generated-licence-number',
-  'views/components/workflows/licensing-workflow/fetch-updated-dates',
-  'views/components/workflows/licensing-workflow/transfer-of-licence',
-  'views/components/workflows/licensing-workflow/transfer-of-licence',
-  'views/components/workflows/fetch-latest-tile'
-], function (ko, arches, OpenableWorkflow, workflowTemplate) {
-  return ko.components.register('licensing-workflow', {
+import ko from 'knockout';
+import arches from 'arches';
+import OpenableWorkflow from 'viewmodels/openable-workflow';
+import workflowTemplate from 'templates/views/components/plugins/default-workflow.htm';
+import defaultCardUtil from 'views/components/workflows/default-card-util';
+import licenceInitialStep from 'views/components/workflows/licensing-workflow/licence-initial-step';
+import relatedDocumentUpload from 'views/components/workflows/related-document-upload';
+import licenceCoverLetter from 'views/components/workflows/licensing-workflow/licence-cover-letter';
+import fileTemplate from 'views/components/workflows/file-template';
+import licenceFinalStep from 'views/components/workflows/licensing-workflow/licence-final-step';
+import fetchGeneratedLicenceNumber from 'views/components/workflows/licensing-workflow/fetch-generated-licence-number';
+import fetchUpdatedDates from 'views/components/workflows/licensing-workflow/fetch-updated-dates';
+import transferOfLicence from 'views/components/workflows/licensing-workflow/transfer-of-licence';
+import transferOfLicence1 from 'views/components/workflows/licensing-workflow/transfer-of-licence';
+import fetchLatestTile from 'views/components/workflows/fetch-latest-tile';
+
+export default ko.components.register('licensing-workflow', {
     viewModel: function (params) {
       this.componentName = 'licensing-workflow';
       this.stepConfig = [
@@ -247,7 +246,7 @@ define([
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    nodegroupid: '5f81a8d4-d7de-11ee-b2c1-0242ac120006',
+                    nodegroupid: '86752f29-d77d-53a3-94aa-c19c13711376',
                     parenttileid:
                       "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     semanticName: 'Council'
@@ -288,7 +287,7 @@ define([
                   parameters: {
                     graphid: 'b9e0701e-5463-11e9-b5f5-000d3ab1e588',
                     resourceid: "['init-step']['app-id'][0]['resourceid']['activityResourceId']",
-                    nodegroupid: '33b4430a-16be-11ef-8633-0242ac180006',
+                    nodegroupid: 'a5416b43-f121-11eb-b691-a87eeabdefba',
                     parenttileid:
                       "['init-step']['app-id'][0]['resourceid']['activityLocationTileId']",
                     semanticName: 'Irish Grid Reference'
@@ -1123,4 +1122,3 @@ define([
     },
     template: workflowTemplate
   });
-});

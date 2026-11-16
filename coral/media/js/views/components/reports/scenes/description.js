@@ -1,12 +1,11 @@
-define([
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/report',
-    'templates/views/components/reports/scenes/description.htm',
-    'bindings/datatable',
-], function(_, ko, arches, reportUtils, descriptionReportTemplate) {
-    return ko.components.register('views/components/reports/scenes/description', {
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import reportUtils from 'utils/report';
+import descriptionReportTemplate from 'templates/views/components/reports/scenes/description.htm';
+import datatable from 'bindings/datatable';
+
+export default ko.components.register('views/components/reports/scenes/description', {
         viewModel: function(params) {
             const self = this;
             Object.assign(self, reportUtils);
@@ -74,7 +73,7 @@ define([
             Object.assign(self.dataConfig, params.dataConfig || {});
 
 
-            // bba34790-37b4-11ef-9263-0242ac150006
+            // 522486cf-b407-5251-b51e-9c4228730040
 
             // if params.compiled is set and true, the user has compiled their own data.  Use as is.
             if(params?.compiled){
@@ -168,4 +167,3 @@ define([
         },
         template: descriptionReportTemplate
     });
-});

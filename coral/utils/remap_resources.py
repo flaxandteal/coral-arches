@@ -107,7 +107,7 @@ class RemapResources:
                 self.alias_mapping[alias] = {"target": None, "destination": None}
             parent_nodegroup_id = (
                 str(node.nodegroup.parentnodegroup_id)
-                if node.nodegroup.parentnodegroup_id
+                if node.nodegroup and node.nodegroup.parentnodegroup_id
                 else None
             )
             self.alias_mapping[alias][target] = {

@@ -12,7 +12,9 @@
         "name": "archive-reference-step",
         "title": "Archive Reference",
         "required": true,
-        "hiddenWorkflowButtons": ["undo"],
+        "hiddenWorkflowButtons": [
+          "undo"
+        ],
         "layoutSections": [
           {
             "componentConfigs": [
@@ -65,7 +67,10 @@
                   "nodegroupid": "145f9615-9ad2-11ea-b4d3-f875a44e0e11",
                   "semanticName": "Archive Source Names",
                   "labels": [
-                    ["Archive Source Name", "File Title"]
+                    [
+                      "Archive Source Name",
+                      "File Title"
+                    ]
                   ]
                 },
                 "tilesManaged": "one",
@@ -133,7 +138,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "archive-source-creation-step",
@@ -155,23 +163,23 @@
                   "semanticName": "Archive Source Creation",
                   "nodeOptions": {
                     "602c8b40-1aba-11ec-9afc-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "98ac7e00-ba0a-11ee-987d-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a919d111-ee15-11eb-9308-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a919d102-ee15-11eb-941c-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -183,7 +191,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "repository-storage-location-step",
@@ -207,7 +218,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       },
       {
         "name": "archive-loan-history-step",
@@ -225,23 +239,23 @@
                   "semanticName": "Archive Loaning",
                   "nodeOptions": {
                     "602c8b40-1aba-11ec-9afc-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "98ac7e00-ba0a-11ee-987d-0242ac180006": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a919d111-ee15-11eb-9308-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     },
                     "a919d102-ee15-11eb-941c-a87eeabdefba": {
-                      "config":{
-                        "maxDate":"today"
+                      "config": {
+                        "maxDate": "today"
                       }
                     }
                   }
@@ -253,7 +267,10 @@
             ]
           }
         ],
-        "workflowstepclass": "workflow-form-component"
+        "workflowstepclass": "workflow-form-component",
+        "hiddenWorkflowButtons": [
+          "undo"
+        ]
       }
     ],
     "initWorkflow": {

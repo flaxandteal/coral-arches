@@ -1,0 +1,172 @@
+{
+  "graph_slug": "historic_landscape_characterization",
+  "graph_name": "Historic Landscape Characterization",
+  "configs": {
+    "search": {
+      "name": "Historic Landscape Characterization",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Historic Landscape Characterization",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Names",
+            "nodegroup_alias": "names",
+            "node_aliases": [
+              "name",
+              "name_currency",
+              "name_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Descriptions",
+            "nodegroup_alias": "descriptions",
+            "node_aliases": [
+              "description",
+              "description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Location",
+            "nodegroup_alias": "geometry",
+            "node_aliases": [
+              "feature_shape",
+              "geospatial_coordinates"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Localities/Administrative Areas",
+            "nodegroup_alias": "localities_administrative_areas",
+            "node_aliases": [
+              "area_currency_type",
+              "area_name",
+              "area_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "National Grid References",
+            "nodegroup_alias": "national_grid_references",
+            "node_aliases": [
+              "national_grid_reference"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Bibliographic Source Citation",
+            "nodegroup_alias": "bibliographic_source_citation",
+            "node_aliases": [
+              "bibliographic_source_citation",
+              "comment",
+              "figs_",
+              "page_s_",
+              "plate_s_",
+              "source_number_value"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "HLC Phase",
+            "nodegroup_alias": "hlc_phase",
+            "node_aliases": [
+              "broad_type",
+              "confidence_of_dating",
+              "confidence_of_interpretation",
+              "historic_map",
+              "hlc_phase_date_qualifier",
+              "hlc_phase_description",
+              "hlc_phase_display_date",
+              "hlc_phase_end_date",
+              "hlc_phase_start_date",
+              "hlc_type",
+              "period"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Historic Land Use Character Attributes",
+            "nodegroup_alias": "historic_land_use_character_attributes",
+            "node_aliases": [
+              "average_height",
+              "rear_gardens",
+              "street_frontage",
+              "street_pattern"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Monuments, Areas and Artefacts",
+            "nodegroup_alias": "associated_monuments_areas_and_artefacts",
+            "node_aliases": [
+              "association_type",
+              "monument_area_or_artefact"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

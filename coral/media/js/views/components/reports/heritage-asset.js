@@ -1,17 +1,16 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/heritage-asset.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json',
-    'views/components/reports/scenes/all',
-    'views/components/reports/scenes/enforcements',
-], function($, _, ko, arches, resourceUtils, reportUtils, heritageAssetReportTemplate) {
-    return ko.components.register('heritage-asset-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import heritageAssetReportTemplate from 'templates/views/components/reports/heritage-asset.htm';
+import name from 'views/components/reports/scenes/name';
+import json from 'views/components/reports/scenes/json';
+import all from 'views/components/reports/scenes/all';
+import enforcements from 'views/components/reports/scenes/enforcements';
+
+export default ko.components.register('heritage-asset-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -40,7 +39,7 @@ define([
             self.displayname = ko.observable(ko.unwrap(self.reportMetadata)?.displayname);
             self.activeSection = ko.observable('all');
 
-            self.issueNodeGroups = ['d3ff3fe6-d62b-11ee-9454-0242ac180006'];
+            self.issueNodeGroups = ['7f835acf-5601-5dae-ac0f-6f030fc50ee7'];
 
             self.nameDataConfig = {
                 name: 'heritage asset',
@@ -154,4 +153,3 @@ define([
         },
         template: heritageAssetReportTemplate
     });
-});

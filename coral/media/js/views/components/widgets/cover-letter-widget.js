@@ -1,12 +1,11 @@
-define([
-  'knockout',
-  'arches',
-  'uuid',
-  'underscore',
-  'viewmodels/widget',
-  'templates/views/components/widgets/cover-letter-widget.htm'
-], function (ko, arches, uuid, _, WidgetViewModel, coverLetterWidgetTemplate) {
-  return ko.components.register('cover-letter-widget', {
+import ko from 'knockout';
+import arches from 'arches';
+import uuid from 'uuid';
+import _ from 'underscore';
+import WidgetViewModel from 'viewmodels/widget';
+import coverLetterWidgetTemplate from 'templates/views/components/widgets/cover-letter-widget.htm';
+
+export default ko.components.register('cover-letter-widget', {
     viewModel: function (params) {
       params.configKeys = ['placeholder', 'label', 'disabled', 'defaultValue', 'mode'];
       WidgetViewModel.apply(this, [params]);
@@ -54,4 +53,3 @@ define([
     },
     template: coverLetterWidgetTemplate
   });
-});

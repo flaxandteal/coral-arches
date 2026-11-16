@@ -1,13 +1,12 @@
-define([
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/report',
-    'templates/views/components/reports/scenes/protection.htm',
-    'bindings/datatable',
-    'views/components/reports/scenes/map'
-], function(_, ko, arches, reportUtils, protectionReportTemplate) {
-    return ko.components.register('views/components/reports/scenes/protection', {
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import reportUtils from 'utils/report';
+import protectionReportTemplate from 'templates/views/components/reports/scenes/protection.htm';
+import datatable from 'bindings/datatable';
+import map from 'views/components/reports/scenes/map';
+
+export default ko.components.register('views/components/reports/scenes/protection', {
         viewModel: function(params) {
             const self = this;
             Object.assign(self, reportUtils);
@@ -61,16 +60,16 @@ define([
             // utitility function - checks whether at least one observable (or array object)
             // has a set value (used to determine whether a section is visible)
             self.observableValueSet = (...observables) => {
-                for(observable of observables) {
+                for(const observable of observables) {
                     if(ko.isObservable(observable)){
-                        observableValue = ko.unwrap(observable);
+                        const observableValue = ko.unwrap(observable);
                         if (observableValue && observableValue != "--"){
                             return true;
                         }
                     } else if (typeof observable === "object" && observable !== null){
-                        for(key of Object.keys(observable)){
+                        for(const key of Object.keys(observable)){
                             if(ko.isObservable(observable[key])){
-                                observableValue = ko.unwrap(observable[key]);
+                                const observableValue = ko.unwrap(observable[key]);
                                 if (observableValue && observableValue != "--"){
                                     return true;
                                 }
@@ -190,4 +189,3 @@ define([
         },
         template: protectionReportTemplate
     });
-});

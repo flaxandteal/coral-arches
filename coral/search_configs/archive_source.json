@@ -1,0 +1,707 @@
+{
+  "graph_slug": "archive_source",
+  "graph_name": "Archive Source",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "archive_holder",
+      "label": "Archive Holder",
+      "sortorder": 0,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "archive_holder_date_qualifier",
+      "label": "Archive Holder Date Qualifier",
+      "sortorder": 1,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "archive_holder_end_date",
+      "label": "Archive Holder End Date",
+      "sortorder": 2,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "archive_holder_start_date",
+      "label": "Archive Holder Start Date",
+      "sortorder": 3,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "archive_source_name",
+      "label": "Archive Source Name",
+      "sortorder": 4,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "archive_source_name_currency",
+      "label": "Archive Source Name Currency",
+      "sortorder": 5,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "archive_source_name_type",
+      "label": "Archive Source Name Type",
+      "sortorder": 6,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "archive_source_name_use_type",
+      "label": "Archive Source Name Use Type",
+      "sortorder": 7,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "archive_source_type",
+      "label": "Archive Source Type",
+      "sortorder": 8,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "association_type",
+      "label": "Association Type",
+      "sortorder": 9,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "audit_note",
+      "label": "Audit Note",
+      "sortorder": 10,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "audit_notes_type",
+      "label": "Audit Notes Type",
+      "sortorder": 11,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "author_name",
+      "label": "Author Name",
+      "sortorder": 12,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "author_name_type",
+      "label": "Author Name Type",
+      "sortorder": 13,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "authorship_type",
+      "label": "Authorship Type",
+      "sortorder": 14,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "bibliographic_source_citation",
+      "label": "Bibliographic Source Citation",
+      "sortorder": 15,
+      "datatype": "resource-instance",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "caption",
+      "label": "Caption",
+      "sortorder": 16,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "caption_type",
+      "label": "Caption Type",
+      "sortorder": 17,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "comment",
+      "label": "Comment",
+      "sortorder": 18,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "contribution_type",
+      "label": "Contribution Type",
+      "sortorder": 19,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "contributor_name",
+      "label": "Contributor Name",
+      "sortorder": 20,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "contributor_name_type",
+      "label": "Contributor Name Type",
+      "sortorder": 21,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "copyright_holder",
+      "label": "Copyright Holder",
+      "sortorder": 22,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "copyright_metatype_n1",
+      "label": "Copyright Metatype",
+      "sortorder": 23,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "copyright_note_text",
+      "label": "Copyright Note Text",
+      "sortorder": 24,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "copyright_note_type",
+      "label": "Copyright Note Type",
+      "sortorder": 25,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "copyright_statement",
+      "label": "Copyright Statement",
+      "sortorder": 26,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "copyright_type",
+      "label": "Copyright Type",
+      "sortorder": 27,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "copyright_type_n1",
+      "label": "Copyright Type",
+      "sortorder": 28,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "creation_date",
+      "label": "Creation Date",
+      "sortorder": 29,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "creation_date_qualifier",
+      "label": "Creation Date Qualifier",
+      "sortorder": 30,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "creation_end_date",
+      "label": "Creation End Date",
+      "sortorder": 31,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "creator_name",
+      "label": "Creator Name",
+      "sortorder": 32,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "creator_name_currency",
+      "label": "Creator Name Currency",
+      "sortorder": 33,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "creator_name_type",
+      "label": "Creator Name Type",
+      "sortorder": 34,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "creator_name_use_type",
+      "label": "Creator Name Use Type",
+      "sortorder": 35,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "date_of_last_update",
+      "label": "Date of Last Update",
+      "sortorder": 36,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "date_qualifier",
+      "label": "Date Qualifier",
+      "sortorder": 37,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description",
+      "label": "Description",
+      "sortorder": 38,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "description_type",
+      "label": "Description Type",
+      "sortorder": 39,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "digital_file_s_",
+      "label": "Digital File(s)",
+      "sortorder": 40,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "display_date",
+      "label": "Display Date",
+      "sortorder": 41,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "display_name_value",
+      "label": "Display Name Value",
+      "sortorder": 42,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "editor_name",
+      "label": "Editor Name",
+      "sortorder": 43,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "editor_name_type",
+      "label": "Editor Name Type",
+      "sortorder": 44,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "editorship_type",
+      "label": "Editorship Type",
+      "sortorder": 45,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "end_date",
+      "label": "End Date",
+      "sortorder": 46,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "extent_measurement_unit",
+      "label": "Extent Measurement Unit",
+      "sortorder": 47,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "external_cross_reference",
+      "label": "External Cross Reference",
+      "sortorder": 48,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "external_cross_reference_description",
+      "label": "External Cross Reference Description",
+      "sortorder": 49,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "external_cross_reference_description_type",
+      "label": "External Cross Reference Description Type",
+      "sortorder": 50,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "external_cross_reference_source",
+      "label": "External Cross Reference Source",
+      "sortorder": 51,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "figs_",
+      "label": "Figs.",
+      "sortorder": 52,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "figures_type",
+      "label": "Figures Type",
+      "sortorder": 53,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "file_id_number",
+      "label": "File ID Number",
+      "sortorder": 54,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "file_id_source",
+      "label": "File ID Source",
+      "sortorder": 55,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "images",
+      "label": "Images",
+      "sortorder": 56,
+      "datatype": "file-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "language",
+      "label": "Language",
+      "sortorder": 57,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "legacy_id",
+      "label": "Legacy ID",
+      "sortorder": 58,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id_type",
+      "label": "Legacy ID Type",
+      "sortorder": 59,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "_legacy_record",
+      "label": "Legacy Record",
+      "sortorder": 60,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "page_s_",
+      "label": "Page(s)",
+      "sortorder": 61,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "pages_type",
+      "label": "Pages Type",
+      "sortorder": 62,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "periods",
+      "label": "Periods",
+      "sortorder": 63,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "plate_s_",
+      "label": "Plate(s)",
+      "sortorder": 64,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "plates_type",
+      "label": "Plates Type",
+      "sortorder": 65,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "primary_reference_number",
+      "label": "Primary Reference Number",
+      "sortorder": 66,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "primary_reference_number_type",
+      "label": "Primary Reference Number Type",
+      "sortorder": 67,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "quantity",
+      "label": "Quantity",
+      "sortorder": 68,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "repository_owner",
+      "label": "Repository owner",
+      "sortorder": 69,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "resourceid",
+      "label": "ResourceID",
+      "sortorder": 70,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "resourceid_type",
+      "label": "ResourceID Type",
+      "sortorder": 71,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "resource_model_type",
+      "label": "Resource Model Type",
+      "sortorder": 72,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "role_type",
+      "label": "Role Type",
+      "sortorder": 73,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "source_comment_type",
+      "label": "Source Comment Type",
+      "sortorder": 74,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "source_number_type",
+      "label": "Source Number Type",
+      "sortorder": 75,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "source_number_value",
+      "label": "Source Number Value",
+      "sortorder": 76,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "start_date",
+      "label": "Start Date",
+      "sortorder": 77,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "statement_of_responsibility",
+      "label": "Statement of Responsibility",
+      "sortorder": 78,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "statement_of_responsibility_type",
+      "label": "Statement of Responsibility Type",
+      "sortorder": 79,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "status",
+      "label": "Status",
+      "sortorder": 80,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "storage_box_name",
+      "label": "Storage Box Name",
+      "sortorder": 81,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "storage_building_name",
+      "label": "Storage Building Name",
+      "sortorder": 82,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "storage_building_name_currency",
+      "label": "Storage Building Name Currency",
+      "sortorder": 83,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "storage_building_name_type",
+      "label": "Storage Building Name Type",
+      "sortorder": 84,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "storage_building_name_use_type",
+      "label": "Storage Building Name Use Type",
+      "sortorder": 85,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "storage_room_name",
+      "label": "Storage Room Name",
+      "sortorder": 86,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "storage_room_name_type",
+      "label": "Storage Room Name Type",
+      "sortorder": 87,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "storage_shelf_name",
+      "label": "Storage Shelf Name",
+      "sortorder": 88,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "subjects",
+      "label": "Subjects",
+      "sortorder": 89,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "subtitle",
+      "label": "Subtitle",
+      "sortorder": 90,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "subtitle_type",
+      "label": "Subtitle Type",
+      "sortorder": 91,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "update_date_qualifier",
+      "label": "Update Date Qualifier",
+      "sortorder": 92,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "update_end_date",
+      "label": "Update End Date",
+      "sortorder": 93,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "updater_name",
+      "label": "Updater Name",
+      "sortorder": 94,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "updater_name_currency",
+      "label": "Updater Name Currency",
+      "sortorder": 95,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "updater_name_type",
+      "label": "Updater Name Type",
+      "sortorder": 96,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "updater_name_use_type",
+      "label": "Updater Name Use Type",
+      "sortorder": 97,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "url",
+      "label": "URL",
+      "sortorder": 98,
+      "datatype": "url",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "validation",
+      "label": "Validation",
+      "sortorder": 99,
+      "datatype": "reference",
+      "support": "renderable"
+    }
+  ]
+}

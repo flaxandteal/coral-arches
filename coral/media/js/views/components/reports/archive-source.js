@@ -1,15 +1,14 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/archive-source.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils, archiveSourceReportTemplate) {
-    return ko.components.register('archive-source-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import archiveSourceReportTemplate from 'templates/views/components/reports/archive-source.htm';
+import name from 'views/components/reports/scenes/name';
+import json from 'views/components/reports/scenes/json';
+
+export default ko.components.register('archive-source-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -180,4 +179,3 @@ define([
         },
         template: archiveSourceReportTemplate
     });
-});

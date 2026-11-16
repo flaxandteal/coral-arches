@@ -1,0 +1,756 @@
+{
+  "graph_slug": "risk_assessment",
+  "graph_name": "Risk Assessment",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "address_currency",
+      "label": "Address Currency",
+      "sortorder": 0,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "address_status",
+      "label": "Address Status",
+      "sortorder": 1,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "area_currency_type",
+      "label": "Area Currency Type",
+      "sortorder": 2,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "area_name",
+      "label": "Area Name",
+      "sortorder": 3,
+      "datatype": "reference",
+      "support": "large-list"
+    },
+    {
+      "node_alias": "area_name_type",
+      "label": "Area Name Type",
+      "sortorder": 4,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "area_reference_language",
+      "label": "Area Reference Language",
+      "sortorder": 5,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "area_reference_type",
+      "label": "Area Reference Type",
+      "sortorder": 6,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "area_reference_value",
+      "label": "Area Reference Value",
+      "sortorder": 7,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "area_status",
+      "label": "Area Status",
+      "sortorder": 8,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "area_status_end_date",
+      "label": "Area Status End Date",
+      "sortorder": 9,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "area_status_start_date",
+      "label": "Area Status Start Date",
+      "sortorder": 10,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "area_type",
+      "label": "Area Type",
+      "sortorder": 11,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "assessment_done_by",
+      "label": "Assessment Done By",
+      "sortorder": 12,
+      "datatype": "resource-instance",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "associated_heritage_assets",
+      "label": "Associated Heritage Assets",
+      "sortorder": 13,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "authorization_date_qualifier",
+      "label": "Authorization Date Qualifier",
+      "sortorder": 14,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "authorization_end_date",
+      "label": "Authorization End Date",
+      "sortorder": 15,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "authorization_type",
+      "label": "Authorization Type",
+      "sortorder": 16,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "authorizer_name",
+      "label": "Authorizer Name",
+      "sortorder": 17,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "authorizer_name_currency",
+      "label": "Authorizer Name Currency",
+      "sortorder": 18,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "authorizer_name_type",
+      "label": "Authorizer Name Type",
+      "sortorder": 19,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "authorizer_name_use_type",
+      "label": "Authorizer Name Use Type",
+      "sortorder": 20,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "building_name_type",
+      "label": "Building Name Type",
+      "sortorder": 21,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "building_name_value",
+      "label": "Building Name Value",
+      "sortorder": 22,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "building_number_sub_street_type",
+      "label": "Building Number Sub-Street Type",
+      "sortorder": 23,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "building_number_sub_street_value",
+      "label": "Building Number Sub-Street Value",
+      "sortorder": 24,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "building_number_type",
+      "label": "Building Number Type",
+      "sortorder": 25,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "building_number_value",
+      "label": "Building Number Value",
+      "sortorder": 26,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "capture_scale",
+      "label": "Capture Scale",
+      "sortorder": 27,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "compilation_date_qualifier",
+      "label": "Compilation Date Qualifier",
+      "sortorder": 28,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "compilation_end_date",
+      "label": "Compilation End Date",
+      "sortorder": 29,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "compilation_start_date",
+      "label": "Compilation Start Date",
+      "sortorder": 30,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "compiler_name",
+      "label": "Compiler Name",
+      "sortorder": 31,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "compiler_name_currency",
+      "label": "Compiler Name Currency",
+      "sortorder": 32,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "compiler_name_type",
+      "label": "Compiler Name Type",
+      "sortorder": 33,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "compiler_name_use_type",
+      "label": "Compiler Name Use Type",
+      "sortorder": 34,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "coordinate_system_value",
+      "label": "Coordinate System Value",
+      "sortorder": 35,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "county_type",
+      "label": "County Type",
+      "sortorder": 36,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "county_value",
+      "label": "County Value",
+      "sortorder": 37,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "current_base_map_name",
+      "label": "Current Base Map Name",
+      "sortorder": 38,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "current_base_map_name_currency",
+      "label": "Current Base Map Name Currency",
+      "sortorder": 39,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "current_base_map_name_type",
+      "label": "Current Base Map Name Type",
+      "sortorder": 40,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "current_base_map_name_use_type",
+      "label": "Current Base Map Name Use Type",
+      "sortorder": 41,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "date_of_authorization",
+      "label": "Date of Authorization",
+      "sortorder": 42,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "description",
+      "label": "Description",
+      "sortorder": 43,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "digital_files",
+      "label": "Digital Files",
+      "sortorder": 44,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "feature_shape",
+      "label": "Feature Shape",
+      "sortorder": 45,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "full_address",
+      "label": "Full Address",
+      "sortorder": 46,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "full_address_type",
+      "label": "Full Address Type",
+      "sortorder": 47,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "geology",
+      "label": "Geology",
+      "sortorder": 48,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "geospatial_coordinates",
+      "label": "Geospatial Coordinates",
+      "sortorder": 49,
+      "datatype": "geojson-feature-collection",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "hazard_identification_and_risk_evaluation_value",
+      "label": "Hazard Identification and Risk Evaluation Value",
+      "sortorder": 50,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "irish_grid_reference_tm65_",
+      "label": "Irish Grid Reference (TM65)",
+      "sortorder": 51,
+      "datatype": "tm65centrepoint",
+      "support": "unsupported"
+    },
+    {
+      "node_alias": "land_use_assessment_end_date",
+      "label": "Land Use Assessment End Date",
+      "sortorder": 52,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "land_use_assessment_start_date",
+      "label": "Land Use Assessment Start Date",
+      "sortorder": 53,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "land_use_classification",
+      "label": "Land Use Classification",
+      "sortorder": 54,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "land_use_notes_language",
+      "label": "Land Use Notes Language",
+      "sortorder": 55,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "land_use_notes_type",
+      "label": "Land Use Notes Type",
+      "sortorder": 56,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "land_use_notes_value",
+      "label": "Land Use Notes Value",
+      "sortorder": 57,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id",
+      "label": "Legacy ID",
+      "sortorder": 58,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id_type",
+      "label": "Legacy ID Type",
+      "sortorder": 59,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "locality_type",
+      "label": "Locality Type",
+      "sortorder": 60,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "locality_value",
+      "label": "Locality Value",
+      "sortorder": 61,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "location_description",
+      "label": "Location Description",
+      "sortorder": 62,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "location_description_type",
+      "label": "Location Description Type",
+      "sortorder": 63,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "named_location",
+      "label": "Named Location",
+      "sortorder": 64,
+      "datatype": "resource-instance",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "national_grid_reference",
+      "label": "National Grid Reference",
+      "sortorder": 65,
+      "datatype": "bngcentrepoint",
+      "support": "unsupported"
+    },
+    {
+      "node_alias": "ownership",
+      "label": "Ownership",
+      "sortorder": 66,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "postcode_type",
+      "label": "Postcode Type",
+      "sortorder": 67,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "postcode_value",
+      "label": "Postcode Value",
+      "sortorder": 68,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "primary_reference_number",
+      "label": "Primary Reference Number",
+      "sortorder": 69,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "primary_reference_number_type",
+      "label": "Primary Reference Number Type",
+      "sortorder": 70,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "priority",
+      "label": "Priority",
+      "sortorder": 71,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "property_status",
+      "label": "Property Status",
+      "sortorder": 72,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "resourceid",
+      "label": "ResourceID",
+      "sortorder": 73,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "resourceid_type",
+      "label": "ResourceID Type",
+      "sortorder": 74,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "shine_form",
+      "label": "SHINE - Form",
+      "sortorder": 75,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "shine_significance",
+      "label": "SHINE - Significance",
+      "sortorder": 76,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "spatial_accuracy_qualifier",
+      "label": "Spatial Accuracy Qualifier",
+      "sortorder": 77,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "spatial_metadata_notes",
+      "label": "Spatial Metadata Notes",
+      "sortorder": 78,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "spatial_metadata_notes_language",
+      "label": "Spatial Metadata Notes Language",
+      "sortorder": 79,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "spatial_metadata_notes_type",
+      "label": "Spatial Metadata Notes Type",
+      "sortorder": 80,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "spatial_record_compilation_type",
+      "label": "Spatial Record Compilation Type",
+      "sortorder": 81,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "spatial_record_update_type",
+      "label": "Spatial Record Update Type",
+      "sortorder": 82,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "street_type",
+      "label": "Street Type",
+      "sortorder": 83,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "street_value",
+      "label": "Street Value",
+      "sortorder": 84,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "sub_soil",
+      "label": "Sub-Soil",
+      "sortorder": 85,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "sub_street_type",
+      "label": "Sub-Street Type",
+      "sortorder": 86,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "sub_street_value",
+      "label": "Sub-Street Value",
+      "sortorder": 87,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "town_or_city_type",
+      "label": "Town or City Type",
+      "sortorder": 88,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "town_or_city_value",
+      "label": "Town or City Value",
+      "sortorder": 89,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "update_date_qualifier",
+      "label": "Update Date Qualifier",
+      "sortorder": 90,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "update_end_date",
+      "label": "Update End Date",
+      "sortorder": 91,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "updater_name",
+      "label": "Updater Name",
+      "sortorder": 92,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "updater_name_currency",
+      "label": "Updater Name Currency",
+      "sortorder": 93,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "updater_name_type",
+      "label": "Updater Name Type",
+      "sortorder": 94,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "updater_name_use_type",
+      "label": "Updater Name Use Type",
+      "sortorder": 95,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "update_start_date",
+      "label": "Update Start Date",
+      "sortorder": 96,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "visitation_rate",
+      "label": "Visitation Rate",
+      "sortorder": 97,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "area_leased",
+      "label": "Area Leased",
+      "sortorder": 98,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "assessment_date",
+      "label": "Assessment Date",
+      "sortorder": 99,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "severity_after_controls",
+      "label": "Severity After Controls",
+      "sortorder": 100,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "date_for_renewal",
+      "label": "Date for Renewal",
+      "sortorder": 101,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "likelihood_after_controls",
+      "label": "Likelihood After Controls",
+      "sortorder": 102,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "sign_off_by",
+      "label": "Sign Off By",
+      "sortorder": 103,
+      "datatype": "resource-instance",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "details_on_file",
+      "label": "Details on file",
+      "sortorder": 104,
+      "datatype": "boolean",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "risk_evaluation_after_contols",
+      "label": "Risk Evaluation After Controls",
+      "sortorder": 105,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "sign_off_date",
+      "label": "Sign Off Date",
+      "sortorder": 106,
+      "datatype": "date",
+      "support": "backend-only"
+    }
+  ]
+}

@@ -36,6 +36,7 @@ STRATEGY_MAP = {
     # Excavation Groups
     EXCAVATION_ADMIN_GROUP: ('excavation_dashboard', ExcavationTaskStrategy),
     EXCAVATION_USER_GROUP: ('excavation_dashboard', ExcavationTaskStrategy),
+    EXCAVATION_CUR_D: ('excavation_dashboard', ExcavationTaskStrategy),
     EXCAVATION_CUR_E: ('excavation_dashboard', ExcavationTaskStrategy),
     # Records and Designation Groups
     SECOND_SURVEY_GROUP_USER: ('designation_dashboard', DesignationTaskStrategy),
@@ -52,8 +53,10 @@ STRATEGY_MAP = {
 def get_strategy(groupId):
     config = STRATEGY_MAP.get(groupId)
 
-    if config:
-        name, strategy_class = config
+    if not config:
+        return None
+
+    name, strategy_class = config
     return {
         'name': name,
         'strategy': strategy_class()

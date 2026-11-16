@@ -1,15 +1,14 @@
-define([
-  'jquery',
-  'underscore',
-  'knockout',
-  'arches',
-  'utils/resource',
-  'utils/report',
-  'templates/views/components/reports/state-care-condition-survey.htm',
-  'views/components/reports/scenes/name',
-  'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils, historicLandscapeCharacterizationReportTemplate) {
-  return ko.components.register('state-care-condition-survey-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import historicLandscapeCharacterizationReportTemplate from 'templates/views/components/reports/state-care-condition-survey.htm';
+import name from 'views/components/reports/scenes/name';
+import json from 'views/components/reports/scenes/json';
+
+export default ko.components.register('state-care-condition-survey-report', {
       viewModel: function(params) {
           var self = this;
           params.configKeys = ['tabs', 'activeTabIndex'];
@@ -36,4 +35,3 @@ define([
       },
       template: historicLandscapeCharacterizationReportTemplate
   });
-});

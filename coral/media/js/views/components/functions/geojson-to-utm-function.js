@@ -1,11 +1,11 @@
-define(['knockout',
-    'knockout-mapping',
-    'views/list',
-    'viewmodels/function',
-    'bindings/chosen',
-    'templates/views/components/functions/geojson-to-utm.htm',
-], function(ko, koMapping, ListView, FunctionViewModel, chosen, geojsonToUtmFunctionTemplate) {
-    return ko.components.register('views/components/functions/geojson-to-utm-function', {
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import ListView from 'views/list';
+import FunctionViewModel from 'viewmodels/function-view-model';
+import chosen from 'bindings/chosen';
+import geojsonToUtmFunctionTemplate from 'templates/views/components/functions/geojson-to-utm.htm';
+
+export default ko.components.register('views/components/functions/geojson-to-utm-function', {
         viewModel: function(params) {
             
             FunctionViewModel.apply(this, arguments);
@@ -79,4 +79,3 @@ define(['knockout',
         },
         template: geojsonToUtmFunctionTemplate
     });
-})

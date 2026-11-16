@@ -1,0 +1,28 @@
+{
+  "graph_slug": "set",
+  "graph_name": "Set",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "title_text",
+      "label": "Title Text",
+      "sortorder": 0,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "nested_sets",
+      "label": "Nested Sets",
+      "sortorder": 1,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "members",
+      "label": "Members",
+      "sortorder": 2,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    }
+  ]
+}

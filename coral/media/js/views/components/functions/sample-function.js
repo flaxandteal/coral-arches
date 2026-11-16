@@ -1,11 +1,10 @@
-define([
-    'jquery',
-    'knockout',
-    'viewmodels/function',
-    'bindings/chosen',
-    'templates/views/components/functions/sample-function.htm',
-], function($, ko, FunctionViewModel, chosen, sampleFunctionTemplate) {
-    return ko.components.register('views/components/functions/sample-function', {
+import $ from 'jquery';
+import ko from 'knockout';
+import FunctionViewModel from 'viewmodels/function-view-model';
+import chosen from 'bindings/chosen';
+import sampleFunctionTemplate from 'templates/views/components/functions/sample-function.htm';
+
+export default ko.components.register('views/components/functions/sample-function', {
         viewModel: function(params) {
              
             FunctionViewModel.apply(this, arguments);
@@ -21,4 +20,3 @@ define([
         },
         template: sampleFunctionTemplate
     });
-});

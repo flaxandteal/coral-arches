@@ -1,3 +1,21 @@
+# Heritage Asset and Consultation ids here follow the graphs as regenerated during
+# the v8 upgrade: they match the live DB, output/output/graphs/resource_models, and
+# the already-migrated add-building / add-monument workflows. coral/pkg/graphs still
+# holds the pre-upgrade ids, so a fresh package load will not line up with this until
+# those are regenerated too. Heritage Asset Revision was not regenerated, so its ids
+# are unchanged.
+#
+# Council and Status Type are now `reference` (controlled list) nodes. A reference
+# tile stores a list of {uri, list_id, labels: [{value, list_item_id, ...}]} rather
+# than a bare option id, so those comparisons go through jsonb_array_elements rather
+# than a `->>` equality.
+#
+# Heritage Asset and Heritage Asset Revision hold their councils in two separate
+# controlled lists, which give the same eleven councils different list item ids. The
+# filter value is therefore the LA code from the label ("LA01"), matched against the
+# label text, so one value works for both models. See get_filter_options in
+# coral/views/dashboards/designation_strategy.py, which produces those codes.
+
 DESIGNATION_SQL_QUERY_CONFIG = {
     "base_sort": {
         'Monument': {
@@ -30,8 +48,8 @@ DESIGNATION_SQL_QUERY_CONFIG = {
         },
         'hb_number': {
             'Monument': {
-                'sql': "'250002fe-3aae-11ef-91fd-0242ac120003' -> 'en' ->> 'value'",
-                'nodegroupid': 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
+                'sql': "'4b9883ef-9aad-559a-bd84-e4bb7b94a358' -> 'en' ->> 'value'",
+                'nodegroupid': 'ebd91984-e3fd-5dcd-b8e0-42d63cda77fc'
             },
             'MonumentRevision': {
                 'sql': "'b6ec253e-3aaf-11ef-a2d0-0242ac120003' -> 'en' ->> 'value'",
@@ -44,8 +62,8 @@ DESIGNATION_SQL_QUERY_CONFIG = {
         },
         'smr_number': {
             'Monument': {
-                'sql': "'158e1ed2-3aae-11ef-a2d0-0242ac120003' -> 'en' ->> 'value'",
-                'nodegroupid': 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
+                'sql': "'d146451b-9140-5f81-b3de-9005acc01e28' -> 'en' ->> 'value'",
+                'nodegroupid': 'ebd91984-e3fd-5dcd-b8e0-42d63cda77fc'
             },
             'MonumentRevision': {
                 'sql': "'59a7f542-3aaf-11ef-a2d0-0242ac120003' -> 'en' ->> 'value'",
@@ -58,8 +76,8 @@ DESIGNATION_SQL_QUERY_CONFIG = {
         },
         'ihr_number': {
             'Monument': {
-                'sql': "'1de9abf0-3aae-11ef-91fd-0242ac120003' -> 'en' ->> 'value'",
-                'nodegroupid': 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
+                'sql': "'0b14fb28-961e-5817-9cac-c61073b58981' -> 'en' ->> 'value'",
+                'nodegroupid': 'ebd91984-e3fd-5dcd-b8e0-42d63cda77fc'
             },
             'MonumentRevision': {
                 'sql': "'7968e094-3aaf-11ef-91fd-0242ac120003' -> 'en' ->> 'value'",
@@ -72,8 +90,8 @@ DESIGNATION_SQL_QUERY_CONFIG = {
         },
         'historic_parks_and_gardens': {
             'Monument': {
-                'sql': "'2c2d02fc-3aae-11ef-91fd-0242ac120003' -> 'en' ->> 'value'",
-                'nodegroupid': 'e71df5cc-3aad-11ef-a2d0-0242ac120003'
+                'sql': "'1edc61a9-b64b-51ae-9077-536908761903' -> 'en' ->> 'value'",
+                'nodegroupid': 'ebd91984-e3fd-5dcd-b8e0-42d63cda77fc'
             },
             'MonumentRevision': {
                 'sql': "'e7ee4eaa-3aaf-11ef-a2d0-0242ac120003' -> 'en' ->> 'value'",
@@ -86,12 +104,21 @@ DESIGNATION_SQL_QUERY_CONFIG = {
         },
     },
     "base_filters": {
+        # Sign Off (a62658ef, formerly Garden Sign Off) with Status Type set to
+        # 'Provisional' (2bd60958) in the sign off status list.
         'Monument': """
             EXISTS (
-                SELECT 1 FROM tiles t2
+                SELECT 1 FROM tiles t2,
+                    jsonb_array_elements(
+                        CASE
+                            WHEN jsonb_typeof(t2.tiledata -> 'e54c9269-5134-5eb2-a592-953c8799776e') = 'array'
+                            THEN t2.tiledata -> 'e54c9269-5134-5eb2-a592-953c8799776e'
+                            ELSE '[]'::jsonb
+                        END
+                    ) AS ref
                 WHERE t2.resourceinstanceid = t_fixed.resourceinstanceid
-                AND t2.nodegroupid = '3897b87a-1902-11ef-aa9f-0242ac150006'
-                AND t2.tiledata ->> '3a0ab672-190b-11ef-aa9c-0242ac150006' = '7f81d135-45ac-483f-96f4-2fa8ca882d79'
+                AND t2.nodegroupid = 'a62658ef-bb95-5dc5-a43f-77118dc1806c'
+                AND ref -> 'labels' -> 0 ->> 'list_item_id' = '2bd60958-34f1-5728-ad88-86cbab10bcb8'
             )
         """,
         'MonumentRevision': """
@@ -107,8 +134,8 @@ DESIGNATION_SQL_QUERY_CONFIG = {
             AND NOT EXISTS (
                 SELECT 1 FROM tiles t2
                 WHERE t2.resourceinstanceid = t_fixed.resourceinstanceid
-                AND t2.nodegroupid = '34959a52-03aa-11ef-948f-0242ac150003'
-                AND t2.tiledata ->> '5ffdc00e-03ad-11ef-948f-0242ac150003' IS NOT NULL
+                AND t2.nodegroupid = '5064f4bf-ecc7-5b16-a998-765c88409fea'
+                AND t2.tiledata ->> '61788794-a20a-5cc9-b30e-9ee0f26d49cd' IS NOT NULL
             )
         """
     },
@@ -116,18 +143,34 @@ DESIGNATION_SQL_QUERY_CONFIG = {
         'council': {
             'Monument': """
                 EXISTS (
-                    SELECT 1 FROM tiles t_filter
+                    SELECT 1 FROM tiles t_filter,
+                        jsonb_array_elements(
+                            CASE
+                                WHEN jsonb_typeof(t_filter.tiledata -> 'f4087433-b7b1-52fd-a1e7-f2f7cb36ef8c') = 'array'
+                                THEN t_filter.tiledata -> 'f4087433-b7b1-52fd-a1e7-f2f7cb36ef8c'
+                                ELSE '[]'::jsonb
+                            END
+                        ) AS ref,
+                        jsonb_array_elements(ref -> 'labels') AS lbl
                     WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
-                    AND t_filter.nodegroupid = '447973ce-d7e2-11ee-a4a1-0242ac120006'
-                    AND t_filter.tiledata ->> '447973ce-d7e2-11ee-a4a1-0242ac120006' = '{filter_value}'
+                    AND t_filter.nodegroupid = 'f4087433-b7b1-52fd-a1e7-f2f7cb36ef8c'
+                    AND lbl ->> 'value' LIKE '{filter_value} - %'
                 )
                 """,
             'MonumentRevision': """
                 EXISTS (
-                    SELECT 1 FROM tiles t_filter
+                    SELECT 1 FROM tiles t_filter,
+                        jsonb_array_elements(
+                            CASE
+                                WHEN jsonb_typeof(t_filter.tiledata -> '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3') = 'array'
+                                THEN t_filter.tiledata -> '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3'
+                                ELSE '[]'::jsonb
+                            END
+                        ) AS ref,
+                        jsonb_array_elements(ref -> 'labels') AS lbl
                     WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
                     AND t_filter.nodegroupid = '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3'
-                    AND t_filter.tiledata ->> '02003ed4-b2b5-4fcc-847b-bc34e7c72ee3' = '{filter_value}'
+                    AND lbl ->> 'value' LIKE '{filter_value} - %'
                 )
                 """,
             'Consultation': """
@@ -139,7 +182,15 @@ DESIGNATION_SQL_QUERY_CONFIG = {
                     AND t_rel.nodegroupid = '58a2b98f-a255-11e9-9a30-00224800b26d'
                     AND EXISTS (
                         SELECT 1
-                        FROM tiles t_council
+                        FROM tiles t_council,
+                            jsonb_array_elements(
+                                CASE
+                                    WHEN jsonb_typeof(t_council.tiledata -> 'f4087433-b7b1-52fd-a1e7-f2f7cb36ef8c') = 'array'
+                                    THEN t_council.tiledata -> 'f4087433-b7b1-52fd-a1e7-f2f7cb36ef8c'
+                                    ELSE '[]'::jsonb
+                                END
+                            ) AS ref,
+                            jsonb_array_elements(ref -> 'labels') AS lbl
                         WHERE
                             t_council.resourceinstanceid IN (
                                 SELECT (value::jsonb->>'resourceId')::uuid
@@ -151,8 +202,8 @@ DESIGNATION_SQL_QUERY_CONFIG = {
                                     END
                                 ) as value
                             )
-                            AND t_council.nodegroupid = '447973ce-d7e2-11ee-a4a1-0242ac120006'
-                            AND t_council.tiledata ->> '447973ce-d7e2-11ee-a4a1-0242ac120006' = '{filter_value}'
+                            AND t_council.nodegroupid = 'f4087433-b7b1-52fd-a1e7-f2f7cb36ef8c'
+                            AND lbl ->> 'value' LIKE '{filter_value} - %'
                     )
             )
                 """,
@@ -162,8 +213,8 @@ DESIGNATION_SQL_QUERY_CONFIG = {
                 EXISTS (
                     SELECT 1 FROM tiles t_filter
                     WHERE t_filter.resourceinstanceid = t_fixed.resourceinstanceid
-                    AND t_filter.nodegroupid = '7e0533aa-37b7-11ef-9263-0242ac150006'
-                    AND t_filter.tiledata ->> '85396d94-37bc-11ef-9263-0242ac150006' IS NOT NULL
+                    AND t_filter.nodegroupid = '5879972a-96d5-51d4-8fbc-f78be2484ce2'
+                    AND t_filter.tiledata ->> '8836a65e-92cb-5330-b468-c6adbe6cc7a5' IS NOT NULL
                 )
                 """,
             'MonumentRevision': """

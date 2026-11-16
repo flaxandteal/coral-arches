@@ -1,0 +1,96 @@
+{
+  "graph_slug": "risk_assessment",
+  "graph_name": "Risk Assessment",
+  "configs": {
+    "search": {
+      "name": "Risk Assessment",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Risk Assessment",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Associated Heritage Assets",
+            "nodegroup_alias": "associated_heritage_assets",
+            "node_aliases": [
+              "associated_heritage_assets"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Details",
+            "nodegroup_alias": "details",
+            "node_aliases": [
+              "property_status",
+              "area_leased",
+              "date_for_renewal",
+              "details_on_file"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Digital Files",
+            "nodegroup_alias": "digital_files",
+            "node_aliases": [
+              "digital_files"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Evaluation",
+            "nodegroup_alias": "evaluation",
+            "node_aliases": [
+              "description",
+              "hazard_identification_and_risk_evaluation_value",
+              "priority",
+              "severity_after_controls",
+              "likelihood_after_controls",
+              "risk_evaluation_after_contols"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Sign Off",
+            "nodegroup_alias": "sign_off",
+            "node_aliases": [
+              "assessment_done_by",
+              "visitation_rate",
+              "assessment_date",
+              "sign_off_by",
+              "sign_off_date"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

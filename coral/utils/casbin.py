@@ -1,16 +1,65 @@
 import hashlib
 import time
 import uuid
-from urllib.parse import parse_qs
+from urllib.parse import parse_qs, urlencode
 from arches.app.search.components.base import SearchFilterFactory
-from arches.app.views.search import build_search
-from arches.app.search.elasticsearch_dsl_builder import Bool, Match, Query, Ids, Nested, Terms, MaxAgg, Aggregation, UpdateByQuery
+from arches.app.search.elasticsearch_dsl_builder import Bool, Match, Query, Ids, Nested, Terms, MaxAgg, Aggregation
 from arches.app.search.search_engine_factory import SearchEngineFactory
 from arches.app.search.mappings import RESOURCES_INDEX
+from django.core.exceptions import ObjectDoesNotExist
 from arches.app.models.models import Plugin
 from arches.app.models.resource import Resource
-from arches_orm.models import Set, LogicalSet, ArchesPlugin
-from arches_orm.adapter import context_free
+from querysets_shim.models import Set, LogicalSet, ArchesPlugin
+from querysets_shim.adapter import context_free
+
+
+def _build_search_from_parameters(parameters):
+    """Build a search DSL from query parameters.
+
+    Replaces the old build_search() that was removed in Arches 8.x.
+    Uses SearchFilterFactory and the search filter components to construct
+    the DSL query, without requiring a real Django request.
+    """
+    from django.test import RequestFactory
+
+    query_string = urlencode(parameters)
+    from django.contrib.auth.models import User
+    from arches.app.utils.permission_backend import get_nodegroups_by_perm
+
+    factory = RequestFactory()
+    fake_request = factory.get(f"/search/resources?{query_string}")
+    # Use a superuser-equivalent so permission checks during DSL building succeed.
+    admin = User.objects.filter(is_superuser=True).first()
+    fake_request.user = admin if admin else User()
+
+    se = SearchEngineFactory().create()
+    search_filter_factory = SearchFilterFactory(fake_request)
+    search_results_object = {"query": Query(se)}
+
+    try:
+        permitted_nodegroups = list(
+            get_nodegroups_by_perm(fake_request.user, "models.read_nodegroup")
+        )
+    except Exception:
+        permitted_nodegroups = []
+
+    for filter_type, querystring in list(fake_request.GET.items()) + [("search-results", "")]:
+        search_filter = search_filter_factory.get_filter(filter_type)
+        if search_filter:
+            search_filter.append_dsl(
+                search_results_object,
+                permitted_nodegroups=permitted_nodegroups,
+                include_provisional=None,
+                # Without this every filter falls back to its own default —
+                # "[]" for resource-type-filter — so the logical set's member
+                # definition was never actually applied, and the empty list left
+                # arches' resource_type_filter reading its loop variable after a
+                # loop that never ran (UnboundLocalError). Matches how arches'
+                # own StandardSearchView invokes the filters.
+                querystring=querystring,
+            )
+
+    return search_results_object["query"]
 
 def _consistent_hash(string: str):
     hsh = hashlib.sha256(string.encode("utf-8"))
@@ -61,14 +110,17 @@ class SetApplicator:
                 """
                 sets = [{"id": str(set_id)}]
             dsl.add_query(bool_query)
-            update_by_query = UpdateByQuery(se=se, query=dsl, script={
-                "lang": "painless",
-                "source": source,
-                "params": {
-                    "logicalSets": sets
+            body = {
+                "query": dsl.dsl["query"],
+                "script": {
+                    "lang": "painless",
+                    "source": source,
+                    "params": {
+                        "logicalSets": sets
+                    }
                 }
-            })
-            results.append(update_by_query.run(index=RESOURCES_INDEX, wait_for_completion=self.synchronous))
+            }
+            results.append(se.es.update_by_query(index=se._add_prefix(RESOURCES_INDEX), body=body, wait_for_completion=self.synchronous))
         return results
 
     @context_free
@@ -83,7 +135,16 @@ class SetApplicator:
         plugins.update({str(plugin.slug): plugin for plugin in plugins.values()})
         arches_plugins = ArchesPlugin.all()
         for ap in arches_plugins:
-            if ap.plugin_identifier and ap.id != _consistent_hash(ap.plugin_identifier):
+            # Compared as strings: _consistent_hash returns a uuid.UUID while
+            # ap.id is a str, so the bare `!=` was always true and every plugin
+            # was deleted and recreated on every run. Deleting a plugin also
+            # strips it from the "Arches Plugins" tile of every Group that
+            # referenced it, so the churn silently wiped workflow permissions —
+            # which stayed invisible only while plugin_identifier itself read
+            # back as None and short-circuited this check.
+            if ap.plugin_identifier and str(ap.id) != str(
+                _consistent_hash(ap.plugin_identifier)
+            ):
                 print("Found a plugin with an incorrect identifier - removing", ap.plugin_identifier, ap.id)
                 ap.delete()
         arches_plugins = ArchesPlugin.all()
@@ -100,7 +161,12 @@ class SetApplicator:
             ap.plugin_identifier = str(plugin.slug or plugin.pk)
             ap.id = _consistent_hash(ap.plugin_identifier)
             ap.save()
-            ap._.index()
+            try:
+                ap._.index()
+            except AttributeError:
+                # querysets_shim's _WrapperMeta doesn't expose .index() yet.
+                # The save() call should trigger Arches's normal indexing path.
+                pass
 
         print("Done with plugins")
 
@@ -112,43 +178,48 @@ class SetApplicator:
         for logical_set in logical_sets:
             if logical_set.member_definition:
                 # user=True is shorthand for "do not restrict by user"
-                parameters = parse_qs(logical_set.member_definition)
+                parameters = parse_qs(str(logical_set.member_definition))
                 for key, value in parameters.items():
                     if len(value) != 1:
                         raise RuntimeError("Each filter type must appear exactly once")
                     parameters[key] = value[0]
                 def _logical_set_query():
-                    _, _, inner_dsl = build_search(
-                        for_export=False,
-                        pages=False,
-                        total=None,
-                        resourceinstanceid=None,
-                        load_tiles=False,
-                        user=True,
-                        provisional_filter=[],
-                        parameters=parameters,
-                        permitted_nodegroups=True # This should be ignored as user==True
-                    )
+                    inner_dsl = _build_search_from_parameters(parameters)
                     return inner_dsl.dsl["query"]
-                if self.print_statistics:
-                    dsl = Query(se=_se)
-                    dsl.add_query(_logical_set_query())
-                    count = dsl.count(index=RESOURCES_INDEX)
-                    print("Logical Set:", logical_set.id)
-                    print("Definition:", logical_set.member_definition)
-                    print("Count:", count)
-                results = self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query, resourceinstanceid=resourceinstanceid)
-                if self.wait:
-                    self.wait_for_completion(_se, results)
-                if self.print_statistics:
-                    dsl = Query(se=_se)
-                    bool_query = Bool()
-                    bool_query.must(Nested(path="sets", query=Terms(field="sets.id", terms=[f"l:{logical_set.id}"])))
-                    if resourceinstanceid:
-                        bool_query.must(Ids(ids=[str(resourceinstanceid)]))
-                    dsl.add_query(bool_query)
-                    count = dsl.count(index=RESOURCES_INDEX)
-                    print("Applies to by search:", count)
+                try:
+                    if self.print_statistics:
+                        dsl = Query(se=_se)
+                        dsl.add_query(_logical_set_query())
+                        count = dsl.count(index=RESOURCES_INDEX)
+                        print("Logical Set:", logical_set.id)
+                        print("Definition:", logical_set.member_definition)
+                        print("Count:", count)
+                    results = self._apply_set(_se, f"l:{logical_set.id}", _logical_set_query, resourceinstanceid=resourceinstanceid)
+                    if self.wait:
+                        self.wait_for_completion(_se, results)
+                    if self.print_statistics:
+                        dsl = Query(se=_se)
+                        bool_query = Bool()
+                        bool_query.must(Nested(path="sets", query=Terms(field="sets.id", terms=[f"l:{logical_set.id}"])))
+                        if resourceinstanceid:
+                            bool_query.must(Ids(ids=[str(resourceinstanceid)]))
+                        dsl.add_query(bool_query)
+                        count = dsl.count(index=RESOURCES_INDEX)
+                        print("Applies to by search:", count)
+                except ObjectDoesNotExist as exc:
+                    # The set's member_definition references data that
+                    # doesn't exist in this environment - a node from a
+                    # resource model the current package build doesn't
+                    # ship, a controlled-list item that isn't loaded here,
+                    # or a stale export from a different graph publication.
+                    # Skip it rather than aborting the whole recalculation
+                    # for every other set.
+                    print(
+                        "Skipping Logical Set", logical_set.id,
+                        f"- its member_definition references data that does not exist here ({exc}):",
+                        logical_set.member_definition,
+                    )
+                    continue
 
         sets = Set.all()
         for regular_set in sets:
@@ -167,11 +238,10 @@ class SetApplicator:
                         self.wait_for_completion(_se, results)
 
     def wait_for_completion(self, _se, results):
-        tasks_client = _se.make_tasks_client()
         while results:
             result = results[0]
             task_id = result["task"]
-            status = tasks_client.get(task_id=task_id)
+            status = _se.es.tasks.get(task_id=task_id)
             if status["completed"]:
                 results.remove(result)
             else:

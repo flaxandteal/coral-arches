@@ -1,0 +1,21 @@
+{
+  "graph_slug": "arches_plugin",
+  "graph_name": "Arches Plugin",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "name",
+      "label": "Name",
+      "sortorder": 0,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "plugin_identifier",
+      "label": "Plugin Identifier",
+      "sortorder": 1,
+      "datatype": "string",
+      "support": "backend-only"
+    }
+  ]
+}

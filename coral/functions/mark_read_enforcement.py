@@ -2,11 +2,12 @@ from arches.app.functions.base import BaseFunction
 from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from arches.app.models import models
+from coral.utils.reference_values import has_list_item
 
 ENFORCEMENT_STATUS_NODEGROUP = "ac823b90-b555-11ee-805b-0242ac120006"
 ENFORCEMENT_STATUS_NODE = "c9711ef6-b555-11ee-baf6-0242ac120006"
 
-ENFORCEMENT_STATUS_CLOSED_VALUE = "f3dcfd61-4b71-4d1d-8cd3-a7abb52d861b"
+ENFORCEMENT_STATUS_CLOSED_VALUE = "3b61556a-4b5e-57d2-84d0-fdbfc080d8a9"
 
 
 details = {
@@ -24,7 +25,7 @@ class MarkReadEnforcement(BaseFunction):
     def post_save(self, tile, request, context):
         resource_instance_id = str(tile.resourceinstance.resourceinstanceid)
 
-        if tile.data.get(ENFORCEMENT_STATUS_NODE) != ENFORCEMENT_STATUS_CLOSED_VALUE:
+        if not has_list_item(tile.data.get(ENFORCEMENT_STATUS_NODE), ENFORCEMENT_STATUS_CLOSED_VALUE):
             return
 
         existing_notification = models.Notification.objects.filter(

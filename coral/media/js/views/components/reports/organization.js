@@ -1,16 +1,15 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/organization.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/contact',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils, organizationReportTemplate) {
-    return ko.components.register('organization-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import organizationReportTemplate from 'templates/views/components/reports/organization.htm';
+import name from 'views/components/reports/scenes/name';
+import contact from 'views/components/reports/scenes/contact';
+import json from 'views/components/reports/scenes/json';
+
+export default ko.components.register('organization-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -166,4 +165,3 @@ define([
         },
         template: organizationReportTemplate
     });
-});

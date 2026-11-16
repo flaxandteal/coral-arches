@@ -1,20 +1,20 @@
-define([
-  'knockout',
-  'proj4',
-  'underscore',
-  'viewmodels/widget',
-  'templates/views/components/widgets/irishGrid.htm'
-], function (ko, proj4, _, WidgetViewModel, tm65pointTemplate) {
-  /**
-   * registers a text-widget component for use in forms
-   * @function external:"ko.components".text-widget
-   * @param {object} params
-   * @param {string} params.value - the value being managed
-   * @param {function} params.config - observable containing config object
-   * @param {string} params.config().label - label to use alongside the text input
-   * @param {string} params.config().placeholder - default text to show in the text input
-   */
-  return ko.components.register('tm65point', {
+import ko from 'knockout';
+import proj4 from 'proj4';
+import _ from 'underscore';
+import WidgetViewModel from 'viewmodels/widget';
+import tm65pointTemplate from 'templates/views/components/widgets/irishGrid.htm';
+
+/**
+ * registers a text-widget component for use in forms
+ * @function external:"ko.components".text-widget
+ * @param {object} params
+ * @param {string} params.value - the value being managed
+ * @param {function} params.config - observable containing config object
+ * @param {string} params.config().label - label to use alongside the text input
+ * @param {string} params.config().placeholder - default text to show in the text input
+ */
+
+export default ko.components.register('tm65point', {
     viewModel: function (params) {
       // CS - The following instantiate the variables and do not execute again after loading
       params.configKeys = ['placeholder'];
@@ -249,7 +249,7 @@ define([
           Z: [4, 0]
         };
 
-        pre = this.tm65Val();
+        var pre = this.tm65Val();
         var gridLettersValueArray = Object.keys(gridSquare);
         if (this.isSelected() === true) {
           this.errorMessage('');
@@ -304,4 +304,3 @@ define([
     },
     template: tm65pointTemplate
   });
-});

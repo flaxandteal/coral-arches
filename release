@@ -1,0 +1,78 @@
+#!/bin/bash
+#
+# Cut a release: bump the version, archive the changelog, PR dev into main.
+#
+#   ./release <major|minor|patch> [--no-pr]
+#
+# --no-pr still commits and pushes the release branch, it just leaves opening the
+# PR to you, and prints the command.
+#
+# Tagging is deliberately not done here — after the PR merges and the main build is
+# green, tag main by hand to deploy to UAT (see README.versioning.md).
+#
+# The version lives only in pyproject.toml; coral/settings.py reads it from there.
+
+set -euo pipefail
+
+CHANGELOG=CHANGELOG.md
+ARCHIVE_DIR=changelogs
+PYPROJECT=pyproject.toml
+
+PART="${1:-}"
+NO_PR="${2:-}"
+
+if [[ ! "$PART" =~ ^(major|minor|patch)$ ]]; then
+    echo "Usage: $0 <major|minor|patch> [--no-pr]"
+    exit 1
+fi
+if [[ -n "$NO_PR" && "$NO_PR" != "--no-pr" ]]; then
+    echo "Unknown option: $NO_PR"
+    exit 1
+fi
+
+# Release is cut from an up-to-date, clean dev.
+[[ -z "$(git status --porcelain)" ]] || { echo "Working tree is dirty."; exit 1; }
+git fetch --quiet origin dev
+[[ "$(git rev-parse HEAD)" == "$(git rev-parse origin/dev)" ]] \
+    || { echo "Not on origin/dev. Check out dev and pull first."; exit 1; }
+
+IFS=. read -r MAJOR MINOR PATCH <<< "$(grep -m1 -oP '(?<=^version = ")[^"]+' "$PYPROJECT")"
+case "$PART" in
+    major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+    minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+    patch) PATCH=$((PATCH + 1)) ;;
+esac
+VERSION="$MAJOR.$MINOR.$PATCH"
+
+echo "Cutting release v$VERSION"
+git switch -c "release/v$VERSION"
+sed -i -E "0,/^version = \"[^\"]+\"/s//version = \"$VERSION\"/" "$PYPROJECT"
+
+# Archive everything under "## Unreleased", then reset it empty.
+{
+    echo "# v$VERSION — $(date +%F)"
+    awk '/^## Unreleased$/ {found=1; next} found' "$CHANGELOG"
+} > "$ARCHIVE_DIR/v$VERSION.md"
+
+awk '
+    /^## Unreleased$/ { print; print ""; print "### Changes"; print ""; print "### Notes"; exit }
+    { print }
+' "$CHANGELOG" > "$CHANGELOG.tmp" && mv "$CHANGELOG.tmp" "$CHANGELOG"
+
+git add "$PYPROJECT" "$CHANGELOG" "$ARCHIVE_DIR/v$VERSION.md"
+git commit -m "release: v$VERSION"
+git push -u origin "release/v$VERSION"
+
+if [[ "$NO_PR" == "--no-pr" ]]; then
+    echo
+    echo "Branch pushed, no PR opened. To open it:"
+    echo "  gh pr create --base main --head release/v$VERSION \\"
+    echo "    --title 'release: v$VERSION' --body-file $ARCHIVE_DIR/v$VERSION.md"
+else
+    gh pr create --base main --head "release/v$VERSION" \
+        --title "release: v$VERSION" --body-file "$ARCHIVE_DIR/v$VERSION.md"
+fi
+
+echo
+echo "After the PR merges and the main build is green, deploy with:"
+echo "  git tag v$VERSION-RELEASE <main commit> && git push origin v$VERSION-RELEASE"

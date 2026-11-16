@@ -1,0 +1,5 @@
+# Dependencies for cypress/seed/seed.py. Pinned exactly: these are pre-release
+# wheels, so an unpinned install would drift to whatever alpha is newest.
+alizarin==2.0.0a116
+alizarin-clm==2.0.0a116
+alizarin-filelist==2.0.0a116

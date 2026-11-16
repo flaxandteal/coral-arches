@@ -1,7 +1,7 @@
 from django.views.generic import View
 from arches.app.utils.response import JSONResponse
 from arches.app.models.resource import Resource
-from arches_orm.adapter import admin
+from querysets_shim.adapter import admin
 import uuid
 
 
@@ -9,7 +9,7 @@ class UserToModel(View):
     def get(self, request):
         user = request.user
 
-        from arches_orm.models import Person, Group
+        from querysets_shim.models import Person, Group
         name = None
 
         with admin():

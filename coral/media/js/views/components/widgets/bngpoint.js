@@ -1,20 +1,20 @@
-define([
-    'knockout',
-    'proj4',
-    'underscore',
-    'viewmodels/widget',
-    'templates/views/components/widgets/bngpoint.htm',
-], function(ko, proj4, _, WidgetViewModel, bngpointTemplate) {
-    /**
-    * registers a text-widget component for use in forms
-    * @function external:"ko.components".text-widget
-    * @param {object} params
-    * @param {string} params.value - the value being managed
-    * @param {function} params.config - observable containing config object
-    * @param {string} params.config().label - label to use alongside the text input
-    * @param {string} params.config().placeholder - default text to show in the text input
-    */
-    return ko.components.register('bngpoint', {
+import ko from 'knockout';
+import proj4 from 'proj4';
+import _ from 'underscore';
+import WidgetViewModel from 'viewmodels/widget';
+import bngpointTemplate from 'templates/views/components/widgets/bngpoint.htm';
+
+/**
+* registers a text-widget component for use in forms
+* @function external:"ko.components".text-widget
+* @param {object} params
+* @param {string} params.value - the value being managed
+* @param {function} params.config - observable containing config object
+* @param {string} params.config().label - label to use alongside the text input
+* @param {string} params.config().placeholder - default text to show in the text input
+*/
+
+export default ko.components.register('bngpoint', {
         viewModel: function(params) {
 
             // CS - The following instantiate the variables and do not execute again after loading 
@@ -362,4 +362,3 @@ define([
         },
         template: bngpointTemplate
     });
-});

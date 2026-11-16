@@ -1,107 +1,82 @@
-# Promoting Coral to a new version
+# Releasing Coral
 
-## Prerequisites 
+Read `README.git.md` first — it covers branch naming, commits and the changelog.
 
-- Recommended to read `README.git.md` before progressing onto this document.
-- Only version up and tag your branch once it is ready to merge. This will prevent version and tag conflicts when attempting to push up the version bump.
-
-## Correct branch and up to date
-
-Make sure your currently on the branch you would like to promote to a new version. Double check you are up to date with the latest `origin/dev`.
+## The flow
 
 ```
-git pull origin/dev
+feat/my-thing ──PR──> dev ──./release──> release/vX.Y.Z ──PR──> main ──tag──> UAT
 ```
 
-## Bumping the Python version
+- **Feature branches PR into `dev`.** Every PR adds its own entry to `CHANGELOG.md`
+  under `## Unreleased`. CI fails the PR if it does not.
+- **`dev` is never versioned.** Builds off dev show the release they descend from
+  plus the commit they were built at, e.g. `v8.1.0+dev.ab12cd34`, on the home page.
+  That is how you tell dev has moved.
+- **A release is cut from `dev`** with `./release`, which bumps the version and PRs
+  into `main`.
+- **`main` is what is released.** Tagging a commit on main deploys it to UAT.
 
-Navigate to `coral/settings.py`. Towards the top of the file you will see:
+## Where the version lives
 
-```
-APP_VERSION = semantic_version.Version(major=3, minor=5, patch=2)
-```
+Only in `pyproject.toml`:
 
-Depending on the level of your change you should increment the correct level of semantic versioning. By this point will have already determined your change objective and put that into your branch name. For example:
-
-### Most common scenarios
-
-- If you have implemented a breaking change that isn't backwards compatible. You should promote `major` to 4 and reset `minor` and `patch` to 0. Resulting in `4.0.0`.
-- If you are working on a feature, `minor` should be bumped to 6.
-- If you are working on a fix, `patch` should be bumped to 3.
-
-### Other conventional commit spec
-
-You can use the other descriptions provided by conventional commits. Just make sure to correctly identify your change within semantic versioning.
-
-- **chore:** can be `major`, `minor` or `patch` depends entirely on your change
-- **docs:** can be `minor`
-- **build:** can be `major`, `minor` or `patch` depends entirely on your change
-- **ci:** can be `major`, `minor` or `patch` depends entirely on your change
-- **perf:** can be `major`, `minor` or `patch` depends entirely on your change
-- **refactor:** can be `major` or `minor` since theres a possibility functionality was broken
-- **style:** can be `patch`
-- **revert:** can be `patch`
-- **test:** can be `patch`
-
-## Committing a new version
-
-After you have updated `settings.py` you will want to make a commit which **only** contains this file. The commit message format should be:
-
-```
-version: v3.5.2
+```toml
+version = "8.1.0"
 ```
 
-## Tagging the new version
+`coral/settings.py` reads it from there, so the displayed version, the Python
+package and the release tag can never drift apart. Do not hand-edit it — `./release`
+owns that line.
 
-Following creation of the new commit you must tag the version that was used **on the same commit the version bump took place**. For example if I used `git log` the most recent commit message should read `version: v3.5.2`. Once you have confirmed your on the right commit run:
+On non-`main` builds, CI writes `coral/BUILD` containing `dev.<short sha>`, and
+settings appends it as semver build metadata: `v8.1.0+dev.ab12cd34`. `main` builds
+are not stamped, so production shows a clean `v8.1.0`.
 
-```
-git tag v3.5.2
-```
+## Cutting a release
 
-## Pushing the changes
-
-That's it complete and you can push up the changes and the newly created tags using:
-
-```
-git push
-git push --tags
-```
-
-# Git utility
-
-To simplify the process, the following git alias is useful for creating the commit and tag at the same time. It works like so:
-
-```
-git ver v3.5.2
-```
-
-Which will create a new commit with the message `version: v3.5.2` and a new tag `v3.5.2`. They can then be pushed up to the repository.
-
-## Functionality
-
-Below is the operation of the version command. You can also use `git ver undo` to revert the version commit and tag.
+From a clean, up-to-date `dev`:
 
 ```bash
-!f() { \
-    if [ "$1" = "undo" ]; then \
-        git reset HEAD^ && git tag -d "$(git describe --tags $(git rev-list --tags --max-count=1))"; \
-    else \
-        git commit -m "version: $1" && git tag "$1"; \
-    fi; \
-}; f
+git switch dev && git pull
+./release minor          # or major / patch
 ```
 
-## Configuring the alias
+That will:
 
-Run the following command to configure the alias onto your git config. If your curious you have a global `.gitconfig` at your user directory usually accessible at `~/.gitconfig`. Have a look with `more ~/.gitconfig` before and after to see the newly added alias.
+1. refuse to run unless you are exactly on `origin/dev` with a clean tree
+2. bump the chosen part of the version in `pyproject.toml`
+3. create `release/vX.Y.Z`
+4. move everything under `## Unreleased` into `changelogs/vX.Y.Z.md`, and reset
+   `CHANGELOG.md` to empty headings
+5. commit `release: vX.Y.Z` and push the branch
+6. open the PR into `main`, using the archived changelog as the PR body
+
+Add `--no-pr` to stop after step 5 and open the PR yourself.
+
+### Which part to bump
+
+Follow semver against what is in the release:
+
+- **major** — breaking change, not backwards compatible
+- **minor** — new features, backwards compatible
+- **patch** — fixes only
+
+## Deploying the release
+
+Tagging is manual and deliberate: the tag is what triggers the UAT deploy
+(`.github/workflows/release.yml` fires on `v*.*.*-RELEASE`).
+
+Once the release PR has merged **and the main build is green** — the deploy retags
+images built from that main commit, so it will fail if the build has not finished:
 
 ```bash
-git config --global alias.ver '!f() { \
-    if [ "$1" = "undo" ]; then \
-        git reset HEAD^ && git tag -d $(git describe --tags $(git rev-list --tags --max-count=1)); \
-    else \
-        git commit -m "version: $1" && git tag "$1"; \
-    fi; \
-}; f'
+git switch main && git pull
+git tag v8.2.0-RELEASE
+git push origin v8.2.0-RELEASE
 ```
+
+## Archived changelogs
+
+`changelogs/` holds one file per release, plus the sprint-named files from the
+previous process.

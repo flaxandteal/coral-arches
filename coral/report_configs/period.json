@@ -1,0 +1,143 @@
+{
+  "graph_slug": "period",
+  "graph_name": "Period",
+  "configs": {
+    "search": {
+      "name": "Period",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Period",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Preferred Period Names",
+            "nodegroup_alias": "period_names",
+            "node_aliases": [
+              "period_name",
+              "period_name_currency_type",
+              "period_name_use_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Alternative Names",
+            "nodegroup_alias": "alternative_names",
+            "node_aliases": [
+              "alternative_name",
+              "alternative_name_currency_type",
+              "alternative_name_use_date_qualifier",
+              "alternative_name_used_by",
+              "alternative_name_use_period_earliest_date",
+              "alternative_name_use_period_latest_date",
+              "alternative_name_use_type",
+              "date_qualifier_metatype_"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Period Descriptions",
+            "nodegroup_alias": "period_descriptions",
+            "node_aliases": [
+              "language_metatype_",
+              "period_description",
+              "period_description_language_type",
+              "period_description_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Parent Period",
+            "nodegroup_alias": "parent_period",
+            "node_aliases": [
+              "parent_period"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Period Types",
+            "nodegroup_alias": "period_type",
+            "node_aliases": [
+              "period_type"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Dates",
+            "nodegroup_alias": "period_dates",
+            "node_aliases": [
+              "earliest_possible_end_date",
+              "earliest_possible_start_date",
+              "latest_possible_end_date",
+              "latest_possible_start_date"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Spatial Extent",
+            "nodegroup_alias": "geometry",
+            "node_aliases": [
+              "feature_shape",
+              "geospatial_coordinates"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "External Cross References",
+            "nodegroup_alias": "external_cross_references",
+            "node_aliases": [
+              "external_cross_reference",
+              "external_cross_reference_description",
+              "external_cross_reference_source",
+              "url"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "System Reference Numbers",
+            "nodegroup_alias": "system_reference_numbers",
+            "node_aliases": [
+              "legacy_id",
+              "primary_reference_number",
+              "resourceid"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Resource Model Type",
+            "nodegroup_alias": "resource_model_type",
+            "node_aliases": [
+              "resource_model_type"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

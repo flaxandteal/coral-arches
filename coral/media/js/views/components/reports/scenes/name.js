@@ -1,12 +1,11 @@
-define([
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/report',
-    'templates/views/components/reports/scenes/name.htm',
-    'bindings/datatable',
-], function(_, ko, arches, reportUtils, nameReportTemplate) {
-    return ko.components.register('views/components/reports/scenes/name', {
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import reportUtils from 'utils/report';
+import nameReportTemplate from 'templates/views/components/reports/scenes/name.htm';
+import datatable from 'bindings/datatable';
+
+export default ko.components.register('views/components/reports/scenes/name', {
         viewModel: function(params) {
             var self = this;
             Object.assign(self, reportUtils);
@@ -234,4 +233,3 @@ define([
         },
         template: nameReportTemplate
     });
-});

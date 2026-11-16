@@ -1,21 +1,12 @@
-define([
-  'knockout',
-  'knockout-mapping',
-  'underscore',
-  'views/list',
-  'viewmodels/function',
-  'bindings/chosen',
-  'templates/views/components/functions/irishgridpoint-to-geojson-function.htm'
-], function (
-  ko,
-  koMapping,
-  underscore,
-  ListView,
-  FunctionViewModel,
-  chosen,
-  tm65pointToGeojsonFunctionTemplate
-) {
-  return ko.components.register('views/components/functions/tm65point-to-geojson-function', {
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import underscore from 'underscore';
+import ListView from 'views/list';
+import FunctionViewModel from 'viewmodels/function-view-model';
+import chosen from 'bindings/chosen';
+import tm65pointToGeojsonFunctionTemplate from 'templates/views/components/functions/irishgridpoint-to-geojson-function.htm';
+
+export default ko.components.register('views/components/functions/tm65point-to-geojson-function', {
     viewModel: function (params) {
       FunctionViewModel.apply(this, arguments);
       var self = this;
@@ -63,4 +54,3 @@ define([
     },
     template: tm65pointToGeojsonFunctionTemplate
   });
-});

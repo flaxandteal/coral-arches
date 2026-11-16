@@ -1,19 +1,19 @@
-define([
-    'knockout', 
-    'underscore', 
-    'viewmodels/widget',
-    'templates/views/components/widgets/sample-widget.htm',
-], function(ko, _, WidgetViewModel, sampleWidgetTemplate) {
-    /**
-    * registers a text-widget component for use in forms
-    * @function external:"ko.components".text-widget
-    * @param {object} params
-    * @param {string} params.value - the value being managed
-    * @param {function} params.config - observable containing config object
-    * @param {string} params.config().label - label to use alongside the text input
-    * @param {string} params.config().placeholder - default text to show in the text input
-    */
-    return ko.components.register('sample-widget', {
+import ko from 'knockout';
+import _ from 'underscore';
+import WidgetViewModel from 'viewmodels/widget';
+import sampleWidgetTemplate from 'templates/views/components/widgets/sample-widget.htm';
+
+/**
+* registers a text-widget component for use in forms
+* @function external:"ko.components".text-widget
+* @param {object} params
+* @param {string} params.value - the value being managed
+* @param {function} params.config - observable containing config object
+* @param {string} params.config().label - label to use alongside the text input
+* @param {string} params.config().placeholder - default text to show in the text input
+*/
+
+export default ko.components.register('sample-widget', {
         viewModel: function(params) {
             /* eslint-disable no-unused-vars */ 
             params.configKeys = ['x_placeholder','y_placeholder'];
@@ -40,4 +40,3 @@ define([
         },
         template: sampleWidgetTemplate,
     });
-});

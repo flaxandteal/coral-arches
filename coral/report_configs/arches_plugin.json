@@ -1,0 +1,42 @@
+{
+  "graph_slug": "arches_plugin",
+  "graph_name": "Arches Plugin",
+  "configs": {
+    "search": {
+      "name": "Arches Plugin",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_search/SearchResults/components/DescriptorSection",
+          "config": {}
+        }
+      ]
+    },
+    "search_result_expanded": {
+      "name": "Arches Plugin",
+      "theme": "default",
+      "components": [
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Name",
+            "nodegroup_alias": "name",
+            "node_aliases": [
+              "name"
+            ]
+          }
+        },
+        {
+          "component": "arches_modular_reports/ModularReport/components/DataSection",
+          "config": {
+            "custom_card_name": "Plugin Identifier",
+            "nodegroup_alias": "plugin_identifier",
+            "node_aliases": [
+              "plugin_identifier"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

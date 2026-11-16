@@ -1,25 +1,24 @@
-define([
-    'jquery',
-    'knockout',
-    'underscore',
-    'dropzone',
-    'uuid',
-    'viewmodels/file-widget',
-    'templates/views/components/widgets/photo.htm',
-    'bindings/gallery',
-    'bindings/dropzone'
-], function($, ko, _, Dropzone, uuid, FileWidgetViewModel, photoWidgetTemplate) {
-    /**
-     * registers a file-widget component for use in forms
-     * @function external:"ko.components".file-widget
-     * @param {object} params
-     * @param {string} params.value - the value being managed
-     * @param {function} params.config - observable containing config object
-     * @param {string} params.config().acceptedFiles - accept attribute value for file input
-     * @param {string} params.config().maxFilesize - maximum allowed file size in MB
-     */
+import $ from 'jquery';
+import ko from 'knockout';
+import _ from 'underscore';
+import Dropzone from 'dropzone';
+import uuid from 'uuid';
+import FileWidgetViewModel from 'viewmodels/file-widget';
+import photoWidgetTemplate from 'templates/views/components/widgets/photo.htm';
+import gallery from 'bindings/gallery';
+import dropzone from 'bindings/dropzone';
 
-    return ko.components.register('photo-widget', {
+/**
+ * registers a file-widget component for use in forms
+ * @function external:"ko.components".file-widget
+ * @param {object} params
+ * @param {string} params.value - the value being managed
+ * @param {function} params.config - observable containing config object
+ * @param {string} params.config().acceptedFiles - accept attribute value for file input
+ * @param {string} params.config().maxFilesize - maximum allowed file size in MB
+ */
+
+export default ko.components.register('photo-widget', {
         viewModel: function(params) {
             params.configKeys = ['acceptedFiles', 'maxFilesize'];
             var self = this;
@@ -96,5 +95,3 @@ define([
         },
         template: photoWidgetTemplate
     });
-
-});

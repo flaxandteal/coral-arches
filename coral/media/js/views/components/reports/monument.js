@@ -1,15 +1,14 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/monument.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils, monumentReportTemplate) {
-    return ko.components.register('monument-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import monumentReportTemplate from 'templates/views/components/reports/monument.htm';
+import name from 'views/components/reports/scenes/name';
+import json from 'views/components/reports/scenes/json';
+
+export default ko.components.register('monument-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -140,4 +139,3 @@ define([
         },
         template: monumentReportTemplate
     });
-});

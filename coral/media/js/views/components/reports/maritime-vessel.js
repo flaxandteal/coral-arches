@@ -1,15 +1,14 @@
-define([
-    'jquery',
-    'underscore',
-    'knockout',
-    'arches',
-    'utils/resource',
-    'utils/report',
-    'templates/views/components/reports/maritime-vessel.htm',
-    'views/components/reports/scenes/name',
-    'views/components/reports/scenes/json'
-], function($, _, ko, arches, resourceUtils, reportUtils, maritimeVesselReport) {
-    return ko.components.register('maritime-vessel-report', {
+import $ from 'jquery';
+import _ from 'underscore';
+import ko from 'knockout';
+import arches from 'arches';
+import resourceUtils from 'utils/resource';
+import reportUtils from 'utils/report';
+import maritimeVesselReport from 'templates/views/components/reports/maritime-vessel.htm';
+import name from 'views/components/reports/scenes/name';
+import json from 'views/components/reports/scenes/json';
+
+export default ko.components.register('maritime-vessel-report', {
         viewModel: function(params) {
             var self = this;
             params.configKeys = ['tabs', 'activeTabIndex'];
@@ -265,4 +264,3 @@ define([
         },
         template: maritimeVesselReport
     });
-});

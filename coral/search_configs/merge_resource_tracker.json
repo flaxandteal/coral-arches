@@ -1,0 +1,119 @@
+{
+  "graph_slug": "merge_resource_tracker",
+  "graph_name": "Merge Resource Tracker",
+  "slug": "filtering",
+  "nodes": [
+    {
+      "node_alias": "actor",
+      "label": "Actor",
+      "sortorder": 0,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "associated_resources",
+      "label": "Associated Resources",
+      "sortorder": 1,
+      "datatype": "resource-instance-list",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "association_type",
+      "label": "Association Type",
+      "sortorder": 2,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "base_resource_data",
+      "label": "Base Resource Data",
+      "sortorder": 3,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "date_of_submission_value",
+      "label": "Date of Submission Value",
+      "sortorder": 4,
+      "datatype": "date",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "date_qualifier",
+      "label": "Date Qualifier",
+      "sortorder": 5,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "description",
+      "label": "Description",
+      "sortorder": 6,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "description_type",
+      "label": "Description Type",
+      "sortorder": 7,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "legacy_id",
+      "label": "Legacy ID",
+      "sortorder": 8,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "legacy_id_type",
+      "label": "Legacy ID Type",
+      "sortorder": 9,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "merged_resource_data",
+      "label": "Merged Resource Data",
+      "sortorder": 10,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "primary_reference_number",
+      "label": "Primary Reference Number",
+      "sortorder": 11,
+      "datatype": "number",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "primary_reference_number_type",
+      "label": "Primary Reference Number Type",
+      "sortorder": 12,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "resourceid",
+      "label": "ResourceID",
+      "sortorder": 13,
+      "datatype": "string",
+      "support": "backend-only"
+    },
+    {
+      "node_alias": "resourceid_type",
+      "label": "ResourceID Type",
+      "sortorder": 14,
+      "datatype": "reference",
+      "support": "renderable"
+    },
+    {
+      "node_alias": "role_type",
+      "label": "Role Type",
+      "sortorder": 15,
+      "datatype": "reference",
+      "support": "renderable"
+    }
+  ]
+}

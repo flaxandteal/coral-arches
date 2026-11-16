@@ -1,13 +1,17 @@
 from coral.functions.notifications.notification_base_strategy import NotificationStrategy
-from arches_orm.adapter import admin
+from querysets_shim.adapter import admin
 class NotificationManager():
     def __init__(self, tile, strategy_registry, request):
-        from arches_orm.models import Person
+        from querysets_shim.models import Person
         with admin():
             if not strategy_registry:
                 raise ValueError("A strategy register must be provided")
             self.request = request
-            persons = Person.where(user_account=request.user.id).get() if request.user else []
+            persons = (
+                Person.where(user_account=request.user.id).get()
+                if request and request.user
+                else []
+            )
             self.user = persons[0] if persons else None
             self.tile = tile
             self.node_group_id = str(tile.nodegroup_id)

@@ -1,122 +1,119 @@
-define([
-    'underscore',
-    'knockout',
-    'knockout-mapping',
-    'uuid',
-    'arches',
-    'viewmodels/card-component',
-    'templates/views/components/cards/default.htm',
-  ], function (_, ko, koMapping, uuid, arches, CardComponentViewModel, componentTemplate) {
-    function viewModel(params) {
+import _ from 'underscore';
+import ko from 'knockout';
+import koMapping from 'knockout-mapping';
+import uuid from 'uuid';
+import arches from 'arches';
+import CardComponentViewModel from 'viewmodels/card-component';
+import componentTemplate from 'templates/views/components/cards/default.htm';
 
-    LICENCE_TIMESPAN_NODEGROUP_ID = "1887f678-c42d-11ee-bc4b-0242ac180006"
-    ISSUE_DATE_NODE = "1887faf6-c42d-11ee-bc4b-0242ac180006"
-    VALID_UNTIL_NODE = "1887fc86-c42d-11ee-bc4b-0242ac180006"
-    
-    LICENCE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
-    LICENCE_NUMBER_VALUE_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
+function viewModel(params) {
 
-    CardComponentViewModel.apply(this, [params]);
+LICENCE_TIMESPAN_NODEGROUP_ID = "1887f678-c42d-11ee-bc4b-0242ac180006"
+ISSUE_DATE_NODE = "1887faf6-c42d-11ee-bc4b-0242ac180006"
+VALID_UNTIL_NODE = "1887fc86-c42d-11ee-bc4b-0242ac180006"
 
-      this.hasLicenceNumber = ko.observable(false)
+LICENCE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
+LICENCE_NUMBER_VALUE_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
 
-      if (this.tile.data[ISSUE_DATE_NODE] && ko.isObservable(this.tile.data[ISSUE_DATE_NODE])) {
-        this.tile.data[ISSUE_DATE_NODE].subscribe(issueDate => {
-          if (this.hasLicenceNumber()) return
-          const validUntilDate = this.addSixMonths(issueDate)
-          this.tile.data[VALID_UNTIL_NODE](validUntilDate)
-        })
-      }
+CardComponentViewModel.apply(this, [params]);
 
-      this.fetchTileData = async (resourceId, nodeId) => {
-        const tilesResponse = await window.fetch(
-          arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
-            (nodeId ? `?nodeid=${nodeId}` : '')
-        );
+  this.hasLicenceNumber = ko.observable(false)
 
-        const data = await tilesResponse.json();
-        return data.tiles;
-      };
-      
-      this.fetchLicenceNumberTile = async () => {
-        const tiles = await this.fetchTileData(this.tile.resourceinstance_id, LICENCE_NUMBER_NODEGROUP);
+  if (this.tile.data[ISSUE_DATE_NODE] && ko.isObservable(this.tile.data[ISSUE_DATE_NODE])) {
+    this.tile.data[ISSUE_DATE_NODE].subscribe(issueDate => {
+      if (this.hasLicenceNumber()) return
+      const validUntilDate = this.addSixMonths(issueDate)
+      this.tile.data[VALID_UNTIL_NODE](validUntilDate)
+    })
+  }
 
-        if (tiles.length === 1){
-          return tiles[0];
-        }
-      };
-      
-      this.checkForLicenceNumberValue = async () => {
-        const licenceNumberTile = await this.fetchLicenceNumberTile()
+  this.fetchTileData = async (resourceId, nodeId) => {
+    const tilesResponse = await window.fetch(
+      arches.urls.resource_tiles.replace('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', resourceId) +
+        (nodeId ? `?nodeid=${nodeId}` : '')
+    );
 
-        if (!licenceNumberTile) {
-          return false
-        }
-        if (licenceNumberTile.data[LICENCE_NUMBER_VALUE_NODE]) {
-          return true;
-        }
-        return false
-      }
+    const data = await tilesResponse.json();
+    return data.tiles;
+  };
 
-      this.checkForLicenceNumberValue().then(result => {
-        this.hasLicenceNumber(result)
-        console.log(result)
-      })
+  this.fetchLicenceNumberTile = async () => {
+    const tiles = await this.fetchTileData(this.tile.resourceinstance_id, LICENCE_NUMBER_NODEGROUP);
 
-      this.addSixMonths = (dateString) => {
-        const date = new Date(dateString);
-
-        date.setMonth(date.getMonth() + 6);
-        date.setDate(date.getDate() - 1);
-      
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-        return `${year}-${month}-${day}`;
-      }
-
-      this.getLatestTile = async () => {
-        try {
-          const tiles = await this.fetchTileData(this.tile.resourceinstance_id, params.nodegroupid);
-  
-          if (!tiles?.length) return;
-  
-          const tile = tiles[0];
-      
-          if (!tile) return;
-  
-          Object.keys(tile.data).forEach((nodeId) => {
-            this.setValue(tile.data[nodeId], nodeId);
-          });
-  
-          this.tile.tileid = tile.tileid;
-  
-          // Reset dirty state
-          this.tile._tileData(koMapping.toJSON(this.tile.data));
-        } catch (err) {
-          console.error('failed fetching tile: ', err);
-        }
-      };
-  
-      this.setValue = (value, nodeId) => {
-        if (ko.isObservable(this.tile.data[nodeId])) {
-          this.tile.data[nodeId](value);
-        } else {
-          this.tile.data[nodeId] = ko.observable();
-          this.tile.data[nodeId](value);
-        }
-      };
-  
-      this.getLatestTile();
+    if (tiles.length === 1){
+      return tiles[0];
     }
+  };
 
-    
-  
-    ko.components.register('fetch-updated-dates', {
-      viewModel: viewModel,
-      template: componentTemplate
-    });
-  
-    return viewModel;
-  });
-  
+  this.checkForLicenceNumberValue = async () => {
+    const licenceNumberTile = await this.fetchLicenceNumberTile()
+
+    if (!licenceNumberTile) {
+      return false
+    }
+    if (licenceNumberTile.data[LICENCE_NUMBER_VALUE_NODE]) {
+      return true;
+    }
+    return false
+  }
+
+  this.checkForLicenceNumberValue().then(result => {
+    this.hasLicenceNumber(result)
+    console.log(result)
+  })
+
+  this.addSixMonths = (dateString) => {
+    const date = new Date(dateString);
+
+    date.setMonth(date.getMonth() + 6);
+    date.setDate(date.getDate() - 1);
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  this.getLatestTile = async () => {
+    try {
+      const tiles = await this.fetchTileData(this.tile.resourceinstance_id, params.nodegroupid);
+
+      if (!tiles?.length) return;
+
+      const tile = tiles[0];
+
+      if (!tile) return;
+
+      Object.keys(tile.data).forEach((nodeId) => {
+        this.setValue(tile.data[nodeId], nodeId);
+      });
+
+      this.tile.tileid = tile.tileid;
+
+      // Reset dirty state
+      this.tile._tileData(koMapping.toJSON(this.tile.data));
+    } catch (err) {
+      console.error('failed fetching tile: ', err);
+    }
+  };
+
+  this.setValue = (value, nodeId) => {
+    if (ko.isObservable(this.tile.data[nodeId])) {
+      this.tile.data[nodeId](value);
+    } else {
+      this.tile.data[nodeId] = ko.observable();
+      this.tile.data[nodeId](value);
+    }
+  };
+
+  this.getLatestTile();
+}
+
+
+
+ko.components.register('fetch-updated-dates', {
+  viewModel: viewModel,
+  template: componentTemplate
+});
+
+export default viewModel;
