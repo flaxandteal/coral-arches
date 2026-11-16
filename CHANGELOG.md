@@ -22,5 +22,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(webpack): production builds keep function names, so workflow steps find their cards again
 
 ### Notes
