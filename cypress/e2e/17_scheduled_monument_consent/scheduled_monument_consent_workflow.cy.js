@@ -152,8 +152,9 @@ describe('Going through the Scheduled Monument Consent Workflow', function () {
     };
 
     // The launcher only lists heritage assets that carry an SMR number.
+    // Picked by kind, not position: the Selected SMC picker renders before this one's template loads.
     const pickHeritageAsset = () => {
-        cy.get('.select2-selection', { timeout: 60000 }).first().click();
+        cy.get('.select2-selection--multiple', { timeout: 60000 }).first().click();
         cy.get('.select2-dropdown', { timeout: 10000 }).should('be.visible');
         cy.get(REAL_OPTIONS, { timeout: 30000 }).first().click();
     };
@@ -400,7 +401,7 @@ describe('Going through the Scheduled Monument Consent Workflow', function () {
         cy.wait('@smcSearch', { timeout: 30000 });
         cy.contains('button', 'Open Selected').should('be.disabled');
 
-        cy.get('.select2-selection').eq(1).click();
+        cy.get('.select2-selection--single').first().click();
         cy.get(REAL_OPTIONS, { timeout: 30000 }).first().click();
         cy.contains('button', 'Open Selected').should('not.be.disabled').click();
 
