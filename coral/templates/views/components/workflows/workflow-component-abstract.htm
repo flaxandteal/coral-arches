@@ -21,7 +21,7 @@
         <!-- /ko -->
 
         <!-- ko if: componentData['tilesManaged'] === "many" && !componentData['noTileSidebar'] -->
-        <!-- ko if: dirty -->
+        <!-- ko if: dirty() || (tile() && tile().dirty()) -->
             <div style="display: flex; justify-content: flex-end; padding: 0 18px;">
                 <button 
                     class="btn btn-workflow-tile btn-danger" 

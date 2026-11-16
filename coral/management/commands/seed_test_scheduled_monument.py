@@ -9,9 +9,12 @@ from arches.app.models.resource import Resource
 from arches.app.models.tile import Tile
 from arches_controlled_lists.models import ListItem
 
+from coral.management.commands.seed_test_issue_report import (
+    HERITAGE_ASSET_GRAPH,
+    HA_SYSTEM_REFERENCE_NODEGROUP,
+    HA_SYSTEM_REFERENCE_NUMBER_NODE,
+)
 from coral.utils.test_seed_guard import require_test_environment
-
-HERITAGE_ASSET_GRAPH = "076f9381-7b00-11e9-8d6b-80000b44d1d9"
 
 # "Designation and Protection Assignment" nodegroup and the "Recommended
 # designation, identification and protection" reference node it holds.
@@ -34,7 +37,12 @@ class Command(BaseCommand):
         parser.add_argument(
             "--resource-id",
             default=None,
-            help="Heritage Asset resourceinstanceid to seed (default: the first one found).",
+            help="Heritage Asset resourceinstanceid to seed (overrides --ha-number).",
+        )
+        parser.add_argument(
+            "--ha-number",
+            default="HA/05",
+            help="HA Number of the Heritage Asset to seed (default: HA/05).",
         )
 
     def handle(self, *args, **options):
@@ -47,13 +55,14 @@ class Command(BaseCommand):
             except (ResourceInstance.DoesNotExist, ValueError):
                 raise CommandError(f"No resource instance '{resource_id}'")
         else:
-            resource = (
-                ResourceInstance.objects.filter(graph_id=HERITAGE_ASSET_GRAPH)
-                .order_by("resourceinstanceid")
-                .first()
-            )
-            if resource is None:
-                raise CommandError("No Heritage Asset resource instances found")
+            system_ref = Tile.objects.filter(
+                nodegroup_id=HA_SYSTEM_REFERENCE_NODEGROUP,
+                resourceinstance__graph_id=HERITAGE_ASSET_GRAPH,
+                **{f"data__{HA_SYSTEM_REFERENCE_NUMBER_NODE}__en__value": options["ha_number"]},
+            ).first()
+            if system_ref is None:
+                raise CommandError(f"No Heritage Asset with HA Number '{options['ha_number']}'")
+            resource = system_ref.resourceinstance
 
         try:
             list_item = ListItem.objects.get(pk=SCHEDULED_MONUMENT_LIST_ITEM)

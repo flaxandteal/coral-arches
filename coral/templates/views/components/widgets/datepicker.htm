@@ -13,7 +13,7 @@
             <div style="display: flex; gap: 8px;">
                 <div class="input-group date">
                     <input type="text" data-bind="value: dateValue, placeholder: placeholder, disable: disabled, attr: {'aria-label': label},
-                        datepicker: {format: dateFormat, viewMode: viewMode, maxDate: maxDate, minDate: minDate}" class="form-control input-lg"
+                        datepicker: {format: dateFormat, viewMode: viewMode, maxDate: maxDate, minDate: minDate}, datepickerClamp: true" class="form-control input-lg"
                         ><span class="input-group-addon date-icon"><i class="fa fa-calendar fa-lg date-icon"></i></span>
                 </div>
                 <button class="btn btn-danger" data-bind="click: () => clearDate()">

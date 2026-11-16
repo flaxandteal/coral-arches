@@ -4,6 +4,39 @@ import _ from 'underscore';
 import WidgetViewModel from 'viewmodels/widget';
 import tm65pointTemplate from 'templates/views/components/widgets/irishGrid.htm';
 
+// WSG84 (long/lat)
+proj4.defs('EPSG:4326', '+proj=longlat +datum=WGS84 +no_defs +type=crs');
+
+// TM75
+proj4.defs(
+  'EPSG:19972',
+  '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +ellps=airy +datum=TM65 +units=m'
+);
+
+proj4.defs(
+  'EPSG:29901',
+  '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1 +x_0=200000 +y_0=250000 +ellps=airy +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs +type=crs'
+);
+// TM65
+proj4.defs(
+  'EPSG:29902',
+  '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +a=6377340.189 +rf=299.3249646 +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs +type=crs'
+);
+proj4.defs(
+  'EPSG:29903',
+  '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +a=6377340.189 +rf=299.3249646 +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs +type=crs'
+);
+
+// ITM style grid references
+proj4.defs(
+  'EPSG:2157',
+  '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=0.99982 +x_0=600000 +y_0=750000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs'
+);
+proj4.defs(
+  'EPSG:9922',
+  '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=0.99982 +x_0=600000 +y_0=750000 +ellps=GRS80 +units=m +vunits=m +no_defs +type=crs'
+);
+
 /**
  * registers a text-widget component for use in forms
  * @function external:"ko.components".text-widget
@@ -34,8 +67,11 @@ export default ko.components.register('tm65point', {
       }
 
       // If changed externally this will update it
+      this.lastWritten = undefined;
       this.value.subscribe((value) => {
-        this.tm65Val(value);
+        if (value !== this.lastWritten) {
+          this.tm65Val(value);
+        }
       });
 
       this.finalGridNumber = function (numberIn) {
@@ -51,9 +87,9 @@ export default ko.components.register('tm65point', {
       this.alphanumericTransform = function (alphaTM65, TM65Keys) {
         // CS - takes an alphanumeric value and ensures it has a valid grid square and 10 numbers in the value string.
         try {
-          var gridSquareLetters = alphaTM65.substring(0, 2);
+          var gridSquareLetters = alphaTM65.substring(0, 1);
           gridSquareLetters = gridSquareLetters.toUpperCase();
-          var gridSquareNumbers = alphaTM65.substring(2);
+          var gridSquareNumbers = alphaTM65.substring(1);
           var gridSquareNumbersSplit = gridSquareNumbers.length / 2;
 
           if (TM65Keys.includes(gridSquareLetters)) {
@@ -85,7 +121,7 @@ export default ko.components.register('tm65point', {
         // CS - Takes an absolute grid reference, checks it only contains numbers, works out the 100km grid quare
         // value and then pads the numerical value to create an Alphanumeric Grid Reference.
         try {
-          var absoluteTM65 = absoluteTM65.replace(',', '');
+          var absoluteTM65 = absoluteTM65.replace(/,/g, '');
           var absoluteTM65AsNumber = Number(absoluteTM65);
           if (isNaN(absoluteTM65AsNumber)) {
             console.log(
@@ -138,42 +174,12 @@ export default ko.components.register('tm65point', {
         // CS - uses the Proj4JS module to reproject long/lat values to an absolute TM65 value and then calls upon the
         // absoluteTM65Transform function to create an Alphanumeric Grid Reference.
 
-        // WSG84 (long/lat)
-        proj4.defs('EPSG:4326', '+proj=longlat +datum=WGS84 +no_defs +type=crs');
-
-        // TM75
-        proj4.defs(
-          'EPSG:19972',
-          '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +ellps=airy +datum=TM65 +units=m'
-        );
-
-        proj4.defs(
-          'EPSG:29901',
-          '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1 +x_0=200000 +y_0=250000 +ellps=airy +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs +type=crs'
-        );
-        // TM65
-        proj4.defs(
-          'EPSG:29902',
-          '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +a=6377340.189 +rf=299.3249646 +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs +type=crs'
-        );
-        proj4.defs(
-          'EPSG:29903',
-          '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=1.000035 +x_0=200000 +y_0=250000 +a=6377340.189 +rf=299.3249646 +towgs84=482.5,-130.6,564.6,-1.042,-0.214,-0.631,8.15 +units=m +no_defs +type=crs'
-        );
-
-        // ITM style grid references
-        proj4.defs(
-          'EPSG:2157',
-          '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=0.99982 +x_0=600000 +y_0=750000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs'
-        );
-        proj4.defs(
-          'EPSG:9922',
-          '+proj=tmerc +lat_0=53.5 +lon_0=-8 +k=0.99982 +x_0=600000 +y_0=750000 +ellps=GRS80 +units=m +vunits=m +no_defs +type=crs'
-        );
-
         var latLongSplit = latLong.split(',');
         var longValue = Number(latLongSplit[0]);
         var latValue = Number(latLongSplit[1]);
+        if (longValue >= 50 && longValue <= 56) {
+          [longValue, latValue] = [latValue, longValue];
+        }
         var longLatCoord = [longValue, latValue];
         try {
           var reprojectOSGBCoords = proj4('EPSG:4326', 'EPSG:29901', longLatCoord);
@@ -220,34 +226,64 @@ export default ko.components.register('tm65point', {
         }
       };
 
+      this.gridSquare = {
+        A: [0, 4],
+        B: [1, 4],
+        C: [2, 4],
+        D: [3, 4],
+        E: [4, 4],
+        F: [0, 3],
+        G: [1, 3],
+        H: [2, 3],
+        J: [3, 3],
+        K: [4, 3],
+        L: [0, 2],
+        M: [1, 2],
+        N: [2, 2],
+        O: [3, 2],
+        P: [4, 2],
+        Q: [0, 1],
+        R: [1, 1],
+        S: [2, 1],
+        T: [3, 1],
+        U: [4, 1],
+        V: [0, 0],
+        W: [1, 0],
+        X: [2, 0],
+        Y: [3, 0],
+        Z: [4, 0]
+      };
+
+      // Reverse of absoluteTM65Transform: J1025169962 -> 310251,369962
+      this.toAbsolute = function (alphaTM65) {
+        var [eastSquare, northSquare] = this.gridSquare[alphaTM65.substring(0, 1)];
+        return eastSquare + alphaTM65.substring(1, 6) + ',' + northSquare + alphaTM65.substring(6);
+      };
+
+      // 7 decimal places (~1cm) so converting it back rounds to the same metre.
+      this.toLongLat = function (alphaTM65) {
+        var [easting, northing] = this.toAbsolute(alphaTM65).split(',');
+        var [long, lat] = proj4('EPSG:29901', 'EPSG:4326', [Number(easting), Number(northing)]);
+        return long.toFixed(7) + ',' + lat.toFixed(7);
+      };
+
+      // Only the alphanumeric value is saved, so show it in whichever format is picked.
+      this.coordFormat.subscribe((format) => {
+        var saved = this.value();
+        if (!saved || !this.validateInput(saved, Object.keys(this.gridSquare))) {
+          return;
+        }
+        if (format === 'Absolute TM65') {
+          this.tm65Val(this.toAbsolute(saved));
+        } else if (format === 'Long/Lat') {
+          this.tm65Val(this.toLongLat(saved));
+        } else {
+          this.tm65Val(saved);
+        }
+      });
+
       this.preview = ko.pureComputed(function () {
-        var gridSquare = {
-          A: [0, 4],
-          B: [1, 4],
-          C: [2, 4],
-          D: [3, 4],
-          E: [4, 4],
-          F: [0, 3],
-          G: [1, 3],
-          H: [2, 3],
-          J: [3, 3],
-          K: [4, 3],
-          L: [0, 2],
-          M: [1, 2],
-          N: [2, 2],
-          O: [3, 2],
-          P: [4, 2],
-          Q: [0, 1],
-          R: [1, 1],
-          S: [2, 1],
-          T: [3, 1],
-          U: [4, 1],
-          V: [0, 0],
-          W: [1, 0],
-          X: [2, 0],
-          Y: [3, 0],
-          Z: [4, 0]
-        };
+        var gridSquare = this.gridSquare;
 
         var pre = this.tm65Val();
         var gridLettersValueArray = Object.keys(gridSquare);
@@ -256,7 +292,7 @@ export default ko.components.register('tm65point', {
         } else {
           if (pre) {
             if (this.coordFormat() === 'Alphanumeric TM65' && pre) {
-              pre = pre.replace(' ', '');
+              pre = pre.replace(/\s/g, '');
               var firstInValue = pre.substring(0, 1);
               if (gridLettersValueArray.includes(firstInValue)) {
                 if (pre.length === 11) {
@@ -268,10 +304,10 @@ export default ko.components.register('tm65point', {
                 pre = '';
               }
             } else if (this.coordFormat() === 'Absolute TM65' && pre) {
-              pre = pre.replace(' ', '');
+              pre = pre.replace(/\s/g, '');
               pre = this.absoluteTM65Transform(pre, gridSquare);
             } else if (this.coordFormat() === 'Long/Lat' && pre) {
-              pre = pre.replace(' ', '');
+              pre = pre.replace(/\s/g, '');
               pre = this.longLatTransform(pre, gridSquare);
             } else if (this.coordFormat() === undefined && pre) {
               this.errorMessage(
@@ -285,11 +321,13 @@ export default ko.components.register('tm65point', {
 
             // Final Validation
             if (this.validateInput(pre, gridLettersValueArray) === true) {
+              this.lastWritten = pre;
               this.value(pre);
               this.errorMessage('');
               this.messageVisible(false);
               return pre;
             } else {
+              this.lastWritten = '';
               this.value('');
               this.errorMessage(
                 'Input coordinate did not pass validation.  Please check it is in one of the approved formats and try again.'

@@ -84,6 +84,9 @@
             "componentConfigs": [
               {
                 "parameters": {
+                  "fields": [["monument_name", "Heritage Asset Name"], ["ha_reference"], ["monument_type", "Heritage Asset Type"], ["townland", "Townland"]],
+                  "noData": "No data available",
+                  "refFallbackLabel": "Heritage Asset Ref Number",
                   "label": "Select Heritage Assets",
                   "graphid": "8d41e49e-a250-11e9-9eab-00224800b26d",
                   "resourceid": "['start-meeting-step']['building'][0]['resourceid']['resourceInstanceId']",
@@ -101,7 +104,7 @@
                   "semanticName": "Heritage Asseets details"
                 },
                 "tilesManaged": "one",
-                "componentName": "get-ha-smc-details",
+                "componentName": "get-selected-monument-details",
                 "uniqueInstanceName": "6cae135a-8a8c-4bbc-92a7-1572a4111bc6"
               },
               {

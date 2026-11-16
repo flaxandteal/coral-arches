@@ -44,7 +44,7 @@ from arches.app.models.system_settings import settings
 from arches.app.models.tile import Tile
 from arches.app.utils.response import JSONResponse
 from arches.app.views.tile import TileData
-import querysets_shim
+import querysets_shim.view_models
 from querysets_shim.wkrm import get_well_known_resource_model_by_graph_id
 from querysets_shim.wrapper import _SemanticNode
 from coral.utils.reference_values import display_value, reference_label

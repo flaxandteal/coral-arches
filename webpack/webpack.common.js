@@ -285,17 +285,25 @@ module.exports = () => {
                     chunks: 'all',
                     maxInitialRequests: 25,
                     maxAsyncRequests: 25,
+                    // Without enforce, commons respects minSize and maxInitialRequests; with it, every
+                    // distinct set of sharing entries got its own chunk and a page loaded ~570 scripts.
+                    minSize: 200000,
                     cacheGroups: {
+                        // Split JavaScript only. Moving CSS into shared chunks changes the order
+                        // stylesheets load in, and library rules then override coral's.
+                        default: false,
+                        defaultVendors: false,
                         vendors: {
                             test: /[\\/]node_modules[\\/]/,
-                            enforce: true, 
+                            type: /javascript/,
+                            name: 'vendors',
                             priority: -10,
                             reuseExistingChunk: true,
                             filename: 'chunks/vendors.[contenthash].js'
                         },
                         commons: {
                             minChunks: 2,
-                            enforce: true, 
+                            type: /javascript/,
                             priority: -20,
                             reuseExistingChunk: true,
                             filename: 'chunks/commons.[contenthash].js'
