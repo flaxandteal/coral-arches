@@ -282,7 +282,7 @@ describe('Issue Report workflow', () => {
             label('monument_name', 'Name');
             cy.get('[aria-label="Name"]').should('be.disabled').should('have.value', 'Testing');
             label('cm_reference_n1', 'CM Reference');
-            cy.get('.widget-wrapper.cm_reference_n1 input').first().should('be.disabled');
+            cy.get('.widget-wrapper.cm_reference_n1 input').first().should('not.be.disabled');
             checkRichText('issue_note', 'Notes');
             checkMultiPicker('damage_type', 'Damage Type', 'Arable Clipping', 'Forestry');
             checkMultiPicker('material_fabric_damage_type', 'Material/Fabric Damage Type', 'Bone', 'Clay');
