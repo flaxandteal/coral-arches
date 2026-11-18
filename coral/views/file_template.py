@@ -143,21 +143,14 @@ class FileTemplateView(View):
         if extract_pdf:
              config['extract_pdf_text'] = []
              pdf_extract = PdfExtract()
-             files = data.get('files')
-             for file in files:
-                filename = file["name"].replace(" ", "_")
-                file_path = os.path.join("uploadedfiles", filename)
-                try:
-                    file = fs.open(file_path)
-                    text = pdf_extract.extract_text(file.read())
-                    config['extract_pdf_text'].append(
-                        { 
-                              'file': file, 
-                              'text': text 
-                        }
-                    )
-                except:
-                    return HttpResponseNotFound(f"No file found")
+             for file in data.get('files', []):
+                # By id: storage rewrites names on upload (brackets dropped, suffix on clashes).
+                stored = models.File.objects.filter(fileid=file.get("file_id")).first()
+                if stored is None:
+                    return HttpResponseNotFound(f"No file found: {file.get('name')}")
+                with stored.path.open("rb") as fh:
+                    text = pdf_extract.extract_text(fh.read())
+                config['extract_pdf_text'].append({'text': text})
 
         self.edit_letter(self.resource, template_dict["provider"], config)
 

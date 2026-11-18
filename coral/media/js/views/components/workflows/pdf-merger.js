@@ -112,25 +112,20 @@ function viewModel(params) {
 
     this.fetchRelatedFiles = async() => {
         const tilesResponse = await window.fetch(
-            arches.urls.related_resources + params.resourceid
+            // Paged at 15 by default, and a consultation's listed buildings can push the response files off page one.
+            arches.urls.related_resources + params.resourceid + '?paginate=false'
         );
         const data = await tilesResponse.json();
-        return data.related_resources.related_resources;
+        return data.related_resources;
     };
 
     this.getFileData = (resource, observable) => {
-        let fileData = null;
-        for (const tile of resource.tiles) {
-            if (this.DIGITAL_OBJECT_FILE_NODE in tile.data) {
-                fileData = tile.data[this.DIGITAL_OBJECT_FILE_NODE];
-                break;
-            }
-        }
-        for(const tile of fileData){
+        const fileTile = resource.tiles.find((tile) => this.DIGITAL_OBJECT_FILE_NODE in tile.data);
+        for(const tile of fileTile?.data[this.DIGITAL_OBJECT_FILE_NODE] ?? []){
             const extension = tile.name.substring(tile.name.lastIndexOf('.') + 1).toLowerCase();
             if (extension == 'pdf'){
                 const file = {
-                    'blob': tile.content,
+                    'file_id': tile.file_id,
                     'url': tile.url,
                     'name': tile.name
                 };
