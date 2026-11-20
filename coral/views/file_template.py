@@ -56,6 +56,28 @@ import os
 logger = logging.getLogger(__name__)
 
 
+BULLETS = "•▪◦‣●○■□➢➤►·*"
+
+
+def starts_with_bullet(line) -> bool:
+    first = line[0]["text"].lstrip()[:1]
+    # Symbol and Wingdings bullets come through as private-use characters.
+    return first != "" and (first in BULLETS or "" <= first <= "")
+
+
+def has_text(line) -> bool:
+    return any(s["text"].strip() for s in line)
+
+
+def ends_short(line, next_line, right_edge) -> bool:
+    """A wrapped line stops only because the next word didn't fit, so one that had room ends a paragraph, heading or row."""
+    end = max(s["x"] + s["width"] for s in line)
+    first = next_line[0]
+    word = first["text"].lstrip().split(" ")[0]
+    word_width = first["width"] * len(word) / max(len(first["text"]), 1)
+    return end + word_width + 5 < right_edge
+
+
 def placeholders(doc) -> set:
     """Every <name> placeholder in the body, tables, headers and footers of a docx."""
     paragraphs = list(doc.paragraphs)
@@ -421,13 +443,23 @@ class FileTemplateView(View):
                 current_y = seg["y"]
         if current_line:
             lines.append(current_line)
-        
-        # For each group (line), add a run per segment:
+        lines = [sorted(line, key=lambda s: s["x"]) for line in lines]
+        right_edge = max((s["x"] + s["width"] for s in segments), default=0)
+
         for i, line in enumerate(lines):
-            # Sort segments by x position for each line
-            line = sorted(line, key=lambda s: s["x"])
-            
+            if not has_text(line):
+                continue
+            if starts_with_bullet(line):
+                # Word's bullets are Symbol-font glyphs that show as a box in the template's font.
+                line[0]["text"] = "• " + line[0]["text"].lstrip()[1:].lstrip()
+
+            prev = None
             for seg in line:
+                # Words in a different font are separate spans, and the PDF keeps the gap, not the space.
+                if (prev and seg["x"] - (prev["x"] + prev["width"]) > 1
+                        and not prev["text"][-1:].isspace() and not seg["text"][:1].isspace()):
+                    paragraph.add_run(" ")
+                prev = seg
                 if seg["text"].startswith("http"):
                     link_text = seg["text"]
                     link_width = seg["x"] + seg["width"]
@@ -462,21 +494,21 @@ class FileTemplateView(View):
                     if seg.get("is_bold"):
                         run.bold = True
 
-            # Determine how to join this line with the next (if any)
-            if i < len(lines) - 1:
+            # A wrapped link empties the lines it swallowed; join to the next line with text,
+            # measuring from the physical line just above it.
+            j = next((k for k in range(i + 1, len(lines)) if has_text(lines[k])), None)
+            if j is not None:
                 current_line_text = "".join(seg["text"] for seg in line)
-                next_line = lines[i + 1] if i < len(lines) - 1 else None
-                if next_line:
-                    next_line_text = "".join(seg["text"] for seg in next_line)
-                current_line_base = min(seg["y"] for seg in line)
-                line_height = max(seg["height"] for seg in line)
-                next_line_base = min(seg["y"] for seg in next_line)
-                gap = next_line_base - current_line_base
+                last, next_line = lines[j - 1], lines[j]
+                next_line_text = "".join(seg["text"] for seg in next_line)
+                line_height = max(seg["height"] for seg in last)
+                gap = min(seg["y"] for seg in next_line) - min(seg["y"] for seg in last)
                 if gap > 2 * line_height:
                     run = paragraph.add_run()
                     run.add_break()
                     run.add_break()
-                elif current_line_text.strip().endswith(":") or re.match(r"^\d+\.", next_line_text):
+                elif (current_line_text.strip().endswith(":") or re.match(r"^\d{1,2}\.\s", next_line_text)
+                        or starts_with_bullet(next_line) or ends_short(last, next_line, right_edge)):
                     paragraph.add_run().add_break()
                 else:
                     paragraph.add_run(" ")
