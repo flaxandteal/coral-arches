@@ -420,7 +420,9 @@ function viewModel(params) {
                     ...docxDefaultOptions,
                     breakPages: true,
                     debug: true,
-                    experimental: true
+                    // Its experimental tab stops count a paragraph's left indent twice, so every
+                    // indented bullet showed a wide gap after the bullet that Word does not.
+                    experimental: false
                 });
 
                 return blob;

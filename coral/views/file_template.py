@@ -28,6 +28,7 @@ from collections.abc import MutableMapping
 import docx
 import textwrap
 from docx import Document
+from docx.shared import Pt
 from docx.text.paragraph import Paragraph
 from docx.oxml.parser import OxmlElement
 from html.parser import HTMLParser
@@ -57,6 +58,7 @@ logger = logging.getLogger(__name__)
 
 
 BULLETS = "•▪◦‣●○■□➢➤►·*"
+BULLET_LEVELS = ["●", "○", "■"]
 
 
 def starts_with_bullet(line) -> bool:
@@ -69,13 +71,66 @@ def has_text(line) -> bool:
     return any(s["text"].strip() for s in line)
 
 
-def ends_short(line, next_line, right_edge) -> bool:
-    """A wrapped line stops only because the next word didn't fit, so one that had room ends a paragraph, heading or row."""
-    end = max(s["x"] + s["width"] for s in line)
+def paragraph_after(paragraph) -> Paragraph:
+    element = OxmlElement("w:p")
+    paragraph._p.addnext(element)
+    added = Paragraph(element, paragraph._parent)
+    added.style = paragraph.style
+    added.paragraph_format.space_after = Pt(0)
+    return added
+
+
+def bullet_levels(lines) -> dict:
+    """Nesting level of each bullet position, outermost first."""
+    positions = sorted({round(line[0]["x"] / 3) for line in lines if starts_with_bullet(line)})
+    return {position: level for level, position in enumerate(positions)}
+
+
+def bullet_level(line, levels) -> int:
+    return levels[round(line[0]["x"] / 3)]
+
+
+def set_indent(paragraph, first, wrapped, margin, levels):
+    """Bullets get a fixed hanging indent per level, as the quartz certificate generator does.
+    Anything else is indented as in the PDF: wrapped lines set the left edge, the first line hangs from it."""
+    if starts_with_bullet(first):
+        text_at = Pt(36 * (bullet_level(first, levels) + 1))
+        paragraph.paragraph_format.left_indent = text_at
+        paragraph.paragraph_format.first_line_indent = Pt(-18)
+        # Not every renderer treats the hanging indent as a tab stop (the docx-preview in the merger
+        # doesn't), so without this the tab after the bullet jumps to the next default stop.
+        paragraph.paragraph_format.tab_stops.clear_all()
+        paragraph.paragraph_format.tab_stops.add_tab_stop(text_at)
+        return
+    left = wrapped[0]["x"] if wrapped else first[0]["x"]
+    paragraph.paragraph_format.left_indent = Pt(left - margin)
+    paragraph.paragraph_format.first_line_indent = Pt(first[0]["x"] - left)
+
+
+def line_end(line) -> float:
+    return max(s["x"] + s["width"] for s in line)
+
+
+def indent(line) -> tuple:
+    return line[0]["page"], round(line[0]["x"] / 3)
+
+
+def right_edges(lines) -> dict:
+    """The right margin per indent on each page: sections of one letter can run to different margins."""
+    edges = {}
+    for line in lines:
+        edges[indent(line)] = max(edges.get(indent(line), 0), line_end(line))
+    return edges
+
+
+def ends_short(line, next_line, edges) -> bool:
+    """A wrapped line stops only because the next word didn't fit, so one that had room ends a paragraph, heading or row.
+    Sections at one indent can still run to different margins, so a lowercase next word is always a continuation."""
     first = next_line[0]
     word = first["text"].lstrip().split(" ")[0]
     word_width = first["width"] * len(word) / max(len(first["text"]), 1)
-    return end + word_width + 5 < right_edge
+    margin = max(edges[indent(line)], edges[indent(next_line)])
+    return not word[:1].islower() and line_end(line) + word_width + 5 < margin
 
 
 def placeholders(doc) -> set:
@@ -389,11 +444,11 @@ class FileTemplateView(View):
             for paragraph in document.paragraphs:
                 if f"<{key}>" in paragraph.text:
                     paragraph.clear()
-                    for file in v:
-                        self.replace_pdf_extract(paragraph, file["text"], tolerance=2)
-                        run = paragraph.add_run()
-                        run.add_break()
-                        run.add_break()
+                    for n, file in enumerate(v):
+                        if n:
+                            paragraph = paragraph_after(paragraph)
+                            paragraph.paragraph_format.space_before = Pt(24)
+                        paragraph = self.replace_pdf_extract(paragraph, file["text"], tolerance=2)
             return
 
         if v and key is not None:
@@ -444,14 +499,25 @@ class FileTemplateView(View):
         if current_line:
             lines.append(current_line)
         lines = [sorted(line, key=lambda s: s["x"]) for line in lines]
-        right_edge = max((s["x"] + s["width"] for s in segments), default=0)
+        edges = right_edges(lines)
+        margin = min((line[0]["x"] for line in lines if has_text(line)), default=0)
+        levels = bullet_levels(lines)
+        first_line = None
+        wrapped = False
 
         for i, line in enumerate(lines):
             if not has_text(line):
                 continue
+            if first_line is None:
+                first_line = line
+                set_indent(paragraph, line, None, margin, levels)
+            elif not wrapped:
+                wrapped = True
+                set_indent(paragraph, first_line, line, margin, levels)
             if starts_with_bullet(line):
                 # Word's bullets are Symbol-font glyphs that show as a box in the template's font.
-                line[0]["text"] = "• " + line[0]["text"].lstrip()[1:].lstrip()
+                # The tab lands on the hanging indent, so the text lines up as it did in the PDF.
+                line[0]["text"] = BULLET_LEVELS[min(bullet_level(line, levels), 2)] + "\t" + line[0]["text"].lstrip()[1:].lstrip()
 
             prev = None
             for seg in line:
@@ -497,21 +563,32 @@ class FileTemplateView(View):
             # A wrapped link empties the lines it swallowed; join to the next line with text,
             # measuring from the physical line just above it.
             j = next((k for k in range(i + 1, len(lines)) if has_text(lines[k])), None)
+            if not wrapped and (j or len(lines)) > i + 1:
+                # The lines a wrapped link swallowed are empty now, but still show where wrapped text sits.
+                wrapped = True
+                set_indent(paragraph, first_line, lines[i + 1], margin, levels)
             if j is not None:
                 current_line_text = "".join(seg["text"] for seg in line)
                 last, next_line = lines[j - 1], lines[j]
                 next_line_text = "".join(seg["text"] for seg in next_line)
                 line_height = max(seg["height"] for seg in last)
                 gap = min(seg["y"] for seg in next_line) - min(seg["y"] for seg in last)
-                if gap > 2 * line_height:
-                    run = paragraph.add_run()
-                    run.add_break()
-                    run.add_break()
-                elif (current_line_text.strip().endswith(":") or re.match(r"^\d{1,2}\.\s", next_line_text)
-                        or starts_with_bullet(next_line) or ends_short(last, next_line, right_edge)):
-                    paragraph.add_run().add_break()
-                else:
+                list_item = starts_with_bullet(next_line) or re.match(r"^\d{1,2}\.\s", next_line_text)
+                # There is no gap to measure across a page break, so a new paragraph there is spaced unless it continues a list.
+                spaced = gap > 1.5 * line_height or (next_line[0]["page"] != last[0]["page"] and not list_item)
+                if (gap > 1.5 * line_height or list_item or current_line_text.strip().endswith(":")
+                        or ends_short(last, next_line, edges)):
+                    paragraph = paragraph_after(paragraph)
+                    paragraph.paragraph_format.space_before = Pt(12 if spaced else 0)
+                    first_line, wrapped = None, False
+                elif re.search(r"\w-\s*$", current_line_text):
+                    # A word split over two lines: join it back up, keeping the hyphen.
+                    if paragraph.runs:
+                        paragraph.runs[-1].text = paragraph.runs[-1].text.rstrip()
+                elif not current_line_text[-1:].isspace():
                     paragraph.add_run(" ")
+
+        return paragraph
 
 
     def insert_image(self, document, k, v, image_path=None, config=None):
