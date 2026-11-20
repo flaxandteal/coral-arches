@@ -34,23 +34,24 @@ class PdfExtract():
 
         return extracted_data 
     
-    def extract_text(self, pdf_bytes, footer_threshold = 750, header_threshold = 100):
+    def extract_text(self, pdf_bytes, footer_threshold = 750):
         data = self.extract_data(pdf_bytes)
         output_data = []
         start_marker = "Section Reference:"
         record = False
 
+        # A running header or footer sits at the same spot on every page; a fixed band cut body text instead.
+        repeated = set()
+        if len(data) > 1:
+            repeated = set.intersection(*({(item["text"], round(item["y"])) for item in page} for page in data))
+
         for page in data:
             page.sort(key=lambda item: item["y"])
             for item in page:
-                text = item["text"]
-                if item["y"] > footer_threshold or item["y"] < header_threshold:
-                    continue
-                if start_marker in text:
+                if start_marker in item["text"]:
                     record = True
-                if record:
-                    output_data.append(item)
-
-        print("THIS", output_data)
+                if not record or item["y"] > footer_threshold or (item["text"], round(item["y"])) in repeated:
+                    continue
+                output_data.append(item)
 
         return output_data
