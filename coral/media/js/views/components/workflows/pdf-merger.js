@@ -302,13 +302,10 @@ function viewModel(params) {
           `resource/${digitalObjectResourceId}/tiles?nodeid=${this.DIGITAL_OBJECT_FILE_CONTENT_NODE}`,
                     context: this,
                     success: async(responseText, status, response) => {
-                        console.log(response.responseJSON);
                         const fileObj = response.responseJSON.tiles[0].data[this.DIGITAL_OBJECT_FILE_NODE][0];
                         fileTiles.push({
-                            tileId: response.responseJSON.tiles[0].tileid,
                             url: fileObj.url,
                             name: fileObj.name
-
                         });
                     },
                     error: (response, status, error) => {
@@ -327,8 +324,14 @@ function viewModel(params) {
             })
         );
 
-        this.uploadedFiles(fileTiles.filter(tile => tile.name.includes('planning-response-combined')));
-        this.uploadedFiles.valueHasMutated();
+        // The requests finish in any order; the name starts with when it was generated (DD-MM-YYYY-HH-MM).
+        const generatedAt = (name) => {
+            const [day, month, year, hour, minute] = name.split('_')[0].split('-');
+            return `${year}${month}${day}${hour}${minute}`;
+        };
+        const combined = fileTiles.filter(file => file.name.includes('planning-response-combined'));
+        combined.sort((a, b) => generatedAt(b.name).localeCompare(generatedAt(a.name)));
+        this.uploadedFiles(combined);
     };
 
     this.getFileTiles();
