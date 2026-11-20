@@ -35,6 +35,7 @@ from html.parser import HTMLParser
 from html.entities import name2codepoint
 from django.core.files.uploadedfile import UploadedFile
 from django.http import HttpRequest, HttpResponseNotFound
+from django.utils.html import escape
 from django.utils.translation import gettext as _
 from django.views.generic import View
 from arches.app.datatypes.datatypes import DataTypeFactory
@@ -224,7 +225,7 @@ class FileTemplateView(View):
                 # By id: storage rewrites names on upload (brackets dropped, suffix on clashes).
                 stored = models.File.objects.filter(fileid=file.get("file_id")).first()
                 if stored is None:
-                    return HttpResponseNotFound(f"No file found: {file.get('name')}")
+                    return HttpResponseNotFound(f"No file found: {escape(file.get('name'))}")
                 with stored.path.open("rb") as fh:
                     text = pdf_extract.extract_text(fh.read())
                 config['extract_pdf_text'].append({'text': text})
