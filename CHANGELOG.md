@@ -22,5 +22,11 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(pdf-merger): uploaded HB/HM response files beyond the first 15 related resources now show in the merger (#946)
+- fix(pdf-merger): uploads with brackets or renamed on clash no longer fail with "No file found" (#946)
+- fix(pdf-merger): letters whose Section Reference sits near the top of the page no longer merge blank (#946)
+- fix(pdf-merger): merged letters keep paragraphs, nested bullets and hanging indents, and rejoin hyphenated words (#946)
+- fix(pdf-merger): preview no longer shows a wide gap after indented bullets (#946)
+- fix(pdf-merger): generated documents are listed newest first (#946)
 
 ### Notes
