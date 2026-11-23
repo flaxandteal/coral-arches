@@ -22,5 +22,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(workflows): Excavation Site Visit shows the licence details, and its launcher lists every site visit by its ESV reference
 
 ### Notes

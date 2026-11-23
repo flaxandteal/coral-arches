@@ -311,9 +311,6 @@
             <!-- ko if: card.widgets().length > 0 -->
             {% block form_widgets %}
             <form class="widgets" style="margin-bottom: 20px;">
-                <div data-bind="foreach: {
-                        data:card.widgets, as: 'widget', noChildContext: true
-                    }">
                 <!-- ko if: selectedResource() -->
                 <div  style="max-width: 600px !important; background: #eee; padding: 8px; border-radius: 6px; margin: 10px 5px 25px 5px; display: flex; flex-direction: column; gap: 12px">
                     <div style="display: flex; flex-direction: column; gap: 4px">
