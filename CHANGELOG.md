@@ -22,5 +22,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- test(cypress): archive cataloguing spec follows its UAT checklist
 
 ### Notes
