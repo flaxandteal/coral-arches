@@ -33,6 +33,18 @@
                         "label": "SMR Number"
                       }
                     }
+                  },
+                  "hiddenNodes": [
+                    "07428674-5020-11ef-b77e-0242ac120006"
+                  ],
+                  "assetDetails": {
+                    "node": "07428674-5020-11ef-b77e-0242ac120006",
+                    "fields": [
+                      [
+                        "smr_number",
+                        "SMR Number"
+                      ]
+                    ]
                   }
                 },
                 "tilesManaged": "one",
