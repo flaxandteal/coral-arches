@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(webpack): production builds keep function names, so workflow steps find their cards again
 - fix(pdf-merger): HB/HM response uploads show however many resources a consultation links, merge even with brackets in the filename or a Section Reference near the top of the page, and keep their paragraphs, nested bullets, hanging indents and hyphenated words; the preview drops the wide gap after bullets, and generated documents list newest first (#946)
 
 ### Notes
