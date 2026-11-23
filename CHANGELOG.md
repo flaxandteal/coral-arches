@@ -23,5 +23,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 - fix(webpack): production builds keep function names, so workflow steps find their cards again
+- fix(letters): SMC, DAERA and agriculture letters save their letter type, so the letter links to the record
 
 ### Notes
+- Letters: run `python manage.py plugin update -s coral/plugins/<name>.json` for `scheduled-monument-consent-workflow`, `daera-workflow`, `agriculture-and-forestry-consultation-workflow` and `assign-consultation-workflow` after migration 8023, or their letter options keep the old ids.
