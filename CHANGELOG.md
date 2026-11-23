@@ -23,7 +23,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 
 ### Changes
 - fix(webpack): production builds keep function names, so workflow steps find their cards again
-- fix(letters): SMC, DAERA and agriculture letters save their letter type, so the letter links to the record
+- fix(pdf-merger): HB/HM response uploads show however many resources a consultation links, merge even with brackets in the filename or a Section Reference near the top of the page, and keep their paragraphs, nested bullets, hanging indents and hyphenated words; the preview drops the wide gap after bullets, and generated documents list newest first (#946)
+- fix(letters): SMC, DAERA and agriculture letters save their letter type, so the letter links to the record (#947)
 
 ### Notes
 - Letters: run `python manage.py plugin update -s coral/plugins/<name>.json` for `scheduled-monument-consent-workflow`, `daera-workflow`, `agriculture-and-forestry-consultation-workflow` and `assign-consultation-workflow` after migration 8023, or their letter options keep the old ids.
