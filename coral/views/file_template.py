@@ -317,7 +317,7 @@ class FileTemplateView(View):
         raise NotImplementedError
 
     def get_template_path(self, template_id):
-        template_dict = {  # keys are valueids from "Letters" concept list; values are known file names
+        template_dict = {  # keys are letter list item ids; values are known file names
              "a01fb4b1-b443-f59b-e086-dd647de66fde": {
                 "filename": "forestry-consult-response-template.docx",
                 "provider": GenericTemplateProvider
@@ -326,20 +326,40 @@ class FileTemplateView(View):
                 "filename": "daera-consultation-response-template.docx",
                 "provider": GenericTemplateProvider
             },
-            "c5562218-ed5f-4468-9efd-656e3337badd": {
+            "55d79e17-cf59-5fb2-9a55-86012d5ef954": {
                 "filename": "daera-ail-consultation-template.docx",
                 "provider": GenericTemplateProvider
             },
-            "7f1e7061-8bb0-4338-9342-118f1e9214aa": {
+            "2c61956c-a885-56a6-8bb4-60de847aeb4b": {
                 "filename": "smc-addendum-template.docx",
                 "provider": GenericTemplateProvider
             },
-            "e14bd058-e9f2-48f8-8ef5-337310c3420f": {
+            "5084c959-7150-523e-8014-922f17b0aca7": {
                 "filename": "smc-provisional-template.docx",
                 "provider": GenericTemplateProvider
             },
-            "8d605e5c-d0da-4b72-9ce3-2f7dac3381d1": {
+            "4ea04e4f-060f-5d0a-9284-80ed920cd38f": {
                 "filename": "smc-refusal-template.docx",
+                "provider": GenericTemplateProvider
+            },
+            "ae2861c8-f456-56ea-91bf-e3b20a5d7776": {
+                "filename": "smc-final-template.docx",
+                "provider": GenericTemplateProvider
+            },
+            "8e412bbc-9551-5d96-8c8a-8d9123b99798": {
+                "filename": "smc-final-no-conditions-template.docx",
+                "provider": GenericTemplateProvider
+            },
+            "fee98aba-72c5-50a0-8ca7-649f48af9832": {
+                "filename": "smc-provisional-no-conditions-template.docx",
+                "provider": GenericTemplateProvider
+            },
+            "b22a920d-b222-519f-abbf-2464fc105e8c": {
+                "filename": "smc-cl-provisional-template.docx",
+                "provider": GenericTemplateProvider
+            },
+            "2b25b081-7d22-505a-904b-f20ae699313d": {
+                "filename": "smc-cl-final-template.docx",
                 "provider": GenericTemplateProvider
             },
             "64865b40-1ab8-d59e-aacf-668b077f0e9a" : {
