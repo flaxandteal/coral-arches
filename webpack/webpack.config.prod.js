@@ -24,6 +24,8 @@ module.exports = () => {
                                     drop_console: true,
                                 },
                                 mangle: true,
+                                // Workflow steps find their card by `constructor.name === 'CardViewModel'`.
+                                keep_fnames: true,
                             },
                         }),
                     ],

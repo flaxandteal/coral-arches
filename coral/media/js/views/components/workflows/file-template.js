@@ -9,7 +9,7 @@ import AlertViewModel from 'viewmodels/alert';
 import template from 'templates/views/components/workflows/file-template.htm';
 import { renderAsync as docxRenderAsync, defaultOptions as docxDefaultOptions } from 'docx-preview';
 import { showSaveFilePicker } from 'native-file-system-adapter';
-import { singleListItemId } from 'utils/reference-values';
+import { singleListItemId, referenceValue } from 'utils/reference-values';
 
 function viewModel(params) {
   CardComponentViewModel.apply(this, [params]);
@@ -120,8 +120,10 @@ function viewModel(params) {
 
   this.saveRelationship = async (resourceId) => {
     const id = uuid.generate();
+    const listItemId = singleListItemId(this.selectedLetterType());
+    const letterType = listItemId ? await referenceValue(listItemId) : null;
 
-    this.tile.data[this.LETTER_TYPE_NODE] = this.selectedLetterType();
+    this.tile.data[this.LETTER_TYPE_NODE] = letterType;
     this.tile.data[this.LETTER_METATYPE] = null;
     this.tile.data[this.LETTER_RESOURCE_NODE] = [
       {
@@ -135,7 +137,7 @@ function viewModel(params) {
     const fileTileTemplate = {
       tileid: '',
       data: {
-        [this.LETTER_TYPE_NODE]: this.selectedLetterType(),
+        [this.LETTER_TYPE_NODE]: letterType,
         [this.LETTER_METATYPE]: null,
         [this.LETTER_RESOURCE_NODE]: [
           {

@@ -112,25 +112,20 @@ function viewModel(params) {
 
     this.fetchRelatedFiles = async() => {
         const tilesResponse = await window.fetch(
-            arches.urls.related_resources + params.resourceid
+            // Paged at 15 by default, and a consultation's listed buildings can push the response files off page one.
+            arches.urls.related_resources + params.resourceid + '?paginate=false'
         );
         const data = await tilesResponse.json();
-        return data.related_resources.related_resources;
+        return data.related_resources;
     };
 
     this.getFileData = (resource, observable) => {
-        let fileData = null;
-        for (const tile of resource.tiles) {
-            if (this.DIGITAL_OBJECT_FILE_NODE in tile.data) {
-                fileData = tile.data[this.DIGITAL_OBJECT_FILE_NODE];
-                break;
-            }
-        }
-        for(const tile of fileData){
+        const fileTile = resource.tiles.find((tile) => this.DIGITAL_OBJECT_FILE_NODE in tile.data);
+        for(const tile of fileTile?.data[this.DIGITAL_OBJECT_FILE_NODE] ?? []){
             const extension = tile.name.substring(tile.name.lastIndexOf('.') + 1).toLowerCase();
             if (extension == 'pdf'){
                 const file = {
-                    'blob': tile.content,
+                    'file_id': tile.file_id,
                     'url': tile.url,
                     'name': tile.name
                 };
@@ -307,13 +302,10 @@ function viewModel(params) {
           `resource/${digitalObjectResourceId}/tiles?nodeid=${this.DIGITAL_OBJECT_FILE_CONTENT_NODE}`,
                     context: this,
                     success: async(responseText, status, response) => {
-                        console.log(response.responseJSON);
                         const fileObj = response.responseJSON.tiles[0].data[this.DIGITAL_OBJECT_FILE_NODE][0];
                         fileTiles.push({
-                            tileId: response.responseJSON.tiles[0].tileid,
                             url: fileObj.url,
                             name: fileObj.name
-
                         });
                     },
                     error: (response, status, error) => {
@@ -332,8 +324,14 @@ function viewModel(params) {
             })
         );
 
-        this.uploadedFiles(fileTiles.filter(tile => tile.name.includes('planning-response-combined')));
-        this.uploadedFiles.valueHasMutated();
+        // The requests finish in any order; the name starts with when it was generated (DD-MM-YYYY-HH-MM).
+        const generatedAt = (name) => {
+            const [day, month, year, hour, minute] = name.split('_')[0].split('-');
+            return `${year}${month}${day}${hour}${minute}`;
+        };
+        const combined = fileTiles.filter(file => file.name.includes('planning-response-combined'));
+        combined.sort((a, b) => generatedAt(b.name).localeCompare(generatedAt(a.name)));
+        this.uploadedFiles(combined);
     };
 
     this.getFileTiles();
@@ -425,7 +423,9 @@ function viewModel(params) {
                     ...docxDefaultOptions,
                     breakPages: true,
                     debug: true,
-                    experimental: true
+                    // Its experimental tab stops count a paragraph's left indent twice, so every
+                    // indented bullet showed a wide gap after the bullet that Word does not.
+                    experimental: false
                 });
 
                 return blob;
