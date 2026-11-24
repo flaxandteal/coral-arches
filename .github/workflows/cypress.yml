@@ -306,6 +306,11 @@ jobs:
           $COMPOSE exec -T arches bash -lc \
             '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_scheduled_monument'
 
+      - name: Seed an HB-numbered building for the Evaluation Meeting spec
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_evaluation_building'
+
       - name: Seed the admin test 2FA (TOTP) device
         run: |
           $COMPOSE exec -T arches bash -lc \
