@@ -22,5 +22,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(workflows): merges complete (the merged asset is marked deleted with the v8 node), the merge map loads, and Relate only offers assets with an SMR number
 
 ### Notes

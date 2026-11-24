@@ -29,7 +29,11 @@ export default ko.components.register('relate-two-monuments-workflow', {
                     graphIds: [
                       '076f9381-7b00-11e9-8d6b-80000b44d1d9' // Monument
                     ],
-                    label: 'Name/SMR of the Heritage Asset'
+                    label: 'Name/SMR of the Heritage Asset',
+                    // Only Heritage Assets with an SMR Number can be related.
+                    searchString: '/search/resources?advanced-search=' + encodeURIComponent(JSON.stringify([
+                      { op: 'and', 'd146451b-9140-5f81-b3de-9005acc01e28': { op: 'not_null', lang: 'en', val: '' } }
+                    ]))
                   }
                 }
               ]
