@@ -178,7 +178,6 @@ describe('Going through the Excavation Site Visit Workflow', function () {
         openLauncher();
         cy.intercept('GET', '/search/resources?paging-filter=*ea059ab7-83d7-11ea-a3c4-f875a44e0e11*').as('visits');
         pickLicence();
-        // The launcher reads every page of site visits before it fills the list.
         cy.wait('@visits');
         cy.wait(3000);
         cy.contains('button', 'Open Selected').should('be.disabled');

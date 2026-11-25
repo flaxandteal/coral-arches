@@ -35,19 +35,13 @@ const openWorkflowViewModel = function (params) {
     return data.tiles;
   };
 
-  // Search pages its results (5 a page by default), so read every page or a licence's later visits never show.
+  // Search returns 5 results unless given a limit; 10000 is Elasticsearch's result window.
   this.searchSiteVisits = async (resourceId) => {
-    const hits = [];
-    for (let page = 1; ; page++) {
-      const searchResponse = await window.fetch(
-        arches.urls.search_results + `?paging-filter=${page}&advanced-search=[{"op"%3A"and"%2C"ea059ab7-83d7-11ea-a3c4-f875a44e0e11"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}%2C{"op"%3A"and"%2C"e7d69603-9939-11ea-9e7f-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A"ESV"}%2C"e7d69604-9939-11ea-baef-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A""}%2C"e7d69602-9939-11ea-b514-f875a44e0e11"%3A{"op"%3A"eq"%2C"val"%3A""}}]&tiles=true&format=json`
-      );
-      const { results } = await searchResponse.json();
-      hits.push(...results.hits.hits);
-      if (!results.hits.hits.length || hits.length >= results.hits.total.value) {
-        return hits;
-      }
-    }
+    const searchResponse = await window.fetch(
+      arches.urls.search_results + `?paging-filter=1&limit=10000&advanced-search=[{"op"%3A"and"%2C"ea059ab7-83d7-11ea-a3c4-f875a44e0e11"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}%2C{"op"%3A"and"%2C"e7d69603-9939-11ea-9e7f-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A"ESV"}%2C"e7d69604-9939-11ea-baef-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A""}%2C"e7d69602-9939-11ea-b514-f875a44e0e11"%3A{"op"%3A"eq"%2C"val"%3A""}}]&tiles=true&format=json`
+    );
+    const { results } = await searchResponse.json();
+    return results.hits.hits;
   };
 
   // Site visits have no Activity Name, so their display name is "Undefined"; label them by their ESV reference.
