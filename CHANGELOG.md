@@ -22,5 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(workflows): State Care Initial Step shows the asset's SMR number locked, and Open Selected lists every survey for the chosen asset
 
 ### Notes
+- State Care: run `python manage.py plugin update -s coral/plugins/state-care-condition-survey-workflow.json` after deploying.

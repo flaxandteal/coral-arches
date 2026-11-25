@@ -1,3 +1,22 @@
+<!-- ko if: inputs -->
+<div class="card-component">
+    <div class="card">
+        <form class="widgets">
+            <!-- ko foreach: {data: showNodes, as: 'labelValue'} -->
+            <div class="row widget-wrapper">
+                <div class="form-group">
+                    <label class="control-label widget-input-label" data-bind="text: labelValue[0]"></label>
+                    <div class="col-xs-12">
+                        <input type="text" class="form-control input-lg widget-input" disabled data-bind="value: labelValue[1], attr: { 'aria-label': labelValue[0] }">
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+        </form>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko ifnot: inputs -->
 <div class="card-component">
     <div
         class="her-final-step-section"
@@ -21,3 +40,4 @@
         </tbody>
     </table>
 </div>
+<!-- /ko -->
