@@ -34,19 +34,13 @@ const openWorkflowViewModel = function (params) {
     return data.tiles;
   };
 
-  // Search pages its results (5 a page by default), so read every page or a building's later meetings never show.
+  // Search returns 5 results unless given a limit; 10000 is Elasticsearch's result window.
   this.searchSiteVisits = async (resourceId) => {
-    const hits = [];
-    for (let page = 1; ; page++) {
-      const searchResponse = await window.fetch(
-        arches.urls.search_results + `?paging-filter=${page}&advanced-search=[{"op"%3A"and"%2C"58a2b98f-a255-11e9-9a30-00224800b26d"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}]&format=json`
-      );
-      const { results } = await searchResponse.json();
-      hits.push(...results.hits.hits);
-      if (!results.hits.hits.length || hits.length >= results.hits.total.value) {
-        return hits;
-      }
-    }
+    const searchResponse = await window.fetch(
+      arches.urls.search_results + `?paging-filter=1&limit=10000&advanced-search=[{"op"%3A"and"%2C"58a2b98f-a255-11e9-9a30-00224800b26d"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}]&format=json`
+    );
+    const { results } = await searchResponse.json();
+    return results.hits.hits;
   };
 
   this.getParentTileOptions = async (resourceId) => {

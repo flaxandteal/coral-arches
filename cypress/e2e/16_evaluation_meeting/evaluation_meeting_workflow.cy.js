@@ -157,7 +157,6 @@ describe('Going through the Evaluation Meeting Workflow', function () {
         openLauncher();
         cy.intercept('GET', '/search/resources?paging-filter=*58a2b98f-a255-11e9-9a30-00224800b26d*').as('meetings');
         pickBuilding();
-        // The launcher reads every page of meetings before it fills the list.
         cy.wait('@meetings');
         cy.wait(3000);
         cy.then(() => {
