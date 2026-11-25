@@ -14,21 +14,3 @@
         }
     } --><!-- /ko -->
 <!-- /ko -->
-<!-- ko if: assetDetails().length -->
-<div class="card-component">
-    <div class="card">
-        <form class="widgets">
-            <!-- ko foreach: assetDetails -->
-            <div class="row widget-wrapper">
-                <div class="form-group">
-                    <label class="control-label widget-input-label" data-bind="text: label"></label>
-                    <div class="col-xs-12">
-                        <input type="text" class="form-control input-lg widget-input" disabled data-bind="value: value, attr: { 'aria-label': label }">
-                    </div>
-                </div>
-            </div>
-            <!-- /ko -->
-        </form>
-    </div>
-</div>
-<!-- /ko -->

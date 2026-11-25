@@ -124,7 +124,7 @@ describe('Going through the State Care Condition Survey Workflow', function () {
         cy.contains('Associated Heritage Asset', { timeout: 90000 });
         cy.contains('Please select the Heritage Asset being surveyed');
         cy.wait('@smr', { timeout: 90000 }).then(({ response }) => {
-            survey.smr = Object.values(response.body)[0].smr_number[0];
+            survey.smr = response.body.smr_number[0];
             cy.get('input[aria-label="SMR Number"]', { timeout: 30000 }).should('be.disabled').and('have.value', survey.smr);
         });
         cy.get(FOOTER).should('contain.text', 'Next Step').and('not.contain.text', 'Previous Step').and('not.contain.text', 'Save');

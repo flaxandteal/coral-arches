@@ -36,33 +36,6 @@ function viewModel(params) {
     });
   };
 
-  // assetDetails: { node, fields: [[alias, label]] } shows those values of the Heritage Asset in `node` as locked text.
-  self.assetDetails = ko.observableArray();
-  if (params.assetDetails) {
-    const { node, fields } = params.assetDetails;
-    const showDetails = async (value) => {
-      const resourceIds = (ko.unwrap(value) || []).map((ref) => ko.unwrap(ref.resourceId));
-      if (!resourceIds.length) {
-        self.assetDetails([]);
-        return;
-      }
-      const response = await $.ajax({
-        type: 'POST',
-        url: arches.urls.orm || '/orm/resources',
-        dataType: 'json',
-        data: { resourceids: resourceIds, show_nodes: fields.map(([alias]) => alias) }
-      });
-      self.assetDetails(
-        fields.map(([alias, label]) => ({
-          label,
-          value: resourceIds.flatMap((id) => response[id]?.[alias] || []).join(', ')
-        }))
-      );
-    };
-    // The step swaps in the saved tile after loading, so follow self.tile() rather than the first tile's observable.
-    ko.computed(() => showDetails(ko.unwrap(self.tile()?.data?.[node])));
-  }
-
   const card = params.form.card();
   if (card) {
     applyWidgetCustomisations(card.widgets());
