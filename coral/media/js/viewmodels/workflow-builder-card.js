@@ -12,7 +12,6 @@ import relatedDocumentUpload from 'views/components/workflows/related-document-u
 import fileTemplate from 'views/components/workflows/file-template';
 import pdfMerger from 'views/components/workflows/pdf-merger';
 import getSelectedMonumentDetails from 'views/components/workflows/fmw-workflow/get-selected-monument-details';
-import getSelectedLicenceDetails from 'views/components/workflows/excavation-site-visit-workflow/get-selected-licence-details';
 import getDesignationDetails from 'views/components/workflows/evaluation-meeting-workflow/get-designation-details';
 import calculateCompositeScore from 'views/components/workflows/fmw-workflow/calculate-composite-score';
 

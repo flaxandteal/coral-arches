@@ -125,18 +125,37 @@
               },
               {
                 "parameters": {
-                  "labels": [
-                    [
-                      "Associated Licences",
-                      "Licence Number"
-                    ]
-                  ],
                   "graphid": "b9e0701e-5463-11e9-b5f5-000d3ab1e588",
                   "resourceid": "['initial-step-step']['system-reference'][0]['resourceid']['resourceInstanceId']",
-                  "nodegroupid": "ef26a827-f384-5e21-b92c-0414220a1c76"
+                  "nodegroupid": "ea059ab7-83d7-11ea-a3c4-f875a44e0e11",
+                  "node": "ea059ab7-83d7-11ea-a3c4-f875a44e0e11",
+                  "hiddenNodes": [
+                    "ea059ab7-83d7-11ea-a3c4-f875a44e0e11"
+                  ],
+                  "model": "License",
+                  "fields": [
+                    [
+                      "licence_number_value",
+                      "Licence Number"
+                    ],
+                    [
+                      "associated_activities",
+                      "Site Name"
+                    ],
+                    [
+                      "cm_reference_number",
+                      "CM Number"
+                    ],
+                    [
+                      "licensee",
+                      "Licensee(s)",
+                      ", "
+                    ]
+                  ],
+                  "noData": "No data available"
                 },
                 "tilesManaged": "one",
-                "componentName": "get-selected-licence-details",
+                "componentName": "get-selected-monument-details",
                 "uniqueInstanceName": "licence-resource"
               },
               {
