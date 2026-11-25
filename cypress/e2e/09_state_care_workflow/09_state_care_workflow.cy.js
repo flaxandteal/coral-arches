@@ -243,7 +243,6 @@ describe('Going through the State Care Condition Survey Workflow', function () {
         cy.then(() => {
             cy.intercept('GET', '/search/resources?paging-filter=*07428674-5020-11ef-b77e-0242ac120006*').as('surveys');
             pickHeritageAsset(ASSET);
-            // The launcher reads every page of surveys before it fills the list.
             cy.wait('@surveys');
             cy.wait(3000);
             cy.get('.select2-selection[aria-label^="Selected State Care Condition Survey"]', { timeout: 30000 }).first().click();
