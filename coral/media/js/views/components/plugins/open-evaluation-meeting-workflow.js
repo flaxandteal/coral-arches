@@ -34,12 +34,13 @@ const openWorkflowViewModel = function (params) {
     return data.tiles;
   };
 
+  // Search returns 5 results unless given a limit; 10000 is Elasticsearch's result window.
   this.searchSiteVisits = async (resourceId) => {
     const searchResponse = await window.fetch(
-        arches.urls.search_results + `?advanced-search=[{"op"%3A"and"%2C"58a2b98f-a255-11e9-9a30-00224800b26d"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}]&format=json`
-    )
-    const data = await searchResponse.json()
-    return data.results.hits.hits;
+      arches.urls.search_results + `?paging-filter=1&limit=10000&advanced-search=[{"op"%3A"and"%2C"58a2b98f-a255-11e9-9a30-00224800b26d"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}]&format=json`
+    );
+    const { results } = await searchResponse.json();
+    return results.hits.hits;
   };
 
   this.getParentTileOptions = async (resourceId) => {
