@@ -22,5 +22,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(letters): SMC letters fetch only their placeholders, so generation no longer times out
 
 ### Notes
