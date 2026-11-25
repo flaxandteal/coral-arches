@@ -7,7 +7,6 @@ import AlertViewModel from 'viewmodels/alert';
 import CardComponentViewModel from 'viewmodels/card-component';
 import mapConfigurator from 'utils/map-configurator';
 import mapPopupProvider from 'utils/map-popup-provider';
-import template from 'viewmodels/map';
 import heritageAssetMapTemplate from 'templates/views/components/workflows/merge-workflow/heritage-asset-map.htm';
 import MapViewModel from 'viewmodels/map';
 import ResourceInstanceSelectViewModel from 'viewmodels/resource-instance-select';
@@ -329,7 +328,7 @@ function viewModel(params) {
 
 ko.components.register('heritage-asset-map', {
   viewModel: viewModel,
-  template: template
+  template: heritageAssetMapTemplate
 });
 
 export default viewModel;

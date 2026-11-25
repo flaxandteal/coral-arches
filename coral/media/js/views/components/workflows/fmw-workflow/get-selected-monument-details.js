@@ -26,11 +26,13 @@ import template from 'templates/views/components/workflows/fmw-workflow/get-sele
     this.labels = params.labels || [];
 
     // [alias, label, join?]: no join renders one span per value; REFERENCE marks the ref row.
+    // `model` names the resource model the node links to (orm.py's MODELS); Heritage Asset by default.
     const fields = params.fields || DEFAULT_FIELDS;
     const noData = params.noData || 'No data available';
     const refFallbackLabel = params.refFallbackLabel || 'Heritage Asset Ref Number';
+    const hasReference = fields.some(([alias]) => alias === REFERENCE);
     const showNodes = [
-      ...HERITAGE_ASSET_REFS.map(([alias]) => alias),
+      ...(hasReference ? HERITAGE_ASSET_REFS.map(([alias]) => alias) : []),
       ...fields.map(([alias]) => alias).filter((alias) => alias !== REFERENCE)
     ];
 
@@ -69,7 +71,7 @@ import template from 'templates/views/components/workflows/fmw-workflow/get-sele
         type: 'POST',
         url: arches.urls.orm || '/orm/resources',
         dataType: 'json',
-        data: { resourceids: resourceIds, show_nodes: showNodes }
+        data: { resourceids: resourceIds, show_nodes: showNodes, model: params.model || 'Monument' }
         });
       } catch (error) {
         this.selectedMonuments([]);

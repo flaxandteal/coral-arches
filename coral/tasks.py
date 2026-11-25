@@ -55,17 +55,17 @@ def merge_resources_task(
     )
     deleted_tiles = Tile.objects.filter(
                 resourceinstance_id=merge_resource_id,
-                nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2",
+                nodegroup_id="da365f6b-7334-56c5-8bb7-54d4fa834a5f",
             )
     if deleted_tiles.exists():
         for tile in deleted_tiles:
-            tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
+            tile.data["da365f6b-7334-56c5-8bb7-54d4fa834a5f"] = True
             tile.save()
     else:
         deleted_tile = Tile.get_blank_tile_from_nodegroup_id(
-                nodegroup_id="98bd23cd-0923-4d5b-8c84-4269e92887d2", resourceid=merge_resource_id
+                nodegroup_id="da365f6b-7334-56c5-8bb7-54d4fa834a5f", resourceid=merge_resource_id
             )
-        deleted_tile.data["98bd23cd-0923-4d5b-8c84-4269e92887d2"] = True
+        deleted_tile.data["da365f6b-7334-56c5-8bb7-54d4fa834a5f"] = True
         deleted_tile.save()
 
 @shared_task
