@@ -9,7 +9,6 @@ import enforcementSummaryStep from 'views/components/workflows/enforcement-workf
 import relatedDocumentUpload from 'views/components/workflows/related-document-upload';
 import fileTemplate from 'views/components/workflows/file-template';
 import getSelectedMonumentDetails from 'views/components/workflows/fmw-workflow/get-selected-monument-details';
-import getSelectedLicenceDetails from 'views/components/workflows/excavation-site-visit-workflow/get-selected-licence-details';
 import calculateCompositeScore from 'views/components/workflows/fmw-workflow/calculate-composite-score';
 import generateHaNumber from 'views/components/workflows/generate-ha-number';
 import generateSmrNumber from 'views/components/workflows/generate-smr-number';

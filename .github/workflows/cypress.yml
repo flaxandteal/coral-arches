@@ -306,6 +306,14 @@ jobs:
           $COMPOSE exec -T arches bash -lc \
             '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_scheduled_monument'
 
+      - name: Seed a granted Licence for the Excavation Site Visit launcher
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_licence'
+      - name: Seed two throwaway Heritage Assets for the Merge workflow spec
+        run: |
+          $COMPOSE exec -T arches bash -lc \
+            '. /web_root/ENV/bin/activate && python /web_root/${ARCHES_PROJECT}/manage.py seed_test_merge_pair'
       - name: Seed a Heritage Asset for the HA Designation spec
         run: |
           $COMPOSE exec -T arches bash -lc \
