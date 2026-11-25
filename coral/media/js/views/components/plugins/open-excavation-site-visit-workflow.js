@@ -6,6 +6,8 @@ import uuid from 'uuid';
 import OpenWorkflow from 'viewmodels/open-workflow';
 import pageTemplate from 'templates/views/components/plugins/open-excavation-site-visit-workflow.htm';
 
+const ESV_REFERENCE_NODE = 'e7d69603-9939-11ea-9e7f-f875a44e0e11';
+
 const openWorkflowViewModel = function (params) {
   OpenWorkflow.apply(this, [params]);
   this.OPEN_WORKFLOW_CONFIG = 'open-workflow-config';
@@ -33,20 +35,25 @@ const openWorkflowViewModel = function (params) {
     return data.tiles;
   };
 
+  // Search returns 5 results unless given a limit; 10000 is Elasticsearch's result window.
   this.searchSiteVisits = async (resourceId) => {
     const searchResponse = await window.fetch(
-        arches.urls.search_results + `?advanced-search=[{"op"%3A"and"%2C"ea059ab7-83d7-11ea-a3c4-f875a44e0e11"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}%2C{"op"%3A"and"%2C"e7d69603-9939-11ea-9e7f-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A"ESV"}%2C"e7d69604-9939-11ea-baef-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A""}%2C"e7d69602-9939-11ea-b514-f875a44e0e11"%3A{"op"%3A"eq"%2C"val"%3A""}}]&format=json`
-    )
-    const data = await searchResponse.json()
-    return data.results.hits.hits;
+      arches.urls.search_results + `?paging-filter=1&limit=10000&advanced-search=[{"op"%3A"and"%2C"ea059ab7-83d7-11ea-a3c4-f875a44e0e11"%3A{"op"%3A""%2C"val"%3A["${resourceId}"]}}%2C{"op"%3A"and"%2C"e7d69603-9939-11ea-9e7f-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A"ESV"}%2C"e7d69604-9939-11ea-baef-f875a44e0e11"%3A{"op"%3A"~"%2C"lang"%3A"en"%2C"val"%3A""}%2C"e7d69602-9939-11ea-b514-f875a44e0e11"%3A{"op"%3A"eq"%2C"val"%3A""}}]&tiles=true&format=json`
+    );
+    const { results } = await searchResponse.json();
+    return results.hits.hits;
   };
+
+  // Site visits have no Activity Name, so their display name is "Undefined"; label them by their ESV reference.
+  const siteVisitReference = (hit) =>
+    hit?._source?.tiles?.find((tile) => tile.data?.[ESV_REFERENCE_NODE])?.data[ESV_REFERENCE_NODE]?.en?.value;
 
   this.getParentTileOptions = async (resourceId) => {
     const tiles = await this.searchSiteVisits(resourceId);
     this.parentTileOptions(
       tiles.map((tile, idx) => {
         return {
-          text: tile?._source.displayname,
+          text: siteVisitReference(tile) || tile?._source.displayname,
           tile: tile,
           id: tile._id
         };

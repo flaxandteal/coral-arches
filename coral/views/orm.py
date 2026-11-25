@@ -1,29 +1,35 @@
 from django.views.generic import View
-from django.http import JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from urllib.parse import parse_qs
 from querysets_shim.adapter import admin
 from coral.utils.reference_values import display_value
 
 RESOURCE_INSTANCE_DATATYPES = ("resource-instance", "resource-instance-list")
+# Reads run as admin, so only models whose details panels need it.
+MODELS = ("Monument", "License")
 
 
 class ORM(View):
     def post(self, request):
-        from querysets_shim.models import Monument
+        from querysets_shim import models
         from querysets_shim.values import EMPTY, descriptor_names, related_resource_ids, values_by_resource
 
         data = parse_qs(request.body.decode())
         many = "resourceids[]" in data
         resourceids = data["resourceids[]"] if many else [data["resourceid"][0]]
         aliases = data["show_nodes[]"]
+        model_name = data.get("model", ["Monument"])[0]
+        if model_name not in MODELS:
+            return HttpResponseBadRequest(f"Unknown model {model_name}")
+        model = getattr(models, model_name)
 
         with admin():
             datatypes = {
                 alias: node.datatype
-                for alias, node in Monument._._node_objects_by_alias().items()
+                for alias, node in model._._node_objects_by_alias().items()
                 if alias in aliases
             }
-            all_values = values_by_resource(Monument, resourceids, aliases)
+            all_values = values_by_resource(model, resourceids, aliases)
             related = {
                 alias: {
                     target

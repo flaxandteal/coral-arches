@@ -33,11 +33,31 @@
                         "label": "SMR Number"
                       }
                     }
-                  }
+                  },
+                  "hiddenNodes": [
+                    "07428674-5020-11ef-b77e-0242ac120006"
+                  ]
                 },
                 "tilesManaged": "one",
                 "componentName": "workflow-builder-initial-step",
                 "uniqueInstanceName": "e769c1dc-f1ca-4982-bf7e-f7e2ee344dea"
+              },
+              {
+                "parameters": {
+                  "graphid": "c0098070-d052-4449-982b-952507306c03",
+                  "nodegroupid": "07428674-5020-11ef-b77e-0242ac120006",
+                  "semanticName": "SMR Number",
+                  "inputs": true,
+                  "showNodes": [
+                    [
+                      "SMR Number",
+                      "smr_number"
+                    ]
+                  ]
+                },
+                "tilesManaged": "one",
+                "componentName": "show-nodes",
+                "uniqueInstanceName": "state-care-smr-number"
               }
             ]
           }
