@@ -6,17 +6,18 @@ import arches from 'arches';
 import componentTemplate from 'templates/views/components/workflows/licensing-workflow/fetch-generated-licence-number.htm';
 import AlertViewModel from 'viewmodels/alert';
 import Cookies from 'js-cookie';
+import { hasListItem } from 'utils/reference-values';
 
 function viewModel(params) {
   this.LICENCE_NUMBER_NODE = '9a9e198c-c502-11ee-af34-0242ac180006';
 
   this.STATUS_NODEGROUP = '4f0f655c-48cf-11ee-8e4e-0242ac140007';
   this.STATUS_NODE = 'a79fedae-bad5-11ee-900d-0242ac180006';
-  this.STATUS_FINAL_VALUE = '8c454982-c470-437d-a9c6-87460b07b3d9';
+  this.STATUS_FINAL_VALUE = '1b180b5b-14e9-5361-91db-5f13e95ea176';
 
   this.CUR_D_DECISION_NODEGROUP = 'c9f504b4-c42d-11ee-94bf-0242ac180006';
   this.CUR_D_DECISION_NODE = '2a5151f0-c42e-11ee-94bf-0242ac180006';
-  this.CUR_D_DECISION_APPROVED_VALUE = '0c888ace-b068-470a-91cb-9e5f57c660b4';
+  this.CUR_D_DECISION_APPROVED_VALUE = '696f00b1-e806-59f0-916d-dc8a39c2ed6c';
 
   const self = this;
   self.params = params
@@ -123,26 +124,26 @@ function viewModel(params) {
     let tile = null;
     switch (self.tile().nodegroup_id) {
       case this.STATUS_NODEGROUP:
-        if (self.tile().data[this.STATUS_NODE]() !== this.STATUS_FINAL_VALUE) {
+        if (!hasListItem(ko.toJS(self.tile().data[this.STATUS_NODE]), this.STATUS_FINAL_VALUE)) {
           params.form.complete(true);
           params.form.saving(false);
           return;
         }
         tile = await this.fetchDecisionTile();
-        if (!tile || tile.data[this.CUR_D_DECISION_NODE] !== this.CUR_D_DECISION_APPROVED_VALUE) {
+        if (!tile || !hasListItem(tile.data[this.CUR_D_DECISION_NODE], this.CUR_D_DECISION_APPROVED_VALUE)) {
           params.form.complete(true);
           params.form.saving(false);
           return;
         }
         break;
       case this.CUR_D_DECISION_NODEGROUP:
-        if (self.tile().data[this.CUR_D_DECISION_NODE]() !== this.CUR_D_DECISION_APPROVED_VALUE) {
+        if (!hasListItem(ko.toJS(self.tile().data[this.CUR_D_DECISION_NODE]), this.CUR_D_DECISION_APPROVED_VALUE)) {
           params.form.complete(true);
           params.form.saving(false);
           return;
         }
         tile = await this.fetchStatusTile();
-        if (!tile || tile.data[this.STATUS_NODE] !== this.STATUS_FINAL_VALUE) {
+        if (!tile || !hasListItem(tile.data[this.STATUS_NODE], this.STATUS_FINAL_VALUE)) {
           params.form.complete(true);
           params.form.saving(false);
           return;

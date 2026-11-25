@@ -468,6 +468,7 @@ function viewModel(params) {
       countyId
     }
   ) => {
+    const countyDisplay = self.getValueFromTiles(tileData, countyId)?.display;
     self.setAddressValues(addressee, {
       fullAddress: self.getValueFromTiles(tileData, fullAddressId)?.value,
       buildingNumberSubSt: self.getValueFromTiles(tileData, buildingNumberSubStId)?.value,
@@ -478,7 +479,8 @@ function viewModel(params) {
       buildingNumber: self.getValueFromTiles(tileData, buildingNumberId)?.value,
       streetName: self.getValueFromTiles(tileData, streetNameId)?.value,
       locality: self.getValueFromTiles(tileData, localityId)?.value,
-      county: self.getValueFromTiles(tileData, countyId)?.value
+      // County is a reference now, so take its display label rather than the raw value.
+      county: countyDisplay ? createTextObject(countyDisplay) : null
     });
   };
 
@@ -487,16 +489,7 @@ function viewModel(params) {
     try {
       const licenceTiles = await self.fetchTileData(self.resourceId());
 
-      const licenceNo = self.getValueFromTiles(
-        licenceTiles,
-        '280b75bc-4e4d-11ee-a340-0242ac140007',
-        (tile) => {
-          return (
-            tile.data?.['280b7a9e-4e4d-11ee-a340-0242ac140007'] ===
-            '9a383c95-b795-4d76-957a-39f84bcee49e'
-          );
-        }
-      );
+      const licenceNo = self.getValueFromTiles(licenceTiles, '9a9e198c-c502-11ee-af34-0242ac180006');
       if (licenceNo) {
         self.coverLetterData.licenceNumber(licenceNo.value);
       }
@@ -601,16 +594,8 @@ function viewModel(params) {
         if (siteName) {
           self.coverLetterData.siteName(siteName.value);
         }
-        const cmReference = self.getValueFromTiles(
-          activityTiles,
-          '589d4dc7-edf9-11eb-9856-a87eeabdefba',
-          (tile) => {
-            return (
-              tile.data?.['589d4dcd-edf9-11eb-8a7d-a87eeabdefba'] ===
-              '19afd557-cc21-44b4-b1df-f32568181b2c'
-            );
-          }
-        );
+        // The licence holds its own CM reference; the activity's cross-references have no CM source in v8.
+        const cmReference = self.getValueFromTiles(licenceTiles, 'b84fb182-bad2-11ee-b3f2-0242ac180006');
         if (cmReference) {
           self.coverLetterData.cmReference(cmReference.value);
         }
@@ -624,13 +609,13 @@ function viewModel(params) {
           buildingNumberId: 'a541b925-f121-11eb-9264-a87eeabdefba',
           streetNameId: 'a541b927-f121-11eb-8377-a87eeabdefba',
           localityId: 'a541b930-f121-11eb-a30c-a87eeabdefba',
-          countyId: 'a541e034-f121-11eb-8803-0242ac120003'
+          countyId: '5928bafc-a522-5561-beae-82d12670fbfe'
         });
       }
 
       const acknowledgedDate = self.getValueFromTiles(
         licenceTiles,
-        '0a914884-48b4-11ee-90a8-0242ac140007'
+        'ed16bb80-5d4a-11ee-9b75-0242ac130003'
       );
       if (acknowledgedDate) {
         self.coverLetterData.dates.acknowledged(acknowledgedDate.value);
@@ -638,7 +623,7 @@ function viewModel(params) {
 
       const receivedDate = self.getValueFromTiles(
         licenceTiles,
-        '6b96c722-48c7-11ee-ba3a-0242ac140007'
+        '58880bd6-5d4a-11ee-9b75-0242ac130003'
       );
       if (receivedDate) {
         self.coverLetterData.dates.received(receivedDate.value);

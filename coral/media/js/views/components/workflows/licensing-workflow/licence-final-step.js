@@ -25,10 +25,10 @@ function viewModel(params) {
       label: 'Contacts',
       nodegroupId: '6d290832-5891-11ee-a624-0242ac120004',
       renderNodeIds: [
-        '6d292f88-5891-11ee-a624-0242ac120004',
-        '6d2924b6-5891-11ee-a624-0242ac120004',
-        '6d294784-5891-11ee-a624-0242ac120004',
-        '6d292a2e-5891-11ee-a624-0242ac120004'
+        '6d2924b6-5891-11ee-a624-0242ac120004', // Applicant
+        '6d294784-5891-11ee-a624-0242ac120004', // Licensee
+        '07d3905c-d58b-11ee-a02f-0242ac180006', // Employing Body
+        '6d293532-5891-11ee-a624-0242ac120004' // Planning Officer
       ]
     },
     dates: {
@@ -37,17 +37,18 @@ function viewModel(params) {
     },
     status: {
       label: 'Application Status',
-      nodegroupId: 'ee5947c6-48b2-11ee-abec-0242ac140007'
+      nodegroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+      renderNodeIds: ['a79fedae-bad5-11ee-900d-0242ac180006']
     },
-    decisionMadeBy: {
-      label: 'Decision',
-      nodegroupId: '2749ea5a-48cb-11ee-be76-0242ac140007',
-      renderNodeIds: [
-        '4c58921e-48cc-11ee-9081-0242ac140007',
-        '25f04f6c-48cd-11ee-94b3-0242ac140007',
-        'f3dcbf02-48cb-11ee-9081-0242ac140007',
-        'f6c207ae-5938-11ee-9e74-0242ac130007'
-      ]
+    curDDecision: {
+      label: 'Cur D Decision',
+      nodegroupId: 'c9f504b4-c42d-11ee-94bf-0242ac180006',
+      renderNodeIds: ['2a5151f0-c42e-11ee-94bf-0242ac180006']
+    },
+    gradeEDecision: {
+      label: 'Grade E Decision',
+      nodegroupId: '69f2eb3c-c430-11ee-94bf-0242ac180006',
+      renderNodeIds: ['a68fa38c-c430-11ee-bc4b-0242ac180006']
     },
     report: {
       label: 'Report',
@@ -85,8 +86,8 @@ function viewModel(params) {
     },
     excavationType: {
       label: 'Excavation Type',
-      nodegroupId: '6e071042-5d45-11ee-88b0-0242ac120008',
-      renderNodeIds: ['6e071042-5d45-11ee-88b0-0242ac120008']
+      nodegroupId: '4f0f655c-48cf-11ee-8e4e-0242ac140007',
+      renderNodeIds: ['8f87fdae-2d50-11ef-bbfd-0242ac120006']
     },
     communication: {
       label: 'Email',
@@ -149,7 +150,6 @@ function viewModel(params) {
       nodegroupId: 'a5416b3d-f121-11eb-85b4-a87eeabdefba',
       renderNodeIds: [
         'a5419224-f121-11eb-9ca7-a87eeabdefba',
-        'a541e034-f121-11eb-8803-0242ac120003',
         'a541e030-f121-11eb-aaf7-a87eeabdefba',
         'a541e029-f121-11eb-802c-a87eeabdefba',
         'a541e027-f121-11eb-ba26-a87eeabdefba',

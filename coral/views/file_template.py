@@ -362,19 +362,19 @@ class FileTemplateView(View):
                 "filename": "smc-cl-final-template.docx",
                 "provider": GenericTemplateProvider
             },
-            "64865b40-1ab8-d59e-aacf-668b077f0e9a" : {
+            "024aef5e-7cac-bc66-e4bb-ed3ca35f2fa5" : {
                 "filename": "licence-covering-letter.docx",
                 "provider": GenericTemplateProvider
             },
-            "e3a1469c-ae0e-7a59-2e25-09c036647e89": {
+            "a81e9843-5379-aacc-650a-db41650b14e7": {
                 "filename": "final-report-letter.docx",
                 "provider": GenericTemplateProvider,
             },
-            "a346c0f8-7be6-4a7c-da2c-aef42b02ee26": {
+            "5faadd4f-7d73-77f9-6396-b60c7c4e4762": {
                 "filename": "extra-name-on-letter.docx",
                 "provider": GenericTemplateProvider,
             },
-            "28e3fbdd-8dc8-4fb9-e378-91df6776e065": {
+            "c177c7cd-fd3b-7aeb-07b2-6d0b217a04db": {
                 "filename": "extension-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
             },
@@ -386,11 +386,11 @@ class FileTemplateView(View):
                 "filename": "advance-listing-letter-to-council.docx",
                 "provider": GenericTemplateProvider,
             },
-            "28faad65-2403-b0b9-3ba8-bbbc99efd175": {
+            "34ba34f1-e4c3-a9d8-687f-f7f2f5dafacf": {
                 "filename": "overdue-excavations-report-letter.docx",
                 "provider": GenericTemplateProvider,
             },
-            "f08c5baf-4434-ac59-a02c-e692ae79d455": {
+            "d37e88e6-4f15-4a85-d04b-0674dfece04f": {
                 "filename": "transfer-of-licence-letter.docx",
                 "provider": GenericTemplateProvider,
             },
