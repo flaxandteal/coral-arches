@@ -362,6 +362,10 @@
                     }
                   ],
                   "config": {
+                    "fetch": "placeholders",
+                    "expand": [
+                      "related_monuments_and_areas"
+                    ],
                     "special": {
                       "today": "today",
                       "user": "user"
