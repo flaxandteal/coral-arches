@@ -25,6 +25,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): State Care Initial Step shows the asset's SMR number locked, and Open Selected lists every survey for the chosen asset
 - test(cypress): archive cataloguing spec follows its UAT checklist
 - fix(workflows): Excavation Site Visit shows the licence details, and its launcher lists every site visit by its ESV reference
+- fix(workflows): merges complete (the merged asset is marked deleted with the v8 node), the merge map loads, and Relate only offers assets with an SMR number
 
 ### Notes
 - State Care: run `python manage.py plugin update -s coral/plugins/state-care-condition-survey-workflow.json` after deploying.

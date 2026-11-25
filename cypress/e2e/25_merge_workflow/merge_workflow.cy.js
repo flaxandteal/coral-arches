@@ -1,124 +1,124 @@
 describe('Going through the Merge Workflow', function () {
+    const container = Cypress.env('CORAL_CONTAINER');
+
+    // Seeded by seed_test_merge_pair. A merge consumes them, so locally the spec reseeds first.
+    const BASE = 'HA/90 Merge Test Base';
+    const OTHER = 'HA/91 Merge Test Other';
+    // Seeded assets swapped in and out to show a selection is replaced.
+    const SPARE = 'SMR-TEST-004 Testing';
+
+    const FOOTER = '.tabbed-workflow-footer-button-container';
+    const REAL_OPTIONS = '.select2-results__option:not(.loading-results):not(.select2-results__option--load-more):not(.select2-results__message)';
+    const CALENDAR = '.bootstrap-datetimepicker-widget';
+
+    const pad = (n) => String(n).padStart(2, '0');
+    const now = new Date();
+    const todayString = () => `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()}`;
+
+    before(() => {
+        // CI seeds the pair in the workflow; locally the spec reseeds the stack it runs against.
+        if (!container) return;
+        cy.exec(
+            `docker exec -e CORAL_ALLOW_TEST_SEED=1 ${container} sh -c ` +
+            `"[ -f /web_root/ENV/bin/activate ] && . /web_root/ENV/bin/activate; cd /web_root/coral 2>/dev/null || cd /app; ` +
+            `python manage.py seed_test_merge_pair"`,
+            { timeout: 180000, failOnNonZeroExit: true }
+        );
+    });
 
     beforeEach(() => {
         cy.login();
     });
 
-    // Merge Workflow (coral/media/js/views/components/plugins/merge-workflow.js)
-    // irreversibly merges one Heritage Asset's data into another - its own
-    // "Approval" step text warns "This process cannot easily be undone".
-    // To avoid ever touching shared fixture resources (e.g. the "Garden
-    // Test" HAs other specs in this suite depend on), this test creates two
-    // brand-new, uniquely-named, throwaway Heritage Assets via the Add
-    // Garden workflow first and merges those instead. Only the Start step
-    // is required on Add Garden, so everything past Site Name is skipped to
-    // keep setup fast - reaching "Save and Complete Workflow" is what
-    // actually gets the resource indexed and searchable for the merge
-    // picker (see coral/management/commands/seed_test_scheduled_monument.py
-    // for the same reindex-before-search requirement in a different context).
-    const createThrowawayHeritageAsset = (siteName) => {
-        cy.visit('/plugins/init-workflow');
-        cy.contains('Workflows').should('be.visible');
-        cy.contains('Add Garden').click();
-        cy.wait(2000);
-        cy.get('.btn-success').contains('Start New').click();
-
-        cy.wait(2500);
-        cy.get('.card_component.resourceid').contains('HA Number').should('be.visible');
-        cy.workflowNext();
-
-        cy.contains('Site Name').should('be.visible');
-        cy.get('[aria-label="Site Name"]').click().type(siteName);
-        cy.workflowNext();
-
-        cy.workflowNext(); // Location Details - not required, nothing filled
-        cy.workflowNext(); // Map - manually tested, see 01_add_garden
-        cy.get('.bord-top > .btn').contains('Select Files').click();
-        cy.workflowNext(); // Digital Files
-
-        cy.wait(2000);
-        cy.get('.form-control.input-lg').first().click();
-        cy.get('.card_component.input_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
-        cy.get('.form-control.input-lg').eq(1).click();
-        cy.get('.card_component.gar_approved_date_value > .row > .form-group > .col-xs-12 > :nth-child(1) > .input-group > .input-group-addon').click();
-
-        cy.get('.workflow-top-control > .btn-success').contains('Save and Complete Workflow').click();
-        cy.wait(3000);
+    const footer = ({ previous = true, next = false, save = false }) => {
+        const has = (text, present) => cy.get(FOOTER, { timeout: 30000 })
+            .should(present ? 'contain.text' : 'not.contain.text', text);
+        has('Previous Step', previous);
+        has('Next Step', next);
+        has('Save and Continue', save);
     };
+    const info = (heading, text) => {
+        cy.contains(heading, { timeout: 60000 });
+        cy.contains(text);
+    };
+    const picker = (label) => cy.get(`[aria-label="${label}"] + .select2 .select2-selection`, { timeout: 60000 }).first();
+    const pick = (label, name) => {
+        picker(label).click();
+        cy.select2Search(name);
+        cy.get(REAL_OPTIONS, { timeout: 30000 }).contains(name).click();
+        picker(label).should('contain.text', name);
+    };
+    const tabsDisabledAfter = (count) => cy.get('.workflow-nav-tab.disabled').should('have.length', count);
 
-    it('Merge two Heritage Assets and go through the workflow', function () {
-        const suffix = Date.now();
-        const baseName = `Merge Test Base ${suffix}`;
-        const mergeName = `Merge Test Merge ${suffix}`;
+    it('Merges one Heritage Asset into another', function () {
+        cy.visit('/plugins/merge-workflow', { timeout: 180000 });
 
-        createThrowawayHeritageAsset(baseName);
-        createThrowawayHeritageAsset(mergeName);
+        // Search: nothing to do until a base asset is chosen.
+        info('Base Resource', 'The resource selected here will take priority during the merge.');
+        cy.contains('label', 'Base Heritage Asset');
+        footer({ previous: false, next: true });
+        cy.get(FOOTER).contains('button', 'Next Step').should('have.class', 'disabled');
+        tabsDisabledAfter(5);
 
-        // Merge Workflow has config.show=false like Relate Heritage Assets,
-        // so it's reached by direct URL rather than the workflow tile list.
-        cy.visit('/plugins/merge-workflow');
-        cy.wait(2000);
+        // A second pick replaces the first.
+        pick('Base Heritage Asset', SPARE);
+        pick('Base Heritage Asset', BASE);
+        picker('Base Heritage Asset').should('not.contain.text', SPARE);
+        footer({ previous: false, save: true });
+        cy.contains('button', 'Save and Continue').click();
 
-        // Search tab - select-resource-id widgets, not the usual
-        // relationship picker, so they're driven with select2Search.
-        cy.contains('Base Heritage Asset').should('be.visible');
-        cy.get('.select2-selection').first().click();
-        cy.select2Search(baseName);
-        cy.get('.select2-results__option').contains(baseName).click();
-        cy.wait(2000);
+        // Merging
+        info('Merge Resource', 'Data from this resource will be merged into the base resource');
+        cy.contains('label', 'Merge Heritage Asset');
+        footer({ next: true });
+        cy.get(FOOTER).contains('button', 'Next Step').should('have.class', 'disabled');
+        pick('Merge Heritage Asset', SPARE);
+        pick('Merge Heritage Asset', OTHER);
+        picker('Merge Heritage Asset').should('not.contain.text', SPARE);
+        footer({ save: true });
+        cy.contains('button', 'Save and Continue').click();
 
-        cy.workflowNext();
+        // Map of Locations: the seeded assets have no geometry, so only the map itself is checked.
+        info('Geometry Locations', 'Red represents the base resource. Blue represents the merge resource.');
+        cy.get('.mapboxgl-canvas, .maplibregl-canvas', { timeout: 60000 }).should('be.visible');
+        footer({ next: true });
+        cy.get(FOOTER).contains('button', 'Next Step').should('not.have.class', 'disabled').click();
 
-        // Merging tab
-        cy.contains('Merge Heritage Asset').should('be.visible');
-        cy.get('.select2-selection').first().click();
-        cy.select2Search(mergeName);
-        cy.get('.select2-results__option').contains(mergeName).click();
-        cy.wait(2000);
+        // Information: both HA numbers, locked, and the reason is required.
+        info('Please provide information', "It's mandatory that you provide information in the notes text box");
+        cy.get('[aria-label="Base HA Number"]', { timeout: 60000 }).should('be.disabled').and('have.value', 'HA/90');
+        cy.get('[aria-label="Merged HA Number"]').should('be.disabled').and('have.value', 'HA/91');
+        cy.get('.widget-wrapper.description').should('contain.text', 'Notes');
+        cy.typeRichText('description', 'Cypress merge: the two records describe the same site.');
+        footer({ save: true });
+        cy.contains('button', 'Save and Continue').click();
 
-        cy.workflowNext();
+        // Approval
+        cy.get('.workflow-nav-tab.active', { timeout: 60000 }).should('contain.text', 'Approval');
+        footer({ save: true });
+        cy.contains('Report Updated By');
+        // The admin user has no Person in the merge sign-off groups.
+        cy.contains('You do not have permission to sign off');
+        cy.get('[aria-label="Reference ID"]').should('be.disabled')
+            .and(($input) => expect($input.val()).to.match(/^MRT\/\d{4}\/\w+$/));
+        cy.get('.widget-wrapper.date_of_submission_value').should('contain.text', 'Date of Submission');
+        cy.get('.widget-wrapper.date_of_submission_value input.form-control').first().click({ force: true });
+        cy.get(`${CALENDAR} td.day.active:visible`).should('have.text', String(now.getDate()));
+        cy.get('.workflow-nav-tab.active').click();
+        cy.get('.widget-wrapper.date_of_submission_value input.form-control').first().should('have.value', todayString());
+        cy.pickCalendarDay('date_of_submission_value', 1);
+        cy.contains('button', 'Save and Continue').click();
 
-        // Map of Locations tab - shows both resources' geometry, nothing to
-        // input since neither throwaway resource has a geometry tile.
-        cy.workflowNext();
-
-        // Information tab - the two "* HA Number" cards just redisplay each
-        // resource's already-generated, disabled HA Number; only the notes
-        // card needs input, and it's mandatory per the step's own
-        // information box text.
-        cy.contains('Base HA Number').should('be.visible');
-        cy.contains('Merged HA Number').should('be.visible');
-        cy.get('input[aria-label="Description Type"]').click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').first().click();
-        cy.get('[aria-label="Notes"]').click().type(`Merging ${mergeName} into ${baseName} for testing.`);
-
-        cy.workflowNext();
-
-        // Approval tab - "Report Updated By" is meant to be restricted to
-        // sign-off groups via user-to-model-select, but works as a plain
-        // resource-instance-list picker either way.
-        cy.contains('Report Updated By').scrollIntoView();
-        cy.pickRelationshipFirst('Report Updated By');
-        cy.wait(2000);
-
-        // Widget label here is "Reference ID", not "ResourceID" like the
-        // node's own name suggests.
-        cy.contains('Reference ID').scrollIntoView();
-        cy.get('[aria-label="Reference ID"]').click().type(`MERGE-${suffix}`);
-
-        cy.get('.card_component.date_of_submission_value input.form-control').first().click();
-        cy.get('.card_component.date_of_submission_value .input-group-addon').click();
-
-        cy.workflowNext();
-
-        // Submit Merge tab - domain-checkbox-widget is a newer web-component
-        // widget (part of the v8 Vue component migration) rather than a
-        // knockout-bound one, so this targets its checkbox input generically
-        // rather than a class name verified against the others in this
-        // suite's commands.js helpers.
-        cy.contains('acknowledging the process').scrollIntoView();
-        cy.get('input[type="checkbox"]').first().click({ force: true });
-        cy.get('button').contains('Submit').should('not.be.disabled').click();
+        // Submit Merge: Submit waits for the acknowledgement, then starts the merge.
+        info('WARNING: Process Description', 'This process cannot easily be undone');
+        cy.contains('button', 'Submit').should('be.disabled');
+        cy.get('input[type="checkbox"]:visible, .form-checkbox:visible').first().click({ force: true });
+        cy.intercept('POST', '/merge-resources').as('merge');
+        cy.contains('button', 'Submit').should('be.enabled').click();
+        cy.wait('@merge').its('response.statusCode').should('eq', 200);
+        cy.contains('Merge process has STARTED', { timeout: 30000 });
+        cy.contains('You can now safely save and exit the workflow');
+        cy.contains('button, .btn', /^\s*ok\s*$/i).click();
+        cy.location('pathname', { timeout: 60000 }).should('include', '/plugins/init-workflow');
     });
 });
