@@ -20,7 +20,7 @@ class ORM(View):
         aliases = data["show_nodes[]"]
         model_name = data.get("model", ["Monument"])[0]
         if model_name not in MODELS:
-            return HttpResponseBadRequest(f"Unknown model {model_name}")
+            return HttpResponseBadRequest("Unknown model")
         model = getattr(models, model_name)
 
         with admin():
