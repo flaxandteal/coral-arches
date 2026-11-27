@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 
 def get_paginator(task_resources, page, items_per_page):
-    paginator = Paginator(list(range(task_resources)), items_per_page)
+    paginator = Paginator(range(task_resources), items_per_page)
     pages = [page]
     if paginator.num_pages > 1:
         before = list(range(1, page))
