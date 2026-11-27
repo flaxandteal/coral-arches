@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- fix(security): the ORM endpoint no longer echoes an unknown model name back as HTML
 - fix(workflows): State Care Initial Step shows the asset's SMR number locked, and Open Selected lists every survey for the chosen asset
 - test(cypress): archive cataloguing spec follows its UAT checklist
 - fix(workflows): Excavation Site Visit shows the licence details, and its launcher lists every site visit by its ESV reference
