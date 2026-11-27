@@ -7,7 +7,6 @@ from arches.app.models.tile import Tile
 from coral.utils.reference_values import has_list_item
 import datetime
 import json
-from django.db.models import Max
 
 LICENCE_GRAPH_ID = "cc5da227-24e7-4088-bb83-a564c4331efd"
 ACTIVITY_GRAPH_ID = ""
@@ -59,35 +58,19 @@ def licence_number_format(year, index):
 
 
 def get_latest_licence_number(licence_instance_id):
-
-    latest_licence_number_tile = None
-    try:
-        licence_number_generated = {
-            f"data__{LICENCE_NUMBER_NODE}__en__value__icontains": LICENCE_NUMBER_PREFIX,
-        }
-        query_result = Tile.objects.filter(
-            nodegroup_id=LICENCE_NUMBER_NODEGROUP,
-            **licence_number_generated,
-        ).exclude(resourceinstance_id=licence_instance_id)
-        query_result = query_result.annotate(
-            most_recent=Max("resourceinstance__createdtime")
-        )
-        query_result = query_result.order_by("-most_recent")
-        latest_licence_number_tile = query_result.first()
-    except Exception as e:
-        print(f"Failed querying for previous licence number tile: {e}")
-        raise e
-
-    if not latest_licence_number_tile:
-        return
-
-    latest_licence_number = (
-        latest_licence_number_tile.data.get(LICENCE_NUMBER_NODE).get("en").get("value")
+    """This year's highest licence number. Legacy numbers such as AE/19/29M are skipped."""
+    year = str(datetime.datetime.now().year)
+    prefix = f"{LICENCE_NUMBER_PREFIX}/{year}/"
+    value = f"data__{LICENCE_NUMBER_NODE}__en__value"
+    numbers = (
+        Tile.objects.filter(nodegroup_id=LICENCE_NUMBER_NODEGROUP, **{f"{value}__startswith": prefix})
+        .exclude(resourceinstance_id=licence_instance_id)
+        .values_list(value, flat=True)
     )
-
-    print(f"Previous licence number: {latest_licence_number}")
-    licence_number_parts = latest_licence_number.split("/")
-    return {"year": licence_number_parts[1], "index": int(licence_number_parts[2])}
+    indexes = [int(n[len(prefix):]) for n in numbers if n[len(prefix):].isdigit()]
+    if not indexes:
+        return
+    return {"year": year, "index": max(indexes)}
 
 
 def generate_licence_number(licence_instance_id, attempts=0):

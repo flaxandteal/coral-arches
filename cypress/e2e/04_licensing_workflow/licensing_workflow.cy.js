@@ -57,12 +57,8 @@ describe('Going through the licensing Workflow', function () {
         cy.fillDate('actual_end_date');
         cy.type_ckeditor('editor3', 'test, Description');
         cy.wait(2000);
-        // Stage of Application starts unset (its old init default pointed at a
-        // stale/orphaned reference id and has been nulled out), so match by
-        // the card's alias rather than a hard-coded current-value label.
-        cy.get('.card_component.application_stage_type .select2-selection').scrollIntoView().click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more').not('.select2-results__message').first().click();
+        // Granted, so that Grade D "Approved" on Record Decision generates a licence number.
+        cy.pickCardOption('application_stage_type', 'Granted');
         // issue with multi select
         // cy.get('[label="Excavation Reason(s)"]').click();
         // cy.wait(2000);
@@ -98,28 +94,36 @@ describe('Going through the licensing Workflow', function () {
         cy.setBooleanTrue('developer_funding_form');
     }
 
+    // Communication Type is hidden but required, so the row only saves if its default applies.
     function fillCommunicationsTab() {
-        cy.get('.col-xs-12 > .form-control').filter(':visible').first().clear({force: true});
-        cy.get('.col-xs-12 > .form-control').filter(':visible').first().type('test', {force: true});
+        cy.typeInCard('subject', 'Test subject');
+        cy.pickCardOption('attendees');
+        cy.wait(2000);
+        cy.intercept('POST', '/tile').as('communicationSave');
+        cy.get('.btn-workflow-tile.btn-success:visible').contains('Add').click();
     }
 
+    // Both Made By pickers carry the same label, so each is picked by its widget alias.
     function fillRecordDecisionTab() {
-        // Cur Grade E Decision is now a reference (controlled-list) field, so
-        // its current-value label text no longer includes "Grant licence" --
-        // match by aria-label prefix and take whatever option is available.
-        cy.get('.select2-selection[aria-label^="Cur Grade E Decision, "]').filter(':visible').first().scrollIntoView().click();
-        cy.wait(2000);
-        cy.get('.select2-results__option').not('.loading-results').not('.select2-results__option--load-more').not('.select2-results__message').first().click();
-        cy.wait(2000);
-        cy.pickRelationshipFirst('Made By');
+        cy.pickCardOption('grade_e_decision', 'Grant licence');
+        cy.pickCardOption('grade_e_actor');
         cy.wait(1000);
-        // this select doesn't work for some reason
-        // cy.get('[aria-label="Cur Grade D Decision, Approved"]').click();
-        // cy.wait(2000);
-        // cy.get('.select2-results__option').first().click();
-        cy.pickRelationshipFirst('Made By');
+        cy.pickCardOption('grade_d_decision', 'Approved');
+        cy.pickCardOption('grade_d_actor');
         cy.wait(1000);
         cy.type_ckeditor('editor11', 'test, Description');
+    }
+
+    // Stage "Granted" plus Grade D "Approved" generates the licence number on save.
+    function saveDecisionAndAcceptLicenceNumber() {
+        cy.get('.tabbed-workflow-footer-button-container')
+            .find('button:not([disabled]):not(.disabled)')
+            .contains(/Save and Continue|Next Step/)
+            .click();
+        cy.contains(/Application status is "Granted"\. Licence Number: AE\/\d{4}\/\d{3}/, { timeout: 60000 })
+            .should('be.visible');
+        cy.get('.ep-form-alert-buttons .btn:visible').contains('OK').click();
+        cy.contains('.step-counter span', /^\s*8\s*$/, { timeout: 30000 });
     }
 
     function fillAmendmentsTab() {
@@ -130,17 +134,12 @@ describe('Going through the licensing Workflow', function () {
         cy.pickRelationshipFirst('Former Employing Body');
         cy.wait(1000);
         cy.fillDate('date_requested_value');
-        // Match the decision widgets by aria-label prefix - the label carries
-        // the current value, which differs from the hard-coded one.
-        cy.pickDomainByLabel('Cur Grade E Decision', 'Do not approve transfer');
-        cy.pickRelationshipFirst('Made By');
+        // Four "Made By" pickers share the label, so pick by widget alias.
+        cy.pickCardOption('grade_e_decision_n1', 'Do not approve transfer');
+        cy.pickCardOption('grade_e_actor_n1');
         cy.wait(1000);
-        cy.pickDomainByLabel('Cur Grade D Decision', 'Decline');
-        cy.pickRelationshipFirst('Made By');
-        cy.wait(1000);
-        cy.pickRelationshipFirst('Made By');
-        cy.wait(1000);
-        cy.pickRelationshipFirst('Made By');
+        cy.pickCardOption('grade_d_decision_n1', 'Decline');
+        cy.pickCardOption('grade_d_actor_n1');
         cy.wait(1000);
         cy.fillDate('issued_date_value');
     }
@@ -200,8 +199,8 @@ describe('Going through the licensing Workflow', function () {
         });
         cy.wait(4000);
         cy.get('body').then(($b) => {
-            if ($b.find('.ep-form-alert-buttons .btn').length) {
-                cy.get('.ep-form-alert-buttons .btn').first().click();
+            if ($b.find('.ep-form-alert-buttons .btn:visible').length) {
+                cy.get('.ep-form-alert-buttons .btn:visible').first().click();
             }
         });
     }
@@ -227,12 +226,11 @@ describe('Going through the licensing Workflow', function () {
 
         fillCommunicationsTab();
         cy.workflowNext();          // Communications     -> Record Decision
+        cy.wait('@communicationSave').its('response.statusCode').should('eq', 200);
         cy.wait(4000);
 
         fillRecordDecisionTab();
-        // No issue_date widget on this workflow - Record Decision ends at the
-        // decision notes, then the (card-less) Letter tab, then Amendments.
-        cy.workflowNext();          // Record Decision    -> Letter
+        saveDecisionAndAcceptLicenceNumber();   // Record Decision -> Letter
         cy.wait(4000);
         cy.workflowNext();          // Letter             -> Amendments
         cy.wait(6000);
@@ -242,11 +240,8 @@ describe('Going through the licensing Workflow', function () {
         cy.wait(4000);
 
         fillFinalReportTab();
-        // Finish the workflow. Target the footer button explicitly - a blanket
-        // `.btn-success` click races the completion re-render and detaches.
-        saveAndConfirmAlert();
-        cy.wait(2000);
-        saveAndConfirmAlert();       // Final Report -> Summary, then Summary -> complete
+        cy.workflowNext();          // Final Report       -> Summary
+        saveAndConfirmAlert();      // Summary            -> complete
 
         // Workflow completes and returns to the workflow launcher list.
         cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');

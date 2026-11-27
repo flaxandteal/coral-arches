@@ -6,6 +6,7 @@ import _ from 'underscore';
 import AlertViewModel from 'viewmodels/alert';
 import checkOpenApplicationsTemplate from 'templates/views/components/widgets/check-open-applications.htm';
 import ResourceInstanceSelectViewModel from 'viewmodels/resource-instance-select';
+import { hasListItem } from 'utils/reference-values';
 
 const viewModel = function (params) {
   // ResourceInstanceSelectViewModel imported at top of file
@@ -210,9 +211,10 @@ const viewModel = function (params) {
 
     let hasNotReceived = false;
     if (reportClassificationTiles?.length) {
-      hasNotReceived =
-        reportClassificationTiles[0].data[this.REPORT_CLASSIFICATION_TYPE_NODE_ID] ===
-        this.REPORT_CLASSIFICATION_NOT_RECEIVED_ID;
+      hasNotReceived = hasListItem(
+        reportClassificationTiles[0].data[this.REPORT_CLASSIFICATION_TYPE_NODE_ID],
+        this.REPORT_CLASSIFICATION_NOT_RECEIVED_ID
+      );
     }
 
     return [existsInContacts, hasNotReceived];

@@ -228,10 +228,12 @@ function viewModel(params) {
       data: {
         '59d663f2-48b9-11ee-84da-0242ac140007': null,
         '59d66c4e-48b9-11ee-84da-0242ac140007': null,
-        '59d66ab4-48b9-11ee-84da-0242ac140007': '04a4c4d5-5a5e-4018-93aa-65abaa53fb53',
-        '59d665c8-48b9-11ee-84da-0242ac140007': '8a96a261-cd79-48e2-9f12-74924c152b00',
-        '59d6691a-48b9-11ee-84da-0242ac140007': 'a0e096e2-f5ae-4579-950d-3040714713b4',
-        '59d66df2-48b9-11ee-84da-0242ac140007': '5a88136a-bf3a-4b48-a830-a7f42000dd24',
+        // The name's type and metatype nodes are `reference` now and these defaults were v7
+        // concept ids, which fail validation. Only the name itself is read back.
+        '59d66ab4-48b9-11ee-84da-0242ac140007': null,
+        '59d665c8-48b9-11ee-84da-0242ac140007': null,
+        '59d6691a-48b9-11ee-84da-0242ac140007': null,
+        '59d66df2-48b9-11ee-84da-0242ac140007': null,
         [licenceNameNode]: null
       },
       nodegroup_id: '59d65ec0-48b9-11ee-84da-0242ac140007',
