@@ -87,7 +87,7 @@ class Utilities():
             return "hb-planning-consultation-response-workflow"
         elif groupId in [PLANNING_GROUP]:
             return "assign-consultation-workflow"
-        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_E, EXCAVATION_USER_GROUP]:
+        elif groupId in [EXCAVATION_ADMIN_GROUP, EXCAVATION_USER_GROUP, EXCAVATION_CUR_D, EXCAVATION_CUR_E]:
             return "licensing-workflow"
     
     def create_deadline_message(self, date):

@@ -22,6 +22,7 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
+- perf(dashboards): the excavation dashboard reads its licence cards off tiles like the other dashboards, and the dashboard finds a user's groups and person in one query each
 - fix(workflows): State Care Initial Step shows the asset's SMR number locked, and Open Selected lists every survey for the chosen asset
 - test(cypress): archive cataloguing spec follows its UAT checklist
 - fix(workflows): Excavation Site Visit shows the licence details, and its launcher lists every site visit by its ESV reference
