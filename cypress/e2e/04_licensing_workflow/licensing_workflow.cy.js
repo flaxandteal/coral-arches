@@ -94,9 +94,13 @@ describe('Going through the licensing Workflow', function () {
         cy.setBooleanTrue('developer_funding_form');
     }
 
+    // Communication Type is hidden but required, so the row only saves if its default applies.
     function fillCommunicationsTab() {
-        cy.get('.col-xs-12 > .form-control').filter(':visible').first().clear({force: true});
-        cy.get('.col-xs-12 > .form-control').filter(':visible').first().type('test', {force: true});
+        cy.typeInCard('subject', 'Test subject');
+        cy.pickCardOption('attendees');
+        cy.wait(2000);
+        cy.intercept('POST', '/tile').as('communicationSave');
+        cy.get('.btn-workflow-tile.btn-success:visible').contains('Add').click();
     }
 
     // Both Made By pickers carry the same label, so each is picked by its widget alias.
@@ -222,6 +226,7 @@ describe('Going through the licensing Workflow', function () {
 
         fillCommunicationsTab();
         cy.workflowNext();          // Communications     -> Record Decision
+        cy.wait('@communicationSave').its('response.statusCode').should('eq', 200);
         cy.wait(4000);
 
         fillRecordDecisionTab();
@@ -235,11 +240,8 @@ describe('Going through the licensing Workflow', function () {
         cy.wait(4000);
 
         fillFinalReportTab();
-        // Finish the workflow. Target the footer button explicitly - a blanket
-        // `.btn-success` click races the completion re-render and detaches.
-        saveAndConfirmAlert();
-        cy.wait(2000);
-        saveAndConfirmAlert();       // Final Report -> Summary, then Summary -> complete
+        cy.workflowNext();          // Final Report       -> Summary
+        saveAndConfirmAlert();      // Summary            -> complete
 
         // Workflow completes and returns to the workflow launcher list.
         cy.location('pathname', { timeout: 20000 }).should('include', '/plugins/init-workflow');

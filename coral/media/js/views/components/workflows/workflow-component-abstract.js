@@ -560,6 +560,8 @@ function MultipleTileBasedComponent(title) {
        * tte wca into the coral side. This implements all fixes need for updating
        * the tiles shown in the sidebar.
        */
+      // A second save while new tiles are still in flight would create each of them twice.
+      if (self.saving()) return;
       self.complete(false);
       self.saving(true);
       self.previouslyPersistedComponentData = [];

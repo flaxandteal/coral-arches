@@ -22,7 +22,8 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 ## Unreleased
 
 ### Changes
-- fix(workflows): Licensing grants a licence number again with legacy numbers present, its Summary and cover letter read the v8 nodes, and licence letters find their templates
+- fix(workflows): Licensing grants a licence number again with legacy numbers present, its Summary and cover letter read the v8 nodes, licence letters find their templates, Communications rows save, and Record Decision fills Valid Until again
+- fix(workflows): a double click on a multi-row step's save no longer creates every new row twice
 - fix(workflows): State Care Initial Step shows the asset's SMR number locked, and Open Selected lists every survey for the chosen asset
 - test(cypress): archive cataloguing spec follows its UAT checklist
 - fix(workflows): Excavation Site Visit shows the licence details, and its launcher lists every site visit by its ESV reference
@@ -31,5 +32,6 @@ everything under it into `changelogs/vX.Y.Z.md` and leaves the headings empty ag
 - fix(workflows): Evaluation Meeting's launcher lists every meeting for a building
 
 ### Notes
+- Licensing: run `python manage.py migrate` (8024 gives Communication Type its Email default), then restart the app pods so the new default is served.
 - State Care: run `python manage.py plugin update -s coral/plugins/state-care-condition-survey-workflow.json` after deploying.
 - Excavation Site Visit: run `python manage.py plugin update -s coral/plugins/excavation-site-visit-workflow.json` after deploying.

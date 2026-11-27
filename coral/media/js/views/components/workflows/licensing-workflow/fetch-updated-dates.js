@@ -8,12 +8,12 @@ import componentTemplate from 'templates/views/components/cards/default.htm';
 
 function viewModel(params) {
 
-LICENCE_TIMESPAN_NODEGROUP_ID = "1887f678-c42d-11ee-bc4b-0242ac180006"
-ISSUE_DATE_NODE = "1887faf6-c42d-11ee-bc4b-0242ac180006"
-VALID_UNTIL_NODE = "1887fc86-c42d-11ee-bc4b-0242ac180006"
+const LICENCE_TIMESPAN_NODEGROUP_ID = "1887f678-c42d-11ee-bc4b-0242ac180006"
+const ISSUE_DATE_NODE = "1887faf6-c42d-11ee-bc4b-0242ac180006"
+const VALID_UNTIL_NODE = "1887fc86-c42d-11ee-bc4b-0242ac180006"
 
-LICENCE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
-LICENCE_NUMBER_VALUE_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
+const LICENCE_NUMBER_NODEGROUP = "6de3741e-c502-11ee-86cf-0242ac180006"
+const LICENCE_NUMBER_VALUE_NODE = "9a9e198c-c502-11ee-af34-0242ac180006"
 
 CardComponentViewModel.apply(this, [params]);
 
